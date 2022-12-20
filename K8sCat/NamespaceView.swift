@@ -6,9 +6,11 @@
 //
 
 import SwiftUI
+import SwiftUIX
 
 struct NamespaceView: View {
     @State var ns = "default"
+    @State var search = ""
     var body: some View {
         VStack {
             NavigationStack {
@@ -19,6 +21,7 @@ struct NamespaceView: View {
                 }.onChange(of: ns) {
                     c in print("select ns \(c)")
                 }
+                SearchBar(text: $search)
                 List {
                     ForEach(["pod 1", "pod 2", "pod 3", "pod 4", "pod 5"], id: \.self) {
                         i in
@@ -29,7 +32,7 @@ struct NamespaceView: View {
                         }
                 
                     }
-                }
+                }.listStyle(PlainListStyle())
             }
         }
         
