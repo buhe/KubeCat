@@ -21,7 +21,7 @@ struct NamespaceView: View {
                 }.onChange(of: ns) {
                     c in print("select ns \(c)")
                 }
-                SearchBar(text: $search)
+                SearchBar(text: $search).padding(.horizontal)
                 List {
                     ForEach(["pod 1", "pod 2", "pod 3", "pod 4", "pod 5"], id: \.self) {
                         i in
