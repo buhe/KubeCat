@@ -11,6 +11,7 @@ import SwiftUIX
 struct NamespaceView: View {
     @State var ns = "default"
     @State var search = ""
+    @State var tabIndex = 0
     var body: some View {
         VStack {
             NavigationStack {
@@ -22,6 +23,8 @@ struct NamespaceView: View {
                     c in print("select ns \(c)")
                 }
                 SearchBar(text: $search).padding(.horizontal)
+                CustomTopTabBar(tabIndex: $tabIndex).padding(.horizontal, 12)
+
                 List {
                     ForEach(["pod 1", "pod 2", "pod 3", "pod 4", "pod 5"], id: \.self) {
                         i in
