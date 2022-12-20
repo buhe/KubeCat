@@ -27,6 +27,8 @@ struct CustomTopTabBar: View {
                 .onTapGesture { onButtonTapped(index: 0) }
             TabBarButton(text: "Job", isSelected: .constant(tabIndex == 1))
                 .onTapGesture { onButtonTapped(index: 1) }
+            TabBarButton(text: "Deployments", isSelected: .constant(tabIndex == 2))
+                .onTapGesture { onButtonTapped(index: 2) }
             Spacer()
         }
         .border(width: 1, edges: [.bottom], color: .black)
