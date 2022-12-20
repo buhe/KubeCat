@@ -8,8 +8,32 @@
 import SwiftUI
 
 struct NamespaceView: View {
+    @State var ns = "default"
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            NavigationStack {
+                Picker("ns", selection: $ns) {
+                    ForEach(["default", "monitor"], id: \.self) {
+                        Text($0)
+                     }
+                }.onChange(of: ns) {
+                    c in print("select ns \(c)")
+                }
+                List {
+                    ForEach(["pod 1", "pod 2", "pod 3", "pod 4", "pod 5"], id: \.self) {
+                        i in
+                        NavigationLink {
+                            Text(i)
+                        } label: {
+                            Text(i)
+                        }
+                
+                    }
+                }
+            }
+        }
+        
+        
     }
 }
 
