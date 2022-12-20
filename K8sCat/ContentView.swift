@@ -10,16 +10,16 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         TabView {
-            Text("ns").tabItem {
-                Text("ns")
+            NamespaceView().tabItem {
+                Label("Namespaces", systemImage: "aqi.medium")
             }
             
-            Text("global").tabItem {
-                Text("global")
+            GlobalView().tabItem {
+                Label("Global", systemImage: "globe")
             }
             
-            Text("settings").tabItem {
-                Text("settings")
+            SettingView().tabItem {
+                Label("Setting", systemImage: "gear")
             }
         }
     }
