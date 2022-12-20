@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3F19F8BB295173CC005C0558 /* SwiftkubeClient in Frameworks */ = {isa = PBXBuildFile; productRef = 3F19F8BA295173CC005C0558 /* SwiftkubeClient */; };
 		3FFCCF8D294DFF6000FE6710 /* K8sCatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FFCCF8C294DFF6000FE6710 /* K8sCatApp.swift */; };
 		3FFCCF8F294DFF6000FE6710 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FFCCF8E294DFF6000FE6710 /* ContentView.swift */; };
 		3FFCCF91294DFF6100FE6710 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3FFCCF90294DFF6100FE6710 /* Assets.xcassets */; };
@@ -52,6 +53,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3F19F8BB295173CC005C0558 /* SwiftkubeClient in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -145,6 +147,9 @@
 			dependencies = (
 			);
 			name = K8sCat;
+			packageProductDependencies = (
+				3F19F8BA295173CC005C0558 /* SwiftkubeClient */,
+			);
 			productName = K8sCat;
 			productReference = 3FFCCF89294DFF6000FE6710 /* K8sCat.app */;
 			productType = "com.apple.product-type.application";
@@ -217,6 +222,9 @@
 				Base,
 			);
 			mainGroup = 3FFCCF80294DFF6000FE6710;
+			packageReferences = (
+				3F19F8B9295173CC005C0558 /* XCRemoteSwiftPackageReference "client" */,
+			);
 			productRefGroup = 3FFCCF8A294DFF6000FE6710 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -612,6 +620,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		3F19F8B9295173CC005C0558 /* XCRemoteSwiftPackageReference "client" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/swiftkube/client";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.9.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		3F19F8BA295173CC005C0558 /* SwiftkubeClient */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3F19F8B9295173CC005C0558 /* XCRemoteSwiftPackageReference "client" */;
+			productName = SwiftkubeClient;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 3FFCCF81294DFF6000FE6710 /* Project object */;
 }
