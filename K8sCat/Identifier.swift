@@ -12,11 +12,11 @@ import Yams
 import NIOSSL
 
 
-protocol Identifier {
+protocol CertIdentifier {
     func config() throws -> KubernetesClientConfig?
 }
 
-struct Default: Identifier {
+struct Default: CertIdentifier {
     
     func config() throws -> SwiftkubeClient.KubernetesClientConfig? {
         let decoder = YAMLDecoder()

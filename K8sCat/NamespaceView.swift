@@ -27,12 +27,12 @@ struct NamespaceView: View {
                 CustomTopTabBar(tabIndex: $tabIndex).padding(.horizontal, 12)
 
                 List {
-                    ForEach(["pod 1", "pod 2", "pod 3", "pod 4", "pod 5"], id: \.self) {
+                    ForEach(viewModel.pods) {
                         i in
                         NavigationLink {
-                            Text(i)
+                            Text(i.name)
                         } label: {
-                            Text(i)
+                            Text(i.name)
                         }
                 
                     }
