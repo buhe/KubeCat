@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
+    let model = Model()
     var body: some View {
         TabView {
             NamespaceView().tabItem {
