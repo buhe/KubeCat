@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct ContentView: View {
-    let model = Model()
+    @ObservedObject var viewModel = ViewModel()
     var body: some View {
         TabView {
-            NamespaceView().tabItem {
+            NamespaceView(viewModel: viewModel).tabItem {
                 Label("Namespaces", systemImage: "aqi.medium")
             }
             

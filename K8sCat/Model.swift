@@ -7,18 +7,24 @@
 
 import Foundation
 import SwiftkubeClient
+import SwiftkubeModel
 
 struct Model {
+    let client: KubernetesClient
+    var namespaces: core.v1.Namespace.List?
+    
     init() {
-        let client = KubernetesClient(config: try! Default().config()!)
-        let namespaces = try! client.namespaces.list().wait().map {
-            nses in
-            return nses.name!
-        }
-        print("ns is \(namespaces)")
+        client = KubernetesClient(config: try! Default().config()!)
         
+        try! namespace()
         defer {
             try? client.syncShutdown()
         }
+    }
+    
+    mutating func namespace() throws {
+        let namespaces = try client.namespaces.list().wait()
+        print("ns is \(namespaces)")
+        self.namespaces = namespaces
     }
 }

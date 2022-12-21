@@ -12,11 +12,12 @@ struct NamespaceView: View {
     @State var ns = "default"
     @State var search = ""
     @State var tabIndex = 0
+    let viewModel: ViewModel
     var body: some View {
         VStack {
             NavigationStack {
                 Picker("ns", selection: $ns) {
-                    ForEach(["default", "monitor"], id: \.self) {
+                    ForEach((viewModel.model.namespaces?.items.map { $0.name! })!, id: \.self) {
                         Text($0)
                      }
                 }.onChange(of: ns) {
@@ -43,8 +44,8 @@ struct NamespaceView: View {
     }
 }
 
-struct NamespaceView_Previews: PreviewProvider {
-    static var previews: some View {
-        NamespaceView()
-    }
-}
+//struct NamespaceView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        NamespaceView()
+//    }
+//}
