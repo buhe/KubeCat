@@ -21,7 +21,8 @@ struct NamespaceView: View {
                         Text($0)
                      }
                 }.onChange(of: ns) {
-                    c in print("select ns \(c)")
+                    c in
+                    try! viewModel.podsSelector(in: .namespace(c))
                 }
                 SearchBar(text: $search).padding(.horizontal)
                 CustomTopTabBar(tabIndex: $tabIndex).padding(.horizontal, 12)
