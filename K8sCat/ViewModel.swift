@@ -12,7 +12,7 @@ class ViewModel: ObservableObject {
     @Published var model = Model()
     
     var pods: [Pod] {
-        (model.pods.map {Pod(id: $0.name!, name: $0.name!)})
+        model.pods.map {Pod(id: $0.name!, name: $0.name!)}
     }
     
     func podsSelector(in ns: NamespaceSelector) throws {

@@ -12,7 +12,8 @@ struct NamespaceView: View {
     @State var ns = "default"
     @State var search = ""
     @State var tabIndex = 0
-    let viewModel: ViewModel
+    @ObservedObject var viewModel: ViewModel
+    // must add @ObservedObject
     var body: some View {
         VStack {
             NavigationStack {
