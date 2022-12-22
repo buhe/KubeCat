@@ -19,12 +19,21 @@ class ViewModel: ObservableObject {
         model.namespaces.map { $0.name! }
     }
     
+    var deployment: [Deployment] {
+        model.deployments.map {Deployment(id: $0.name!, name: $0.name!)}
+    }
+    
     func podsSelector(in ns: NamespaceSelector) throws {
         try model.pod(in: ns)
     }
 }
 
 struct Pod: Identifiable {
+    var id: String
+    var name: String
+}
+
+struct Deployment: Identifiable {
     var id: String
     var name: String
 }
