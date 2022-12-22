@@ -15,6 +15,10 @@ class ViewModel: ObservableObject {
         model.pods.map {Pod(id: $0.name!, name: $0.name!)}
     }
     
+    var namespaces: [String] {
+        model.namespaces.map { $0.name! }
+    }
+    
     func podsSelector(in ns: NamespaceSelector) throws {
         try model.pod(in: ns)
     }

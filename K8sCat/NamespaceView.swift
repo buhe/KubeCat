@@ -18,7 +18,7 @@ struct NamespaceView: View {
         VStack {
             NavigationStack {
                 Picker("ns", selection: $ns) {
-                    ForEach((viewModel.model.namespaces?.items.map { $0.name! })!, id: \.self) {
+                    ForEach(viewModel.namespaces, id: \.self) {
                         Text($0)
                      }
                 }.onChange(of: ns) {
