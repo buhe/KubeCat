@@ -39,7 +39,7 @@ struct NamespaceView: View {
                     switch tabIndex {
                     case 0:
                         List {
-                            ForEach(viewModel.pods) {
+                            ForEach(viewModel.pods(in: .namespace(ns))) {
                                 i in
                                 NavigationLink {
                                     Text(i.name)
@@ -51,7 +51,7 @@ struct NamespaceView: View {
                         }.listStyle(PlainListStyle())
                     case 1:
                         List {
-                            ForEach(viewModel.deployment) {
+                            ForEach(viewModel.deployment(in: .namespace(ns))) {
                                 i in
                                 NavigationLink {
                                     Text(i.name)

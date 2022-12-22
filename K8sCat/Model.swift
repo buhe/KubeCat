@@ -12,8 +12,8 @@ import SwiftkubeModel
 struct Model {
     let client: KubernetesClient
     var namespaces: [core.v1.Namespace] = []
-    var pods: [core.v1.Pod] = []
-    var deployments: [apps.v1.Deployment] = []
+    var pods: [String: [core.v1.Pod]] = ["": []]
+    var deployments: [String: [apps.v1.Deployment]] = ["": []]
     fileprivate func workaroundChinaSpecialBug() {
         let url = URL(string: "https://www.baidu.com")!
         
@@ -42,11 +42,19 @@ struct Model {
     
     mutating func pod(in ns: NamespaceSelector) throws {
         let pods = try client.pods.list(in: ns).wait().items
-        self.pods = pods
+        switch ns {
+        case .namespace(let name):
+            self.pods[name] = pods
+        default: break
+        }
     }
     
     mutating func deployment(in ns: NamespaceSelector) throws {
         let deployments = try client.appsV1.deployments.list(in: ns).wait().items
-        self.deployments = deployments
+        switch ns {
+        case .namespace(let name):
+            self.deployments[name] = deployments
+        default: break
+        }
     }
 }

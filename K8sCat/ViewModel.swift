@@ -11,16 +11,31 @@ import SwiftkubeClient
 class ViewModel: ObservableObject {
     @Published var model = Model()
     
-    var pods: [Pod] {
-        model.pods.map {Pod(id: $0.name!, name: $0.name!)}
+    func pods(in ns: NamespaceSelector) -> [Pod] {
+        switch ns {
+        case .namespace(let name):
+            if model.pods[name] == nil {
+                try! model.pod(in: ns)
+            }
+            return model.pods[name]!.map {Pod(id: $0.name!, name: $0.name!)}
+        default: return []
+        }
+        
     }
     
     var namespaces: [String] {
         model.namespaces.map { $0.name! }
     }
-    
-    var deployment: [Deployment] {
-        model.deployments.map {Deployment(id: $0.name!, name: $0.name!)}
+    func deployment(in ns: NamespaceSelector) -> [Deployment] {
+        switch ns {
+        case .namespace(let name):
+            if model.deployments[name] == nil {
+                try! model.deployment(in: ns)
+            }
+            return model.deployments[name]!.map {Deployment(id: $0.name!, name: $0.name!)}
+        default: return []
+        }
+        
     }
     
     func podsSelector(in ns: NamespaceSelector) throws {
