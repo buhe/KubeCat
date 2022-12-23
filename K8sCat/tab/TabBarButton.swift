@@ -45,12 +45,10 @@ struct CustomTopTabBar: View {
                         .onTapGesture { onButtonTapped(index: 7) }
                     TabBarButton(text: "Daemon Sets", isSelected: .constant(tabIndex == 8))
                         .onTapGesture { onButtonTapped(index: 8) }
-                    TabBarButton(text: "Daemon Sets", isSelected: .constant(tabIndex == 9))
+                    TabBarButton(text: "Replica Sets", isSelected: .constant(tabIndex == 9))
                         .onTapGesture { onButtonTapped(index: 9) }
-                    TabBarButton(text: "Replica Sets", isSelected: .constant(tabIndex == 10))
+                    TabBarButton(text: "Replication Controllers", isSelected: .constant(tabIndex == 10))
                         .onTapGesture { onButtonTapped(index: 10) }
-                    TabBarButton(text: "Replication Controllers", isSelected: .constant(tabIndex == 11))
-                        .onTapGesture { onButtonTapped(index: 11) }
                 }
               
             }
