@@ -26,9 +26,27 @@ struct NamespaceView: View {
                     c in
                     switch tabIndex {
                     case 0:
-                        try! viewModel.podsSelector(in: .namespace(c))
+                        try! viewModel.model.pod(in: .namespace(c))
                     case 1:
                         try! viewModel.model.deployment(in: .namespace(c))
+                    case 2:
+                        try! viewModel.model.job(in: .namespace(c))
+                    case 3:
+                        try! viewModel.model.cronJob(in: .namespace(c))
+                    case 4:
+                        try! viewModel.model.statefull(in: .namespace(c))
+                    case 5:
+                        try! viewModel.model.service(in: .namespace(c))
+                    case 6:
+                        try! viewModel.model.configMap(in: .namespace(c))
+                    case 7:
+                        try! viewModel.model.secret(in: .namespace(c))
+                    case 8:
+                        try! viewModel.model.daemon(in: .namespace(c))
+                    case 9:
+                        try! viewModel.model.replica(in: .namespace(c))
+                    case 10:
+                        try! viewModel.model.replication(in: .namespace(c))
                     default: break
                     }
                     
@@ -52,6 +70,114 @@ struct NamespaceView: View {
                     case 1:
                         List {
                             ForEach(viewModel.deployment(in: .namespace(ns))) {
+                                i in
+                                NavigationLink {
+                                    Text(i.name)
+                                } label: {
+                                    Text(i.name)
+                                }
+                        
+                            }
+                        }.listStyle(PlainListStyle())
+                    case 2:
+                        List {
+                            ForEach(viewModel.job(in: .namespace(ns))) {
+                                i in
+                                NavigationLink {
+                                    Text(i.name)
+                                } label: {
+                                    Text(i.name)
+                                }
+                        
+                            }
+                        }.listStyle(PlainListStyle())
+                    case 3:
+                        List {
+                            ForEach(viewModel.cronJob(in: .namespace(ns))) {
+                                i in
+                                NavigationLink {
+                                    Text(i.name)
+                                } label: {
+                                    Text(i.name)
+                                }
+                        
+                            }
+                        }.listStyle(PlainListStyle())
+                    case 4:
+                        List {
+                            ForEach(viewModel.statefull(in: .namespace(ns))) {
+                                i in
+                                NavigationLink {
+                                    Text(i.name)
+                                } label: {
+                                    Text(i.name)
+                                }
+                        
+                            }
+                        }.listStyle(PlainListStyle())
+                    case 5:
+                        List {
+                            ForEach(viewModel.service(in: .namespace(ns))) {
+                                i in
+                                NavigationLink {
+                                    Text(i.name)
+                                } label: {
+                                    Text(i.name)
+                                }
+                        
+                            }
+                        }.listStyle(PlainListStyle())
+                    case 6:
+                        List {
+                            ForEach(viewModel.configMap(in: .namespace(ns))) {
+                                i in
+                                NavigationLink {
+                                    Text(i.name)
+                                } label: {
+                                    Text(i.name)
+                                }
+                        
+                            }
+                        }.listStyle(PlainListStyle())
+                    case 7:
+                        List {
+                            ForEach(viewModel.secret(in: .namespace(ns))) {
+                                i in
+                                NavigationLink {
+                                    Text(i.name)
+                                } label: {
+                                    Text(i.name)
+                                }
+                        
+                            }
+                        }.listStyle(PlainListStyle())
+                    case 8:
+                        List {
+                            ForEach(viewModel.daemon(in: .namespace(ns))) {
+                                i in
+                                NavigationLink {
+                                    Text(i.name)
+                                } label: {
+                                    Text(i.name)
+                                }
+                        
+                            }
+                        }.listStyle(PlainListStyle())
+                    case 9:
+                        List {
+                            ForEach(viewModel.replica(in: .namespace(ns))) {
+                                i in
+                                NavigationLink {
+                                    Text(i.name)
+                                } label: {
+                                    Text(i.name)
+                                }
+                        
+                            }
+                        }.listStyle(PlainListStyle())
+                    case 10:
+                        List {
+                            ForEach(viewModel.replication(in: .namespace(ns))) {
                                 i in
                                 NavigationLink {
                                     Text(i.name)
