@@ -60,13 +60,13 @@ class ViewModel: ObservableObject {
         }
     }
     
-    func statefull(in ns: NamespaceSelector) -> [Statefull] {
+    func statefull(in ns: NamespaceSelector) -> [Stateful] {
         switch ns {
         case .namespace(let name):
             if model.statefulls[name] == nil {
                 try! model.statefull(in: ns)
             }
-            return model.statefulls[name]!.map {Statefull(id: $0.name!, name: $0.name!, k8sName: ($0.metadata?.labels!["app.kubernetes.io/name"]!)!)}
+            return model.statefulls[name]!.map {Stateful(id: $0.name!, name: $0.name!, k8sName: ($0.metadata?.labels!["app.kubernetes.io/name"]!)!)}
         default: return []
         }
     }
@@ -77,7 +77,7 @@ class ViewModel: ObservableObject {
             if model.services[name] == nil {
                 try! model.service(in: ns)
             }
-            return model.services[name]!.map {Service(id: $0.name!, name: $0.name!, k8sName: ($0.metadata?.labels!["app.kubernetes.io/name"]!)!)}
+            return model.services[name]!.map {Service(id: $0.name!, name: $0.name!, k8sName: $0.metadata?.labels!["app.kubernetes.io/name"] ?? "unknow", type: ($0.spec?.type!)!, clusterIps: $0.spec?.clusterIPs, externalIps: $0.spec?.externalIPs)}
         default: return []
         }
     }
@@ -110,7 +110,7 @@ class ViewModel: ObservableObject {
             if model.daemons[name] == nil {
                 try! model.daemon(in: ns)
             }
-            return model.daemons[name]!.map {Daemon(id: $0.name!, name: $0.name!)}
+            return model.daemons[name]!.map {Daemon(id: $0.name!, name: $0.name!, k8sName: ($0.metadata?.labels!["app.kubernetes.io/name"]!)!)}
         default: return []
         }
     }
@@ -174,7 +174,7 @@ struct CronJob: Identifiable {
     var name: String
 }
 
-struct Statefull: Identifiable {
+struct Stateful: Identifiable {
     var id: String
     var name: String
     let k8sName: String
@@ -184,6 +184,10 @@ struct Service: Identifiable {
     var id: String
     var name: String
     let k8sName: String
+    let type: String
+    let clusterIps: [String]?
+    let externalIps: [String]?
+//    let ports: Int
 }
 
 struct ConfigMap: Identifiable {
@@ -199,6 +203,7 @@ struct Secret: Identifiable {
 struct Daemon: Identifiable {
     var id: String
     var name: String
+    let k8sName: String
 }
 
 struct Replica: Identifiable {

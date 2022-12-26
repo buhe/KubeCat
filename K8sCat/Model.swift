@@ -32,6 +32,18 @@ struct Model {
         try! client.pods.list(in: ns,options: [.labelSelector(.eq(["app.kubernetes.io/name": replica]))]).wait().items.map { Pod(id: $0.name!, name: $0.name!, k8sName: replica, expect: $0.spec?.containers.count ?? 0, pending: 0, fail: 0, containers: ($0.spec?.containers.map{Container(id: $0.name, name: $0.name, image: $0.image!)})!)}
     }
     
+    func podsByDaemon(in ns: NamespaceSelector, daemon: String) -> [Pod] {
+        try! client.pods.list(in: ns,options: [.labelSelector(.eq(["app.kubernetes.io/name": daemon]))]).wait().items.map { Pod(id: $0.name!, name: $0.name!, k8sName: daemon, expect: $0.spec?.containers.count ?? 0, pending: 0, fail: 0, containers: ($0.spec?.containers.map{Container(id: $0.name, name: $0.name, image: $0.image!)})!)}
+    }
+    
+    func podsByService(in ns: NamespaceSelector, service: String) -> [Pod] {
+        try! client.pods.list(in: ns,options: [.labelSelector(.eq(["app.kubernetes.io/name": service]))]).wait().items.map { Pod(id: $0.name!, name: $0.name!, k8sName: service, expect: $0.spec?.containers.count ?? 0, pending: 0, fail: 0, containers: ($0.spec?.containers.map{Container(id: $0.name, name: $0.name, image: $0.image!)})!)}
+    }
+    
+    func podsByStateful(in ns: NamespaceSelector, stateful: String) -> [Pod] {
+        try! client.pods.list(in: ns,options: [.labelSelector(.eq(["app.kubernetes.io/name": stateful]))]).wait().items.map { Pod(id: $0.name!, name: $0.name!, k8sName: stateful, expect: $0.spec?.containers.count ?? 0, pending: 0, fail: 0, containers: ($0.spec?.containers.map{Container(id: $0.name, name: $0.name, image: $0.image!)})!)}
+    }
+    
     fileprivate func workaroundChinaSpecialBug() {
         let url = URL(string: "https://www.baidu.com")!
         

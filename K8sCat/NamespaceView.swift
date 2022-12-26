@@ -116,7 +116,7 @@ struct NamespaceView: View {
                             ForEach(viewModel.statefull(in: .namespace(ns))) {
                                 i in
                                 NavigationLink {
-                                    Text(i.name)
+                                    StatefulView(stateful: i, viewModel: viewModel)
                                 } label: {
                                     Text(i.name)
                                 }
@@ -128,7 +128,7 @@ struct NamespaceView: View {
                             ForEach(viewModel.service(in: .namespace(ns))) {
                                 i in
                                 NavigationLink {
-                                    Text(i.name)
+                                    ServiceView(service: i, viewModel: viewModel)
                                 } label: {
                                     Text(i.name)
                                 }
@@ -164,7 +164,7 @@ struct NamespaceView: View {
                             ForEach(viewModel.daemon(in: .namespace(ns))) {
                                 i in
                                 NavigationLink {
-                                    Text(i.name)
+                                    DaemonView(daemon: i, viewModel: viewModel)
                                 } label: {
                                     Text(i.name)
                                 }
