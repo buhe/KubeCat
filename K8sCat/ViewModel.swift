@@ -10,6 +10,7 @@ import SwiftkubeClient
 
 class ViewModel: ObservableObject {
     @Published var model = Model()
+    var ns: String = "default"
     
     func pods(in ns: NamespaceSelector) -> [Pod] {
         switch ns {

@@ -24,6 +24,7 @@ struct NamespaceView: View {
                      }
                 }.onChange(of: ns) {
                     c in
+                    viewModel.ns = c
                     switch tabIndex {
                     case 0:
                         try! viewModel.model.pod(in: .namespace(c))
@@ -79,8 +80,7 @@ struct NamespaceView: View {
                             ForEach(viewModel.deployment(in: .namespace(ns))) {
                                 i in
                                 NavigationLink {
-                                    let pods = viewModel.model.podsByDeployment(in: .namespace(ns), deployment: i.name)
-                                    
+                                    DeploymentView(deployment: i, viewModel: viewModel)
                                 } label: {
                                     Text(i.name)
                                 }

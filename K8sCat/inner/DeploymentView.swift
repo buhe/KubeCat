@@ -9,13 +9,58 @@ import SwiftUI
 
 struct DeploymentView: View {
     let deployment: Deployment
+    let viewModel: ViewModel
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Form {
+            Section(header: "Name") {
+                Text(deployment.name)
+            }
+            Section(header: "Status") {
+                
+            }
+            Section(header: "Pods") {
+                List {
+                    ForEach(viewModel.model.podsByDeployment(in: .namespace(viewModel.ns), deployment: deployment.name)) {
+                        i in
+                        NavigationLink {
+                            PodView(pod: i)
+                        } label: {
+                            VStack(alignment: .leading) {
+                                Text(i.name).foregroundColor(.green)
+                                HStack{
+                                    Text("expect: \(i.expect), ")
+                                    Text("pendding: \(i.pending)").foregroundColor(i.pending > 0 ? .red : .black)
+                                }
+                                
+                            }
+                        }
+                    }
+                }
+            }
+            Section(header: "Labels and Annotations") {
+                
+            }
+            Section(header: "Ip") {
+                HStack{
+                    Text("Node IP")
+                    Spacer()
+                    Text("192.168.3.4")
+                }
+            }
+            Section(header: "Misc") {
+                HStack{
+                    Text("Namespace")
+                    Spacer()
+                    Text("monitoring")
+                }
+                
+            }
+        }
     }
 }
 
 struct DeploymentView_Previews: PreviewProvider {
     static var previews: some View {
-        DeploymentView(deployment:  Deployment(id: "123", name: "123"))
+        DeploymentView(deployment:  Deployment(id: "123", name: "123"), viewModel: ViewModel())
     }
 }
