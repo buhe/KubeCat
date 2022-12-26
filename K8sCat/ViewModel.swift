@@ -17,7 +17,7 @@ class ViewModel: ObservableObject {
             if model.pods[name] == nil {
                 try! model.pod(in: ns)
             }
-            return model.pods[name]!.map {Pod(id: $0.name!, name: $0.name!)}
+            return model.pods[name]!.map {Pod(id: $0.name!, name: $0.name!, expect: $0.spec?.containers.count ?? 0, pending: $0.status?.containerStatuses?.filter{$0.ready == false}.count ?? 0, fail: 0)}
         default: return []
         }
         
@@ -144,6 +144,9 @@ class ViewModel: ObservableObject {
 struct Pod: Identifiable {
     var id: String
     var name: String
+    let expect: Int
+    let pending: Int
+    let fail: Int
 }
 
 struct Deployment: Identifiable {

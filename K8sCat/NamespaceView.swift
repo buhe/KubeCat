@@ -56,14 +56,31 @@ struct NamespaceView: View {
                 Group {
                     switch tabIndex {
                     case 0:
-                        PodsView(pods: viewModel.pods(in: .namespace(ns)))
+                        List {
+                            ForEach(viewModel.pods(in: .namespace(ns))) {
+                                i in
+                                NavigationLink {
+                                    Text(i.name)
+                                } label: {
+                                    VStack(alignment: .leading) {
+                                        Text(i.name).foregroundColor(.green)
+                                        HStack{
+                                            Text("expect: \(i.expect), ")
+                                            Text("pendding: \(i.pending)").foregroundColor(i.pending > 0 ? .red : .black)
+                                        }
+                                        
+                                    }
+                                }
+                        
+                            }
+                        }.listStyle(PlainListStyle())
                     case 1:
                         List {
                             ForEach(viewModel.deployment(in: .namespace(ns))) {
                                 i in
                                 NavigationLink {
                                     let pods = viewModel.model.podsByDeployment(in: .namespace(ns), deployment: i.name)
-                                    PodsView(pods: pods)
+                                    
                                 } label: {
                                     Text(i.name)
                                 }
@@ -190,8 +207,8 @@ struct NamespaceView: View {
     }
 }
 
-//struct NamespaceView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        NamespaceView()
-//    }
-//}
+struct NamespaceView_Previews: PreviewProvider {
+    static var previews: some View {
+        NamespaceView(viewModel: ViewModel())
+    }
+}
