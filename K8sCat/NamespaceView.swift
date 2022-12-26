@@ -60,7 +60,7 @@ struct NamespaceView: View {
                             ForEach(viewModel.pods(in: .namespace(ns))) {
                                 i in
                                 NavigationLink {
-                                    Text(i.name)
+                                    PodView(pod: i)
                                 } label: {
                                     VStack(alignment: .leading) {
                                         Text(i.name).foregroundColor(.green)

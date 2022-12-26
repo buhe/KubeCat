@@ -25,7 +25,7 @@ struct Model {
     var replications: [String: [core.v1.ReplicationController]] = ["": []]
     
     func podsByDeployment(in ns: NamespaceSelector, deployment: String) -> [Pod] {
-        try! client.pods.list(in: ns,options: [.labelSelector(.eq(["app.kubernetes.io/name": deployment]))]).wait().items.map { Pod(id: $0.name!, name: $0.name!, expect: $0.spec?.containers.count ?? 0, pending: 0, fail: 0)}
+        try! client.pods.list(in: ns,options: [.labelSelector(.eq(["app.kubernetes.io/name": deployment]))]).wait().items.map { Pod(id: $0.name!, name: $0.name!, expect: $0.spec?.containers.count ?? 0, pending: 0, fail: 0, containers: ($0.spec?.containers.map{Container(id: $0.name, name: $0.name)})!)}
     }
     
     fileprivate func workaroundChinaSpecialBug() {

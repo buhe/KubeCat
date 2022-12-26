@@ -17,7 +17,7 @@ class ViewModel: ObservableObject {
             if model.pods[name] == nil {
                 try! model.pod(in: ns)
             }
-            return model.pods[name]!.map {Pod(id: $0.name!, name: $0.name!, expect: $0.spec?.containers.count ?? 0, pending: $0.status?.containerStatuses?.filter{$0.ready == false}.count ?? 0, fail: 0)}
+            return model.pods[name]!.map {Pod(id: $0.name!, name: $0.name!, expect: $0.spec?.containers.count ?? 0, pending: $0.status?.containerStatuses?.filter{$0.ready == false}.count ?? 0, fail: 0, containers: ($0.spec?.containers.map{Container(id: $0.name, name: $0.name)})!)}
         default: return []
         }
         
@@ -147,6 +147,12 @@ struct Pod: Identifiable {
     let expect: Int
     let pending: Int
     let fail: Int
+    let containers: [Container]
+}
+
+struct Container: Identifiable {
+    var id: String
+    var name: String
 }
 
 struct Deployment: Identifiable {
