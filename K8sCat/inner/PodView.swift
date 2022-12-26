@@ -14,16 +14,37 @@ struct PodView: View {
             Section(header: "Name") {
                 Text(pod.name)
             }
+            Section(header: "Status") {
+                
+            }
             Section(header: "Containers") {
                 List {
                     ForEach(pod.containers) {
                         c in VStack(alignment: .leading) {
                             Text(c.name)
-                            Text("log").font(.caption)
+                            Text(c.image).font(.caption)
                         }
                         
                     }
                 }
+            }
+            Section(header: "Labels and Annotations") {
+                
+            }
+            Section(header: "Ip") {
+                HStack{
+                    Text("Node IP")
+                    Spacer()
+                    Text("192.168.3.4")
+                }
+            }
+            Section(header: "Misc") {
+                HStack{
+                    Text("Namespace")
+                    Spacer()
+                    Text("monitoring")
+                }
+                
             }
         }
     }
@@ -31,6 +52,6 @@ struct PodView: View {
 
 struct PodView_Previews: PreviewProvider {
     static var previews: some View {
-        PodView(pod: Pod(id: "123", name: "123", expect: 8, pending: 7, fail: 6, containers: [Container(id: "abc", name: "abclong...."), Container(id: "ef", name: "ef")]))
+        PodView(pod: Pod(id: "123", name: "123", expect: 8, pending: 7, fail: 6, containers: [Container(id: "abc", name: "abclong....", image: "hello"), Container(id: "ef", name: "ef", image: "kkk")]))
     }
 }
