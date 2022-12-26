@@ -24,6 +24,10 @@ struct Model {
     var replicas: [String: [apps.v1.ReplicaSet]] = ["": []]
     var replications: [String: [core.v1.ReplicationController]] = ["": []]
     
+    func podsByDeployment(in ns: NamespaceSelector, deployment: String) -> [Pod] {
+        try! client.pods.list(in: ns,options: [.labelSelector(.eq(["app.kubernetes.io/name": deployment]))]).wait().items.map { Pod(id: $0.name!, name: $0.name!)}
+    }
+    
     fileprivate func workaroundChinaSpecialBug() {
         let url = URL(string: "https://www.baidu.com")!
         
@@ -61,6 +65,14 @@ struct Model {
     
     mutating func deployment(in ns: NamespaceSelector) throws {
         let deployments = try client.appsV1.deployments.list(in: ns).wait().items
+        let l = deployments.map {
+            $0.metadata?.labels
+        }
+        print("label: \(l)")
+        let n = deployments.map {
+            $0.name
+        }
+        print("name: \(n)")
         switch ns {
         case .namespace(let name):
             self.deployments[name] = deployments

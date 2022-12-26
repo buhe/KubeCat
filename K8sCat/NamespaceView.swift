@@ -56,23 +56,14 @@ struct NamespaceView: View {
                 Group {
                     switch tabIndex {
                     case 0:
-                        List {
-                            ForEach(viewModel.pods(in: .namespace(ns))) {
-                                i in
-                                NavigationLink {
-                                    Text(i.name)
-                                } label: {
-                                    Text(i.name)
-                                }
-                        
-                            }
-                        }.listStyle(PlainListStyle())
+                        PodsView(pods: viewModel.pods(in: .namespace(ns)))
                     case 1:
                         List {
                             ForEach(viewModel.deployment(in: .namespace(ns))) {
                                 i in
                                 NavigationLink {
-                                    Text(i.name)
+                                    let pods = viewModel.model.podsByDeployment(in: .namespace(ns), deployment: i.name)
+                                    PodsView(pods: pods)
                                 } label: {
                                     Text(i.name)
                                 }
