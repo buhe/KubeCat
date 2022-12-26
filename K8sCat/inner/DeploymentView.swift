@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+// deployment has child
 struct DeploymentView: View {
     let deployment: Deployment
     let viewModel: ViewModel
@@ -20,7 +20,7 @@ struct DeploymentView: View {
             }
             Section(header: "Pods") {
                 List {
-                    ForEach(viewModel.model.podsByDeployment(in: .namespace(viewModel.ns), deployment: deployment.name)) {
+                    ForEach(viewModel.model.podsByDeployment(in: .namespace(viewModel.ns), deployment: deployment.k8sName)) {
                         i in
                         NavigationLink {
                             PodView(pod: i)
@@ -61,6 +61,6 @@ struct DeploymentView: View {
 
 struct DeploymentView_Previews: PreviewProvider {
     static var previews: some View {
-        DeploymentView(deployment:  Deployment(id: "123", name: "123"), viewModel: ViewModel())
+        DeploymentView(deployment:  Deployment(id: "123", name: "123", k8sName: "123"), viewModel: ViewModel())
     }
 }

@@ -33,7 +33,7 @@ class ViewModel: ObservableObject {
             if model.deployments[name] == nil {
                 try! model.deployment(in: ns)
             }
-            return model.deployments[name]!.map {Deployment(id: $0.name!, name: $0.name!)}
+            return model.deployments[name]!.map {Deployment(id: $0.name!, name: $0.name!, k8sName: ($0.metadata?.labels!["app.kubernetes.io/name"]!)!)}
         default: return []
         }
     }
@@ -66,7 +66,7 @@ class ViewModel: ObservableObject {
             if model.statefulls[name] == nil {
                 try! model.statefull(in: ns)
             }
-            return model.statefulls[name]!.map {Statefull(id: $0.name!, name: $0.name!)}
+            return model.statefulls[name]!.map {Statefull(id: $0.name!, name: $0.name!, k8sName: ($0.metadata?.labels!["app.kubernetes.io/name"]!)!)}
         default: return []
         }
     }
@@ -77,7 +77,7 @@ class ViewModel: ObservableObject {
             if model.services[name] == nil {
                 try! model.service(in: ns)
             }
-            return model.services[name]!.map {Service(id: $0.name!, name: $0.name!)}
+            return model.services[name]!.map {Service(id: $0.name!, name: $0.name!, k8sName: ($0.metadata?.labels!["app.kubernetes.io/name"]!)!)}
         default: return []
         }
     }
@@ -161,6 +161,7 @@ struct Container: Identifiable {
 struct Deployment: Identifiable {
     var id: String
     var name: String
+    let k8sName: String
 }
 
 struct Job: Identifiable {
@@ -176,11 +177,13 @@ struct CronJob: Identifiable {
 struct Statefull: Identifiable {
     var id: String
     var name: String
+    let k8sName: String
 }
 
 struct Service: Identifiable {
     var id: String
     var name: String
+    let k8sName: String
 }
 
 struct ConfigMap: Identifiable {
