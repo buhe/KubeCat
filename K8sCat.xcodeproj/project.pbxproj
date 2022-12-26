@@ -19,6 +19,15 @@
 		3F19F8D22952B00C005C0558 /* Identifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F19F8D12952B00C005C0558 /* Identifier.swift */; };
 		3F2BE3E929595A040002DEEC /* PodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2BE3E829595A040002DEEC /* PodView.swift */; };
 		3F2BE3EB29595A320002DEEC /* DeploymentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2BE3EA29595A320002DEEC /* DeploymentView.swift */; };
+		3F2BE3ED295996940002DEEC /* JobView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2BE3EC295996940002DEEC /* JobView.swift */; };
+		3F2BE3EF295996BA0002DEEC /* CronJobView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2BE3EE295996BA0002DEEC /* CronJobView.swift */; };
+		3F2BE3F1295996E20002DEEC /* StatefulView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2BE3F0295996E20002DEEC /* StatefulView.swift */; };
+		3F2BE3F3295997050002DEEC /* ServiceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2BE3F2295997050002DEEC /* ServiceView.swift */; };
+		3F2BE3F52959972B0002DEEC /* ConfigMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2BE3F42959972B0002DEEC /* ConfigMapView.swift */; };
+		3F2BE3F72959974A0002DEEC /* SecretView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2BE3F62959974A0002DEEC /* SecretView.swift */; };
+		3F2BE3F92959976A0002DEEC /* DaemonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2BE3F82959976A0002DEEC /* DaemonView.swift */; };
+		3F2BE3FB295997940002DEEC /* ReplicaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2BE3FA295997940002DEEC /* ReplicaView.swift */; };
+		3F2BE3FD295997B80002DEEC /* ReplicationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2BE3FC295997B80002DEEC /* ReplicationView.swift */; };
 		3FFCCF8D294DFF6000FE6710 /* K8sCatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FFCCF8C294DFF6000FE6710 /* K8sCatApp.swift */; };
 		3FFCCF8F294DFF6000FE6710 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FFCCF8E294DFF6000FE6710 /* ContentView.swift */; };
 		3FFCCF91294DFF6100FE6710 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3FFCCF90294DFF6100FE6710 /* Assets.xcassets */; };
@@ -56,6 +65,15 @@
 		3F19F8D12952B00C005C0558 /* Identifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Identifier.swift; sourceTree = "<group>"; };
 		3F2BE3E829595A040002DEEC /* PodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodView.swift; sourceTree = "<group>"; };
 		3F2BE3EA29595A320002DEEC /* DeploymentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeploymentView.swift; sourceTree = "<group>"; };
+		3F2BE3EC295996940002DEEC /* JobView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobView.swift; sourceTree = "<group>"; };
+		3F2BE3EE295996BA0002DEEC /* CronJobView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CronJobView.swift; sourceTree = "<group>"; };
+		3F2BE3F0295996E20002DEEC /* StatefulView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatefulView.swift; sourceTree = "<group>"; };
+		3F2BE3F2295997050002DEEC /* ServiceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceView.swift; sourceTree = "<group>"; };
+		3F2BE3F42959972B0002DEEC /* ConfigMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigMapView.swift; sourceTree = "<group>"; };
+		3F2BE3F62959974A0002DEEC /* SecretView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecretView.swift; sourceTree = "<group>"; };
+		3F2BE3F82959976A0002DEEC /* DaemonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaemonView.swift; sourceTree = "<group>"; };
+		3F2BE3FA295997940002DEEC /* ReplicaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplicaView.swift; sourceTree = "<group>"; };
+		3F2BE3FC295997B80002DEEC /* ReplicationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplicationView.swift; sourceTree = "<group>"; };
 		3FFCCF89294DFF6000FE6710 /* K8sCat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = K8sCat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FFCCF8C294DFF6000FE6710 /* K8sCatApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = K8sCatApp.swift; sourceTree = "<group>"; };
 		3FFCCF8E294DFF6000FE6710 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -109,6 +127,15 @@
 			children = (
 				3F2BE3E829595A040002DEEC /* PodView.swift */,
 				3F2BE3EA29595A320002DEEC /* DeploymentView.swift */,
+				3F2BE3EC295996940002DEEC /* JobView.swift */,
+				3F2BE3EE295996BA0002DEEC /* CronJobView.swift */,
+				3F2BE3F0295996E20002DEEC /* StatefulView.swift */,
+				3F2BE3F2295997050002DEEC /* ServiceView.swift */,
+				3F2BE3F42959972B0002DEEC /* ConfigMapView.swift */,
+				3F2BE3F62959974A0002DEEC /* SecretView.swift */,
+				3F2BE3F82959976A0002DEEC /* DaemonView.swift */,
+				3F2BE3FA295997940002DEEC /* ReplicaView.swift */,
+				3F2BE3FC295997B80002DEEC /* ReplicationView.swift */,
 			);
 			path = inner;
 			sourceTree = "<group>";
@@ -317,14 +344,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3F2BE3F72959974A0002DEEC /* SecretView.swift in Sources */,
+				3F2BE3ED295996940002DEEC /* JobView.swift in Sources */,
 				3FFCCF8F294DFF6000FE6710 /* ContentView.swift in Sources */,
 				3F19F8D02952AF1B005C0558 /* ViewModel.swift in Sources */,
+				3F2BE3F52959972B0002DEEC /* ConfigMapView.swift in Sources */,
 				3F19F8C32951A63A005C0558 /* SettingView.swift in Sources */,
+				3F2BE3FD295997B80002DEEC /* ReplicationView.swift in Sources */,
 				3F2BE3EB29595A320002DEEC /* DeploymentView.swift in Sources */,
+				3F2BE3F92959976A0002DEEC /* DaemonView.swift in Sources */,
 				3FFCCF8D294DFF6000FE6710 /* K8sCatApp.swift in Sources */,
+				3F2BE3EF295996BA0002DEEC /* CronJobView.swift in Sources */,
+				3F2BE3F1295996E20002DEEC /* StatefulView.swift in Sources */,
+				3F2BE3F3295997050002DEEC /* ServiceView.swift in Sources */,
 				3F19F8C12951A617005C0558 /* NamespaceView.swift in Sources */,
 				3F19F8BF2951A5DC005C0558 /* GlobalView.swift in Sources */,
 				3F2BE3E929595A040002DEEC /* PodView.swift in Sources */,
+				3F2BE3FB295997940002DEEC /* ReplicaView.swift in Sources */,
 				3F19F8D22952B00C005C0558 /* Identifier.swift in Sources */,
 				3F19F8CC2951E010005C0558 /* Ex.swift in Sources */,
 				3F19F8CA2951DE88005C0558 /* TabBarButton.swift in Sources */,
