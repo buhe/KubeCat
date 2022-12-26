@@ -47,8 +47,8 @@ struct CustomTopTabBar: View {
                         .onTapGesture { onButtonTapped(index: 8) }
                     TabBarButton(text: "Replica Sets", isSelected: .constant(tabIndex == 9))
                         .onTapGesture { onButtonTapped(index: 9) }
-                    TabBarButton(text: "Replication Controllers", isSelected: .constant(tabIndex == 10))
-                        .onTapGesture { onButtonTapped(index: 10) }
+//                    TabBarButton(text: "Replication Controllers", isSelected: .constant(tabIndex == 10))
+//                        .onTapGesture { onButtonTapped(index: 10) }
                 }
               
             }

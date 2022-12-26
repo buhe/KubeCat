@@ -18,7 +18,7 @@ class ViewModel: ObservableObject {
             if model.pods[name] == nil {
                 try! model.pod(in: ns)
             }
-            return model.pods[name]!.map {Pod(id: $0.name!, name: $0.name!, expect: $0.spec?.containers.count ?? 0, pending: $0.status?.containerStatuses?.filter{$0.ready == false}.count ?? 0, fail: 0, containers: ($0.spec?.containers.map{Container(id: $0.name, name: $0.name, image: $0.image!)})!)}
+            return model.pods[name]!.map {Pod(id: $0.name!, name: $0.name!, k8sName: ($0.metadata?.labels!["app.kubernetes.io/name"]!)!, expect: $0.spec?.containers.count ?? 0, pending: $0.status?.containerStatuses?.filter{$0.ready == false}.count ?? 0, fail: 0, containers: ($0.spec?.containers.map{Container(id: $0.name, name: $0.name, image: $0.image!)})!)}
         default: return []
         }
         
@@ -121,21 +121,21 @@ class ViewModel: ObservableObject {
             if model.replicas[name] == nil {
                 try! model.replica(in: ns)
             }
-            return model.replicas[name]!.map {Replica(id: $0.name!, name: $0.name!)}
+            return model.replicas[name]!.map {Replica(id: $0.name!, name: $0.name!, k8sName: ($0.metadata?.labels!["app.kubernetes.io/name"]!)!)}
         default: return []
         }
     }
     
-    func replication(in ns: NamespaceSelector) -> [Replication] {
-        switch ns {
-        case .namespace(let name):
-            if model.replications[name] == nil {
-                try! model.replication(in: ns)
-            }
-            return model.replications[name]!.map {Replication(id: $0.name!, name: $0.name!)}
-        default: return []
-        }
-    }
+//    func replication(in ns: NamespaceSelector) -> [Replication] {
+//        switch ns {
+//        case .namespace(let name):
+//            if model.replications[name] == nil {
+//                try! model.replication(in: ns)
+//            }
+//            return model.replications[name]!.map {Replication(id: $0.name!, name: $0.name!)}
+//        default: return []
+//        }
+//    }
     
     func podsSelector(in ns: NamespaceSelector) throws {
         try model.pod(in: ns)
@@ -145,6 +145,7 @@ class ViewModel: ObservableObject {
 struct Pod: Identifiable {
     var id: String
     var name: String
+    let k8sName: String
     let expect: Int
     let pending: Int
     let fail: Int
@@ -200,9 +201,10 @@ struct Daemon: Identifiable {
 struct Replica: Identifiable {
     var id: String
     var name: String
+    var k8sName: String
 }
 
-struct Replication: Identifiable {
-    var id: String
-    var name: String
-}
+//struct Replication: Identifiable {
+//    var id: String
+//    var name: String
+//}

@@ -46,8 +46,8 @@ struct NamespaceView: View {
                         try! viewModel.model.daemon(in: .namespace(c))
                     case 9:
                         try! viewModel.model.replica(in: .namespace(c))
-                    case 10:
-                        try! viewModel.model.replication(in: .namespace(c))
+//                    case 10:
+//                        try! viewModel.model.replication(in: .namespace(c))
                     default: break
                     }
                     
@@ -176,25 +176,25 @@ struct NamespaceView: View {
                             ForEach(viewModel.replica(in: .namespace(ns))) {
                                 i in
                                 NavigationLink {
-                                    Text(i.name)
+                                    ReplicaView(replica: i, viewModel: viewModel)
                                 } label: {
                                     Text(i.name)
                                 }
                         
                             }
                         }.listStyle(PlainListStyle())
-                    case 10:
-                        List {
-                            ForEach(viewModel.replication(in: .namespace(ns))) {
-                                i in
-                                NavigationLink {
-                                    Text(i.name)
-                                } label: {
-                                    Text(i.name)
-                                }
-                        
-                            }
-                        }.listStyle(PlainListStyle())
+//                    case 10:
+//                        List {
+//                            ForEach(viewModel.replication(in: .namespace(ns))) {
+//                                i in
+//                                NavigationLink {
+//                                    Text(i.name)
+//                                } label: {
+//                                    Text(i.name)
+//                                }
+//
+//                            }
+//                        }.listStyle(PlainListStyle())
                     default:
                         EmptyView()
                     }

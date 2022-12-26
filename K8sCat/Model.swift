@@ -22,10 +22,14 @@ struct Model {
     var secrets: [String: [core.v1.Secret]] = ["": []]
     var daemons: [String: [apps.v1.DaemonSet]] = ["": []]
     var replicas: [String: [apps.v1.ReplicaSet]] = ["": []]
-    var replications: [String: [core.v1.ReplicationController]] = ["": []]
+//    var replications: [String: [core.v1.ReplicationController]] = ["": []]
     
     func podsByDeployment(in ns: NamespaceSelector, deployment: String) -> [Pod] {
-        try! client.pods.list(in: ns,options: [.labelSelector(.eq(["app.kubernetes.io/name": deployment]))]).wait().items.map { Pod(id: $0.name!, name: $0.name!, expect: $0.spec?.containers.count ?? 0, pending: 0, fail: 0, containers: ($0.spec?.containers.map{Container(id: $0.name, name: $0.name, image: $0.image!)})!)}
+        try! client.pods.list(in: ns,options: [.labelSelector(.eq(["app.kubernetes.io/name": deployment]))]).wait().items.map { Pod(id: $0.name!, name: $0.name!,k8sName: deployment, expect: $0.spec?.containers.count ?? 0, pending: 0, fail: 0, containers: ($0.spec?.containers.map{Container(id: $0.name, name: $0.name, image: $0.image!)})!)}
+    }
+    
+    func podsByReplica(in ns: NamespaceSelector, replica: String) -> [Pod] {
+        try! client.pods.list(in: ns,options: [.labelSelector(.eq(["app.kubernetes.io/name": replica]))]).wait().items.map { Pod(id: $0.name!, name: $0.name!, k8sName: replica, expect: $0.spec?.containers.count ?? 0, pending: 0, fail: 0, containers: ($0.spec?.containers.map{Container(id: $0.name, name: $0.name, image: $0.image!)})!)}
     }
     
     fileprivate func workaroundChinaSpecialBug() {
@@ -65,14 +69,14 @@ struct Model {
     
     mutating func deployment(in ns: NamespaceSelector) throws {
         let deployments = try client.appsV1.deployments.list(in: ns).wait().items
-        let l = deployments.map {
-            $0.metadata?.labels
-        }
-        print("label: \(l)")
-        let n = deployments.map {
-            $0.name
-        }
-        print("name: \(n)")
+//        let l = deployments.map {
+//            $0.metadata?.labels
+//        }
+//        print("label: \(l)")
+//        let n = deployments.map {
+//            $0.name
+//        }
+//        print("name: \(n)")
         switch ns {
         case .namespace(let name):
             self.deployments[name] = deployments
@@ -152,12 +156,12 @@ struct Model {
         }
     }
     
-    mutating func replication(in ns: NamespaceSelector) throws {
-        let replication = try client.replicationControllers.list(in: ns).wait().items
-        switch ns {
-        case .namespace(let name):
-            self.replications[name] = replication
-        default: break
-        }
-    }
+//    mutating func replication(in ns: NamespaceSelector) throws {
+//        let replication = try client.replicationControllers.list(in: ns).wait().items
+//        switch ns {
+//        case .namespace(let name):
+//            self.replications[name] = replication
+//        default: break
+//        }
+//    }
 }
