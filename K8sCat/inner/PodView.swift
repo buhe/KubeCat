@@ -22,7 +22,7 @@ struct PodView: View {
                     ForEach(pod.containers) {
                         c in VStack(alignment: .leading) {
                             Text(c.name)
-                            Text(c.image).font(.caption)
+                            CaptionText(text: c.image)
                         }
                         
                     }

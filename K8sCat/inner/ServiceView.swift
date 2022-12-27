@@ -28,8 +28,8 @@ struct ServiceView: View {
                             VStack(alignment: .leading) {
                                 Text(i.name).foregroundColor(.green)
                                 HStack{
-                                    Text("expect: \(i.expect), ")
-                                    Text("pendding: \(i.pending)").foregroundColor(i.pending > 0 ? .red : .black)
+                                    CaptionText(text: "expect: \(i.expect), ")
+                                    CaptionText(text: "pendding: \(i.pending)").foregroundColor(i.pending > 0 ? .red : .none)
                                 }
                                 
                             }
