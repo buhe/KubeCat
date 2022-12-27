@@ -36,7 +36,7 @@ class ViewModel: ObservableObject {
             if model.deployments[name] == nil {
                 try! model.deployment(in: ns)
             }
-            return model.deployments[name]!.map {Deployment(id: $0.name!, name: $0.name!, k8sName: $0.metadata?.labels!["app.kubernetes.io/name"] ?? "unknow", expect: Int($0.spec?.replicas ?? 0), pending: Int($0.status?.availableReplicas ?? 0))}
+            return model.deployments[name]!.map {Deployment(id: $0.name!, name: $0.name!, k8sName: $0.metadata?.labels!["app.kubernetes.io/name"] ?? "unknow", expect: Int($0.spec?.replicas ?? 0), pending: Int($0.status?.unavailableReplicas ?? 0))}
         default: return []
         }
     }
