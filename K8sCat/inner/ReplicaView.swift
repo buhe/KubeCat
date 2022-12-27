@@ -24,7 +24,7 @@ struct ReplicaView: View {
                     ForEach(viewModel.model.podsByReplica(in: .namespace(viewModel.ns), replica: replica.k8sName)) {
                         i in
                         NavigationLink {
-                            PodView(pod: i)
+                            PodView(pod: i, viewModel: viewModel)
                         } label: {
                             VStack(alignment: .leading) {
                                 Text(i.name).foregroundColor(.green)

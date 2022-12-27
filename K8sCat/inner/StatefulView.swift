@@ -23,7 +23,7 @@ struct StatefulView: View {
                     ForEach(viewModel.model.podsByStateful(in: .namespace(viewModel.ns), stateful: stateful.k8sName)) {
                         i in
                         NavigationLink {
-                            PodView(pod: i)
+                            PodView(pod: i, viewModel: viewModel)
                         } label: {
                             VStack(alignment: .leading) {
                                 Text(i.name).foregroundColor(.green)

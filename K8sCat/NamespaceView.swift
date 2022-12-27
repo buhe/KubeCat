@@ -61,7 +61,7 @@ struct NamespaceView: View {
                             ForEach(viewModel.pods(in: .namespace(ns))) {
                                 i in
                                 NavigationLink {
-                                    PodView(pod: i)
+                                    PodView(pod: i, viewModel: viewModel)
                                 } label: {
                                     VStack(alignment: .leading) {
                                         switch i.status {

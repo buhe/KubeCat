@@ -9,6 +9,7 @@ import SwiftUI
 
 struct PodView: View {
     let pod: Pod
+    let viewModel: ViewModel
     var body: some View {
         Form {
             Section(header: "Name") {
@@ -22,7 +23,7 @@ struct PodView: View {
                     ForEach(pod.containers) {
                         c in
                         NavigationLink {
-                            ContainerView()
+                            ContainerView(pod: pod, container: c, viewModel: viewModel)
                         } label: {
                             VStack(alignment: .leading) {
                                 Text(c.name)
@@ -58,6 +59,6 @@ struct PodView: View {
 
 struct PodView_Previews: PreviewProvider {
     static var previews: some View {
-        PodView(pod: Pod(id: "123", name: "123", k8sName: "123", status: "fail", expect: 8, pending: 7, containers: [Container(id: "abc", name: "abclong....", image: "hello"), Container(id: "ef", name: "ef", image: "kkk")]))
+        PodView(pod: Pod(id: "123", name: "123", k8sName: "123", status: "fail", expect: 8, pending: 7, containers: [Container(id: "abc", name: "abclong....", image: "hello"), Container(id: "ef", name: "ef", image: "kkk")]), viewModel: ViewModel())
     }
 }

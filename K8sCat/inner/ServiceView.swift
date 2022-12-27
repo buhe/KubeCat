@@ -23,7 +23,7 @@ struct ServiceView: View {
                     ForEach(viewModel.model.podsByService(in: .namespace(viewModel.ns), service: service.k8sName)) {
                         i in
                         NavigationLink {
-                            PodView(pod: i)
+                            PodView(pod: i, viewModel: viewModel)
                         } label: {
                             VStack(alignment: .leading) {
                                 Text(i.name).foregroundColor(.green)

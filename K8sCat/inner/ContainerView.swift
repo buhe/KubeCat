@@ -6,8 +6,30 @@
 //
 
 import SwiftUI
+import SwiftkubeClient
+import SwiftkubeModel
 
 struct ContainerView: View {
+    let pod: Pod
+    let container: Container
+    let viewModel: ViewModel
+    
+    @State var logTask: SwiftkubeClientTask?
+    
+    @State var showLogs = false
+    @State var logsLines: [String] = []
+    
+    var delegate: LogWatcherDelegate {
+        LogWatcherCallback(onNext: {
+            line in
+            logsLines.append(line)
+        })
+    }
+    
+    func logs() -> SwiftkubeClientTask {
+        try! viewModel.model.logs(in: .namespace(viewModel.ns), pod: pod, container: container, delegate: delegate)
+    }
+    
     var body: some View {
         Form {
             
@@ -19,16 +41,27 @@ struct ContainerView: View {
             }
             
             Button {
-                
+                showLogs = true
+                logTask = logs()
             } label: {
                 Label("log", systemImage: "doc.text.magnifyingglass")
             }
+        }.sheet(isPresented: $showLogs, onDismiss: {
+            logTask?.cancel()
+        }) {
+            List {
+                ForEach(logsLines, id: \.self) {
+                    l in
+                    Text(l)
+                }
+            }
         }
+        
     }
 }
 
-struct ContainerView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContainerView()
-    }
-}
+//struct ContainerView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ContainerView()
+//    }
+//}

@@ -23,7 +23,7 @@ struct DeploymentView: View {
                     ForEach(viewModel.model.podsByDeployment(in: .namespace(viewModel.ns), deployment: deployment.k8sName)) {
                         i in
                         NavigationLink {
-                            PodView(pod: i)
+                            PodView(pod: i, viewModel: viewModel)
                         } label: {
                             VStack(alignment: .leading) {
                                 Text(i.name).foregroundColor(.green)

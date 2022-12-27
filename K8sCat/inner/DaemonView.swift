@@ -23,7 +23,7 @@ struct DaemonView: View {
                     ForEach(viewModel.model.podsByDaemon(in: .namespace(viewModel.ns), daemon: daemon.k8sName)) {
                         i in
                         NavigationLink {
-                            PodView(pod: i)
+                            PodView(pod: i, viewModel: viewModel)
                         } label: {
                             VStack(alignment: .leading) {
                                 Text(i.name).foregroundColor(.green)
