@@ -64,10 +64,13 @@ struct NamespaceView: View {
                                     PodView(pod: i)
                                 } label: {
                                     VStack(alignment: .leading) {
-                                        Text(i.name).foregroundColor(.green)
+                                        switch i.status {
+                                        case "Running", "Succeeded": Text(i.name).foregroundColor(.green)
+                                        default: Text(i.name).foregroundColor(.red)
+                                        }
                                         HStack{
-                                            Text("expect: \(i.expect), ")
-                                            Text("pendding: \(i.pending)").foregroundColor(i.pending > 0 ? .red : .black)
+                                            Text("expect: \(i.expect), ").font(.caption)
+                                            Text("pendding: \(i.pending)").font(.caption).foregroundColor(i.pending > 0 ? .red : .none)
                                         }
                                         
                                     }

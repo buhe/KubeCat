@@ -15,7 +15,7 @@ struct PodView: View {
                 Text(pod.name)
             }
             Section(header: "Status") {
-                
+                Text(pod.status)
             }
             Section(header: "Containers") {
                 List {
@@ -52,6 +52,6 @@ struct PodView: View {
 
 struct PodView_Previews: PreviewProvider {
     static var previews: some View {
-        PodView(pod: Pod(id: "123", name: "123", k8sName: "123", expect: 8, pending: 7, fail: 6, containers: [Container(id: "abc", name: "abclong....", image: "hello"), Container(id: "ef", name: "ef", image: "kkk")]))
+        PodView(pod: Pod(id: "123", name: "123", k8sName: "123", status: "fail", expect: 8, pending: 7, fail: 6, containers: [Container(id: "abc", name: "abclong....", image: "hello"), Container(id: "ef", name: "ef", image: "kkk")]))
     }
 }
