@@ -85,7 +85,14 @@ struct NamespaceView: View {
                                 NavigationLink {
                                     DeploymentView(deployment: i, viewModel: viewModel)
                                 } label: {
-                                    Text(i.name)
+                                    VStack(alignment: .leading) {
+                                        Text(i.name)
+                                        HStack{
+                                            Text("expect: \(i.expect), ").font(.caption)
+                                            Text("pendding: \(i.pending)").font(.caption).foregroundColor(i.pending > 0 ? .red : .none)
+                                        }
+                                        
+                                    }
                                 }
                         
                             }

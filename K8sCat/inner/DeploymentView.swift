@@ -61,6 +61,6 @@ struct DeploymentView: View {
 
 struct DeploymentView_Previews: PreviewProvider {
     static var previews: some View {
-        DeploymentView(deployment:  Deployment(id: "123", name: "123", k8sName: "123"), viewModel: ViewModel())
+        DeploymentView(deployment:  Deployment(id: "123", name: "123", k8sName: "123", expect: 1, pending: 0), viewModel: ViewModel())
     }
 }
