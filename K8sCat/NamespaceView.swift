@@ -85,6 +85,7 @@ struct NamespaceView: View {
                                 NavigationLink {
                                     DeploymentView(deployment: i, viewModel: viewModel)
                                 } label: {
+                                    Image(systemName: "ipad.landscape.badge.play")
                                     VStack(alignment: .leading) {
                                         Text(i.name)
                                         HStack{
@@ -128,6 +129,7 @@ struct NamespaceView: View {
                                 NavigationLink {
                                     StatefulView(stateful: i, viewModel: viewModel)
                                 } label: {
+                                    Image(systemName: "macpro.gen2.fill")
                                     Text(i.name)
                                 }
                         
@@ -176,6 +178,7 @@ struct NamespaceView: View {
                                 NavigationLink {
                                     DaemonView(daemon: i, viewModel: viewModel)
                                 } label: {
+                                    Image(systemName: "xserve")
                                     Text(i.name)
                                 }
                         

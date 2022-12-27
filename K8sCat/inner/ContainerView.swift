@@ -9,7 +9,21 @@ import SwiftUI
 
 struct ContainerView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Form {
+            
+        }.toolbar {
+            Button {
+                
+            } label: {
+                Label("shell", systemImage: "terminal")
+            }
+            
+            Button {
+                
+            } label: {
+                Label("log", systemImage: "doc.text.magnifyingglass")
+            }
+        }
     }
 }
 

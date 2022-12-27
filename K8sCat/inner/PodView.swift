@@ -20,10 +20,16 @@ struct PodView: View {
             Section(header: "Containers") {
                 List {
                     ForEach(pod.containers) {
-                        c in VStack(alignment: .leading) {
-                            Text(c.name)
-                            CaptionText(text: c.image)
+                        c in
+                        NavigationLink {
+                            ContainerView()
+                        } label: {
+                            VStack(alignment: .leading) {
+                                Text(c.name)
+                                CaptionText(text: c.image)
+                            }
                         }
+                        
                         
                     }
                 }
