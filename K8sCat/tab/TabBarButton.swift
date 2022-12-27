@@ -19,7 +19,7 @@ struct TabBarButton: View {
     }
 }
 
-struct CustomTopTabBar: View {
+struct NamespacesTabBar: View {
     @Binding var tabIndex: Int
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
@@ -51,6 +51,25 @@ struct CustomTopTabBar: View {
 //                        .onTapGesture { onButtonTapped(index: 10) }
                 }
               
+            }
+        }
+        .border(width: 1, edges: [.bottom], color: .black)
+    }
+    
+    private func onButtonTapped(index: Int) {
+        withAnimation { tabIndex = index }
+    }
+}
+
+struct GlobalTabBar: View {
+    @Binding var tabIndex: Int
+    var body: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 20) {
+                TabBarButton(text: "Nodes", isSelected: .constant(tabIndex == 0))
+                    .onTapGesture { onButtonTapped(index: 0) }
+                TabBarButton(text: "Persistent Volumes", isSelected: .constant(tabIndex == 1))
+                    .onTapGesture { onButtonTapped(index: 1) }
             }
         }
         .border(width: 1, edges: [.bottom], color: .black)

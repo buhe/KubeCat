@@ -28,6 +28,7 @@
 		3F2BE3F92959976A0002DEEC /* DaemonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2BE3F82959976A0002DEEC /* DaemonView.swift */; };
 		3F2BE3FB295997940002DEEC /* ReplicaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2BE3FA295997940002DEEC /* ReplicaView.swift */; };
 		3F2BE3FF2959BF750002DEEC /* ContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2BE3FE2959BF750002DEEC /* ContainerView.swift */; };
+		3F2BE401295AA0AD0002DEEC /* NodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2BE400295AA0AD0002DEEC /* NodeView.swift */; };
 		3FFCCF8D294DFF6000FE6710 /* K8sCatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FFCCF8C294DFF6000FE6710 /* K8sCatApp.swift */; };
 		3FFCCF8F294DFF6000FE6710 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FFCCF8E294DFF6000FE6710 /* ContentView.swift */; };
 		3FFCCF91294DFF6100FE6710 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3FFCCF90294DFF6100FE6710 /* Assets.xcassets */; };
@@ -74,6 +75,7 @@
 		3F2BE3F82959976A0002DEEC /* DaemonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaemonView.swift; sourceTree = "<group>"; };
 		3F2BE3FA295997940002DEEC /* ReplicaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplicaView.swift; sourceTree = "<group>"; };
 		3F2BE3FE2959BF750002DEEC /* ContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerView.swift; sourceTree = "<group>"; };
+		3F2BE400295AA0AD0002DEEC /* NodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeView.swift; sourceTree = "<group>"; };
 		3FFCCF89294DFF6000FE6710 /* K8sCat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = K8sCat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FFCCF8C294DFF6000FE6710 /* K8sCatApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = K8sCatApp.swift; sourceTree = "<group>"; };
 		3FFCCF8E294DFF6000FE6710 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -136,6 +138,7 @@
 				3F2BE3F82959976A0002DEEC /* DaemonView.swift */,
 				3F2BE3FA295997940002DEEC /* ReplicaView.swift */,
 				3F2BE3FE2959BF750002DEEC /* ContainerView.swift */,
+				3F2BE400295AA0AD0002DEEC /* NodeView.swift */,
 			);
 			path = inner;
 			sourceTree = "<group>";
@@ -352,6 +355,7 @@
 				3F2BE3FF2959BF750002DEEC /* ContainerView.swift in Sources */,
 				3F19F8C32951A63A005C0558 /* SettingView.swift in Sources */,
 				3F2BE3EB29595A320002DEEC /* DeploymentView.swift in Sources */,
+				3F2BE401295AA0AD0002DEEC /* NodeView.swift in Sources */,
 				3F2BE3F92959976A0002DEEC /* DaemonView.swift in Sources */,
 				3FFCCF8D294DFF6000FE6710 /* K8sCatApp.swift in Sources */,
 				3F2BE3EF295996BA0002DEEC /* CronJobView.swift in Sources */,

@@ -53,7 +53,7 @@ struct NamespaceView: View {
                     
                 }
                 SearchBar(text: $search).padding(.horizontal)
-                CustomTopTabBar(tabIndex: $tabIndex).padding(.horizontal, 12)
+                NamespacesTabBar(tabIndex: $tabIndex).padding(.horizontal, 12)
                 Group {
                     switch tabIndex {
                     case 0:

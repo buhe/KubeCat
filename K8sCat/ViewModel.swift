@@ -24,6 +24,9 @@ class ViewModel: ObservableObject {
         
     }
     
+    var nodes: [Node] {
+        model.nodes.map { Node(id: $0.name!, name: $0.name!, hostName: ($0.metadata?.labels!["kubernetes.io/hostname"]!)!, arch: ($0.metadata?.labels!["kubernetes.io/arch"]!)!, os: ($0.metadata?.labels!["kubernetes.io/os"]!)!) }
+    }
     var namespaces: [String] {
         model.namespaces.map { $0.name! }
     }
@@ -216,3 +219,12 @@ struct Replica: Identifiable {
 //    var id: String
 //    var name: String
 //}
+struct Node: Identifiable {
+    var id: String
+    var name: String
+    var hostName: String
+    var arch: String
+    var os: String
+//    var version: String
+//    var age: String
+}

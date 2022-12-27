@@ -15,7 +15,7 @@ struct ContentView: View {
                 Label("Namespaces", systemImage: "aqi.medium")
             }
             
-            GlobalView().tabItem {
+            GlobalView(viewModel: viewModel).tabItem {
                 Label("Global", systemImage: "globe")
             }
             

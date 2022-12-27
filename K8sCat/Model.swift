@@ -11,6 +11,8 @@ import SwiftkubeModel
 
 struct Model {
     let client: KubernetesClient
+    
+    var nodes: [core.v1.Node] = []
     var namespaces: [core.v1.Namespace] = []
     var pods: [String: [core.v1.Pod]] = ["": []]
     var deployments: [String: [apps.v1.Deployment]] = ["": []]
@@ -61,6 +63,7 @@ struct Model {
         
         try? namespace()
         try? pod(in: .default)
+        try? node()
         
     }
     
@@ -68,6 +71,10 @@ struct Model {
         let namespaces = try client.namespaces.list().wait().items
 //        print("ns is \(namespaces)")
         self.namespaces = namespaces
+    }
+    
+    mutating func node() throws {
+        self.nodes = try client.nodes.list().wait().items
     }
     
     mutating func pod(in ns: NamespaceSelector) throws {
