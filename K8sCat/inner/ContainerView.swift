@@ -17,6 +17,7 @@ struct ContainerView: View {
     @State var logTask: SwiftkubeClientTask?
     
     @State var showLogs = false
+    @State var showShell = false
     @State var logsLines: [String] = []
     
     var delegate: LogWatcherDelegate {
@@ -35,7 +36,7 @@ struct ContainerView: View {
             
         }.toolbar {
             Button {
-                
+                showShell = true
             } label: {
                 Label("shell", systemImage: "terminal")
             }
@@ -55,8 +56,9 @@ struct ContainerView: View {
                     Text(l)
                 }
             }
+        }.sheet(isPresented: $showShell) {
+            WebView(pod: pod, container: container).padding()
         }
-        
     }
 }
 

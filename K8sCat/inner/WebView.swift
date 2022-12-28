@@ -10,7 +10,8 @@ import WebKit
 
 struct WebView: UIViewRepresentable {
     @Environment(\.colorScheme) private var colorScheme
-    var string: String
+    let pod: Pod
+    let container: Container
 
     func makeUIView(context: Context) -> WKWebView {
         return WKWebView()
@@ -21,7 +22,7 @@ struct WebView: UIViewRepresentable {
         let baseUrl = Bundle.main.url(forResource: "index", withExtension: "html")!
 //        print(baseUrl)
         var component = URLComponents(url: baseUrl, resolvingAgainstBaseURL: false)
-        component?.queryItems = [URLQueryItem(name: "items", value: string), URLQueryItem(name: "theme", value: colorScheme == .dark ? "dark" : "light")]
+        component?.queryItems = [URLQueryItem(name: "theme", value: colorScheme == .dark ? "dark" : "light")]
         
         if let url = component?.url {
 //            print(url)
