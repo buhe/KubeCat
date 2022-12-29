@@ -62,7 +62,12 @@ class ViewModel: ObservableObject {
             if model.jobs[name] == nil {
                 try! model.job(in: ns)
             }
-            return model.jobs[name]!.map {Job(id: $0.name!, name: $0.name!)}
+            return model.jobs[name]!.map {Job(id: $0.name!, name: $0.name!,
+                                              k8sName: $0.metadata!.labels!["job-name"] ?? "unknow"
+                                              , labels: $0.metadata?.labels
+                                              , annotations: $0.metadata?.annotations
+                                              , namespace: ($0.metadata?.namespace)!
+            )}
         default: return []
         }
     }
@@ -73,7 +78,13 @@ class ViewModel: ObservableObject {
             if model.cronJobs[name] == nil {
                 try! model.cronJob(in: ns)
             }
-            return model.cronJobs[name]!.map {CronJob(id: $0.name!, name: $0.name!)}
+            return model.cronJobs[name]!.map {CronJob(id: $0.name!, name: $0.name!,
+                                                      k8sName: $0.metadata?.labels?["job-name"] ?? "unknow"
+                                                      , labels: $0.metadata?.labels
+                                                      , annotations: $0.metadata?.annotations
+                                                      , namespace: ($0.metadata?.namespace)!
+                                                      , schedule: $0.spec!.schedule
+            )}
         default: return []
         }
     }
@@ -222,11 +233,20 @@ struct Deployment: Identifiable {
 struct Job: Identifiable {
     var id: String
     var name: String
+    let k8sName: String
+    let labels: [String: String]?
+    let annotations: [String: String]?
+    let namespace: String
 }
 
 struct CronJob: Identifiable {
     var id: String
     var name: String
+    let k8sName: String
+    let labels: [String: String]?
+    let annotations: [String: String]?
+    let namespace: String
+    let schedule: String
 }
 
 struct Stateful: Identifiable {

@@ -31,6 +31,16 @@ struct Model {
         
     }
     
+    func podsByJob(in ns: NamespaceSelector, job: String) -> [Pod] {
+        try! client.pods.list(in: ns,options: [.labelSelector(.eq(["job-name": job]))]).wait().items.map { Pod(id: $0.name!, name: $0.name!,k8sName: job, status: ($0.status?.phase)!, expect: $0.spec?.containers.count ?? 0, pending: 0, containers: ($0.spec?.containers.map{Container(id: $0.name, name: $0.name, image: $0.image!)})!, clusterIP: ($0.status?.podIP)!, nodeIP: ($0.status?.hostIP)!, labels: $0.metadata?.labels
+                                                                                                                                    , annotations: $0.metadata?.annotations, namespace: ($0.metadata?.namespace)!)}
+    }
+    
+    func podsByCronJob(in ns: NamespaceSelector, cronJob: String) -> [Pod] {
+        try! client.pods.list(in: ns,options: [.labelSelector(.eq(["job-name": cronJob]))]).wait().items.map { Pod(id: $0.name!, name: $0.name!,k8sName: cronJob, status: ($0.status?.phase)!, expect: $0.spec?.containers.count ?? 0, pending: 0, containers: ($0.spec?.containers.map{Container(id: $0.name, name: $0.name, image: $0.image!)})!, clusterIP: ($0.status?.podIP)!, nodeIP: ($0.status?.hostIP)!, labels: $0.metadata?.labels
+                                                                                                                                    , annotations: $0.metadata?.annotations, namespace: ($0.metadata?.namespace)!)}
+    }
+    
     func podsByDeployment(in ns: NamespaceSelector, deployment: String) -> [Pod] {
         try! client.pods.list(in: ns,options: [.labelSelector(.eq(["app.kubernetes.io/name": deployment]))]).wait().items.map { Pod(id: $0.name!, name: $0.name!,k8sName: deployment, status: ($0.status?.phase)!, expect: $0.spec?.containers.count ?? 0, pending: 0, containers: ($0.spec?.containers.map{Container(id: $0.name, name: $0.name, image: $0.image!)})!, clusterIP: ($0.status?.podIP)!, nodeIP: ($0.status?.hostIP)!, labels: $0.metadata?.labels
                                                                                                                                     , annotations: $0.metadata?.annotations, namespace: ($0.metadata?.namespace)!)}

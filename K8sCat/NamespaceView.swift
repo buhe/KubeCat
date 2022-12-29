@@ -103,7 +103,7 @@ struct NamespaceView: View {
                             ForEach(viewModel.job(in: .namespace(ns))) {
                                 i in
                                 NavigationLink {
-                                    Text(i.name)
+                                    JobView(job: i, viewModel: viewModel)
                                 } label: {
                                     Text(i.name)
                                 }
@@ -115,7 +115,7 @@ struct NamespaceView: View {
                             ForEach(viewModel.cronJob(in: .namespace(ns))) {
                                 i in
                                 NavigationLink {
-                                    Text(i.name)
+                                    CronJobView(cronJob: i, viewModel: viewModel)
                                 } label: {
                                     Text(i.name)
                                 }
