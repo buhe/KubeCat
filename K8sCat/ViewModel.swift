@@ -21,6 +21,7 @@ class ViewModel: ObservableObject {
                                               , clusterIP: ($0.status?.podIP)!, nodeIP: ($0.status?.hostIP)!
                                               , labels: $0.metadata?.labels
                                               , annotations: $0.metadata?.annotations
+                                              , namespace: ($0.metadata?.namespace)!
             )}
         default: return []
         }
@@ -160,6 +161,7 @@ struct Pod: Identifiable {
     let nodeIP: String
     let labels: [String: String]?
     let annotations: [String: String]?
+    let namespace: String
 }
 
 struct Container: Identifiable {

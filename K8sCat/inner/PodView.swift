@@ -81,7 +81,7 @@ struct PodView: View {
                 HStack{
                     Text("Namespace")
                     Spacer()
-                    Text("monitoring")
+                    Text(pod.namespace)
                 }
                 
             }
@@ -91,6 +91,6 @@ struct PodView: View {
 
 struct PodView_Previews: PreviewProvider {
     static var previews: some View {
-        PodView(pod: Pod(id: "123", name: "123", k8sName: "123", status: "fail", expect: 8, pending: 7, containers: [Container(id: "abc", name: "abclong....", image: "hello"), Container(id: "ef", name: "ef", image: "kkk")],clusterIP: "10.0.0.3", nodeIP: "192.168.1.3", labels: ["l1":"l1v"],annotations: ["a1":"a1v"]), viewModel: ViewModel())
+        PodView(pod: Pod(id: "123", name: "123", k8sName: "123", status: "fail", expect: 8, pending: 7, containers: [Container(id: "abc", name: "abclong....", image: "hello"), Container(id: "ef", name: "ef", image: "kkk")],clusterIP: "10.0.0.3", nodeIP: "192.168.1.3", labels: ["l1":"l1v"],annotations: ["a1":"a1v"],namespace: "default"), viewModel: ViewModel())
     }
 }
