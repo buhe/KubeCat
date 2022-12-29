@@ -19,6 +19,8 @@ class ViewModel: ObservableObject {
             }
             return model.pods[name]!.map {Pod(id: $0.name!, name: $0.name!, k8sName: $0.metadata?.labels!["app.kubernetes.io/name"] ?? "unknow", status: ($0.status?.phase)!, expect: $0.spec?.containers.count ?? 0, pending: $0.status?.containerStatuses?.filter{$0.ready == false}.count ?? 0, containers: ($0.spec?.containers.map{Container(id: $0.name, name: $0.name, image: $0.image!)})!
                                               , clusterIP: ($0.status?.podIP)!, nodeIP: ($0.status?.hostIP)!
+                                              , labels: $0.metadata?.labels
+                                              , annotations: $0.metadata?.annotations
             )}
         default: return []
         }
@@ -156,7 +158,8 @@ struct Pod: Identifiable {
     let containers: [Container]
     let clusterIP: String
     let nodeIP: String
-    
+    let labels: [String: String]?
+    let annotations: [String: String]?
 }
 
 struct Container: Identifiable {

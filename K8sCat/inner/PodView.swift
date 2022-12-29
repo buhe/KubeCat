@@ -36,7 +36,34 @@ struct PodView: View {
                 }
             }
             Section(header: "Labels and Annotations") {
-                
+                NavigationLink {
+                    List {
+                        ForEach((pod.labels ?? [:]).sorted(by: >), id: \.key) {
+                            key, value in
+                            VStack(alignment: .leading) {
+                                Text(key)
+                                
+                                CaptionText(text: value)
+                            }
+                        }
+                    }
+                    
+                } label: {
+                    Text("Labels")
+                }
+                NavigationLink {
+                    List {
+                        ForEach((pod.annotations ?? [:]).sorted(by: >), id: \.key) {
+                            key, value in
+                            VStack(alignment: .leading) {
+                                Text(key)
+                                CaptionText(text: value)
+                            }
+                        }
+                    }
+                } label: {
+                    Text("Annotations")
+                }
             }
             Section(header: "Ip") {
                 HStack{
@@ -64,6 +91,6 @@ struct PodView: View {
 
 struct PodView_Previews: PreviewProvider {
     static var previews: some View {
-        PodView(pod: Pod(id: "123", name: "123", k8sName: "123", status: "fail", expect: 8, pending: 7, containers: [Container(id: "abc", name: "abclong....", image: "hello"), Container(id: "ef", name: "ef", image: "kkk")],clusterIP: "10.0.0.3", nodeIP: "192.168.1.3"), viewModel: ViewModel())
+        PodView(pod: Pod(id: "123", name: "123", k8sName: "123", status: "fail", expect: 8, pending: 7, containers: [Container(id: "abc", name: "abclong....", image: "hello"), Container(id: "ef", name: "ef", image: "kkk")],clusterIP: "10.0.0.3", nodeIP: "192.168.1.3", labels: ["l1":"l1v"],annotations: ["a1":"a1v"]), viewModel: ViewModel())
     }
 }
