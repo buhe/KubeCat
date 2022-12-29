@@ -177,9 +177,17 @@
 			path = inner;
 			sourceTree = "<group>";
 		};
+		3F2BE422295DADB10002DEEC /* kube */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = kube;
+			sourceTree = "<group>";
+		};
 		3FFCCF80294DFF6000FE6710 = {
 			isa = PBXGroup;
 			children = (
+				3F2BE422295DADB10002DEEC /* kube */,
 				3FFCCF8B294DFF6000FE6710 /* K8sCat */,
 				3FFCCF9D294DFF6100FE6710 /* K8sCatTests */,
 				3FFCCFA7294DFF6100FE6710 /* K8sCatUITests */,

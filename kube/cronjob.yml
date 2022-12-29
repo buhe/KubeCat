@@ -1,0 +1,15 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: simplecronjob
+spec:
+  # Run every 10 minutes. See https://en.wikipedia.org/wiki/Cron
+  schedule: "*/10 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: simplepyscriptapp
+            image: bmalevich/simplepyscriptapp
+          restartPolicy: OnFailure
