@@ -40,9 +40,14 @@ struct PodView: View {
             }
             Section(header: "Ip") {
                 HStack{
+                    Text("Pod IP")
+                    Spacer()
+                    Text(pod.clusterIP)
+                }
+                HStack{
                     Text("Node IP")
                     Spacer()
-                    Text("192.168.3.4")
+                    Text(pod.nodeIP)
                 }
             }
             Section(header: "Misc") {
@@ -59,6 +64,6 @@ struct PodView: View {
 
 struct PodView_Previews: PreviewProvider {
     static var previews: some View {
-        PodView(pod: Pod(id: "123", name: "123", k8sName: "123", status: "fail", expect: 8, pending: 7, containers: [Container(id: "abc", name: "abclong....", image: "hello"), Container(id: "ef", name: "ef", image: "kkk")]), viewModel: ViewModel())
+        PodView(pod: Pod(id: "123", name: "123", k8sName: "123", status: "fail", expect: 8, pending: 7, containers: [Container(id: "abc", name: "abclong....", image: "hello"), Container(id: "ef", name: "ef", image: "kkk")],clusterIP: "10.0.0.3", nodeIP: "192.168.1.3"), viewModel: ViewModel())
     }
 }
