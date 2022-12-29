@@ -142,6 +142,7 @@ struct NamespaceView: View {
                                 NavigationLink {
                                     ServiceView(service: i, viewModel: viewModel)
                                 } label: {
+                                    Image(systemName: "paperplane")
                                     VStack(alignment: .leading) {
                                         Text(i.name)
                                         VStack(alignment: .leading) {
