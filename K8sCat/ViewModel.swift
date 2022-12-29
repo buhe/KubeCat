@@ -107,7 +107,12 @@ class ViewModel: ObservableObject {
             if model.configMaps[name] == nil {
                 try! model.configMap(in: ns)
             }
-            return model.configMaps[name]!.map {ConfigMap(id: $0.name!, name: $0.name!)}
+            return model.configMaps[name]!.map {ConfigMap(id: $0.name!, name: $0.name!
+                                                          , labels: $0.metadata?.labels
+                                                          , annotations: $0.metadata?.annotations
+                                                          , namespace: ($0.metadata?.namespace)!
+                                                          , data: $0.data
+            )}
         default: return []
         }
     }
@@ -118,7 +123,12 @@ class ViewModel: ObservableObject {
             if model.secrets[name] == nil {
                 try! model.secret(in: ns)
             }
-            return model.secrets[name]!.map {Secret(id: $0.name!, name: $0.name!)}
+            return model.secrets[name]!.map {Secret(id: $0.name!, name: $0.name!
+                                                    , labels: $0.metadata?.labels
+                                                    , annotations: $0.metadata?.annotations
+                                                    , namespace: ($0.metadata?.namespace)!
+                                                    , data: $0.data
+            )}
         default: return []
         }
     }
@@ -237,11 +247,19 @@ struct Service: Identifiable {
 struct ConfigMap: Identifiable {
     var id: String
     var name: String
+    let labels: [String: String]?
+    let annotations: [String: String]?
+    let namespace: String
+    let data: [String: String]?
 }
 
 struct Secret: Identifiable {
     var id: String
     var name: String
+    let labels: [String: String]?
+    let annotations: [String: String]?
+    let namespace: String
+    let data: [String: String]?
 }
 
 struct Daemon: Identifiable {

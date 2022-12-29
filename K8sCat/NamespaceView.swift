@@ -175,10 +175,13 @@ struct NamespaceView: View {
                             ForEach(viewModel.configMap(in: .namespace(ns))) {
                                 i in
                                 NavigationLink {
-                                    Text(i.name)
+                                    ConfigMapView(configMap: i, viewModel: viewModel)
                                 } label: {
                                     Image(systemName: "note.text")
-                                    Text(i.name)
+                                    VStack(alignment: .leading) {
+                                        Text(i.name)
+                                        CaptionText(text: "\(i.data?.count ?? 0) keys")
+                                    }
                                 }
                         
                             }
@@ -188,10 +191,13 @@ struct NamespaceView: View {
                             ForEach(viewModel.secret(in: .namespace(ns))) {
                                 i in
                                 NavigationLink {
-                                    Text(i.name)
+                                    SecretView(secret: i, viewModel: viewModel)
                                 } label: {
                                     Image(systemName: "lock.doc")
-                                    Text(i.name)
+                                    VStack(alignment: .leading) {
+                                        Text(i.name)
+                                        CaptionText(text: "\(i.data?.count ?? 0) keys")
+                                    }
                                 }
                         
                             }

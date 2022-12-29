@@ -8,13 +8,86 @@
 import SwiftUI
 
 struct ConfigMapView: View {
+    let configMap: ConfigMap
+    let viewModel: ViewModel
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Form {
+            Section(header: "Name") {
+                Text(configMap.name)
+            }
+            Section(header: "Data") {
+                
+                    List {
+                        ForEach((configMap.data ?? [:]).sorted(by: >), id: \.key) {
+                            key, value in
+                            NavigationLink {
+                                Form{
+                                    Section(header: "Name"){
+                                        Text(key)
+                                    }
+                                    Section(header: "Data"){
+                                        Text(value)
+                                    }
+                                    
+                                    
+                                }
+                            } label: {
+                                VStack(alignment: .leading) {
+                                    Text(key)
+                                }
+                            }
+                        }
+                    }
+                    
+                
+                  
+            }
+            Section(header: "Labels and Annotations") {
+                NavigationLink {
+                    List {
+                        ForEach((configMap.labels ?? [:]).sorted(by: >), id: \.key) {
+                            key, value in
+                            VStack(alignment: .leading) {
+                                Text(key)
+                                
+                                CaptionText(text: value)
+                            }
+                        }
+                    }
+                    
+                } label: {
+                    Text("Labels")
+                }
+                NavigationLink {
+                    List {
+                        ForEach((configMap.annotations ?? [:]).sorted(by: >), id: \.key) {
+                            key, value in
+                            VStack(alignment: .leading) {
+                                Text(key)
+                                CaptionText(text: value)
+                            }
+                        }
+                    }
+                } label: {
+                    Text("Annotations")
+                }
+            }
+            
+            Section(header: "Misc") {
+                HStack{
+                    Text("Namespace")
+                    Spacer()
+                    Text(configMap.namespace)
+                }
+                
+            }
+        }
     }
 }
 
 struct ConfigMapView_Previews: PreviewProvider {
     static var previews: some View {
-        ConfigMapView()
+        ConfigMapView(configMap: ConfigMap(id: "abc", name: "abc", labels: ["l1":"l1v"], annotations: ["l1":"l1v"], namespace: "default", data: ["l1":"l1v"]), viewModel: ViewModel())
     }
 }
