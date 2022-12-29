@@ -29,7 +29,10 @@ class ViewModel: ObservableObject {
     }
     
     var nodes: [Node] {
-        model.nodes.map { Node(id: $0.name!, name: $0.name!, hostName: ($0.metadata?.labels!["kubernetes.io/hostname"]!)!, arch: ($0.metadata?.labels!["kubernetes.io/arch"]!)!, os: ($0.metadata?.labels!["kubernetes.io/os"]!)!) }
+        model.nodes.map { Node(id: $0.name!, name: $0.name!, hostName: ($0.metadata?.labels!["kubernetes.io/hostname"]!)!, arch: ($0.metadata?.labels!["kubernetes.io/arch"]!)!, os: ($0.metadata?.labels!["kubernetes.io/os"]!)!
+                               , labels: $0.metadata?.labels
+                               , annotations: $0.metadata?.annotations
+        ) }
     }
     var namespaces: [String] {
         model.namespaces.map { $0.name! }
@@ -290,6 +293,9 @@ struct Node: Identifiable {
     var hostName: String
     var arch: String
     var os: String
+    
+    let labels: [String: String]?
+    let annotations: [String: String]?
 //    var version: String
 //    var age: String
 }

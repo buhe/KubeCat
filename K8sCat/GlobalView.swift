@@ -24,7 +24,7 @@ struct GlobalView: View {
                         ForEach(viewModel.nodes) {
                             i in
                             NavigationLink {
-                                NodeView(node: i)
+                                NodeView(node: i, viewModel: viewModel)
                             } label: {
                                 Text(i.name)
                             }
