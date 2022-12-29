@@ -38,20 +38,64 @@ struct ServiceView: View {
                 }
             }
             Section(header: "Labels and Annotations") {
-                
+                NavigationLink {
+                    List {
+                        ForEach((service.labels ?? [:]).sorted(by: >), id: \.key) {
+                            key, value in
+                            VStack(alignment: .leading) {
+                                Text(key)
+                                
+                                CaptionText(text: value)
+                            }
+                        }
+                    }
+                    
+                } label: {
+                    Text("Labels")
+                }
+                NavigationLink {
+                    List {
+                        ForEach((service.annotations ?? [:]).sorted(by: >), id: \.key) {
+                            key, value in
+                            VStack(alignment: .leading) {
+                                Text(key)
+                                CaptionText(text: value)
+                            }
+                        }
+                    }
+                } label: {
+                    Text("Annotations")
+                }
             }
             Section(header: "Ip") {
-                HStack{
-                    Text("Node IP")
-                    Spacer()
-                    Text("192.168.3.4")
+                List {
+                    
+                    VStack(alignment: .leading) {
+                        Text("Cluster IPs")
+                        ForEach(service.clusterIps ?? ["None"], id: \.self) {
+                            ip in
+                            
+                            CaptionText(text: ip)
+                            
+                        }
+                    }
+                    
+                    VStack(alignment: .leading) {
+                        Text("External IPs")
+                        ForEach(service.externalIps ?? ["None"], id: \.self) {
+                            ip in
+                            
+                            CaptionText(text: ip)
+                            
+                        }
+                    }
                 }
             }
             Section(header: "Misc") {
                 HStack{
                     Text("Namespace")
                     Spacer()
-                    Text("monitoring")
+                    Text(service.namespace)
                 }
                 
             }
@@ -61,6 +105,6 @@ struct ServiceView: View {
 
 struct ServiceView_Previews: PreviewProvider {
     static var previews: some View {
-        ServiceView(service: Service(id: "123", name: "123", k8sName: "123", type: "clusterIP", clusterIps: ["10.0.0.3"], externalIps: nil), viewModel: ViewModel())
+        ServiceView(service: Service(id: "123", name: "123", k8sName: "123", type: "clusterIP", clusterIps: ["10.0.0.3"], externalIps: nil, labels: ["l1":"l1v"],annotations: ["a1":"a1v"],namespace: "default"), viewModel: ViewModel())
     }
 }

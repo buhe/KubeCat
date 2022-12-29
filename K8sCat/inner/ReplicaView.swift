@@ -39,20 +39,41 @@ struct ReplicaView: View {
                 }
             }
             Section(header: "Labels and Annotations") {
-                
-            }
-            Section(header: "Ip") {
-                HStack{
-                    Text("Node IP")
-                    Spacer()
-                    Text("192.168.3.4")
+                NavigationLink {
+                    List {
+                        ForEach((replica.labels ?? [:]).sorted(by: >), id: \.key) {
+                            key, value in
+                            VStack(alignment: .leading) {
+                                Text(key)
+                                
+                                CaptionText(text: value)
+                            }
+                        }
+                    }
+                    
+                } label: {
+                    Text("Labels")
+                }
+                NavigationLink {
+                    List {
+                        ForEach((replica.annotations ?? [:]).sorted(by: >), id: \.key) {
+                            key, value in
+                            VStack(alignment: .leading) {
+                                Text(key)
+                                CaptionText(text: value)
+                            }
+                        }
+                    }
+                } label: {
+                    Text("Annotations")
                 }
             }
+
             Section(header: "Misc") {
                 HStack{
                     Text("Namespace")
                     Spacer()
-                    Text("monitoring")
+                    Text(replica.namespace)
                 }
                 
             }
@@ -62,6 +83,6 @@ struct ReplicaView: View {
 
 struct ReplicaView_Previews: PreviewProvider {
     static var previews: some View {
-        ReplicaView(replica: Replica(id: "abc", name: "abc", k8sName: "abc"), viewModel: ViewModel())
+        ReplicaView(replica: Replica(id: "abc", name: "abc", k8sName: "abc", labels: ["l1":"l1v"],annotations: ["a1":"a1v"],namespace: "default"), viewModel: ViewModel())
     }
 }

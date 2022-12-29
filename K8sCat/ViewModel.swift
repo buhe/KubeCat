@@ -40,7 +40,11 @@ class ViewModel: ObservableObject {
             if model.deployments[name] == nil {
                 try! model.deployment(in: ns)
             }
-            return model.deployments[name]!.map {Deployment(id: $0.name!, name: $0.name!, k8sName: $0.metadata?.labels!["app.kubernetes.io/name"] ?? "unknow", expect: Int($0.spec?.replicas ?? 0), pending: Int($0.status?.unavailableReplicas ?? 0))}
+            return model.deployments[name]!.map {Deployment(id: $0.name!, name: $0.name!, k8sName: $0.metadata?.labels!["app.kubernetes.io/name"] ?? "unknow", expect: Int($0.spec?.replicas ?? 0), pending: Int($0.status?.unavailableReplicas ?? 0)
+                                                            , labels: $0.metadata?.labels
+                                                            , annotations: $0.metadata?.annotations
+                                                            , namespace: ($0.metadata?.namespace)!
+            )}
         default: return []
         }
     }
@@ -73,7 +77,11 @@ class ViewModel: ObservableObject {
             if model.statefulls[name] == nil {
                 try! model.statefull(in: ns)
             }
-            return model.statefulls[name]!.map {Stateful(id: $0.name!, name: $0.name!, k8sName: ($0.metadata?.labels!["app.kubernetes.io/name"]!)!)}
+            return model.statefulls[name]!.map {Stateful(id: $0.name!, name: $0.name!, k8sName: ($0.metadata?.labels!["app.kubernetes.io/name"]!)!
+                                                         , labels: $0.metadata?.labels
+                                                         , annotations: $0.metadata?.annotations
+                                                         , namespace: ($0.metadata?.namespace)!
+            )}
         default: return []
         }
     }
@@ -84,7 +92,11 @@ class ViewModel: ObservableObject {
             if model.services[name] == nil {
                 try! model.service(in: ns)
             }
-            return model.services[name]!.map {Service(id: $0.name!, name: $0.name!, k8sName: $0.metadata?.labels!["app.kubernetes.io/name"] ?? "unknow", type: ($0.spec?.type!)!, clusterIps: $0.spec?.clusterIPs, externalIps: $0.spec?.externalIPs)}
+            return model.services[name]!.map {Service(id: $0.name!, name: $0.name!, k8sName: $0.metadata?.labels!["app.kubernetes.io/name"] ?? "unknow", type: ($0.spec?.type!)!, clusterIps: $0.spec?.clusterIPs, externalIps: $0.spec?.externalIPs
+                                                      , labels: $0.metadata?.labels
+                                                      , annotations: $0.metadata?.annotations
+                                                      , namespace: ($0.metadata?.namespace)!
+            )}
         default: return []
         }
     }
@@ -117,7 +129,11 @@ class ViewModel: ObservableObject {
             if model.daemons[name] == nil {
                 try! model.daemon(in: ns)
             }
-            return model.daemons[name]!.map {Daemon(id: $0.name!, name: $0.name!, k8sName: ($0.metadata?.labels!["app.kubernetes.io/name"]!)!)}
+            return model.daemons[name]!.map {Daemon(id: $0.name!, name: $0.name!, k8sName: ($0.metadata?.labels!["app.kubernetes.io/name"]!)!
+                                                    , labels: $0.metadata?.labels
+                                                    , annotations: $0.metadata?.annotations
+                                                    , namespace: ($0.metadata?.namespace)!
+            )}
         default: return []
         }
     }
@@ -128,7 +144,11 @@ class ViewModel: ObservableObject {
             if model.replicas[name] == nil {
                 try! model.replica(in: ns)
             }
-            return model.replicas[name]!.map {Replica(id: $0.name!, name: $0.name!, k8sName: ($0.metadata?.labels!["app.kubernetes.io/name"]!)!)}
+            return model.replicas[name]!.map {Replica(id: $0.name!, name: $0.name!, k8sName: $0.metadata?.labels!["app.kubernetes.io/name"] ?? "unknow"
+                                                      , labels: $0.metadata?.labels
+                                                      , annotations: $0.metadata?.annotations
+                                                      , namespace: ($0.metadata?.namespace)!
+            )}
         default: return []
         }
     }
@@ -177,6 +197,9 @@ struct Deployment: Identifiable {
 //    let status: String
     let expect: Int
     let pending: Int
+    let labels: [String: String]?
+    let annotations: [String: String]?
+    let namespace: String
 }
 
 struct Job: Identifiable {
@@ -193,6 +216,9 @@ struct Stateful: Identifiable {
     var id: String
     var name: String
     let k8sName: String
+    let labels: [String: String]?
+    let annotations: [String: String]?
+    let namespace: String
 }
 
 struct Service: Identifiable {
@@ -202,6 +228,9 @@ struct Service: Identifiable {
     let type: String
     let clusterIps: [String]?
     let externalIps: [String]?
+    let labels: [String: String]?
+    let annotations: [String: String]?
+    let namespace: String
 //    let ports: Int
 }
 
@@ -219,12 +248,18 @@ struct Daemon: Identifiable {
     var id: String
     var name: String
     let k8sName: String
+    let labels: [String: String]?
+    let annotations: [String: String]?
+    let namespace: String
 }
 
 struct Replica: Identifiable {
     var id: String
     var name: String
     var k8sName: String
+    let labels: [String: String]?
+    let annotations: [String: String]?
+    let namespace: String
 }
 
 //struct Replication: Identifiable {

@@ -38,20 +38,41 @@ struct StatefulView: View {
                 }
             }
             Section(header: "Labels and Annotations") {
-                
-            }
-            Section(header: "Ip") {
-                HStack{
-                    Text("Node IP")
-                    Spacer()
-                    Text("192.168.3.4")
+                NavigationLink {
+                    List {
+                        ForEach((stateful.labels ?? [:]).sorted(by: >), id: \.key) {
+                            key, value in
+                            VStack(alignment: .leading) {
+                                Text(key)
+                                
+                                CaptionText(text: value)
+                            }
+                        }
+                    }
+                    
+                } label: {
+                    Text("Labels")
+                }
+                NavigationLink {
+                    List {
+                        ForEach((stateful.annotations ?? [:]).sorted(by: >), id: \.key) {
+                            key, value in
+                            VStack(alignment: .leading) {
+                                Text(key)
+                                CaptionText(text: value)
+                            }
+                        }
+                    }
+                } label: {
+                    Text("Annotations")
                 }
             }
+
             Section(header: "Misc") {
                 HStack{
                     Text("Namespace")
                     Spacer()
-                    Text("monitoring")
+                    Text(stateful.namespace)
                 }
                 
             }
@@ -61,6 +82,6 @@ struct StatefulView: View {
 
 struct StatefulView_Previews: PreviewProvider {
     static var previews: some View {
-        StatefulView(stateful: Stateful(id: "123", name: "123", k8sName: "123"), viewModel: ViewModel())
+        StatefulView(stateful: Stateful(id: "123", name: "123", k8sName: "123", labels: ["l1":"l1v"],annotations: ["a1":"a1v"],namespace: "default"), viewModel: ViewModel())
     }
 }

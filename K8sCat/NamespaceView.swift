@@ -142,7 +142,29 @@ struct NamespaceView: View {
                                 NavigationLink {
                                     ServiceView(service: i, viewModel: viewModel)
                                 } label: {
-                                    Text(i.name)
+                                    VStack(alignment: .leading) {
+                                        Text(i.name)
+                                        VStack(alignment: .leading) {
+                                            Text("Cluster IPs").font(.caption)
+                                            ForEach(i.clusterIps ?? ["None"], id: \.self) {
+                                                ip in
+                                                
+                                                Text(ip).font(.caption2)
+                                                
+                                            }
+                                        }
+                                        
+                                        VStack(alignment: .leading) {
+                                            Text("External IPs").font(.caption)
+                                            ForEach(i.externalIps ?? ["None"], id: \.self) {
+                                                ip in
+                                                
+                                                Text(ip).font(.caption2)
+                                                
+                                            }
+                                        }
+                                    }
+                                   
                                 }
                         
                             }
