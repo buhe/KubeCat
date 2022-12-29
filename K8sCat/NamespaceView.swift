@@ -105,6 +105,7 @@ struct NamespaceView: View {
                                 NavigationLink {
                                     JobView(job: i, viewModel: viewModel)
                                 } label: {
+                                    Image(systemName: "figure.run")
                                     Text(i.name)
                                 }
                         
@@ -117,6 +118,7 @@ struct NamespaceView: View {
                                 NavigationLink {
                                     CronJobView(cronJob: i, viewModel: viewModel)
                                 } label: {
+                                    Image(systemName: "timer")
                                     VStack(alignment: .leading) {
                                         Text(i.name)
                                         CaptionText(text: i.schedule)
