@@ -117,7 +117,11 @@ struct NamespaceView: View {
                                 NavigationLink {
                                     CronJobView(cronJob: i, viewModel: viewModel)
                                 } label: {
-                                    Text(i.name)
+                                    VStack(alignment: .leading) {
+                                        Text(i.name)
+                                        CaptionText(text: i.schedule)
+                                    }
+                                    
                                 }
                         
                             }
