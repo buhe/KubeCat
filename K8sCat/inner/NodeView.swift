@@ -15,8 +15,25 @@ struct NodeView: View {
             Section(header: "Name") {
                 Text(node.name)
             }
-            Section(header: "Status") {
-                
+//            Section(header: "Status") {
+//                Text(node.status)
+//            }
+            Section(header: "Role") {
+                HStack{
+                    Text("Etcd")
+                    Spacer()
+                    Text(String(node.etcd))
+                }
+                HStack{
+                    Text("Control Plane")
+                    Spacer()
+                    Text(String(node.controlPlane))
+                }
+                HStack{
+                    Text("Worker")
+                    Spacer()
+                    Text(String(node.worker))
+                }
             }
 //            Section(header: "Pods") {
 //                List {
@@ -75,6 +92,11 @@ struct NodeView: View {
                     Text(node.hostName)
                 }
                 HStack{
+                    Text("Kube Version")
+                    Spacer()
+                    Text(node.version)
+                }
+                HStack{
                     Text("Arch")
                     Spacer()
                     Text(node.arch)
@@ -91,6 +113,6 @@ struct NodeView: View {
 
 struct NodeView_Previews: PreviewProvider {
     static var previews: some View {
-        NodeView(node: Node(id: "123", name: "123", hostName: "10.0.0.4", arch: "x86", os: "linux", labels: ["l1":"l1v"],annotations: ["a1":"a1v"]),viewModel: ViewModel())
+        NodeView(node: Node(id: "123", name: "123", hostName: "10.0.0.4", arch: "x86", os: "linux", labels: ["l1":"l1v"],annotations: ["a1":"a1v"], etcd: true,worker: true,controlPlane: true, version: "1.1"),viewModel: ViewModel())
     }
 }

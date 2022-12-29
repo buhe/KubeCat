@@ -26,7 +26,11 @@ struct GlobalView: View {
                             NavigationLink {
                                 NodeView(node: i, viewModel: viewModel)
                             } label: {
-                                Text(i.name)
+                                Image(systemName: "display")
+                                VStack(alignment: .leading) {
+                                    Text(i.name)
+                                    CaptionText(text: i.version)
+                                }
                             }
                     
                         }

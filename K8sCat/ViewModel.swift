@@ -31,7 +31,11 @@ class ViewModel: ObservableObject {
     var nodes: [Node] {
         model.nodes.map { Node(id: $0.name!, name: $0.name!, hostName: ($0.metadata?.labels!["kubernetes.io/hostname"]!)!, arch: ($0.metadata?.labels!["kubernetes.io/arch"]!)!, os: ($0.metadata?.labels!["kubernetes.io/os"]!)!
                                , labels: $0.metadata?.labels
-                               , annotations: $0.metadata?.annotations
+                               , annotations: $0.metadata?.annotations,
+                               etcd: ($0.metadata?.labels!["node-role.kubernetes.io/etcd"] ?? "false") == "true",
+                               worker: ($0.metadata?.labels!["node-role.kubernetes.io/worker"] ?? "false") == "true",
+                               controlPlane: ($0.metadata?.labels!["node-role.kubernetes.io/controlplane"] ?? "false") == "true",
+                               version: ($0.status?.nodeInfo!.kubeletVersion)!
         ) }
     }
     var namespaces: [String] {
@@ -296,6 +300,10 @@ struct Node: Identifiable {
     
     let labels: [String: String]?
     let annotations: [String: String]?
-//    var version: String
+    
+    let etcd: Bool
+    let worker: Bool
+    let controlPlane: Bool
+    var version: String
 //    var age: String
 }
