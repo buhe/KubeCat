@@ -177,6 +177,7 @@ struct NamespaceView: View {
                                 NavigationLink {
                                     Text(i.name)
                                 } label: {
+                                    Image(systemName: "note.text")
                                     Text(i.name)
                                 }
                         
@@ -189,6 +190,7 @@ struct NamespaceView: View {
                                 NavigationLink {
                                     Text(i.name)
                                 } label: {
+                                    Image(systemName: "lock.doc")
                                     Text(i.name)
                                 }
                         
