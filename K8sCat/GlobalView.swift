@@ -17,7 +17,7 @@ struct GlobalView: View {
         VStack {
             NavigationStack {
                 SearchBar(text: $search).padding(.horizontal)
-                NodesTabBar(tabIndex: $tabIndex).padding(.horizontal, 12)
+                NodesTabBar(tabIndex: $tabIndex).padding(.horizontal, 26)
                 switch tabIndex {
                 case 0:
                     List {

@@ -18,7 +18,7 @@ struct StorageView: View {
             NavigationStack {
                 
                 SearchBar(text: $search).padding(.horizontal)
-                StorageTabBar(tabIndex: $tabIndex).padding(.horizontal, 12)
+                StorageTabBar(tabIndex: $tabIndex).padding(.horizontal, 26)
                 switch tabIndex {
                 case 0:
                     List {
