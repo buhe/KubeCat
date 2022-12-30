@@ -25,7 +25,7 @@ struct StorageView: View {
                         ForEach(viewModel.pv) {
                             i in
                             NavigationLink {
-//                                DeploymentView(deployment: i, viewModel: viewModel)
+                                PVView(pv: i, viewModel: viewModel)
                             } label: {
                                 Image(systemName: "capsule.portrait")
                                 Text(i.name)
