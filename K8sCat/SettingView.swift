@@ -20,12 +20,12 @@ struct SettingView: View {
                 }
                 Section(){
                     Button{
-                        if let url = URL(string: "https://www.baidu.com") {
-                        UIApplication.shared.open(url)
+                        if let url = URL(string: "https://github.com/buhe/KubeCat/issues") {
+                            UIApplication.shared.open(url)
                         }
                     } label: {
                         
-                        Text("Submit Issue")
+                        Text("Feedback")
                         
                     }.buttonStyle(PlainButtonStyle())
                     HStack{
