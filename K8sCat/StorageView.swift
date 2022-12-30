@@ -16,28 +16,25 @@ struct StorageView: View {
     var body: some View {
         VStack {
             NavigationStack {
+                
                 SearchBar(text: $search).padding(.horizontal)
-                NodesTabBar(tabIndex: $tabIndex).padding(.horizontal, 12)
+                StorageTabBar(tabIndex: $tabIndex).padding(.horizontal, 12)
                 switch tabIndex {
                 case 0:
                     List {
-                        ForEach(viewModel.nodes) {
+                        ForEach(viewModel.pv) {
                             i in
                             NavigationLink {
-                                NodeView(node: i, viewModel: viewModel)
+//                                DeploymentView(deployment: i, viewModel: viewModel)
                             } label: {
-                                Image(systemName: "display")
-                                VStack(alignment: .leading) {
-                                    Text(i.name)
-                                    CaptionText(text: i.version)
-                                }
+                                Text(i.name)
                             }
                     
                         }
                     }.listStyle(PlainListStyle())
                 case 1:
                     List {
-                        ForEach(viewModel.nodes) {
+                        ForEach(viewModel.pvc) {
                             i in
                             NavigationLink {
 //                                DeploymentView(deployment: i, viewModel: viewModel)

@@ -27,33 +27,29 @@ class ViewModel: ObservableObject {
         }
         
     }
-    func pv(in ns: NamespaceSelector) -> [PersistentVolume] {
-        switch ns {
-        case .namespace(let name):
-            if model.deployments[name] == nil {
-                try! model.deployment(in: ns)
+    var pv: [PersistentVolume] {
+
+            if model.pvs == nil {
+                try! model.pv()
             }
-            return model.pvs[name]!.map {PersistentVolume(id: $0.name!, name: $0.name!
+            return model.pvs!.map {PersistentVolume(id: $0.name!, name: $0.name!
                                                             , labels: $0.metadata?.labels
                                                             , annotations: $0.metadata?.annotations
-                                                            , namespace: ($0.metadata?.namespace)!
+                                                            
             )}
-        default: return []
-        }
+
     }
-    func pvc(in ns: NamespaceSelector) -> [PersistentVolumeClaim] {
-        switch ns {
-        case .namespace(let name):
-            if model.deployments[name] == nil {
-                try! model.deployment(in: ns)
+    var pvc: [PersistentVolumeClaim] {
+
+            if model.pvcs == nil {
+                try! model.pvc()
             }
-            return model.pvcs[name]!.map {PersistentVolumeClaim(id: $0.name!, name: $0.name!
+            return model.pvcs!.map {PersistentVolumeClaim(id: $0.name!, name: $0.name!
                                                             , labels: $0.metadata?.labels
                                                             , annotations: $0.metadata?.annotations
-                                                            , namespace: ($0.metadata?.namespace)!
+                                                            
             )}
-        default: return []
-        }
+        
     }
     var nodes: [Node] {
         if model.nodes == nil {
@@ -265,7 +261,7 @@ struct PersistentVolume: Identifiable {
     var name: String
     let labels: [String: String]?
     let annotations: [String: String]?
-    let namespace: String
+    
 }
 
 struct PersistentVolumeClaim: Identifiable {
@@ -273,7 +269,6 @@ struct PersistentVolumeClaim: Identifiable {
     var name: String
     let labels: [String: String]?
     let annotations: [String: String]?
-    let namespace: String
 }
 
 struct Job: Identifiable {

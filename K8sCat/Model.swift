@@ -24,8 +24,8 @@ struct Model {
     var secrets: [String: [core.v1.Secret]] = ["": []]
     var daemons: [String: [apps.v1.DaemonSet]] = ["": []]
     var replicas: [String: [apps.v1.ReplicaSet]] = ["": []]
-    var pvs: [String: [core.v1.PersistentVolume]] = ["": []]
-    var pvcs: [String: [core.v1.PersistentVolumeClaim]] = ["": []]
+    var pvs: [core.v1.PersistentVolume]?
+    var pvcs: [core.v1.PersistentVolumeClaim]?
 //    var replications: [String: [core.v1.ReplicationController]] = ["": []]
     
     func logs(in ns: NamespaceSelector, pod: Pod, container: Container, delegate:  LogWatcherDelegate) throws -> SwiftkubeClientTask {
@@ -99,22 +99,17 @@ struct Model {
         self.nodes = try client.nodes.list().wait().items
     }
     
-    mutating func pv(in ns: NamespaceSelector) throws {
-        let pvs = try client.persistentVolumes.list(in: ns).wait().items
-        switch ns {
-        case .namespace(let name):
-            self.pvs[name] = pvs
-        default: break
-        }
+    mutating func pv() throws {
+        let pvs = try client.persistentVolumes.list().wait().items
+            self.pvs = pvs
+
     }
     
-    mutating func pvc(in ns: NamespaceSelector) throws {
-        let pvcs = try client.persistentVolumeClaims.list(in: ns).wait().items
-        switch ns {
-        case .namespace(let name):
-            self.pvcs[name] = pvcs
-        default: break
-        }
+    mutating func pvc() throws {
+        let pvcs = try client.persistentVolumeClaims.list().wait().items
+
+            self.pvcs = pvcs
+
     }
     
     mutating func pod(in ns: NamespaceSelector) throws {
