@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftUIX
 
 struct NamespaceView: View {
-    @State var ns = "default"
+    
     @State var search = ""
     @State var tabIndex = 0
     
@@ -18,13 +18,13 @@ struct NamespaceView: View {
     var body: some View {
         VStack {
             NavigationStack {
-                Picker("ns", selection: $ns) {
+                Picker("ns", selection: $viewModel.ns) {
                     ForEach(viewModel.namespaces, id: \.self) {
                         Text($0)
                      }
-                }.onChange(of: ns) {
+                }.onChange(of: viewModel.ns) {
                     c in
-                    viewModel.ns = c
+                    
                     switch tabIndex {
                     case 0:
                         try! viewModel.model.pod(in: .namespace(c))
@@ -58,7 +58,7 @@ struct NamespaceView: View {
                     switch tabIndex {
                     case 0:
                         List {
-                            ForEach(viewModel.pods(in: .namespace(ns))) {
+                            ForEach(viewModel.pods(in: .namespace(viewModel.ns))) {
                                 i in
                                 NavigationLink {
                                     PodView(pod: i, viewModel: viewModel)
@@ -80,7 +80,7 @@ struct NamespaceView: View {
                         }.listStyle(PlainListStyle())
                     case 1:
                         List {
-                            ForEach(viewModel.deployment(in: .namespace(ns))) {
+                            ForEach(viewModel.deployment(in: .namespace(viewModel.ns))) {
                                 i in
                                 NavigationLink {
                                     DeploymentView(deployment: i, viewModel: viewModel)
@@ -100,7 +100,7 @@ struct NamespaceView: View {
                         }.listStyle(PlainListStyle())
                     case 2:
                         List {
-                            ForEach(viewModel.job(in: .namespace(ns))) {
+                            ForEach(viewModel.job(in: .namespace(viewModel.ns))) {
                                 i in
                                 NavigationLink {
                                     JobView(job: i, viewModel: viewModel)
@@ -113,7 +113,7 @@ struct NamespaceView: View {
                         }.listStyle(PlainListStyle())
                     case 3:
                         List {
-                            ForEach(viewModel.cronJob(in: .namespace(ns))) {
+                            ForEach(viewModel.cronJob(in: .namespace(viewModel.ns))) {
                                 i in
                                 NavigationLink {
                                     CronJobView(cronJob: i, viewModel: viewModel)
@@ -130,7 +130,7 @@ struct NamespaceView: View {
                         }.listStyle(PlainListStyle())
                     case 4:
                         List {
-                            ForEach(viewModel.statefull(in: .namespace(ns))) {
+                            ForEach(viewModel.statefull(in: .namespace(viewModel.ns))) {
                                 i in
                                 NavigationLink {
                                     StatefulView(stateful: i, viewModel: viewModel)
@@ -143,7 +143,7 @@ struct NamespaceView: View {
                         }.listStyle(PlainListStyle())
                     case 5:
                         List {
-                            ForEach(viewModel.service(in: .namespace(ns))) {
+                            ForEach(viewModel.service(in: .namespace(viewModel.ns))) {
                                 i in
                                 NavigationLink {
                                     ServiceView(service: i, viewModel: viewModel)
@@ -178,7 +178,7 @@ struct NamespaceView: View {
                         }.listStyle(PlainListStyle())
                     case 6:
                         List {
-                            ForEach(viewModel.configMap(in: .namespace(ns))) {
+                            ForEach(viewModel.configMap(in: .namespace(viewModel.ns))) {
                                 i in
                                 NavigationLink {
                                     ConfigMapView(configMap: i, viewModel: viewModel)
@@ -194,7 +194,7 @@ struct NamespaceView: View {
                         }.listStyle(PlainListStyle())
                     case 7:
                         List {
-                            ForEach(viewModel.secret(in: .namespace(ns))) {
+                            ForEach(viewModel.secret(in: .namespace(viewModel.ns))) {
                                 i in
                                 NavigationLink {
                                     SecretView(secret: i, viewModel: viewModel)
@@ -210,7 +210,7 @@ struct NamespaceView: View {
                         }.listStyle(PlainListStyle())
                     case 8:
                         List {
-                            ForEach(viewModel.daemon(in: .namespace(ns))) {
+                            ForEach(viewModel.daemon(in: .namespace(viewModel.ns))) {
                                 i in
                                 NavigationLink {
                                     DaemonView(daemon: i, viewModel: viewModel)
@@ -223,7 +223,7 @@ struct NamespaceView: View {
                         }.listStyle(PlainListStyle())
                     case 9:
                         List {
-                            ForEach(viewModel.replica(in: .namespace(ns))) {
+                            ForEach(viewModel.replica(in: .namespace(viewModel.ns))) {
                                 i in
                                 NavigationLink {
                                     ReplicaView(replica: i, viewModel: viewModel)

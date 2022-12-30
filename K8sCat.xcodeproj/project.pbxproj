@@ -45,6 +45,9 @@
 		3F2BE41E295BF2400002DEEC /* 787.98e5931d.chunk.js.map in Resources */ = {isa = PBXBuildFile; fileRef = 3F2BE417295BF1E80002DEEC /* 787.98e5931d.chunk.js.map */; };
 		3F2BE41F295BF2400002DEEC /* main.de295cca.js.map in Resources */ = {isa = PBXBuildFile; fileRef = 3F2BE418295BF1E80002DEEC /* main.de295cca.js.map */; };
 		3F2BE421295BF31D0002DEEC /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2BE420295BF31D0002DEEC /* WebView.swift */; };
+		3F2BE426295DDCF80002DEEC /* PVView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2BE425295DDCF80002DEEC /* PVView.swift */; };
+		3F2BE428295DDD110002DEEC /* PVCView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2BE427295DDD110002DEEC /* PVCView.swift */; };
+		3F2BE42A295DDFB10002DEEC /* StorageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2BE429295DDFB10002DEEC /* StorageView.swift */; };
 		3FFCCF8D294DFF6000FE6710 /* K8sCatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FFCCF8C294DFF6000FE6710 /* K8sCatApp.swift */; };
 		3FFCCF8F294DFF6000FE6710 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FFCCF8E294DFF6000FE6710 /* ContentView.swift */; };
 		3FFCCF91294DFF6100FE6710 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3FFCCF90294DFF6100FE6710 /* Assets.xcassets */; };
@@ -108,6 +111,9 @@
 		3F2BE418295BF1E80002DEEC /* main.de295cca.js.map */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = main.de295cca.js.map; sourceTree = "<group>"; };
 		3F2BE419295BF1E80002DEEC /* main.de295cca.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = main.de295cca.js; sourceTree = "<group>"; };
 		3F2BE420295BF31D0002DEEC /* WebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
+		3F2BE425295DDCF80002DEEC /* PVView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PVView.swift; sourceTree = "<group>"; };
+		3F2BE427295DDD110002DEEC /* PVCView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PVCView.swift; sourceTree = "<group>"; };
+		3F2BE429295DDFB10002DEEC /* StorageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageView.swift; sourceTree = "<group>"; };
 		3FFCCF89294DFF6000FE6710 /* K8sCat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = K8sCat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FFCCF8C294DFF6000FE6710 /* K8sCatApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = K8sCatApp.swift; sourceTree = "<group>"; };
 		3FFCCF8E294DFF6000FE6710 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -173,6 +179,8 @@
 				3F2BE400295AA0AD0002DEEC /* NodeView.swift */,
 				3F2BE420295BF31D0002DEEC /* WebView.swift */,
 				3F2BE402295AB8D20002DEEC /* CaptionText.swift */,
+				3F2BE425295DDCF80002DEEC /* PVView.swift */,
+				3F2BE427295DDD110002DEEC /* PVCView.swift */,
 			);
 			path = inner;
 			sourceTree = "<group>";
@@ -218,6 +226,7 @@
 				3F19F8BE2951A5DC005C0558 /* GlobalView.swift */,
 				3F19F8C02951A617005C0558 /* NamespaceView.swift */,
 				3F19F8C22951A63A005C0558 /* SettingView.swift */,
+				3F2BE429295DDFB10002DEEC /* StorageView.swift */,
 				3F19F8CB2951E010005C0558 /* Ex.swift */,
 				3F19F8CD2952AF01005C0558 /* Model.swift */,
 				3F19F8CF2952AF1B005C0558 /* ViewModel.swift */,
@@ -423,10 +432,12 @@
 				3F19F8D02952AF1B005C0558 /* ViewModel.swift in Sources */,
 				3F2BE3F52959972B0002DEEC /* ConfigMapView.swift in Sources */,
 				3F2BE3FF2959BF750002DEEC /* ContainerView.swift in Sources */,
+				3F2BE42A295DDFB10002DEEC /* StorageView.swift in Sources */,
 				3F19F8C32951A63A005C0558 /* SettingView.swift in Sources */,
 				3F2BE3EB29595A320002DEEC /* DeploymentView.swift in Sources */,
 				3F2BE403295AB8D20002DEEC /* CaptionText.swift in Sources */,
 				3F2BE421295BF31D0002DEEC /* WebView.swift in Sources */,
+				3F2BE426295DDCF80002DEEC /* PVView.swift in Sources */,
 				3F2BE401295AA0AD0002DEEC /* NodeView.swift in Sources */,
 				3F2BE3F92959976A0002DEEC /* DaemonView.swift in Sources */,
 				3FFCCF8D294DFF6000FE6710 /* K8sCatApp.swift in Sources */,
@@ -440,6 +451,7 @@
 				3F19F8D22952B00C005C0558 /* Identifier.swift in Sources */,
 				3F19F8CC2951E010005C0558 /* Ex.swift in Sources */,
 				3F19F8CA2951DE88005C0558 /* TabBarButton.swift in Sources */,
+				3F2BE428295DDD110002DEEC /* PVCView.swift in Sources */,
 				3F19F8CE2952AF01005C0558 /* Model.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

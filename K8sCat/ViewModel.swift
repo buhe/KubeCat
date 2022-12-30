@@ -10,7 +10,7 @@ import SwiftkubeClient
 
 class ViewModel: ObservableObject {
     @Published var model = Model()
-    var ns: String = "default"
+    @Published var ns: String = "default"
     func pods(in ns: NamespaceSelector) -> [Pod] {
         switch ns {
         case .namespace(let name):
@@ -27,9 +27,39 @@ class ViewModel: ObservableObject {
         }
         
     }
-    
+    func pv(in ns: NamespaceSelector) -> [PersistentVolume] {
+        switch ns {
+        case .namespace(let name):
+            if model.deployments[name] == nil {
+                try! model.deployment(in: ns)
+            }
+            return model.pvs[name]!.map {PersistentVolume(id: $0.name!, name: $0.name!
+                                                            , labels: $0.metadata?.labels
+                                                            , annotations: $0.metadata?.annotations
+                                                            , namespace: ($0.metadata?.namespace)!
+            )}
+        default: return []
+        }
+    }
+    func pvc(in ns: NamespaceSelector) -> [PersistentVolumeClaim] {
+        switch ns {
+        case .namespace(let name):
+            if model.deployments[name] == nil {
+                try! model.deployment(in: ns)
+            }
+            return model.pvcs[name]!.map {PersistentVolumeClaim(id: $0.name!, name: $0.name!
+                                                            , labels: $0.metadata?.labels
+                                                            , annotations: $0.metadata?.annotations
+                                                            , namespace: ($0.metadata?.namespace)!
+            )}
+        default: return []
+        }
+    }
     var nodes: [Node] {
-        model.nodes.map { Node(id: $0.name!, name: $0.name!, hostName: ($0.metadata?.labels!["kubernetes.io/hostname"]!)!, arch: ($0.metadata?.labels!["kubernetes.io/arch"]!)!, os: ($0.metadata?.labels!["kubernetes.io/os"]!)!
+        if model.nodes == nil {
+            try! model.node()
+        }
+        return model.nodes!.map { Node(id: $0.name!, name: $0.name!, hostName: ($0.metadata?.labels!["kubernetes.io/hostname"]!)!, arch: ($0.metadata?.labels!["kubernetes.io/arch"]!)!, os: ($0.metadata?.labels!["kubernetes.io/os"]!)!
                                , labels: $0.metadata?.labels
                                , annotations: $0.metadata?.annotations,
                                etcd: ($0.metadata?.labels!["node-role.kubernetes.io/etcd"] ?? "false") == "true",
@@ -225,6 +255,22 @@ struct Deployment: Identifiable {
 //    let status: String
     let expect: Int
     let pending: Int
+    let labels: [String: String]?
+    let annotations: [String: String]?
+    let namespace: String
+}
+
+struct PersistentVolume: Identifiable {
+    var id: String
+    var name: String
+    let labels: [String: String]?
+    let annotations: [String: String]?
+    let namespace: String
+}
+
+struct PersistentVolumeClaim: Identifiable {
+    var id: String
+    var name: String
     let labels: [String: String]?
     let annotations: [String: String]?
     let namespace: String

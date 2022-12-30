@@ -12,11 +12,15 @@ struct ContentView: View {
     var body: some View {
         TabView {
             NamespaceView(viewModel: viewModel).tabItem {
-                Label("Namespaces", systemImage: "aqi.medium")
+                Label("Payloads", systemImage: "aqi.medium")
+            }
+            
+            StorageView(viewModel: viewModel).tabItem {
+                Label("Storage", systemImage: "opticaldiscdrive")
             }
             
             GlobalView(viewModel: viewModel).tabItem {
-                Label("Global", systemImage: "globe")
+                Label("Nodes", systemImage: "display.2")
             }
             
             SettingView().tabItem {

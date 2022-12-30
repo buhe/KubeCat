@@ -12,7 +12,7 @@ import SwiftkubeModel
 struct Model {
     let client: KubernetesClient
     
-    var nodes: [core.v1.Node] = []
+    var nodes: [core.v1.Node]?
     var namespaces: [core.v1.Namespace] = []
     var pods: [String: [core.v1.Pod]] = ["": []]
     var deployments: [String: [apps.v1.Deployment]] = ["": []]
@@ -24,6 +24,8 @@ struct Model {
     var secrets: [String: [core.v1.Secret]] = ["": []]
     var daemons: [String: [apps.v1.DaemonSet]] = ["": []]
     var replicas: [String: [apps.v1.ReplicaSet]] = ["": []]
+    var pvs: [String: [core.v1.PersistentVolume]] = ["": []]
+    var pvcs: [String: [core.v1.PersistentVolumeClaim]] = ["": []]
 //    var replications: [String: [core.v1.ReplicationController]] = ["": []]
     
     func logs(in ns: NamespaceSelector, pod: Pod, container: Container, delegate:  LogWatcherDelegate) throws -> SwiftkubeClientTask {
@@ -82,8 +84,8 @@ struct Model {
         workaroundChinaSpecialBug()
         
         try? namespace()
-        try? pod(in: .default)
-        try? node()
+//        try? pod(in: .default)
+//        try? node()
         
     }
     
@@ -95,6 +97,24 @@ struct Model {
     
     mutating func node() throws {
         self.nodes = try client.nodes.list().wait().items
+    }
+    
+    mutating func pv(in ns: NamespaceSelector) throws {
+        let pvs = try client.persistentVolumes.list(in: ns).wait().items
+        switch ns {
+        case .namespace(let name):
+            self.pvs[name] = pvs
+        default: break
+        }
+    }
+    
+    mutating func pvc(in ns: NamespaceSelector) throws {
+        let pvcs = try client.persistentVolumeClaims.list(in: ns).wait().items
+        switch ns {
+        case .namespace(let name):
+            self.pvcs[name] = pvcs
+        default: break
+        }
     }
     
     mutating func pod(in ns: NamespaceSelector) throws {
