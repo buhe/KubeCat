@@ -9,37 +9,39 @@ import SwiftUI
 
 struct SettingView: View {
     var body: some View {
-        Form{
-            Section(header: "Clsters") {
-                Button{
-                    
-                } label: {
-
+        NavigationStack {
+            Form{
+                Section(header: "Clsters") {
+                    NavigationLink {
+                        ClusterView()
+                    } label: {
                         Text("Cluster Management")
-
+                    }
                 }
-            }
-            Section(){
-                Button{
-                    
-                } label: {
-
+                Section(){
+                    Button{
+                        if let url = URL(string: "https://www.baidu.com") {
+                        UIApplication.shared.open(url)
+                        }
+                    } label: {
+                        
                         Text("Submit Issue")
-
+                        
+                    }.buttonStyle(PlainButtonStyle())
+                    HStack{
+                        Text("Version")
+                        Spacer()
+                        Text("1")
+                    }
+                    HStack{
+                        Text("License")
+                        Spacer()
+                        Text("GPLv3")
+                    }
                 }
-                HStack{
-                    Text("Version")
-                    Spacer()
-                    Text("1")
-                }
-                HStack{
-                    Text("License")
-                    Spacer()
-                    Text("GPLv3")
-                }
+                
+                
             }
-            
-            
         }
     }
 }
