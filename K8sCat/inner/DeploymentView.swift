@@ -26,7 +26,7 @@ struct DeploymentView: View {
                             PodView(pod: i, viewModel: viewModel)
                         } label: {
                             VStack(alignment: .leading) {
-                                Text(i.name).foregroundColor(.green)
+                                Text(i.name)
                                 HStack{
                                     CaptionText(text: "expect: \(i.expect), ")
                                     CaptionText(text: "pendding: \(i.pending)").foregroundColor(i.pending > 0 ? .red : .none)
