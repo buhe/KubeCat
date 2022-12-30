@@ -37,7 +37,10 @@ class ViewModel: ObservableObject {
             }
             return model.pvs!.map {PersistentVolume(id: $0.name!, name: $0.name!
                                                             , labels: $0.metadata?.labels
-                                                            , annotations: $0.metadata?.annotations
+                                                            , annotations: $0.metadata?.annotations,
+                                                    accessModes: ($0.spec?.accessModes?.first)!,
+                                                    status: ($0.status?.phase)!,
+                                                    storageClass: ($0.spec?.storageClassName)!
                                                             
             )}
 
@@ -269,6 +272,11 @@ struct PersistentVolume: Identifiable {
     let labels: [String: String]?
     let annotations: [String: String]?
     
+//    let capactiy: String
+    let accessModes: String
+//    let reclaim: String
+    let status: String
+    let storageClass: String
 }
 
 struct PersistentVolumeClaim: Identifiable {

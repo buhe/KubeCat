@@ -15,7 +15,15 @@ struct PVView: View {
             Section(header: "Name") {
                 Text(pv.name)
             }
-            
+            Section(header: "Status") {
+                Text(pv.status)
+            }
+            Section(header: "Access Modes") {
+                Text(pv.accessModes)
+            }
+            Section(header: "Storage Class") {
+                Text(pv.storageClass)
+            }
             Section(header: "Labels and Annotations") {
                 NavigationLink {
                     List {
@@ -53,6 +61,6 @@ struct PVView: View {
 
 struct PVView_Previews: PreviewProvider {
     static var previews: some View {
-        PVView(pv: PersistentVolume(id: "123", name: "123", labels: ["l1":"l1v"], annotations: ["l1":"l1v"]), viewModel: ViewModel())
+        PVView(pv: PersistentVolume(id: "123", name: "123", labels: ["l1":"l1v"], annotations: ["l1":"l1v"],accessModes: "r/w",status: "B",storageClass: "M"), viewModel: ViewModel())
     }
 }
