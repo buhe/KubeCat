@@ -14,41 +14,56 @@ struct NamespaceView: View {
     @State var tabIndex = 0
     
     @ObservedObject var viewModel: ViewModel
+    @State var showCluster = false
     // must add @ObservedObject
     var body: some View {
         VStack {
             NavigationStack {
-                Picker("ns", selection: $viewModel.ns) {
-                    ForEach(viewModel.namespaces, id: \.self) {
-                        Text($0)
-                     }
-                }.onChange(of: viewModel.ns) {
-                    c in
-                    
-                    switch tabIndex {
-                    case 0:
-                        try! viewModel.model.pod(in: .namespace(c))
-                    case 1:
-                        try! viewModel.model.deployment(in: .namespace(c))
-                    case 2:
-                        try! viewModel.model.job(in: .namespace(c))
-                    case 3:
-                        try! viewModel.model.cronJob(in: .namespace(c))
-                    case 4:
-                        try! viewModel.model.statefull(in: .namespace(c))
-                    case 5:
-                        try! viewModel.model.service(in: .namespace(c))
-                    case 6:
-                        try! viewModel.model.configMap(in: .namespace(c))
-                    case 7:
-                        try! viewModel.model.secret(in: .namespace(c))
-                    case 8:
-                        try! viewModel.model.daemon(in: .namespace(c))
-                    case 9:
-                        try! viewModel.model.replica(in: .namespace(c))
-//                    case 10:
-//                        try! viewModel.model.replication(in: .namespace(c))
-                    default: break
+                ZStack(){
+                    HStack{
+                        Spacer()
+                        Button{showCluster = true}label: {
+                            Image(systemName: "plus")
+                        }.padding(.trailing)
+                    }
+                    HStack{
+                        Spacer()
+                        Picker("ns", selection: $viewModel.ns) {
+                            ForEach(viewModel.namespaces, id: \.self) {
+                                Text($0)
+                            }
+                        }.onChange(of: viewModel.ns) {
+                            c in
+                            
+                            switch tabIndex {
+                            case 0:
+                                try! viewModel.model.pod(in: .namespace(c))
+                            case 1:
+                                try! viewModel.model.deployment(in: .namespace(c))
+                            case 2:
+                                try! viewModel.model.job(in: .namespace(c))
+                            case 3:
+                                try! viewModel.model.cronJob(in: .namespace(c))
+                            case 4:
+                                try! viewModel.model.statefull(in: .namespace(c))
+                            case 5:
+                                try! viewModel.model.service(in: .namespace(c))
+                            case 6:
+                                try! viewModel.model.configMap(in: .namespace(c))
+                            case 7:
+                                try! viewModel.model.secret(in: .namespace(c))
+                            case 8:
+                                try! viewModel.model.daemon(in: .namespace(c))
+                            case 9:
+                                try! viewModel.model.replica(in: .namespace(c))
+                                //                    case 10:
+                                //                        try! viewModel.model.replication(in: .namespace(c))
+                            default: break
+                            }
+                            
+                        }
+                        Spacer()
+                        
                     }
                     
                 }
@@ -251,6 +266,8 @@ struct NamespaceView: View {
                 }
                 
             }
+        }.sheet(isPresented: $showCluster){
+            ClusterView()
         }
         
         

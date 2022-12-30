@@ -9,7 +9,38 @@ import SwiftUI
 
 struct SettingView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Form{
+            Section(header: "Clsters") {
+                Button{
+                    
+                } label: {
+
+                        Text("Cluster Management")
+
+                }
+            }
+            Section(){
+                Button{
+                    
+                } label: {
+
+                        Text("Submit Issue")
+
+                }
+                HStack{
+                    Text("Version")
+                    Spacer()
+                    Text("1")
+                }
+                HStack{
+                    Text("License")
+                    Spacer()
+                    Text("GPLv3")
+                }
+            }
+            
+            
+        }
     }
 }
 

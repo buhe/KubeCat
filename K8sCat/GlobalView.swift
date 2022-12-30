@@ -12,11 +12,17 @@ struct GlobalView: View {
     @State var search = ""
     @State var tabIndex = 0
     @ObservedObject var viewModel: ViewModel
+    @State var showCluster = false
     
     var body: some View {
         VStack {
             NavigationStack {
-                SearchBar(text: $search).padding(.horizontal)
+                HStack{
+                    SearchBar(text: $search).padding(.horizontal)
+                    Button{ showCluster = true }label: {
+                        Image(systemName: "plus")
+                    }.padding(.trailing)
+                }
                 NodesTabBar(tabIndex: $tabIndex).padding(.horizontal, 26)
                 switch tabIndex {
                 case 0:
@@ -39,6 +45,8 @@ struct GlobalView: View {
                     EmptyView()
                 }
             }
+        }.sheet(isPresented: $showCluster){
+            ClusterView()
         }
     }
 }

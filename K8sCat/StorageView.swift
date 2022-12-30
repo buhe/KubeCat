@@ -12,12 +12,17 @@ struct StorageView: View {
     @State var search = ""
     @State var tabIndex = 0
     @ObservedObject var viewModel: ViewModel
+    @State var showCluster = false
     
     var body: some View {
         VStack {
             NavigationStack {
-                
-                SearchBar(text: $search).padding(.horizontal)
+                HStack{
+                    SearchBar(text: $search).padding(.horizontal)
+                    Button{showCluster = true}label: {
+                        Image(systemName: "plus")
+                    }.padding(.trailing)
+                }
                 StorageTabBar(tabIndex: $tabIndex).padding(.horizontal, 26)
                 switch tabIndex {
                 case 0:
@@ -51,6 +56,8 @@ struct StorageView: View {
                     EmptyView()
                 }
             }
+        }.sheet(isPresented: $showCluster){
+            ClusterView()
         }
     }
 }
