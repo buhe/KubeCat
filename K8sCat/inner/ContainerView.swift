@@ -33,13 +33,40 @@ struct ContainerView: View {
     
     var body: some View {
         Form {
-            
-        }.toolbar {
-            Button {
-                showShell = true
-            } label: {
-                Label("shell", systemImage: "terminal")
+            Section(header: "Name") {
+                Text(container.name)
             }
+            Section(header: "Image") {
+                Text(container.image).font(.caption)
+            }
+            Section(header: "Termination Message") {
+                HStack{
+                    Text("Path")
+                    Spacer()
+                    Text(container.path)
+                }
+                HStack{
+                    Text("Policy")
+                    Spacer()
+                    Text(container.policy)
+                }
+            }
+            
+            Section(header: "Misc") {
+                HStack{
+                    Text("Pull Policy")
+                    Spacer()
+                    Text(container.pullPolicy)
+                }
+                
+            }
+        }
+        .toolbar {
+//            Button {
+//                showShell = true
+//            } label: {
+//                Label("shell", systemImage: "terminal")
+//            }
             
             Button {
                 showLogs = true

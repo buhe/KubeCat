@@ -17,7 +17,10 @@ class ViewModel: ObservableObject {
             if model.pods[name] == nil {
                 try! model.pod(in: ns)
             }
-            return model.pods[name]!.map {Pod(id: $0.name!, name: $0.name!, k8sName: $0.metadata?.labels!["app.kubernetes.io/name"] ?? "unknow", status: ($0.status?.phase)!, expect: $0.spec?.containers.count ?? 0, pending: $0.status?.containerStatuses?.filter{$0.ready == false}.count ?? 0, containers: ($0.spec?.containers.map{Container(id: $0.name, name: $0.name, image: $0.image!)})!
+            return model.pods[name]!.map {Pod(id: $0.name!, name: $0.name!, k8sName: $0.metadata?.labels!["app.kubernetes.io/name"] ?? "unknow", status: ($0.status?.phase)!, expect: $0.spec?.containers.count ?? 0, pending: $0.status?.containerStatuses?.filter{$0.ready == false}.count ?? 0, containers: ($0.spec?.containers.map{Container(
+                id: $0.name, name: $0.name, image: $0.image!
+                ,path: $0.terminationMessagePath!, policy: $0.terminationMessagePolicy!, pullPolicy: $0.imagePullPolicy!
+                )})!
                                               , clusterIP: ($0.status?.podIP)!, nodeIP: ($0.status?.hostIP)!
                                               , labels: $0.metadata?.labels
                                               , annotations: $0.metadata?.annotations
@@ -242,6 +245,11 @@ struct Container: Identifiable {
     var id: String
     var name: String
     let image: String
+    
+    let path: String
+    let policy: String
+    
+    let pullPolicy: String
 }
 
 struct Deployment: Identifiable {
