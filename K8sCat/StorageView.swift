@@ -27,6 +27,7 @@ struct StorageView: View {
                             NavigationLink {
 //                                DeploymentView(deployment: i, viewModel: viewModel)
                             } label: {
+                                Image(systemName: "capsule.portrait")
                                 Text(i.name)
                             }
                     
@@ -39,6 +40,7 @@ struct StorageView: View {
                             NavigationLink {
 //                                DeploymentView(deployment: i, viewModel: viewModel)
                             } label: {
+                                Image(systemName: "shield")
                                 Text(i.name)
                             }
                     

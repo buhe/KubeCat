@@ -63,11 +63,11 @@ struct NamespaceView: View {
                                 NavigationLink {
                                     PodView(pod: i, viewModel: viewModel)
                                 } label: {
+                                    Image(systemName: "bus.fill")
                                     VStack(alignment: .leading) {
-                                        switch i.status {
-                                        case "Running", "Succeeded": Text(i.name).foregroundColor(.green)
-                                        default: Text(i.name).foregroundColor(.red)
-                                        }
+                                        
+                                        Text(i.name)
+                                        
                                         HStack{
                                             Text("expect: \(i.expect), ").font(.caption)
                                             Text("pendding: \(i.pending)").font(.caption).foregroundColor(i.pending > 0 ? .red : .none)
