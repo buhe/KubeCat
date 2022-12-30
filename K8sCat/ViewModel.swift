@@ -48,8 +48,7 @@ class ViewModel: ObservableObject {
                 try! model.pvc()
             }
             return model.pvcs!.map {PersistentVolumeClaim(id: $0.name!, name: $0.name!
-                                                            , labels: $0.metadata?.labels
-                                                            , annotations: $0.metadata?.annotations
+                                                            
                                                             
             )}
         
@@ -275,8 +274,8 @@ struct PersistentVolume: Identifiable {
 struct PersistentVolumeClaim: Identifiable {
     var id: String
     var name: String
-    let labels: [String: String]?
-    let annotations: [String: String]?
+//    let labels: [String: String]?
+//    let annotations: [String: String]?
 }
 
 struct Job: Identifiable {

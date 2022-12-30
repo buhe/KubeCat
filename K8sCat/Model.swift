@@ -25,7 +25,8 @@ struct Model {
     var daemons: [String: [apps.v1.DaemonSet]] = ["": []]
     var replicas: [String: [apps.v1.ReplicaSet]] = ["": []]
     var pvs: [core.v1.PersistentVolume]?
-    var pvcs: [core.v1.PersistentVolumeClaim]?
+    var pvcs: [core.v1.ObjectReference]?
+//    var pvcs: [core.v1.PersistentVolumeClaim]?
 //    var replications: [String: [core.v1.ReplicationController]] = ["": []]
     
     func logs(in ns: NamespaceSelector, pod: Pod, container: Container, delegate:  LogWatcherDelegate) throws -> SwiftkubeClientTask {
@@ -106,7 +107,7 @@ struct Model {
     }
     
     mutating func pvc() throws {
-        let pvcs = try client.persistentVolumeClaims.list().wait().items
+        let pvcs = try client.persistentVolumes.list().wait().items.map{($0.spec?.claimRef)!}
 
             self.pvcs = pvcs
 
