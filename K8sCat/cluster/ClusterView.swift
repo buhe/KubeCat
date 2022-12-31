@@ -15,6 +15,7 @@ struct ClusterView: View {
     private var cluters: FetchedResults<ClusterEntry>
     
     @State var showClusterType = false
+    @State var selectedItem: String?
     var body: some View {
         HStack {
             Spacer()
@@ -26,25 +27,34 @@ struct ClusterView: View {
             EditButton()
         }
         .sheet(isPresented: $showClusterType){
-            ClusterTypeView{
+            ClusterTypeView(first: cluters.isEmpty){
                 showClusterType = false
             }
                 .environment(\.managedObjectContext, viewContext)
         }
         .padding()
-        List {
+        List(selection: $selectedItem)  {
             ForEach(cluters.map{Cluster(id: $0.name!, name: $0.name!, icon:
-                                            $0.icon ?? "triangle", kubeConfig: $0.config)}) {
+                                            $0.icon ?? "triangle", kubeConfig: $0.config, selected: $0.selected )}) {
                 i in
                 HStack {
+                    Image(systemName: i.selected ? "circle.fill" : "circle")
                     Text(i.name)
                 }
             }.onDelete{
                 sets in
                 deleteItems(offsets: sets)
+            }.onChange(of: selectedItem ?? ""){
+                c in
+                addItem(id: c)
             }
+//            .onMove{
+//                s1,s2 in
+//
+//            }
         }
         .listStyle(PlainListStyle())
+        Text(selectedItem ?? "unselected")
         
     }
     
@@ -64,13 +74,35 @@ struct ClusterView: View {
                 }
             }
         }
+    
+    private func addItem(id: String) {
+        withAnimation {
+            for cluster in cluters {
+                if cluster.name == id {
+                    cluster.selected = true
+                } else {
+                    cluster.selected = false
+                }
+            }
+
+            do {
+                try viewContext.save()
+            } catch {
+                // Replace this implementation with code to handle the error appropriately.
+                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+                let nsError = error as NSError
+                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+            }
+        }
+    }
 }
 
-struct Cluster: Identifiable {
+struct Cluster: Identifiable, Hashable {
     var id: String
     let name: String
     let icon: String
     let kubeConfig: String?
+    let selected: Bool
     
 }
 

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ConfigView: View {
     @Environment(\.managedObjectContext) private var viewContext
+    let first: Bool
     let close: () -> Void
     @State var name: String?
     @State var icon: String?
@@ -41,12 +42,13 @@ struct ConfigView: View {
         .fileImporter(isPresented: $showingExporter, allowedContentTypes: [.yaml]) { result in
             switch result {
             case .success(let url):
-                
+                let _ = url.startAccessingSecurityScopedResource()
                 if let content = try? String(contentsOf: url) {
                     self.content = content
                     importMsg = "Imported"
                     print("Import content is \(content)")
                 }
+                url.stopAccessingSecurityScopedResource()
                 
             case .failure(let error):
                 print(error.localizedDescription)
@@ -61,6 +63,9 @@ struct ConfigView: View {
             newItem.type = ClusterType.Config.rawValue
             newItem.icon = "triangle"
             newItem.config = self.content
+            if first {
+                newItem.selected = true
+            }
 
             do {
                 try viewContext.save()
@@ -76,6 +81,6 @@ struct ConfigView: View {
 
 struct ConfigView_Previews: PreviewProvider {
     static var previews: some View {
-        ConfigView{}
+        ConfigView(first: true){}
     }
 }

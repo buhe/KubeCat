@@ -12,11 +12,12 @@ import CoreData
 
 struct Model {
     private var viewContext: NSManagedObjectContext
+    private var current: ClusterEntry?
 //    @FetchRequest(
 //        sortDescriptors: [],
 //        animation: .default)
 //    private var cluters: FetchedResults<ClusterEntry>
-    let client: KubernetesClient
+    var client: KubernetesClient?
     
     var nodes: [core.v1.Node]?
     var namespaces: [core.v1.Namespace] = []
@@ -35,44 +36,82 @@ struct Model {
 //    var pvcs: [core.v1.PersistentVolumeClaim]?
 //    var replications: [String: [core.v1.ReplicationController]] = ["": []]
     
-    func logs(in ns: NamespaceSelector, pod: Pod, container: Container, delegate:  LogWatcherDelegate) throws -> SwiftkubeClientTask {
-        try client.pods.follow(in: ns, name: pod.name, container: container.name, delegate: delegate)
-        
+    func logs(in ns: NamespaceSelector, pod: Pod, container: Container, delegate:  LogWatcherDelegate) throws -> SwiftkubeClientTask? {
+        if let client = client {
+            return try client.pods.follow(in: ns, name: pod.name, container: container.name, delegate: delegate)
+        } else {
+            return nil
+        }
     }
     
     func podsByJob(in ns: NamespaceSelector, job: String) -> [Pod] {
-        try! client.pods.list(in: ns,options: [.labelSelector(.eq(["job-name": job]))]).wait().items.map { Pod(id: $0.name!, name: $0.name!,k8sName: job, status: ($0.status?.phase)!, expect: $0.spec?.containers.count ?? 0, pending: 0, containers: ($0.spec?.containers.map{Container(id: $0.name, name: $0.name, image: $0.image!,path: $0.terminationMessagePath!, policy: $0.terminationMessagePolicy!, pullPolicy: $0.imagePullPolicy!)})!, clusterIP: ($0.status?.podIP)!, nodeIP: ($0.status?.hostIP)!, labels: $0.metadata?.labels
-                                                                                                                                    , annotations: $0.metadata?.annotations, namespace: ($0.metadata?.namespace)!)}
+        if let client = client {
+           return try! client.pods.list(in: ns,options: [.labelSelector(.eq(["job-name": job]))]).wait().items.map { Pod(id: $0.name!, name: $0.name!,k8sName: job, status: ($0.status?.phase)!, expect: $0.spec?.containers.count ?? 0, pending: 0, containers: ($0.spec?.containers.map{Container(id: $0.name, name: $0.name, image: $0.image!,path: $0.terminationMessagePath!, policy: $0.terminationMessagePolicy!, pullPolicy: $0.imagePullPolicy!)})!, clusterIP: ($0.status?.podIP)!, nodeIP: ($0.status?.hostIP)!, labels: $0.metadata?.labels
+                                                                                                                         , annotations: $0.metadata?.annotations, namespace: ($0.metadata?.namespace)!)}
+        } else {
+            return []
+        }
+        
     }
     
     func podsByCronJob(in ns: NamespaceSelector, cronJob: String) -> [Pod] {
-        try! client.pods.list(in: ns,options: [.labelSelector(.eq(["job-name": cronJob]))]).wait().items.map { Pod(id: $0.name!, name: $0.name!,k8sName: cronJob, status: ($0.status?.phase)!, expect: $0.spec?.containers.count ?? 0, pending: 0, containers: ($0.spec?.containers.map{Container(id: $0.name, name: $0.name, image: $0.image!,path: $0.terminationMessagePath!, policy: $0.terminationMessagePolicy!, pullPolicy: $0.imagePullPolicy!)})!, clusterIP: ($0.status?.podIP)!, nodeIP: ($0.status?.hostIP)!, labels: $0.metadata?.labels
-                                                                                                                                    , annotations: $0.metadata?.annotations, namespace: ($0.metadata?.namespace)!)}
+        if let client = client {
+            return try! client.pods.list(in: ns,options: [.labelSelector(.eq(["job-name": cronJob]))]).wait().items.map { Pod(id: $0.name!, name: $0.name!,k8sName: cronJob, status: ($0.status?.phase)!, expect: $0.spec?.containers.count ?? 0, pending: 0, containers: ($0.spec?.containers.map{Container(id: $0.name, name: $0.name, image: $0.image!,path: $0.terminationMessagePath!, policy: $0.terminationMessagePolicy!, pullPolicy: $0.imagePullPolicy!)})!, clusterIP: ($0.status?.podIP)!, nodeIP: ($0.status?.hostIP)!, labels: $0.metadata?.labels
+                                                                                                                               , annotations: $0.metadata?.annotations, namespace: ($0.metadata?.namespace)!)}
+        } else {
+            return []
+        }
+        
     }
     
     func podsByDeployment(in ns: NamespaceSelector, deployment: String) -> [Pod] {
-        try! client.pods.list(in: ns,options: [.labelSelector(.eq(["app.kubernetes.io/name": deployment]))]).wait().items.map { Pod(id: $0.name!, name: $0.name!,k8sName: deployment, status: ($0.status?.phase)!, expect: $0.spec?.containers.count ?? 0, pending: 0, containers: ($0.spec?.containers.map{Container(id: $0.name, name: $0.name, image: $0.image!,path: $0.terminationMessagePath!, policy: $0.terminationMessagePolicy!, pullPolicy: $0.imagePullPolicy!)})!, clusterIP: ($0.status?.podIP)!, nodeIP: ($0.status?.hostIP)!, labels: $0.metadata?.labels
-                                                                                                                                    , annotations: $0.metadata?.annotations, namespace: ($0.metadata?.namespace)!)}
+        if let client = client {
+            return try! client.pods.list(in: ns,options: [.labelSelector(.eq(["app.kubernetes.io/name": deployment]))]).wait().items.map { Pod(id: $0.name!, name: $0.name!,k8sName: deployment, status: ($0.status?.phase)!, expect: $0.spec?.containers.count ?? 0, pending: 0, containers: ($0.spec?.containers.map{Container(id: $0.name, name: $0.name, image: $0.image!,path: $0.terminationMessagePath!, policy: $0.terminationMessagePolicy!, pullPolicy: $0.imagePullPolicy!)})!, clusterIP: ($0.status?.podIP)!, nodeIP: ($0.status?.hostIP)!, labels: $0.metadata?.labels
+                                                                                                                                        , annotations: $0.metadata?.annotations, namespace: ($0.metadata?.namespace)!)}
+        } else {
+            return []
+        }
+        
     }
     
     func podsByReplica(in ns: NamespaceSelector, replica: String) -> [Pod] {
-        try! client.pods.list(in: ns,options: [.labelSelector(.eq(["app.kubernetes.io/name": replica]))]).wait().items.map { Pod(id: $0.name!, name: $0.name!, k8sName: replica,status: ($0.status?.phase)!, expect: $0.spec?.containers.count ?? 0, pending: 0, containers: ($0.spec?.containers.map{Container(id: $0.name, name: $0.name, image: $0.image!,path: $0.terminationMessagePath!, policy: $0.terminationMessagePolicy!, pullPolicy: $0.imagePullPolicy!)})!, clusterIP: ($0.status?.podIP)!, nodeIP: ($0.status?.hostIP)!, labels: $0.metadata?.labels
-                                                                                                                                 , annotations: $0.metadata?.annotations, namespace: ($0.metadata?.namespace)!)}
+        if let client = client {
+            return try! client.pods.list(in: ns,options: [.labelSelector(.eq(["app.kubernetes.io/name": replica]))]).wait().items.map { Pod(id: $0.name!, name: $0.name!, k8sName: replica,status: ($0.status?.phase)!, expect: $0.spec?.containers.count ?? 0, pending: 0, containers: ($0.spec?.containers.map{Container(id: $0.name, name: $0.name, image: $0.image!,path: $0.terminationMessagePath!, policy: $0.terminationMessagePolicy!, pullPolicy: $0.imagePullPolicy!)})!, clusterIP: ($0.status?.podIP)!, nodeIP: ($0.status?.hostIP)!, labels: $0.metadata?.labels
+                                                                                                                                             , annotations: $0.metadata?.annotations, namespace: ($0.metadata?.namespace)!)}
+        } else {
+            return []
+        }
+        
     }
     
     func podsByDaemon(in ns: NamespaceSelector, daemon: String) -> [Pod] {
-        try! client.pods.list(in: ns,options: [.labelSelector(.eq(["app.kubernetes.io/name": daemon]))]).wait().items.map { Pod(id: $0.name!, name: $0.name!, k8sName: daemon,status: ($0.status?.phase)!, expect: $0.spec?.containers.count ?? 0, pending: 0, containers: ($0.spec?.containers.map{Container(id: $0.name, name: $0.name, image: $0.image!,path: $0.terminationMessagePath!, policy: $0.terminationMessagePolicy!, pullPolicy: $0.imagePullPolicy!)})!, clusterIP: ($0.status?.podIP)!, nodeIP: ($0.status?.hostIP)!, labels: $0.metadata?.labels
-                                                                                                                                , annotations: $0.metadata?.annotations, namespace: ($0.metadata?.namespace)!)}
+        if let client = client {
+            return try! client.pods.list(in: ns,options: [.labelSelector(.eq(["app.kubernetes.io/name": daemon]))]).wait().items.map { Pod(id: $0.name!, name: $0.name!, k8sName: daemon,status: ($0.status?.phase)!, expect: $0.spec?.containers.count ?? 0, pending: 0, containers: ($0.spec?.containers.map{Container(id: $0.name, name: $0.name, image: $0.image!,path: $0.terminationMessagePath!, policy: $0.terminationMessagePolicy!, pullPolicy: $0.imagePullPolicy!)})!, clusterIP: ($0.status?.podIP)!, nodeIP: ($0.status?.hostIP)!, labels: $0.metadata?.labels
+                                                                                                                                            , annotations: $0.metadata?.annotations, namespace: ($0.metadata?.namespace)!)}
+        } else {
+            return []
+        }
+        
     }
     
     func podsByService(in ns: NamespaceSelector, service: String) -> [Pod] {
-        try! client.pods.list(in: ns,options: [.labelSelector(.eq(["app.kubernetes.io/name": service]))]).wait().items.map { Pod(id: $0.name!, name: $0.name!, k8sName: service,status: ($0.status?.phase)!, expect: $0.spec?.containers.count ?? 0, pending: 0, containers: ($0.spec?.containers.map{Container(id: $0.name, name: $0.name, image: $0.image!,path: $0.terminationMessagePath!, policy: $0.terminationMessagePolicy!, pullPolicy: $0.imagePullPolicy!)})!, clusterIP: ($0.status?.podIP)!, nodeIP: ($0.status?.hostIP)!, labels: $0.metadata?.labels
-                                                                                                                                 , annotations: $0.metadata?.annotations, namespace: ($0.metadata?.namespace)!)}
+        if let client = client {
+            return try! client.pods.list(in: ns,options: [.labelSelector(.eq(["app.kubernetes.io/name": service]))]).wait().items.map { Pod(id: $0.name!, name: $0.name!, k8sName: service,status: ($0.status?.phase)!, expect: $0.spec?.containers.count ?? 0, pending: 0, containers: ($0.spec?.containers.map{Container(id: $0.name, name: $0.name, image: $0.image!,path: $0.terminationMessagePath!, policy: $0.terminationMessagePolicy!, pullPolicy: $0.imagePullPolicy!)})!, clusterIP: ($0.status?.podIP)!, nodeIP: ($0.status?.hostIP)!, labels: $0.metadata?.labels
+                                                                                                                                              , annotations: $0.metadata?.annotations, namespace: ($0.metadata?.namespace)!)}
+        } else {
+            return []
+        }
+       
     }
     
     func podsByStateful(in ns: NamespaceSelector, stateful: String) -> [Pod] {
-        try! client.pods.list(in: ns,options: [.labelSelector(.eq(["app.kubernetes.io/name": stateful]))]).wait().items.map { Pod(id: $0.name!, name: $0.name!, k8sName: stateful,status: ($0.status?.phase)!, expect: $0.spec?.containers.count ?? 0, pending: 0, containers: ($0.spec?.containers.map{Container(id: $0.name, name: $0.name, image: $0.image!,path: $0.terminationMessagePath!, policy: $0.terminationMessagePolicy!, pullPolicy: $0.imagePullPolicy!)})!, clusterIP: ($0.status?.podIP)!, nodeIP: ($0.status?.hostIP)!, labels: $0.metadata?.labels
-                                                                                                                                  , annotations: $0.metadata?.annotations, namespace: ($0.metadata?.namespace)!)}
+        if let client = client {
+            return try! client.pods.list(in: ns,options: [.labelSelector(.eq(["app.kubernetes.io/name": stateful]))]).wait().items.map { Pod(id: $0.name!, name: $0.name!, k8sName: stateful,status: ($0.status?.phase)!, expect: $0.spec?.containers.count ?? 0, pending: 0, containers: ($0.spec?.containers.map{Container(id: $0.name, name: $0.name, image: $0.image!,path: $0.terminationMessagePath!, policy: $0.terminationMessagePolicy!, pullPolicy: $0.imagePullPolicy!)})!, clusterIP: ($0.status?.podIP)!, nodeIP: ($0.status?.hostIP)!, labels: $0.metadata?.labels
+                                                                                                                                              , annotations: $0.metadata?.annotations, namespace: ($0.metadata?.namespace)!)}
+        } else {
+            return []
+        }
+        
     }
     
     fileprivate func workaroundChinaSpecialBug() {
@@ -88,9 +127,11 @@ struct Model {
     
     init(viewContext: NSManagedObjectContext) {
         self.viewContext = viewContext
-        client = KubernetesClient(config: try! Default().config()!)
-        print("load \((try! viewContext.fetch(NSFetchRequest(entityName: "ClusterEntry")).first as! ClusterEntry).config!)")
+//        client = KubernetesClient(config: try! Default().config()!)
+        
+//        print("load \((try! viewContext.fetch(NSFetchRequest(entityName: "ClusterEntry")).first as! ClusterEntry).config!)")
         workaroundChinaSpecialBug()
+        try? select(viewContext: viewContext)
         
         try? namespace()
 //        try? pod(in: .default)
@@ -98,124 +139,231 @@ struct Model {
         
     }
     
+    mutating func select(viewContext: NSManagedObjectContext) throws {
+        let clusters = try! viewContext.fetch(NSFetchRequest(entityName: "ClusterEntry")) as! [ClusterEntry]
+        for c in clusters {
+            if c.selected {
+                print("found cluster: \(c)")
+                if self.current != nil && c != self.current {
+                    try self.client!.syncShutdown()
+                    client = KubernetesClient(config: try! Config(content: c.config!).config()!)
+                }
+                
+                if self.current == nil {
+                    client = KubernetesClient(config: try! Config(content: c.config!).config()!)
+                }
+                
+            }
+        }
+    }
+    
     mutating func namespace() throws {
-        let namespaces = try client.namespaces.list().wait().items
-//        print("ns is \(namespaces)")
-        self.namespaces = namespaces
+        if let client = client {
+            
+            let namespaces = try client.namespaces.list().wait().items
+            //        print("ns is \(namespaces)")
+            self.namespaces = namespaces
+        } else {
+            self.namespaces = []
+        }
     }
     
     mutating func node() throws {
-        self.nodes = try client.nodes.list().wait().items
+        if let client = client {
+            self.nodes = try client.nodes.list().wait().items
+        } else {
+            self.nodes = []
+        }
     }
     
     mutating func pv() throws {
-        let pvs = try client.persistentVolumes.list().wait().items
+        if let client = client {
+            let pvs = try client.persistentVolumes.list().wait().items
             self.pvs = pvs
+        } else {
+            self.pvs = []
+        }
 
     }
     
     mutating func pvc() throws {
-        let pvcs = try client.persistentVolumes.list().wait().items.map{($0.spec?.claimRef)!}
-
+        if let client = client {
+            let pvcs = try client.persistentVolumes.list().wait().items.map{($0.spec?.claimRef)!}
+            
             self.pvcs = pvcs
+        } else {
+            self.pvcs = []
+        }
 
     }
     
     mutating func pod(in ns: NamespaceSelector) throws {
-        let pods = try client.pods.list(in: ns).wait().items
-        switch ns {
-        case .namespace(let name):
-            self.pods[name] = pods
-        default: break
+        if let client = client {
+            let pods = try client.pods.list(in: ns).wait().items
+            switch ns {
+            case .namespace(let name):
+                self.pods[name] = pods
+            default: break
+            }
+        } else {
+            switch ns {
+            case .namespace(let name):
+                self.pods[name] = []
+            default: break
+            }
         }
     }
     
     mutating func deployment(in ns: NamespaceSelector) throws {
-        let deployments = try client.appsV1.deployments.list(in: ns).wait().items
-//        let l = deployments.map {
-//            $0.metadata?.labels
-//        }
-//        print("label: \(l)")
-//        let n = deployments.map {
-//            $0.name
-//        }
-//        print("name: \(n)")
-        switch ns {
-        case .namespace(let name):
-            self.deployments[name] = deployments
-        default: break
+        if let client = client {
+            let deployments = try client.appsV1.deployments.list(in: ns).wait().items
+            switch ns {
+            case .namespace(let name):
+                self.deployments[name] = deployments
+            default: break
+            }
+        } else {
+            switch ns {
+            case .namespace(let name):
+                self.deployments[name] = []
+            default: break
+            }
         }
     }
     
     mutating func job(in ns: NamespaceSelector) throws {
-        let job = try client.batchV1.jobs.list(in: ns).wait().items
-        switch ns {
-        case .namespace(let name):
-            self.jobs[name] = job
-        default: break
+        if let client = client {
+            let job = try client.batchV1.jobs.list(in: ns).wait().items
+            switch ns {
+            case .namespace(let name):
+                self.jobs[name] = job
+            default: break
+            }
+        } else {
+            switch ns {
+            case .namespace(let name):
+                self.jobs[name] = []
+            default: break
+            }
         }
     }
     
     mutating func cronJob(in ns: NamespaceSelector) throws {
-        let cronJob = try client.batchV1Beta1.cronJobs.list(in: ns).wait().items
-        switch ns {
-        case .namespace(let name):
-            self.cronJobs[name] = cronJob
-        default: break
+        if let client = client {
+            let cronJob = try client.batchV1Beta1.cronJobs.list(in: ns).wait().items
+            switch ns {
+            case .namespace(let name):
+                self.cronJobs[name] = cronJob
+            default: break
+            }
+        } else {
+            switch ns {
+            case .namespace(let name):
+                self.cronJobs[name] = []
+            default: break
+            }
         }
     }
     
     mutating func statefull(in ns: NamespaceSelector) throws {
-        let statefull = try client.appsV1.statefulSets.list(in: ns).wait().items
-        switch ns {
-        case .namespace(let name):
-            self.statefulls[name] = statefull
-        default: break
+        if let client = client {
+            let statefull = try client.appsV1.statefulSets.list(in: ns).wait().items
+            switch ns {
+            case .namespace(let name):
+                self.statefulls[name] = statefull
+            default: break
+            }
+        } else {
+            switch ns {
+            case .namespace(let name):
+                self.statefulls[name] = []
+            default: break
+            }
         }
     }
     
     mutating func service(in ns: NamespaceSelector) throws {
-        let service = try client.services.list(in: ns).wait().items
-        switch ns {
-        case .namespace(let name):
-            self.services[name] = service
-        default: break
+        if let client = client {
+            let service = try client.services.list(in: ns).wait().items
+            switch ns {
+            case .namespace(let name):
+                self.services[name] = service
+            default: break
+            }
+        } else {
+            switch ns {
+            case .namespace(let name):
+                self.services[name] = []
+            default: break
+            }
         }
     }
     
     mutating func configMap(in ns: NamespaceSelector) throws {
-        let configMap = try client.configMaps.list(in: ns).wait().items
-        switch ns {
-        case .namespace(let name):
-            self.configMaps[name] = configMap
-        default: break
+        if let client = client {
+            let configMap = try client.configMaps.list(in: ns).wait().items
+            switch ns {
+            case .namespace(let name):
+                self.configMaps[name] = configMap
+            default: break
+            }
+        } else {
+            switch ns {
+            case .namespace(let name):
+                self.configMaps[name] = []
+            default: break
+            }
         }
     }
     
     mutating func secret(in ns: NamespaceSelector) throws {
-        let secret = try client.secrets.list(in: ns).wait().items
-        switch ns {
-        case .namespace(let name):
-            self.secrets[name] = secret
-        default: break
+        if let client = client {
+            let secret = try client.secrets.list(in: ns).wait().items
+            switch ns {
+            case .namespace(let name):
+                self.secrets[name] = secret
+            default: break
+            }
+        } else {
+            switch ns {
+            case .namespace(let name):
+                self.secrets[name] = []
+            default: break
+            }
         }
     }
     
     mutating func daemon(in ns: NamespaceSelector) throws {
-        let daemon = try client.appsV1.daemonSets.list(in: ns).wait().items
-        switch ns {
-        case .namespace(let name):
-            self.daemons[name] = daemon
-        default: break
+        if let client = client {
+            let daemon = try client.appsV1.daemonSets.list(in: ns).wait().items
+            switch ns {
+            case .namespace(let name):
+                self.daemons[name] = daemon
+            default: break
+            }
+        } else {
+            switch ns {
+            case .namespace(let name):
+                self.daemons[name] = []
+            default: break
+            }
         }
     }
     
     mutating func replica(in ns: NamespaceSelector) throws {
-        let replica = try client.appsV1.replicaSets.list(in: ns).wait().items
-        switch ns {
-        case .namespace(let name):
-            self.replicas[name] = replica
-        default: break
+        if let client = client {
+            let replica = try client.appsV1.replicaSets.list(in: ns).wait().items
+            switch ns {
+            case .namespace(let name):
+                self.replicas[name] = replica
+            default: break
+            }
+        } else {
+            switch ns {
+            case .namespace(let name):
+                self.replicas[name] = []
+            default: break
+            }
         }
     }
     

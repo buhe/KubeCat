@@ -9,13 +9,13 @@ import SwiftUI
 
 struct NewClusterView: View {
     @Environment(\.managedObjectContext) private var viewContext
-    
+    let first: Bool
     let type: ClusterType
     let close: () -> Void
     var body: some View {
         switch type {
         case .Config:
-            ConfigView{
+            ConfigView(first: first){
                 close()
             }
                 .environment(\.managedObjectContext, viewContext)
@@ -26,6 +26,6 @@ struct NewClusterView: View {
 
 struct NewClusterView_Previews: PreviewProvider {
     static var previews: some View {
-        NewClusterView(type: .Demo){}
+        NewClusterView(first: true, type: .Demo){}
     }
 }

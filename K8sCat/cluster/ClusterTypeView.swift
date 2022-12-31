@@ -10,7 +10,7 @@ import SwiftUI
 struct ClusterTypeView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @Environment(\.presentationMode) var presentationMode
-    
+    let first: Bool
     let close: () -> Void
     var body: some View {
         NavigationStack {
@@ -18,7 +18,7 @@ struct ClusterTypeView: View {
                 ForEach(ClusterType.allCases, id: \.self) {
                     c in
                     NavigationLink {
-                        NewClusterView(type: c){
+                        NewClusterView(first: first, type: c){
                             presentationMode.wrappedValue.dismiss()
                             close()
                         }
@@ -37,6 +37,6 @@ struct ClusterTypeView: View {
 
 struct ClusterTypeView_Previews: PreviewProvider {
     static var previews: some View {
-        ClusterTypeView{}
+        ClusterTypeView(first: true){}
     }
 }

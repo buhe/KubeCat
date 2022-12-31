@@ -27,7 +27,7 @@ struct ContainerView: View {
         })
     }
     
-    func logs() -> SwiftkubeClientTask {
+    func logs() -> SwiftkubeClientTask? {
         try! viewModel.model.logs(in: .namespace(viewModel.ns), pod: pod, container: container, delegate: delegate)
     }
     

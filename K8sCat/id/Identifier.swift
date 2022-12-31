@@ -24,6 +24,36 @@ protocol CertIdentifier {
     func config() throws -> KubernetesClientConfig?
 }
 
+struct Config: CertIdentifier {
+    let content: String
+    
+    func config() throws -> SwiftkubeClient.KubernetesClientConfig? {
+        let decoder = YAMLDecoder()
+        guard let kubeConfig = try? decoder.decode(KubeConfig.self, from: content) else {
+                return nil
+            }
+//        print("\(kubeConfig)")
+        
+        let p = try NIOSSLCertificate(bytes: .init((kubeConfig.users?.first!.authInfo.clientCertificateData)!), format: NIOSSLSerializationFormats.pem)
+        let k = try NIOSSLPrivateKey(bytes: .init((kubeConfig.users?.first!.authInfo.clientKeyData)!), format: NIOSSLSerializationFormats.pem)
+        
+        let authentication = KubernetesClientAuthentication.x509(clientCertificate: p, clientKey: k)
+        
+        let caCert = try NIOSSLCertificate.fromPEMBytes([UInt8]((kubeConfig.clusters?.first!.cluster.certificateAuthorityData)!))
+        
+        let config = KubernetesClientConfig(
+           masterURL: URL(string: "https://192.168.31.16:6443")!,
+           namespace: "default",
+           authentication: authentication,
+           trustRoots: NIOSSLTrustRoots.certificates(caCert),
+           insecureSkipTLSVerify: false
+        )
+
+//        let client = KubernetesClient(config: config)
+        return config
+    }
+}
+
 struct Default: CertIdentifier {
     
     func config() throws -> SwiftkubeClient.KubernetesClientConfig? {
