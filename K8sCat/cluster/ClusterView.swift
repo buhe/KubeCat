@@ -13,15 +13,23 @@ struct ClusterView: View {
         sortDescriptors: [],
         animation: .default)
     private var cluters: FetchedResults<ClusterEntry>
+    
+    @State var showClusterType = false
     var body: some View {
         HStack {
             Spacer()
             Button{
-                addItem()
+                showClusterType = true
             }label:{
                 Image(systemName: "plus")
             }
             EditButton()
+        }
+        .sheet(isPresented: $showClusterType){
+            ClusterTypeView{
+                showClusterType = false
+            }
+                .environment(\.managedObjectContext, viewContext)
         }
         .padding()
         List {
@@ -40,23 +48,7 @@ struct ClusterView: View {
         
     }
     
-        private func addItem() {
-            withAnimation {
-                let newItem = ClusterEntry(context: viewContext)
-                newItem.name = "demo"
-                newItem.type = ClusterType.Demo.rawValue
-                newItem.icon = "triangle"
-    
-                do {
-                    try viewContext.save()
-                } catch {
-                    // Replace this implementation with code to handle the error appropriately.
-                    // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                    let nsError = error as NSError
-                    fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-                }
-            }
-        }
+       
     
         private func deleteItems(offsets: IndexSet) {
             withAnimation {

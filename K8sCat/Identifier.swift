@@ -11,7 +11,7 @@ import NIO
 import Yams
 import NIOSSL
 
-enum ClusterType: String {
+enum ClusterType: String, CaseIterable {
     case Config
     case Demo
     case Aliyun
