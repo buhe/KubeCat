@@ -87,6 +87,6 @@ struct SecretView: View {
 
 struct SecretView_Previews: PreviewProvider {
     static var previews: some View {
-        SecretView(secret: Secret(id: "abc", name: "abc", labels: ["l1":"l1v"], annotations: ["l1":"l1v"], namespace: "default", data: ["l1":"l1v"]), viewModel: ViewModel())
+        SecretView(secret: Secret(id: "abc", name: "abc", labels: ["l1":"l1v"], annotations: ["l1":"l1v"], namespace: "default", data: ["l1":"l1v"]), viewModel: ViewModel(viewContext: PersistenceController.preview.container.viewContext))
     }
 }

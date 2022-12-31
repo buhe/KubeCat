@@ -82,6 +82,6 @@ struct CronJobView: View {
 
 struct CronJobView_Previews: PreviewProvider {
     static var previews: some View {
-        CronJobView(cronJob: CronJob(id: "123", name: "123", k8sName: "123", labels: ["l1":"l1v"], annotations: ["l1":"l1v"], namespace: "default", schedule: "10 / 5 * * *"), viewModel: ViewModel())
+        CronJobView(cronJob: CronJob(id: "123", name: "123", k8sName: "123", labels: ["l1":"l1v"], annotations: ["l1":"l1v"], namespace: "default", schedule: "10 / 5 * * *"), viewModel: ViewModel(viewContext: PersistenceController.preview.container.viewContext))
     }
 }

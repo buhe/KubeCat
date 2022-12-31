@@ -55,6 +55,6 @@ struct GlobalView: View {
 
 struct GlobalView_Previews: PreviewProvider {
     static var previews: some View {
-        GlobalView(viewModel: ViewModel())
+        GlobalView(viewModel: ViewModel(viewContext: PersistenceController.preview.container.viewContext))
     }
 }

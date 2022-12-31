@@ -12,7 +12,7 @@ struct K8sCatApp: App {
     let persistenceController = PersistenceController.shared
     var body: some Scene {
         WindowGroup {
-            ContentView(viewModel: ViewModel())
+            ContentView(viewModel: ViewModel(viewContext: persistenceController.container.viewContext))
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }

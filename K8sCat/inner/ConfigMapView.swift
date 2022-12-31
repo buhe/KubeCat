@@ -88,6 +88,6 @@ struct ConfigMapView: View {
 
 struct ConfigMapView_Previews: PreviewProvider {
     static var previews: some View {
-        ConfigMapView(configMap: ConfigMap(id: "abc", name: "abc", labels: ["l1":"l1v"], annotations: ["l1":"l1v"], namespace: "default", data: ["l1":"l1v"]), viewModel: ViewModel())
+        ConfigMapView(configMap: ConfigMap(id: "abc", name: "abc", labels: ["l1":"l1v"], annotations: ["l1":"l1v"], namespace: "default", data: ["l1":"l1v"]), viewModel: ViewModel(viewContext: PersistenceController.preview.container.viewContext))
     }
 }

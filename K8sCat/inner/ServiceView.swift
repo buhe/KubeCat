@@ -105,6 +105,6 @@ struct ServiceView: View {
 
 struct ServiceView_Previews: PreviewProvider {
     static var previews: some View {
-        ServiceView(service: Service(id: "123", name: "123", k8sName: "123", type: "clusterIP", clusterIps: ["10.0.0.3"], externalIps: nil, labels: ["l1":"l1v"],annotations: ["a1":"a1v"],namespace: "default"), viewModel: ViewModel())
+        ServiceView(service: Service(id: "123", name: "123", k8sName: "123", type: "clusterIP", clusterIps: ["10.0.0.3"], externalIps: nil, labels: ["l1":"l1v"],annotations: ["a1":"a1v"],namespace: "default"), viewModel: ViewModel(viewContext: PersistenceController.preview.container.viewContext))
     }
 }

@@ -277,6 +277,6 @@ struct NamespaceView: View {
 
 struct NamespaceView_Previews: PreviewProvider {
     static var previews: some View {
-        NamespaceView(viewModel: ViewModel())
+        NamespaceView(viewModel: ViewModel(viewContext: PersistenceController.preview.container.viewContext))
     }
 }

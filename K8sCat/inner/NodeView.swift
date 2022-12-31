@@ -113,6 +113,6 @@ struct NodeView: View {
 
 struct NodeView_Previews: PreviewProvider {
     static var previews: some View {
-        NodeView(node: Node(id: "123", name: "123", hostName: "10.0.0.4", arch: "x86", os: "linux", labels: ["l1":"l1v"],annotations: ["a1":"a1v"], etcd: true,worker: true,controlPlane: true, version: "1.1"),viewModel: ViewModel())
+        NodeView(node: Node(id: "123", name: "123", hostName: "10.0.0.4", arch: "x86", os: "linux", labels: ["l1":"l1v"],annotations: ["a1":"a1v"], etcd: true,worker: true,controlPlane: true, version: "1.1"),viewModel: ViewModel(viewContext: PersistenceController.preview.container.viewContext))
     }
 }

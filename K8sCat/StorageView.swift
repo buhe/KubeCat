@@ -65,6 +65,6 @@ struct StorageView: View {
 
 struct StorageView_Previews: PreviewProvider {
     static var previews: some View {
-        StorageView(viewModel: ViewModel())
+        StorageView(viewModel: ViewModel(viewContext: PersistenceController.preview.container.viewContext))
     }
 }

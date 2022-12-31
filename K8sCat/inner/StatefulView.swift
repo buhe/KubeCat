@@ -82,6 +82,6 @@ struct StatefulView: View {
 
 struct StatefulView_Previews: PreviewProvider {
     static var previews: some View {
-        StatefulView(stateful: Stateful(id: "123", name: "123", k8sName: "123", labels: ["l1":"l1v"],annotations: ["a1":"a1v"],namespace: "default"), viewModel: ViewModel())
+        StatefulView(stateful: Stateful(id: "123", name: "123", k8sName: "123", labels: ["l1":"l1v"],annotations: ["a1":"a1v"],namespace: "default"), viewModel: ViewModel(viewContext: PersistenceController.preview.container.viewContext))
     }
 }

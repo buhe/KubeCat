@@ -8,8 +8,14 @@
 import Foundation
 import SwiftkubeClient
 import SwiftkubeModel
+import CoreData
 
 struct Model {
+    private var viewContext: NSManagedObjectContext
+//    @FetchRequest(
+//        sortDescriptors: [],
+//        animation: .default)
+//    private var cluters: FetchedResults<ClusterEntry>
     let client: KubernetesClient
     
     var nodes: [core.v1.Node]?
@@ -80,8 +86,10 @@ struct Model {
         task.resume()
     }
     
-    init() {
+    init(viewContext: NSManagedObjectContext) {
+        self.viewContext = viewContext
         client = KubernetesClient(config: try! Default().config()!)
+        print("load \((try! viewContext.fetch(NSFetchRequest(entityName: "ClusterEntry")).first as! ClusterEntry).config!)")
         workaroundChinaSpecialBug()
         
         try? namespace()

@@ -83,6 +83,6 @@ struct ReplicaView: View {
 
 struct ReplicaView_Previews: PreviewProvider {
     static var previews: some View {
-        ReplicaView(replica: Replica(id: "abc", name: "abc", k8sName: "abc", labels: ["l1":"l1v"],annotations: ["a1":"a1v"],namespace: "default"), viewModel: ViewModel())
+        ReplicaView(replica: Replica(id: "abc", name: "abc", k8sName: "abc", labels: ["l1":"l1v"],annotations: ["a1":"a1v"],namespace: "default"), viewModel: ViewModel(viewContext: PersistenceController.preview.container.viewContext))
     }
 }

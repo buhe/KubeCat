@@ -7,10 +7,16 @@
 
 import Foundation
 import SwiftkubeClient
+import CoreData
 
 class ViewModel: ObservableObject {
-    @Published var model = Model()
+    
+    @Published var model: Model
     @Published var ns: String = "default"
+    init(viewContext: NSManagedObjectContext) {
+        model = Model(viewContext: viewContext)
+            
+    }
     func pods(in ns: NamespaceSelector) -> [Pod] {
         switch ns {
         case .namespace(let name):
