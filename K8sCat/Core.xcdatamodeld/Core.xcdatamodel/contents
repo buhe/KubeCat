@@ -3,6 +3,7 @@
     <entity name="ClusterEntry" representedClassName="ClusterEntry" syncable="YES" codeGenerationType="class">
         <attribute name="config" optional="YES" attributeType="String"/>
         <attribute name="demo" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="icon" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="type" optional="YES" attributeType="String"/>
     </entity>

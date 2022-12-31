@@ -25,7 +25,8 @@ struct ClusterView: View {
         }
         .padding()
         List {
-            ForEach(cluters.map{Cluster(id: $0.name!, name: $0.name!, icon: "", kubeConfig: $0.config)}) {
+            ForEach(cluters.map{Cluster(id: $0.name!, name: $0.name!, icon:
+                                            $0.icon ?? "triangle", kubeConfig: $0.config)}) {
                 i in
                 HStack {
                     Text(i.name)
@@ -44,6 +45,7 @@ struct ClusterView: View {
                 let newItem = ClusterEntry(context: viewContext)
                 newItem.name = "demo"
                 newItem.type = ClusterType.Demo.rawValue
+                newItem.icon = "triangle"
     
                 do {
                     try viewContext.save()
