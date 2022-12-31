@@ -8,12 +8,14 @@
 import SwiftUI
 
 struct SettingView: View {
+    @Environment(\.managedObjectContext) private var viewContext
     var body: some View {
         NavigationStack {
             Form{
                 Section(header: "Clsters") {
                     NavigationLink {
                         ClusterView()
+                            .environment(\.managedObjectContext, viewContext)
                     } label: {
                         Text("Cluster Management")
                     }

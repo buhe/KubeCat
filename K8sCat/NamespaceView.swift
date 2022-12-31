@@ -12,7 +12,7 @@ struct NamespaceView: View {
     
     @State var search = ""
     @State var tabIndex = 0
-    
+    @Environment(\.managedObjectContext) private var viewContext
     @ObservedObject var viewModel: ViewModel
     @State var showCluster = false
     // must add @ObservedObject
@@ -268,6 +268,7 @@ struct NamespaceView: View {
             }
         }.sheet(isPresented: $showCluster){
             ClusterView()
+                .environment(\.managedObjectContext, viewContext)
         }
         
         

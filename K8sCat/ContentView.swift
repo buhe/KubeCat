@@ -9,21 +9,30 @@ import SwiftUI
 
 struct ContentView: View {
     @ObservedObject var viewModel: ViewModel
+    @Environment(\.managedObjectContext) private var viewContext
     var body: some View {
         TabView {
-            NamespaceView(viewModel: viewModel).tabItem {
+            NamespaceView(viewModel: viewModel)
+                .environment(\.managedObjectContext, viewContext)
+                .tabItem {
                 Label("Payloads", systemImage: "aqi.medium")
             }
             
-            StorageView(viewModel: viewModel).tabItem {
+            StorageView(viewModel: viewModel)
+                .environment(\.managedObjectContext, viewContext)
+                .tabItem {
                 Label("Storage", systemImage: "opticaldiscdrive")
             }
             
-            GlobalView(viewModel: viewModel).tabItem {
+            GlobalView(viewModel: viewModel)
+                .environment(\.managedObjectContext, viewContext)
+                .tabItem {
                 Label("Nodes", systemImage: "display.2")
             }
             
-            SettingView().tabItem {
+            SettingView()
+                .environment(\.managedObjectContext, viewContext)
+                .tabItem {
                 Label("Setting", systemImage: "gear")
             }
         }

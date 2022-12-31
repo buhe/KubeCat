@@ -9,9 +9,11 @@ import SwiftUI
 
 @main
 struct K8sCatApp: App {
+    let persistenceController = PersistenceController.shared
     var body: some Scene {
         WindowGroup {
             ContentView(viewModel: ViewModel())
+                .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
 }

@@ -13,6 +13,7 @@ struct GlobalView: View {
     @State var tabIndex = 0
     @ObservedObject var viewModel: ViewModel
     @State var showCluster = false
+    @Environment(\.managedObjectContext) private var viewContext
     
     var body: some View {
         VStack {
@@ -47,6 +48,7 @@ struct GlobalView: View {
             }
         }.sheet(isPresented: $showCluster){
             ClusterView()
+                .environment(\.managedObjectContext, viewContext)
         }
     }
 }
