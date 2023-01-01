@@ -39,7 +39,8 @@ struct ClusterView: View {
                                             $0.icon ?? "triangle", kubeConfig: $0.config, selected: $0.selected )}) {
                 i in
                 HStack {
-                    Image(systemName: i.selected ? "circle.fill" : "circle")
+//                    Image(systemName: i.selected ? "circle.fill" : "circle")
+                    Image(systemName: i.selected ? i.icon + ".fill" : i.icon)
                     Text(i.name)
                 }
             }.onDelete{
@@ -49,13 +50,9 @@ struct ClusterView: View {
                 c in
                 selectItem(id: c)
             }
-//            .onMove{
-//                s1,s2 in
-//
-//            }
         }
         .listStyle(PlainListStyle())
-        Text(selectedItem ?? "unselected")
+        
         
     }
     

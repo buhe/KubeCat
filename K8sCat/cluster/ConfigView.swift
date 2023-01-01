@@ -12,30 +12,41 @@ struct ConfigView: View {
     let first: Bool
     let close: () -> Void
     @State var name: String?
-    @State var icon: String?
+    @State var icon: String = "a.circle"
     @State var importMsg: String = "Import Kube Config"
     @State var content: String?
     
     @State private var showingExporter = false
+    
+    var columns = Array(repeating: GridItem(.flexible(), spacing: 10), count: 5)
     var body: some View {
+        NavigationStack {
         Form {
-            Section(header: "Name"){
-                TextField(text: $name)
-            }
-            Section(header: "Icon"){
-                TextField(text: $icon)
-            }
-            Section(header: "Kube Config"){
-                Text(importMsg).onTapGesture {
-                    showingExporter = true
+            
+                Section(header: "Name"){
+                    TextField(text: $name)
                 }
-            }
-            Button{
-                // save to core data
-                addItem()
-                close()
-            } label: {
-                Text("Save")
+                Section(header: "Icon"){
+                    Picker("icon", selection: $icon){
+                        ForEach(["a.circle", "b.circle", "c.circle", "e.circle", "f.circle", "g.circle", "h.circle", "i.circle", "j.circle", "k.circle", "l.circle", "m.circle", "n.circle", "o.circle", "p.circle", "q.circle", "r.circle", "s.circle", "t.circle", "u.circle", "v.circle", "w.circle", "x.circle", "y.circle"], id: \.self) {
+                            Image(systemName: $0)
+                        }
+                        
+                    }
+                    
+                }
+                Section(header: "Kube Config"){
+                    Text(importMsg).onTapGesture {
+                        showingExporter = true
+                    }
+                }
+                Button{
+                    // save to core data
+                    addItem()
+                    close()
+                } label: {
+                    Text("Save")
+                }
             }
             
         }
@@ -61,7 +72,7 @@ struct ConfigView: View {
             let newItem = ClusterEntry(context: viewContext)
             newItem.name = self.name
             newItem.type = ClusterType.Config.rawValue
-            newItem.icon = "triangle"
+            newItem.icon = icon
             newItem.config = self.content
             if first {
                 newItem.selected = true

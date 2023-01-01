@@ -146,7 +146,7 @@ struct Model {
             let newItem = ClusterEntry(context: viewContext)
             newItem.name = "demo"
             newItem.type = ClusterType.Demo.rawValue
-            newItem.icon = "triangle"
+            newItem.icon = "d.circle"
 
             newItem.selected = true
             newItem.demo = true
