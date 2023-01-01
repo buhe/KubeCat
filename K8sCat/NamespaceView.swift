@@ -128,7 +128,8 @@ struct NamespaceView: View {
                                     JobView(job: i, viewModel: viewModel)
                                 } label: {
                                     Image(systemName: "figure.run")
-                                    Text(i.name).foregroundColor(i.status == "Succeeded" ? .green : .red)
+                                    Text(i.name)
+                                        .foregroundColor(i.status ? .green : .red)
                                 }
                         
                             }
@@ -159,6 +160,7 @@ struct NamespaceView: View {
                                 } label: {
                                     Image(systemName: "macpro.gen2.fill")
                                     Text(i.name)
+                                        .foregroundColor(i.status ? .green : .red)
                                 }
                         
                             }
@@ -239,6 +241,7 @@ struct NamespaceView: View {
                                 } label: {
                                     Image(systemName: "xserve")
                                     Text(i.name)
+                                        .foregroundColor(i.status ? .green : .red)
                                 }
                         
                             }

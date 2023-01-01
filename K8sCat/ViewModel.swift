@@ -148,7 +148,7 @@ class ViewModel: ObservableObject {
                                               , labels: $0.metadata?.labels
                                               , annotations: $0.metadata?.annotations
                                               , namespace: ($0.metadata?.namespace)!
-                                              , status: $0.status?.succeeded != nil ? "Succeeded" : "Failed"
+                                              , status: $0.status?.succeeded != nil
             )}
         default: return []
         }
@@ -191,6 +191,7 @@ class ViewModel: ObservableObject {
                                                          , labels: $0.metadata?.labels
                                                          , annotations: $0.metadata?.annotations
                                                          , namespace: ($0.metadata?.namespace)!
+                                                         , status: $0.status?.readyReplicas == $0.status?.replicas
             )}
         default: return []
         }
@@ -269,10 +270,11 @@ class ViewModel: ObservableObject {
                 }
                 
             }
-            return model.daemons[name]!.map {Daemon(id: $0.name!, name: $0.name!, k8sName: ($0.metadata?.labels!["app.kubernetes.io/name"]!)!
+            return model.daemons[name]!.map {Daemon(id: $0.name!, name: $0.name!, k8sName: $0.metadata?.labels!["app.kubernetes.io/name"] ?? "unknow"
                                                     , labels: $0.metadata?.labels
                                                     , annotations: $0.metadata?.annotations
                                                     , namespace: ($0.metadata?.namespace)!
+                                                    , status: $0.status!.numberMisscheduled <= 0
             )}
         default: return []
         }

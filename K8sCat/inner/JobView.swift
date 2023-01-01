@@ -16,7 +16,7 @@ struct JobView: View {
                 Text(job.name)
             }
             Section(header: "Status") {
-                Text(job.status)
+                Text(job.status ? "Succeeded" : "Failed")
             }
             Section(header: "Pods") {
                 List {
@@ -82,6 +82,6 @@ struct JobView: View {
 
 struct JobView_Previews: PreviewProvider {
     static var previews: some View {
-        JobView(job: Job(id: "123", name: "123", k8sName: "123", labels: ["l1":"l1v"], annotations: ["l1":"l1v"], namespace: "default", status: "S"), viewModel: ViewModel(viewContext: PersistenceController.preview.container.viewContext))
+        JobView(job: Job(id: "123", name: "123", k8sName: "123", labels: ["l1":"l1v"], annotations: ["l1":"l1v"], namespace: "default", status: false), viewModel: ViewModel(viewContext: PersistenceController.preview.container.viewContext))
     }
 }

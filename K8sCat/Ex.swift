@@ -79,7 +79,7 @@ struct Job: Identifiable {
     let labels: [String: String]?
     let annotations: [String: String]?
     let namespace: String
-    let status: String
+    let status: Bool
 }
 
 struct CronJob: Identifiable {
@@ -99,6 +99,7 @@ struct Stateful: Identifiable {
     let labels: [String: String]?
     let annotations: [String: String]?
     let namespace: String
+    let status: Bool
 }
 
 struct Service: Identifiable {
@@ -139,6 +140,7 @@ struct Daemon: Identifiable {
     let labels: [String: String]?
     let annotations: [String: String]?
     let namespace: String
+    let status: Bool
 }
 
 struct Replica: Identifiable {

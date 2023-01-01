@@ -15,9 +15,6 @@ struct ServiceView: View {
             Section(header: "Name") {
                 Text(service.name)
             }
-            Section(header: "Status") {
-                
-            }
             Section(header: "Pods") {
                 List {
                     ForEach(viewModel.model.podsByService(in: .namespace(viewModel.ns), service: service.k8sName)) {
