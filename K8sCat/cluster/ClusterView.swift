@@ -23,7 +23,7 @@ struct ClusterView: View {
                 showClusterType = true
             }label:{
                 Image(systemName: "plus")
-            }
+            }.padding(.trailing)
             EditButton()
         }
         .sheet(isPresented: $showClusterType){
