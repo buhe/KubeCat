@@ -18,6 +18,7 @@ struct Model {
 //        animation: .default)
 //    private var cluters: FetchedResults<ClusterEntry>
     var client: KubernetesClient?
+    var hasDemo = false
     
     var nodes: [core.v1.Node]?
     var namespaces: [core.v1.Namespace] = []
@@ -140,14 +141,42 @@ struct Model {
     }
     
     mutating func select(viewContext: NSManagedObjectContext) throws {
-        let clusters = try! viewContext.fetch(NSFetchRequest(entityName: "ClusterEntry")) as! [ClusterEntry]
+        var clusters = try! viewContext.fetch(NSFetchRequest(entityName: "ClusterEntry")) as! [ClusterEntry]
+        if clusters.isEmpty {
+            let newItem = ClusterEntry(context: viewContext)
+            newItem.name = "demo"
+            newItem.type = ClusterType.Demo.rawValue
+            newItem.icon = "triangle"
+
+            newItem.selected = true
+            newItem.demo = true
+            
+            clusters.append(newItem)
+
+            do {
+                try viewContext.save()
+            } catch {
+                // Replace this implementation with code to handle the error appropriately.
+                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+                let nsError = error as NSError
+                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+            }
+        }
         for c in clusters {
             if c.selected {
                 print("found cluster: \(c)")
+                if c.demo {
+                    print("has demo")
+                    hasDemo = true
+                    continue
+                }
+                
                 if self.current != nil && c != self.current {
                     try self.client!.syncShutdown()
                     client = KubernetesClient(config: try! Config(content: c.config!).config()!)
                 }
+                
+                
                 
                 if self.current == nil {
                     client = KubernetesClient(config: try! Config(content: c.config!).config()!)
