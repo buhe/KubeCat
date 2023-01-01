@@ -13,9 +13,14 @@ struct NamespaceView: View {
     @State var search = ""
     @State var tabIndex = 0
     @Environment(\.managedObjectContext) private var viewContext
+    // must add @ObservedObject
     @ObservedObject var viewModel: ViewModel
     @State var showCluster = false
-    // must add @ObservedObject
+    @FetchRequest(
+        sortDescriptors: [],
+        animation: .default)
+    private var cluters: FetchedResults<ClusterEntry>
+   
     var body: some View {
         VStack {
             NavigationStack {
@@ -23,7 +28,9 @@ struct NamespaceView: View {
                     HStack{
                         Spacer()
                         Button{showCluster = true}label: {
-                            Image(systemName: "plus")
+                            
+                            
+                            Image(systemName: cluters.filter{$0.selected}.first!.icon!)
                         }.padding(.trailing)
                     }
                     HStack{

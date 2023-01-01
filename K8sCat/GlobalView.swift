@@ -13,6 +13,10 @@ struct GlobalView: View {
     @State var tabIndex = 0
     @ObservedObject var viewModel: ViewModel
     @State var showCluster = false
+    @FetchRequest(
+        sortDescriptors: [],
+        animation: .default)
+    private var cluters: FetchedResults<ClusterEntry>
     @Environment(\.managedObjectContext) private var viewContext
     
     var body: some View {
@@ -21,7 +25,7 @@ struct GlobalView: View {
                 HStack{
                     SearchBar(text: $search).padding(.horizontal)
                     Button{ showCluster = true }label: {
-                        Image(systemName: "plus")
+                        Image(systemName: cluters.filter{$0.selected}.first!.icon!)
                     }.padding(.trailing)
                 }
                 NodesTabBar(tabIndex: $tabIndex).padding(.horizontal, 26)

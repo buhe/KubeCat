@@ -9,6 +9,10 @@ import SwiftUI
 import SwiftUIX
 
 struct StorageView: View {
+    @FetchRequest(
+        sortDescriptors: [],
+        animation: .default)
+    private var cluters: FetchedResults<ClusterEntry>
     @State var search = ""
     @State var tabIndex = 0
     @ObservedObject var viewModel: ViewModel
@@ -20,7 +24,7 @@ struct StorageView: View {
                 HStack{
                     SearchBar(text: $search).padding(.horizontal)
                     Button{showCluster = true}label: {
-                        Image(systemName: "plus")
+                        Image(systemName: cluters.filter{$0.selected}.first!.icon!)
                     }.padding(.trailing)
                 }
                 StorageTabBar(tabIndex: $tabIndex).padding(.horizontal, 26)
