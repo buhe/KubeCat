@@ -267,7 +267,7 @@ struct NamespaceView: View {
                 
             }
         }.sheet(isPresented: $showCluster){
-            ClusterView()
+            ClusterView(viewModel: viewModel)
                 .environment(\.managedObjectContext, viewContext)
         }
         

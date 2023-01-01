@@ -47,7 +47,7 @@ struct GlobalView: View {
                 }
             }
         }.sheet(isPresented: $showCluster){
-            ClusterView()
+            ClusterView(viewModel: viewModel)
                 .environment(\.managedObjectContext, viewContext)
         }
     }

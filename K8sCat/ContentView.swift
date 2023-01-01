@@ -30,7 +30,7 @@ struct ContentView: View {
                 Label("Nodes", systemImage: "display.2")
             }
             
-            SettingView()
+            SettingView(viewModel: viewModel)
                 .environment(\.managedObjectContext, viewContext)
                 .tabItem {
                 Label("Setting", systemImage: "gear")

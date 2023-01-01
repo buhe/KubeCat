@@ -8,13 +8,14 @@
 import SwiftUI
 
 struct SettingView: View {
+    let viewModel: ViewModel
     @Environment(\.managedObjectContext) private var viewContext
     var body: some View {
         NavigationStack {
             Form{
                 Section(header: "Clsters") {
                     NavigationLink {
-                        ClusterView()
+                        ClusterView(viewModel: viewModel)
                             .environment(\.managedObjectContext, viewContext)
                     } label: {
                         Text("Cluster Management")
@@ -68,6 +69,6 @@ spec:
 
 struct SettingView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingView()
+        SettingView(viewModel: ViewModel(viewContext: PersistenceController.preview.container.viewContext))
     }
 }

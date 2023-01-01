@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ClusterView: View {
+    let viewModel: ViewModel
     @Environment(\.managedObjectContext) private var viewContext
     @FetchRequest(
         sortDescriptors: [],
@@ -46,7 +47,7 @@ struct ClusterView: View {
                 deleteItems(offsets: sets)
             }.onChange(of: selectedItem ?? ""){
                 c in
-                addItem(id: c)
+                selectItem(id: c)
             }
 //            .onMove{
 //                s1,s2 in
@@ -75,11 +76,14 @@ struct ClusterView: View {
             }
         }
     
-    private func addItem(id: String) {
+    private func selectItem(id: String) {
         withAnimation {
             for cluster in cluters {
                 if cluster.name == id {
                     cluster.selected = true
+                    if !cluster.demo {
+                        viewModel.model.hasAndSelectDemo = false
+                    }
                 } else {
                     cluster.selected = false
                 }
@@ -108,6 +112,6 @@ struct Cluster: Identifiable, Hashable {
 
 struct ClusterView_Previews: PreviewProvider {
     static var previews: some View {
-        ClusterView()
+        ClusterView(viewModel: ViewModel(viewContext: PersistenceController.preview.container.viewContext))
     }
 }
