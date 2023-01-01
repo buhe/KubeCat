@@ -27,7 +27,7 @@ class ViewModel: ObservableObject {
                 id: $0.name, name: $0.name, image: $0.image!
                 ,path: $0.terminationMessagePath!, policy: $0.terminationMessagePolicy!, pullPolicy: $0.imagePullPolicy!
                 )})!
-                                              , clusterIP: ($0.status?.podIP)!, nodeIP: ($0.status?.hostIP)!
+                                              , clusterIP: $0.status?.podIP ?? "unknow Pod IP", nodeIP: $0.status?.hostIP ?? "unknow Node IP"
                                               , labels: $0.metadata?.labels
                                               , annotations: $0.metadata?.annotations
                                               , namespace: ($0.metadata?.namespace)!
