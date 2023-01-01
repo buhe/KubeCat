@@ -172,18 +172,40 @@ struct Model {
                 }
                 
                 if self.current != nil && c != self.current {
-                    try self.client!.syncShutdown()
+//                    try self.client!.syncShutdown()
                     client = KubernetesClient(config: try! Config(content: c.config!).config()!)
+                    self.current = c
+                    clearAll()
+                    try? namespace()
                 }
                 
                 
                 
                 if self.current == nil {
                     client = KubernetesClient(config: try! Config(content: c.config!).config()!)
+                    self.current = c
+                    try? namespace()
                 }
                 
             }
         }
+    }
+    
+    mutating func clearAll() {
+        nodes = nil
+        namespaces = []
+        pods = ["": []]
+        deployments = ["": []]
+        jobs = ["": []]
+        cronJobs = ["": []]
+        statefulls = ["": []]
+        services = ["": []]
+        configMaps = ["": []]
+        secrets = ["": []]
+        daemons = ["": []]
+        replicas = ["": []]
+        pvs = nil
+        pvcs = nil
     }
     
     mutating func namespace() throws {
