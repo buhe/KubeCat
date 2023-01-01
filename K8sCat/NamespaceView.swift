@@ -100,6 +100,9 @@ struct NamespaceView: View {
                         
                             }
                         }.listStyle(PlainListStyle())
+                            .refreshable {
+                                viewModel.model.pods[viewModel.ns] = nil
+                                        }
                     case 1:
                         List {
                             ForEach(viewModel.deployment(in: .namespace(viewModel.ns))) {
@@ -254,6 +257,7 @@ struct NamespaceView: View {
                                 NavigationLink {
                                     ReplicaView(replica: i, viewModel: viewModel)
                                 } label: {
+                                    Image(systemName: "square.3.layers.3d.down.left")
                                     Text(i.name)
                                 }
                         
