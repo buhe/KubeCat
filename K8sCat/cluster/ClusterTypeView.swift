@@ -18,7 +18,7 @@ struct ClusterTypeView: View {
                 ForEach(ClusterType.allCases, id: \.self) {
                     c in
                     switch c {
-                    case .Config, .Aliyun, .AWS:
+                    case .KubeConfig, .Aliyun, .AWS:
                         NavigationLink {
                             NewClusterView(first: first, type: c){
                                 presentationMode.wrappedValue.dismiss()

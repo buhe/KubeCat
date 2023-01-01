@@ -14,7 +14,7 @@ struct NewClusterView: View {
     let close: () -> Void
     var body: some View {
         switch type {
-        case .Config:
+        case .KubeConfig:
             ConfigView(first: first){
                 close()
             }

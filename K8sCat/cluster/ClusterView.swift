@@ -114,6 +114,16 @@ struct Cluster: Identifiable, Hashable {
     
 }
 
+enum ClusterType: String, CaseIterable {
+    case KubeConfig
+    case Demo
+    case Aliyun
+    case AWS
+    case GCP
+    case Azuse
+    case DO
+}
+
 struct ClusterView_Previews: PreviewProvider {
     static var previews: some View {
         ClusterView(viewModel: ViewModel(viewContext: PersistenceController.preview.container.viewContext))

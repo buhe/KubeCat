@@ -71,7 +71,7 @@ struct ConfigView: View {
         withAnimation {
             let newItem = ClusterEntry(context: viewContext)
             newItem.name = self.name
-            newItem.type = ClusterType.Config.rawValue
+            newItem.type = ClusterType.KubeConfig.rawValue
             newItem.icon = icon
             newItem.config = self.content
             if first {

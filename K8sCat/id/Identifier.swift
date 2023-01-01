@@ -11,15 +11,7 @@ import NIO
 import Yams
 import NIOSSL
 
-enum ClusterType: String, CaseIterable {
-    case Config
-    case Demo
-    case Aliyun
-    case AWS
-    case GCP
-    case Azuse
-    case DO
-}
+
 protocol CertIdentifier {
     func config() throws -> KubernetesClientConfig?
 }
