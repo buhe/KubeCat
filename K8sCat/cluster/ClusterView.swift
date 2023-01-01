@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct ClusterView: View {
+    
     let viewModel: ViewModel
+    let close: () -> Void
     @Environment(\.managedObjectContext) private var viewContext
     @FetchRequest(
         sortDescriptors: [],
@@ -49,6 +51,7 @@ struct ClusterView: View {
             }.onChange(of: selectedItem ?? ""){
                 c in
                 selectItem(id: c)
+                close()
             }
         }
         .listStyle(PlainListStyle())
@@ -126,6 +129,6 @@ enum ClusterType: String, CaseIterable {
 
 struct ClusterView_Previews: PreviewProvider {
     static var previews: some View {
-        ClusterView(viewModel: ViewModel(viewContext: PersistenceController.preview.container.viewContext))
+        ClusterView(viewModel: ViewModel(viewContext: PersistenceController.preview.container.viewContext)){}
     }
 }

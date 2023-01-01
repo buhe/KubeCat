@@ -13,14 +13,14 @@ struct SettingView: View {
     var body: some View {
         NavigationStack {
             Form{
-                Section(header: "Clsters") {
-                    NavigationLink {
-                        ClusterView(viewModel: viewModel)
-                            .environment(\.managedObjectContext, viewContext)
-                    } label: {
-                        Text("Cluster Management")
-                    }
-                }
+//                Section(header: "Clsters") {
+//                    NavigationLink {
+//                        ClusterView(viewModel: viewModel)
+//                            .environment(\.managedObjectContext, viewContext)
+//                    } label: {
+//                        Text("Cluster Management")
+//                    }
+//                }
                 Section(){
                     Button{
                         let b64 = """

@@ -51,7 +51,9 @@ struct GlobalView: View {
                 }
             }
         }.sheet(isPresented: $showCluster){
-            ClusterView(viewModel: viewModel)
+            ClusterView(viewModel: viewModel){
+                showCluster = false
+            }
                 .environment(\.managedObjectContext, viewContext)
         }
     }
