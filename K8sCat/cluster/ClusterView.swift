@@ -60,7 +60,12 @@ struct ClusterView: View {
     
         private func deleteItems(offsets: IndexSet) {
             withAnimation {
-                offsets.map { cluters[$0] }.forEach(viewContext.delete)
+                let delete = offsets.map { cluters[$0] }
+                delete.forEach{if $0.demo && $0.selected {
+                    viewModel.model.hasAndSelectDemo = false
+                    
+                }}
+                delete.forEach(viewContext.delete)
     
                 do {
                     try viewContext.save()
