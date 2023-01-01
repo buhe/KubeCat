@@ -17,18 +17,23 @@ struct ClusterTypeView: View {
             List {
                 ForEach(ClusterType.allCases, id: \.self) {
                     c in
-                    NavigationLink {
-                        NewClusterView(first: first, type: c){
-                            presentationMode.wrappedValue.dismiss()
-                            close()
+                    switch c {
+                    case .Config, .Aliyun, .AWS:
+                        NavigationLink {
+                            NewClusterView(first: first, type: c){
+                                presentationMode.wrappedValue.dismiss()
+                                close()
+                            }
+                                .environment(\.managedObjectContext, viewContext)
+                        } label: {
+                            VStack(alignment: .leading) {
+                                Text(c.rawValue)
+                                
+                            }
                         }
-                            .environment(\.managedObjectContext, viewContext)
-                    } label: {
-                        VStack(alignment: .leading) {
-                            Text(c.rawValue)
-                            
-                        }
+                    default: EmptyView()
                     }
+                    
                 }
             }
         }
