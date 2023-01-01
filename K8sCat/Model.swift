@@ -128,19 +128,16 @@ struct Model {
     
     init(viewContext: NSManagedObjectContext) {
         self.viewContext = viewContext
-//        client = KubernetesClient(config: try! Default().config()!)
-        
-//        print("load \((try! viewContext.fetch(NSFetchRequest(entityName: "ClusterEntry")).first as! ClusterEntry).config!)")
         workaroundChinaSpecialBug()
-        try? select(viewContext: viewContext)
-        
-        try? namespace()
-//        try? pod(in: .default)
-//        try? node()
-        
+        select(viewContext: viewContext)
+        do{
+            try namespace()
+        }catch{
+            // network lose
+        }
     }
     
-    mutating func select(viewContext: NSManagedObjectContext) throws {
+    mutating func select(viewContext: NSManagedObjectContext) {
         var clusters = try! viewContext.fetch(NSFetchRequest(entityName: "ClusterEntry")) as! [ClusterEntry]
         if clusters.isEmpty {
             let newItem = ClusterEntry(context: viewContext)

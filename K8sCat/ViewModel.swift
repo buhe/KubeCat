@@ -68,7 +68,12 @@ class ViewModel: ObservableObject {
     }
     var pvc: [PersistentVolumeClaim] {
         if model.pvcs == nil {
-            try! model.pvc()
+            do{
+                try model.pvc()
+            } catch{
+                model.pvcs = []
+            }
+            
         }
         if model.hasAndSelectDemo {
             return [PersistentVolumeClaim(id: "demo", name: "demo")]
@@ -81,7 +86,12 @@ class ViewModel: ObservableObject {
     }
     var nodes: [Node] {
         if model.nodes == nil {
-            try! model.node()
+            do{
+                try model.node()
+            }catch{
+                model.nodes = []
+            }
+            
         }
         if model.hasAndSelectDemo {
             return [Node(id: "demo1", name: "demo1", hostName: "1.2.3.4", arch: "x86", os: "Linux", labels: [:], annotations: [:], etcd: true, worker: false, controlPlane: true, version: "1.2.3"), Node(id: "demo2", name: "demo2", hostName: "5.6.7.8", arch: "x86", os: "Linux", labels: [:], annotations: [:], etcd: true, worker: true, controlPlane: true, version: "1.2.3")]
@@ -106,7 +116,12 @@ class ViewModel: ObservableObject {
         switch ns {
         case .namespace(let name):
             if model.deployments[name] == nil {
-                try! model.deployment(in: ns)
+                do{
+                    try model.deployment(in: ns)
+                }catch{
+                    model.deployments[name] = []
+                }
+                
             }
             return model.deployments[name]!.map {Deployment(id: $0.name!, name: $0.name!, k8sName: $0.metadata?.labels!["app.kubernetes.io/name"] ?? "unknow", expect: Int($0.spec?.replicas ?? 0), pending: Int($0.status?.unavailableReplicas ?? 0)
                                                             , labels: $0.metadata?.labels
@@ -121,7 +136,12 @@ class ViewModel: ObservableObject {
         switch ns {
         case .namespace(let name):
             if model.jobs[name] == nil {
-                try! model.job(in: ns)
+                do{
+                    try model.job(in: ns)
+                }catch{
+                    model.jobs[name] = []
+                }
+                
             }
             return model.jobs[name]!.map {Job(id: $0.name!, name: $0.name!,
                                               k8sName: $0.metadata!.labels!["job-name"] ?? "unknow"
@@ -137,7 +157,12 @@ class ViewModel: ObservableObject {
         switch ns {
         case .namespace(let name):
             if model.cronJobs[name] == nil {
-                try! model.cronJob(in: ns)
+                do{
+                    try model.cronJob(in: ns)
+                }catch{
+                    model.cronJobs[name] = []
+                }
+                
             }
             return model.cronJobs[name]!.map {CronJob(id: $0.name!, name: $0.name!,
                                                       k8sName: $0.metadata?.labels?["job-name"] ?? "unknow"
@@ -154,7 +179,12 @@ class ViewModel: ObservableObject {
         switch ns {
         case .namespace(let name):
             if model.statefulls[name] == nil {
-                try! model.statefull(in: ns)
+                do{
+                    try model.statefull(in: ns)
+                }catch{
+                    model.statefulls[name] = []
+                }
+                
             }
             return model.statefulls[name]!.map {Stateful(id: $0.name!, name: $0.name!, k8sName: ($0.metadata?.labels!["app.kubernetes.io/name"]!)!
                                                          , labels: $0.metadata?.labels
@@ -169,7 +199,12 @@ class ViewModel: ObservableObject {
         switch ns {
         case .namespace(let name):
             if model.services[name] == nil {
-                try! model.service(in: ns)
+                do{
+                    try model.service(in: ns)
+                }catch{
+                    model.services[name] = []
+                }
+                
             }
             return model.services[name]!.map {Service(id: $0.name!, name: $0.name!, k8sName: $0.metadata?.labels!["app.kubernetes.io/name"] ?? "unknow", type: ($0.spec?.type!)!, clusterIps: $0.spec?.clusterIPs, externalIps: $0.spec?.externalIPs
                                                       , labels: $0.metadata?.labels
@@ -184,7 +219,12 @@ class ViewModel: ObservableObject {
         switch ns {
         case .namespace(let name):
             if model.configMaps[name] == nil {
-                try! model.configMap(in: ns)
+                do{
+                    try model.configMap(in: ns)
+                }catch{
+                    model.configMaps[name] = []
+                }
+                
             }
             return model.configMaps[name]!.map {ConfigMap(id: $0.name!, name: $0.name!
                                                           , labels: $0.metadata?.labels
@@ -200,7 +240,12 @@ class ViewModel: ObservableObject {
         switch ns {
         case .namespace(let name):
             if model.secrets[name] == nil {
-                try! model.secret(in: ns)
+                do{
+                    try model.secret(in: ns)
+                }catch{
+                    model.secrets[name] = []
+                }
+                
             }
             return model.secrets[name]!.map {Secret(id: $0.name!, name: $0.name!
                                                     , labels: $0.metadata?.labels
@@ -216,7 +261,12 @@ class ViewModel: ObservableObject {
         switch ns {
         case .namespace(let name):
             if model.daemons[name] == nil {
-                try! model.daemon(in: ns)
+                do{
+                    try model.daemon(in: ns)
+                }catch{
+                    model.daemons[name] = []
+                }
+                
             }
             return model.daemons[name]!.map {Daemon(id: $0.name!, name: $0.name!, k8sName: ($0.metadata?.labels!["app.kubernetes.io/name"]!)!
                                                     , labels: $0.metadata?.labels
@@ -231,7 +281,12 @@ class ViewModel: ObservableObject {
         switch ns {
         case .namespace(let name):
             if model.replicas[name] == nil {
-                try! model.replica(in: ns)
+                do{
+                    try model.replica(in: ns)
+                }catch{
+                    model.replicas[name] = []
+                }
+                
             }
             return model.replicas[name]!.map {Replica(id: $0.name!, name: $0.name!, k8sName: $0.metadata?.labels!["app.kubernetes.io/name"] ?? "unknow"
                                                       , labels: $0.metadata?.labels
