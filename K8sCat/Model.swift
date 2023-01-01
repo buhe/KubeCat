@@ -18,7 +18,7 @@ struct Model {
 //        animation: .default)
 //    private var cluters: FetchedResults<ClusterEntry>
     var client: KubernetesClient?
-    var hasDemo = false
+    var hasAndSelectDemo = false
     
     var nodes: [core.v1.Node]?
     var namespaces: [core.v1.Namespace] = []
@@ -167,7 +167,7 @@ struct Model {
                 print("found cluster: \(c)")
                 if c.demo {
                     print("has demo")
-                    hasDemo = true
+                    hasAndSelectDemo = true
                     continue
                 }
                 

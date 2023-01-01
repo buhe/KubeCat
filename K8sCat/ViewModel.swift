@@ -23,7 +23,7 @@ class ViewModel: ObservableObject {
             if model.pods[name] == nil {
                 try! model.pod(in: ns)
             }
-            if model.hasDemo {
+            if model.hasAndSelectDemo {
                 return [Pod(id: "demo", name: "demo", k8sName: "demo", status: "Running", expect: 2, pending: 1, containers: [], clusterIP: "10.0.1.3", nodeIP: "1.2.3.4", labels: [:], annotations: [:], namespace: name)]
             }
             return model.pods[name]!.map {Pod(id: $0.name!, name: $0.name!, k8sName: $0.metadata?.labels!["app.kubernetes.io/name"] ?? "unknow", status: ($0.status?.phase)!, expect: $0.spec?.containers.count ?? 0, pending: $0.status?.containerStatuses?.filter{$0.ready == false}.count ?? 0, containers: ($0.spec?.containers.map{Container(
@@ -69,6 +69,9 @@ class ViewModel: ObservableObject {
         if model.nodes == nil {
             try! model.node()
         }
+        if model.hasAndSelectDemo {
+            return [Node(id: "demo1", name: "demo1", hostName: "1.2.3.4", arch: "x86", os: "Linux", labels: [:], annotations: [:], etcd: true, worker: false, controlPlane: true, version: "1.2.3"), Node(id: "demo2", name: "demo2", hostName: "5.6.7.8", arch: "x86", os: "Linux", labels: [:], annotations: [:], etcd: true, worker: true, controlPlane: true, version: "1.2.3")]
+        }
         return model.nodes!.map { Node(id: $0.name!, name: $0.name!, hostName: ($0.metadata?.labels!["kubernetes.io/hostname"]!)!, arch: ($0.metadata?.labels!["kubernetes.io/arch"]!)!, os: ($0.metadata?.labels!["kubernetes.io/os"]!)!
                                , labels: $0.metadata?.labels
                                , annotations: $0.metadata?.annotations,
@@ -79,7 +82,11 @@ class ViewModel: ObservableObject {
         ) }
     }
     var namespaces: [String] {
-        model.namespaces.map { $0.name! }
+        if model.hasAndSelectDemo {
+            return ["demo1", "demo2"]
+        } else {
+            return model.namespaces.map { $0.name! }
+        }
     }
     func deployment(in ns: NamespaceSelector) -> [Deployment] {
         switch ns {
