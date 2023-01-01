@@ -21,7 +21,11 @@ class ViewModel: ObservableObject {
         switch ns {
         case .namespace(let name):
             if model.pods[name] == nil {
-                try! model.pod(in: ns)
+                do{
+                    try model.pod(in: ns)
+                }catch{
+                    model.pods[name] = []
+                }
             }
             if model.hasAndSelectDemo {
                 return [Pod(id: "demo", name: "demo", k8sName: "demo", status: "Running", expect: 2, pending: 1, containers: [], clusterIP: "10.0.1.3", nodeIP: "1.2.3.4", labels: [:], annotations: [:], namespace: name)]
@@ -42,7 +46,12 @@ class ViewModel: ObservableObject {
     var pv: [PersistentVolume] {
 
         if model.pvs == nil {
-            try! model.pv()
+            do{
+                try model.pv()
+            }catch{
+                model.pvs = []
+            }
+            
         }
         if model.hasAndSelectDemo {
             return [PersistentVolume(id: "demo", name: "demo", labels: [:], annotations: [:], accessModes: "r/w", status: "Bounded", storageClass: "auto")]

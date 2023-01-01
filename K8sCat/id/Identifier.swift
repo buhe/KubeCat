@@ -25,23 +25,26 @@ struct Config: CertIdentifier {
                 return nil
             }
 //        print("\(kubeConfig)")
+        let currentContext = kubeConfig.currentContext
+        let context = kubeConfig.contexts?.filter{$0.name == currentContext}.first!
+        let cluster = kubeConfig.clusters?.filter{$0.name == context?.context.cluster}.first!
+        let user = kubeConfig.users?.filter{$0.name == context?.context.user}.first!
         
-        let p = try NIOSSLCertificate(bytes: .init((kubeConfig.users?.first!.authInfo.clientCertificateData)!), format: NIOSSLSerializationFormats.pem)
-        let k = try NIOSSLPrivateKey(bytes: .init((kubeConfig.users?.first!.authInfo.clientKeyData)!), format: NIOSSLSerializationFormats.pem)
+        let p = try NIOSSLCertificate(bytes: .init((user?.authInfo.clientCertificateData)!), format: NIOSSLSerializationFormats.pem)
+        let k = try NIOSSLPrivateKey(bytes: .init((user?.authInfo.clientKeyData)!), format: NIOSSLSerializationFormats.pem)
         
         let authentication = KubernetesClientAuthentication.x509(clientCertificate: p, clientKey: k)
         
-        let caCert = try NIOSSLCertificate.fromPEMBytes([UInt8]((kubeConfig.clusters?.first!.cluster.certificateAuthorityData)!))
+        let caCert = try NIOSSLCertificate.fromPEMBytes([UInt8]((cluster?.cluster.certificateAuthorityData)!))
         
         let config = KubernetesClientConfig(
-           masterURL: URL(string: "https://192.168.31.16:6443")!,
-           namespace: "default",
-           authentication: authentication,
-           trustRoots: NIOSSLTrustRoots.certificates(caCert),
-           insecureSkipTLSVerify: false
+            masterURL: URL(string: (cluster?.cluster.server)!)!,
+            namespace: context?.context.namespace ?? "default",
+            authentication: authentication,
+            trustRoots: NIOSSLTrustRoots.certificates(caCert),
+            insecureSkipTLSVerify: false
         )
 
-//        let client = KubernetesClient(config: config)
         return config
     }
 }
