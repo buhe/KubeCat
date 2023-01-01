@@ -128,7 +128,7 @@ struct NamespaceView: View {
                                     JobView(job: i, viewModel: viewModel)
                                 } label: {
                                     Image(systemName: "figure.run")
-                                    Text(i.name)
+                                    Text(i.name).foregroundColor(i.status == "Succeeded" ? .green : .red)
                                 }
                         
                             }
