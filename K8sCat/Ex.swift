@@ -50,6 +50,7 @@ struct Deployment: Identifiable {
     let labels: [String: String]?
     let annotations: [String: String]?
     let namespace: String
+    let status: Bool
 }
 
 struct PersistentVolume: Identifiable {

@@ -127,6 +127,7 @@ class ViewModel: ObservableObject {
                                                             , labels: $0.metadata?.labels
                                                             , annotations: $0.metadata?.annotations
                                                             , namespace: ($0.metadata?.namespace)!
+                                                            , status: $0.status?.replicas == $0.status?.readyReplicas
             )}
         default: return []
         }

@@ -110,6 +110,7 @@ struct NamespaceView: View {
                                     Image(systemName: "ipad.landscape.badge.play")
                                     VStack(alignment: .leading) {
                                         Text(i.name)
+                                            .foregroundColor(i.status ? .green : .red)
                                         HStack{
                                             Text("expect: \(i.expect), ").font(.caption)
                                             Text("pendding: \(i.pending)").font(.caption).foregroundColor(i.pending > 0 ? .red : .none)

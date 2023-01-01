@@ -16,7 +16,7 @@ struct DeploymentView: View {
                 Text(deployment.name)
             }
             Section(header: "Status") {
-                
+                Text(deployment.status ? "Ready" : "Pending")
             }
             Section(header: "Pods") {
                 List {
@@ -82,6 +82,6 @@ struct DeploymentView: View {
 
 struct DeploymentView_Previews: PreviewProvider {
     static var previews: some View {
-        DeploymentView(deployment:  Deployment(id: "123", name: "123", k8sName: "123", expect: 1, pending: 0, labels: ["l1":"l1v"],annotations: ["a1":"a1v"],namespace: "default"), viewModel: ViewModel(viewContext: PersistenceController.preview.container.viewContext))
+        DeploymentView(deployment:  Deployment(id: "123", name: "123", k8sName: "123", expect: 1, pending: 0, labels: ["l1":"l1v"],annotations: ["a1":"a1v"],namespace: "default", status: false), viewModel: ViewModel(viewContext: PersistenceController.preview.container.viewContext))
     }
 }
