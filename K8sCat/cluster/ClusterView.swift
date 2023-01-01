@@ -36,7 +36,7 @@ struct ClusterView: View {
         .padding()
         List(selection: $selectedItem)  {
             ForEach(cluters.map{Cluster(id: $0.name!, name: $0.name!, icon:
-                                            $0.icon ?? "triangle", kubeConfig: $0.config, selected: $0.selected )}) {
+                                            $0.icon!, kubeConfig: $0.config, selected: $0.selected )}) {
                 i in
                 HStack {
 //                    Image(systemName: i.selected ? "circle.fill" : "circle")
