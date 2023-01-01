@@ -78,7 +78,7 @@ struct NamespaceView: View {
                                 NavigationLink {
                                     PodView(pod: i, viewModel: viewModel)
                                 } label: {
-                                    Image(systemName: "bus.fill")
+                                    Image(systemName: "tray.2")
                                     VStack(alignment: .leading) {
                                         
                                         Text(i.name)
