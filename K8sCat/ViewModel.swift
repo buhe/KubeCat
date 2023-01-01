@@ -41,28 +41,33 @@ class ViewModel: ObservableObject {
     }
     var pv: [PersistentVolume] {
 
-            if model.pvs == nil {
-                try! model.pv()
-            }
-            return model.pvs!.map {PersistentVolume(id: $0.name!, name: $0.name!
-                                                            , labels: $0.metadata?.labels
-                                                            , annotations: $0.metadata?.annotations,
-                                                    accessModes: ($0.spec?.accessModes?.first)!,
-                                                    status: ($0.status?.phase)!,
-                                                    storageClass: ($0.spec?.storageClassName)!
-                                                            
-            )}
+        if model.pvs == nil {
+            try! model.pv()
+        }
+        if model.hasAndSelectDemo {
+            return [PersistentVolume(id: "demo", name: "demo", labels: [:], annotations: [:], accessModes: "r/w", status: "Bounded", storageClass: "auto")]
+        }
+        return model.pvs!.map {PersistentVolume(id: $0.name!, name: $0.name!
+                                                        , labels: $0.metadata?.labels
+                                                        , annotations: $0.metadata?.annotations,
+                                                accessModes: ($0.spec?.accessModes?.first)!,
+                                                status: ($0.status?.phase)!,
+                                                storageClass: ($0.spec?.storageClassName)!
+                                                        
+        )}
 
     }
     var pvc: [PersistentVolumeClaim] {
-
-            if model.pvcs == nil {
-                try! model.pvc()
-            }
-            return model.pvcs!.map {PersistentVolumeClaim(id: $0.name!, name: $0.name!
-                                                            
-                                                            
-            )}
+        if model.pvcs == nil {
+            try! model.pvc()
+        }
+        if model.hasAndSelectDemo {
+            return [PersistentVolumeClaim(id: "demo", name: "demo")]
+        }
+        return model.pvcs!.map {PersistentVolumeClaim(id: $0.name!, name: $0.name!
+                                                        
+                                                        
+        )}
         
     }
     var nodes: [Node] {
