@@ -106,7 +106,7 @@ struct NamespaceView: View {
                         }
                     case 1:
                         List {
-                            ForEach(viewModel.deployment(in: .namespace(viewModel.ns)).filter{$0.name.contains(search.lowercased()) || search == ""}) {
+                            ForEach(viewModel.deployment.filter{$0.name.contains(search.lowercased()) || search == ""}) {
                                 i in
                                 NavigationLink {
                                     DeploymentView(deployment: i, viewModel: viewModel)
@@ -130,7 +130,7 @@ struct NamespaceView: View {
                         }
                     case 2:
                         List {
-                            ForEach(viewModel.job(in: .namespace(viewModel.ns)).filter{$0.name.contains(search.lowercased()) || search == ""}) {
+                            ForEach(viewModel.job.filter{$0.name.contains(search.lowercased()) || search == ""}) {
                                 i in
                                 NavigationLink {
                                     JobView(job: i, viewModel: viewModel)
@@ -147,7 +147,7 @@ struct NamespaceView: View {
                         }
                     case 3:
                         List {
-                            ForEach(viewModel.cronJob(in: .namespace(viewModel.ns)).filter{$0.name.contains(search.lowercased()) || search == ""}) {
+                            ForEach(viewModel.cronJob.filter{$0.name.contains(search.lowercased()) || search == ""}) {
                                 i in
                                 NavigationLink {
                                     CronJobView(cronJob: i, viewModel: viewModel)
@@ -167,7 +167,7 @@ struct NamespaceView: View {
                         }
                     case 4:
                         List {
-                            ForEach(viewModel.statefull(in: .namespace(viewModel.ns)).filter{$0.name.contains(search.lowercased()) || search == ""}) {
+                            ForEach(viewModel.statefull.filter{$0.name.contains(search.lowercased()) || search == ""}) {
                                 i in
                                 NavigationLink {
                                     StatefulView(stateful: i, viewModel: viewModel)
@@ -184,7 +184,7 @@ struct NamespaceView: View {
                         }
                     case 5:
                         List {
-                            ForEach(viewModel.service(in: .namespace(viewModel.ns)).filter{$0.name.contains(search.lowercased()) || search == ""}) {
+                            ForEach(viewModel.service.filter{$0.name.contains(search.lowercased()) || search == ""}) {
                                 i in
                                 NavigationLink {
                                     ServiceView(service: i, viewModel: viewModel)
@@ -222,7 +222,7 @@ struct NamespaceView: View {
                         }
                     case 6:
                         List {
-                            ForEach(viewModel.configMap(in: .namespace(viewModel.ns)).filter{$0.name.contains(search.lowercased()) || search == ""}) {
+                            ForEach(viewModel.configMap.filter{$0.name.contains(search.lowercased()) || search == ""}) {
                                 i in
                                 NavigationLink {
                                     ConfigMapView(configMap: i, viewModel: viewModel)
@@ -241,7 +241,7 @@ struct NamespaceView: View {
                         }
                     case 7:
                         List {
-                            ForEach(viewModel.secret(in: .namespace(viewModel.ns)).filter{$0.name.contains(search.lowercased()) || search == ""}) {
+                            ForEach(viewModel.secret.filter{$0.name.contains(search.lowercased()) || search == ""}) {
                                 i in
                                 NavigationLink {
                                     SecretView(secret: i, viewModel: viewModel)
@@ -260,7 +260,7 @@ struct NamespaceView: View {
                         }
                     case 8:
                         List {
-                            ForEach(viewModel.daemon(in: .namespace(viewModel.ns)).filter{$0.name.contains(search.lowercased()) || search == ""}) {
+                            ForEach(viewModel.daemon.filter{$0.name.contains(search.lowercased()) || search == ""}) {
                                 i in
                                 NavigationLink {
                                     DaemonView(daemon: i, viewModel: viewModel)
@@ -277,7 +277,7 @@ struct NamespaceView: View {
                         }
                     case 9:
                         List {
-                            ForEach(viewModel.replica(in: .namespace(viewModel.ns)).filter{$0.name.contains(search.lowercased()) || search == ""}) {
+                            ForEach(viewModel.replica.filter{$0.name.contains(search.lowercased()) || search == ""}) {
                                 i in
                                 NavigationLink {
                                     ReplicaView(replica: i, viewModel: viewModel)

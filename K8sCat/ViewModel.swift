@@ -129,237 +129,196 @@ class ViewModel: ObservableObject {
             return model.namespaces.map { $0.name! }
         }
     }
-    func deployment(in ns: NamespaceSelector) -> [Deployment] {
-        switch ns {
-        case .namespace(let name):
-            if model.deployments[name] == nil {
+    var deployment: [Deployment] {
+            if model.deployments[ns] == nil {
                 do{
-                    try model.deployment(in: ns)
+                    try model.deployment(in: .namespace(ns))
                 }catch{
-                    model.deployments[name] = []
+                    model.deployments[ns] = []
                 }
                 
             }
             if model.hasAndSelectDemo {
                 return [Deployment(id: "demo1", name: "demo1", k8sName: "demo1", expect: 2, pending: 0, labels: [:], annotations: [:], namespace: "demo1", status: true), Deployment(id: "demo2", name: "demo2", k8sName: "demo2", expect: 2, pending: 1, labels: [:], annotations: [:], namespace: "demo1", status: false)]
             }
-            return model.deployments[name]!.map {Deployment(id: $0.name!, name: $0.name!, k8sName: $0.metadata?.labels!["app.kubernetes.io/name"] ?? "unknow", expect: Int($0.spec?.replicas ?? 0), pending: Int($0.status?.unavailableReplicas ?? 0)
+            return model.deployments[ns]!.map {Deployment(id: $0.name!, name: $0.name!, k8sName: $0.metadata?.labels!["app.kubernetes.io/name"] ?? "unknow", expect: Int($0.spec?.replicas ?? 0), pending: Int($0.status?.unavailableReplicas ?? 0)
                                                             , labels: $0.metadata?.labels
                                                             , annotations: $0.metadata?.annotations
                                                             , namespace: ($0.metadata?.namespace)!
                                                             , status: $0.status?.replicas == $0.status?.readyReplicas
             )}
-        default: return []
-        }
     }
     
-    func job(in ns: NamespaceSelector) -> [Job] {
-        switch ns {
-        case .namespace(let name):
-            if model.jobs[name] == nil {
+    var job: [Job] {
+    
+            if model.jobs[ns] == nil {
                 do{
-                    try model.job(in: ns)
+                    try model.job(in: .namespace(ns))
                 }catch{
-                    model.jobs[name] = []
+                    model.jobs[ns] = []
                 }
                 
             }
             if model.hasAndSelectDemo {
                 return [Job(id: "demo", name: "demo", k8sName: "demo", labels: [:], annotations: [:], namespace: "demo", status: true)]
             }
-            return model.jobs[name]!.map {Job(id: $0.name!, name: $0.name!,
+            return model.jobs[ns]!.map {Job(id: $0.name!, name: $0.name!,
                                               k8sName: $0.metadata!.labels!["job-name"] ?? "unknow"
                                               , labels: $0.metadata?.labels
                                               , annotations: $0.metadata?.annotations
                                               , namespace: ($0.metadata?.namespace)!
                                               , status: $0.status?.succeeded != nil
             )}
-        default: return []
-        }
+       
     }
     
-    func cronJob(in ns: NamespaceSelector) -> [CronJob] {
-        switch ns {
-        case .namespace(let name):
-            if model.cronJobs[name] == nil {
+    var cronJob: [CronJob] {
+        
+            if model.cronJobs[ns] == nil {
                 do{
-                    try model.cronJob(in: ns)
+                    try model.cronJob(in: .namespace(ns))
                 }catch{
-                    model.cronJobs[name] = []
+                    model.cronJobs[ns] = []
                 }
                 
             }
             if model.hasAndSelectDemo {
                 return [CronJob(id: "demo", name: "demo", k8sName: "demo", labels: [:], annotations: [:], namespace: "demo", schedule: "10/5 * * * *")]
             }
-            return model.cronJobs[name]!.map {CronJob(id: $0.name!, name: $0.name!,
+            return model.cronJobs[ns]!.map {CronJob(id: $0.name!, name: $0.name!,
                                                       k8sName: $0.metadata?.labels?["job-name"] ?? "unknow"
                                                       , labels: $0.metadata?.labels
                                                       , annotations: $0.metadata?.annotations
                                                       , namespace: ($0.metadata?.namespace)!
                                                       , schedule: $0.spec!.schedule
             )}
-        default: return []
-        }
+    
     }
     
-    func statefull(in ns: NamespaceSelector) -> [Stateful] {
-        switch ns {
-        case .namespace(let name):
-            if model.statefulls[name] == nil {
+    var statefull: [Stateful] {
+
+            if model.statefulls[ns] == nil {
                 do{
-                    try model.statefull(in: ns)
+                    try model.statefull(in: .namespace(ns))
                 }catch{
-                    model.statefulls[name] = []
+                    model.statefulls[ns] = []
                 }
                 
             }
             if model.hasAndSelectDemo {
                 return [Stateful(id: "demo", name: "demo", k8sName: "demo", labels: [:], annotations: [:], namespace: "demo", status: false)]
             }
-            return model.statefulls[name]!.map {Stateful(id: $0.name!, name: $0.name!, k8sName: ($0.metadata?.labels!["app.kubernetes.io/name"]!)!
+            return model.statefulls[ns]!.map {Stateful(id: $0.name!, name: $0.name!, k8sName: ($0.metadata?.labels!["app.kubernetes.io/name"]!)!
                                                          , labels: $0.metadata?.labels
                                                          , annotations: $0.metadata?.annotations
                                                          , namespace: ($0.metadata?.namespace)!
                                                          , status: $0.status?.readyReplicas == $0.status?.replicas
             )}
-        default: return []
-        }
+        
     }
     
-    func service(in ns: NamespaceSelector) -> [Service] {
-        switch ns {
-        case .namespace(let name):
-            if model.services[name] == nil {
+    var service: [Service] {
+
+            if model.services[ns] == nil {
                 do{
-                    try model.service(in: ns)
+                    try model.service(in: .namespace(ns))
                 }catch{
-                    model.services[name] = []
+                    model.services[ns] = []
                 }
                 
             }
             if model.hasAndSelectDemo {
                 return [Service(id: "demo", name: "demo", k8sName: "demo", type: "Node", clusterIps: ["10.1.2.3"], externalIps: ["1.2.3.4"], labels: [:], annotations: [:], namespace: "demo")]
             }
-            return model.services[name]!.map {Service(id: $0.name!, name: $0.name!, k8sName: $0.metadata?.labels!["app.kubernetes.io/name"] ?? "unknow", type: ($0.spec?.type!)!, clusterIps: $0.spec?.clusterIPs, externalIps: $0.spec?.externalIPs
+        return model.services[ns]!.map {Service(id: $0.name!, name: $0.name!, k8sName: $0.metadata?.labels!["app.kubernetes.io/name"] ?? "unknow", type: ($0.spec?.type!)!, clusterIps: $0.spec?.clusterIPs, externalIps: $0.spec?.externalIPs
                                                       , labels: $0.metadata?.labels
                                                       , annotations: $0.metadata?.annotations
                                                       , namespace: ($0.metadata?.namespace)!
             )}
-        default: return []
-        }
     }
     
-    func configMap(in ns: NamespaceSelector) -> [ConfigMap] {
-        switch ns {
-        case .namespace(let name):
-            if model.configMaps[name] == nil {
+    var configMap: [ConfigMap] {
+            if model.configMaps[ns] == nil {
                 do{
-                    try model.configMap(in: ns)
+                    try model.configMap(in: .namespace(ns))
                 }catch{
-                    model.configMaps[name] = []
+                    model.configMaps[ns] = []
                 }
                 
             }
             if model.hasAndSelectDemo {
                 return [ConfigMap(id: "demo", name: "demo", labels: [:], annotations: [:], namespace: "demo", data: ["demo": "abc=123"])]
             }
-            return model.configMaps[name]!.map {ConfigMap(id: $0.name!, name: $0.name!
+            return model.configMaps[ns]!.map {ConfigMap(id: $0.name!, name: $0.name!
                                                           , labels: $0.metadata?.labels
                                                           , annotations: $0.metadata?.annotations
                                                           , namespace: ($0.metadata?.namespace)!
                                                           , data: $0.data
             )}
-        default: return []
-        }
+       
     }
     
-    func secret(in ns: NamespaceSelector) -> [Secret] {
-        switch ns {
-        case .namespace(let name):
-            if model.secrets[name] == nil {
+    var secret: [Secret] {
+            if model.secrets[ns] == nil {
                 do{
-                    try model.secret(in: ns)
+                    try model.secret(in: .namespace(ns))
                 }catch{
-                    model.secrets[name] = []
+                    model.secrets[ns] = []
                 }
                 
             }
             if model.hasAndSelectDemo {
                 return [Secret(id: "demo", name: "demo", labels: [:], annotations: [:], namespace: "demo", data: ["demo": "qwertyuiop"])]
             }
-            return model.secrets[name]!.map {Secret(id: $0.name!, name: $0.name!
+            return model.secrets[ns]!.map {Secret(id: $0.name!, name: $0.name!
                                                     , labels: $0.metadata?.labels
                                                     , annotations: $0.metadata?.annotations
                                                     , namespace: ($0.metadata?.namespace)!
                                                     , data: $0.data
             )}
-        default: return []
-        }
     }
     
-    func daemon(in ns: NamespaceSelector) -> [Daemon] {
-        switch ns {
-        case .namespace(let name):
-            if model.daemons[name] == nil {
+    var daemon: [Daemon] {
+            if model.daemons[ns] == nil {
                 do{
-                    try model.daemon(in: ns)
+                    try model.daemon(in: .namespace(ns))
                 }catch{
-                    model.daemons[name] = []
+                    model.daemons[ns] = []
                 }
                 
             }
             if model.hasAndSelectDemo {
                 return [Daemon(id: "demo", name: "demo", k8sName: "demo", labels: [:], annotations: [:], namespace: "demo", status: true)]
             }
-            return model.daemons[name]!.map {Daemon(id: $0.name!, name: $0.name!, k8sName: $0.metadata?.labels!["app.kubernetes.io/name"] ?? "unknow"
+            return model.daemons[ns]!.map {Daemon(id: $0.name!, name: $0.name!, k8sName: $0.metadata?.labels!["app.kubernetes.io/name"] ?? "unknow"
                                                     , labels: $0.metadata?.labels
                                                     , annotations: $0.metadata?.annotations
                                                     , namespace: ($0.metadata?.namespace)!
                                                     , status: $0.status!.numberMisscheduled <= 0
             )}
-        default: return []
-        }
     }
     
-    func replica(in ns: NamespaceSelector) -> [Replica] {
-        switch ns {
-        case .namespace(let name):
-            if model.replicas[name] == nil {
+    var replica: [Replica] {
+        
+            if model.replicas[ns] == nil {
                 do{
-                    try model.replica(in: ns)
+                    try model.replica(in: .namespace(ns))
                 }catch{
-                    model.replicas[name] = []
+                    model.replicas[ns] = []
                 }
                 
             }
             if model.hasAndSelectDemo {
                 return [Replica(id: "demo", name: "demo", k8sName: "demo", labels: [:], annotations: [:], namespace: "demo", status: true)]
             }
-            return model.replicas[name]!.map {Replica(id: $0.name!, name: $0.name!, k8sName: $0.metadata?.labels!["app.kubernetes.io/name"] ?? "unknow"
+            return model.replicas[ns]!.map {Replica(id: $0.name!, name: $0.name!, k8sName: $0.metadata?.labels!["app.kubernetes.io/name"] ?? "unknow"
                                                       , labels: $0.metadata?.labels
                                                       , annotations: $0.metadata?.annotations
                                                       , namespace: ($0.metadata?.namespace)!
                                                       , status: $0.status?.replicas == $0.status?.readyReplicas
             )}
-        default: return []
-        }
     }
     
-//    func replication(in ns: NamespaceSelector) -> [Replication] {
-//        switch ns {
-//        case .namespace(let name):
-//            if model.replications[name] == nil {
-//                try! model.replication(in: ns)
-//            }
-//            return model.replications[name]!.map {Replication(id: $0.name!, name: $0.name!)}
-//        default: return []
-//        }
-//    }
-    
-    func podsSelector(in ns: NamespaceSelector) throws {
-        try model.pod(in: ns)
-    }
 }
 
 
