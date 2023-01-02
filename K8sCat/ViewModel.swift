@@ -17,20 +17,19 @@ class ViewModel: ObservableObject {
         model = Model(viewContext: viewContext)
             
     }
-    func pods(in ns: NamespaceSelector) -> [Pod] {
-        switch ns {
-        case .namespace(let name):
-            if model.pods[name] == nil {
+    var pods: [Pod] {
+        
+            if model.pods[ns] == nil {
                 do{
-                    try model.pod(in: ns)
+                    try model.pod(in: .namespace(ns))
                 }catch{
-                    model.pods[name] = []
+                    model.pods[ns] = []
                 }
             }
             if model.hasAndSelectDemo {
-                return [Pod(id: "demo", name: "demo", k8sName: "demo", status: "Running", expect: 2, pending: 1, containers: [], clusterIP: "10.0.1.3", nodeIP: "1.2.3.4", labels: [:], annotations: [:], namespace: name)]
+                return [Pod(id: "demo", name: "demo", k8sName: "demo", status: "Running", expect: 2, pending: 1, containers: [], clusterIP: "10.0.1.3", nodeIP: "1.2.3.4", labels: [:], annotations: [:], namespace: ns)]
             }
-            return model.pods[name]!.map {Pod(id: $0.name!, name: $0.name!, k8sName: $0.metadata?.labels!["app.kubernetes.io/name"] ?? "unknow", status: ($0.status?.phase)!, expect: $0.spec?.containers.count ?? 0, pending: $0.status?.containerStatuses?.filter{$0.ready == false}.count ?? 0, containers: ($0.spec?.containers.map{Container(
+            return model.pods[ns]!.map {Pod(id: $0.name!, name: $0.name!, k8sName: $0.metadata?.labels!["app.kubernetes.io/name"] ?? "unknow", status: ($0.status?.phase)!, expect: $0.spec?.containers.count ?? 0, pending: $0.status?.containerStatuses?.filter{$0.ready == false}.count ?? 0, containers: ($0.spec?.containers.map{Container(
                 id: $0.name, name: $0.name, image: $0.image!
                 ,path: $0.terminationMessagePath!, policy: $0.terminationMessagePolicy!, pullPolicy: $0.imagePullPolicy!
                 )})!
@@ -39,29 +38,25 @@ class ViewModel: ObservableObject {
                                               , annotations: $0.metadata?.annotations
                                               , namespace: ($0.metadata?.namespace)!
             )}
-        default: return []
-        }
+        
         
     }
     
-    func hpas(in ns: NamespaceSelector) -> [Hpa] {
-        switch ns {
-        case .namespace(let name):
-            if model.hpas[name] == nil {
+    var hpas: [Hpa] {
+            if model.hpas[ns] == nil {
                 do{
-                    try model.hpa(in: ns)
+                    try model.hpa(in: .namespace(ns))
                 }catch{
-                    model.hpas[name] = []
+                    model.hpas[ns] = []
                 }
             }
             if model.hasAndSelectDemo {
                 return [Hpa(id: "demo", name: "demo", namespace: "demo1")]
             }
-            return model.hpas[name]!.map {Hpa(id: $0.name!, name: $0.name!
+            return model.hpas[ns]!.map {Hpa(id: $0.name!, name: $0.name!
                                               , namespace: ($0.metadata?.namespace)!
             )}
-        default: return []
-        }
+
         
     }
     

@@ -81,7 +81,7 @@ struct NamespaceView: View {
                     switch tabIndex {
                     case 0:
                         List {
-                            ForEach(viewModel.pods(in: .namespace(viewModel.ns)).filter{$0.name.contains(search.lowercased()) || search == ""}) {
+                            ForEach(viewModel.pods.filter{$0.name.contains(search.lowercased()) || search == ""}) {
                                 i in
                                 NavigationLink {
                                     PodView(pod: i, viewModel: viewModel)
@@ -294,7 +294,7 @@ struct NamespaceView: View {
                         }
                     case 10:
                         List {
-                            ForEach(viewModel.hpas(in: .namespace(viewModel.ns)).filter{$0.name.contains(search.lowercased()) || search == ""}) {
+                            ForEach(viewModel.hpas.filter{$0.name.contains(search.lowercased()) || search == ""}) {
                                 i in
                                 NavigationLink {
                                     HpaView(hpa: i)
