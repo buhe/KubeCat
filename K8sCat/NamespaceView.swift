@@ -268,7 +268,7 @@ struct NamespaceView: View {
                             ForEach(viewModel.hpas(in: .namespace(viewModel.ns))) {
                                 i in
                                 NavigationLink {
-                                    Text(i.name)
+                                    HpaView(hpa: i)
                                 } label: {
                                     Image(systemName: "scale.3d")
                                     Text(i.name)

@@ -17,6 +17,7 @@
 		3F19F8CE2952AF01005C0558 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F19F8CD2952AF01005C0558 /* Model.swift */; };
 		3F19F8D02952AF1B005C0558 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F19F8CF2952AF1B005C0558 /* ViewModel.swift */; };
 		3F19F8D22952B00C005C0558 /* Identifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F19F8D12952B00C005C0558 /* Identifier.swift */; };
+		3F25F1F02962930B00F4DA02 /* HpaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F25F1EF2962930B00F4DA02 /* HpaView.swift */; };
 		3F2BE3E929595A040002DEEC /* PodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2BE3E829595A040002DEEC /* PodView.swift */; };
 		3F2BE3EB29595A320002DEEC /* DeploymentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2BE3EA29595A320002DEEC /* DeploymentView.swift */; };
 		3F2BE3ED295996940002DEEC /* JobView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2BE3EC295996940002DEEC /* JobView.swift */; };
@@ -89,6 +90,7 @@
 		3F19F8CD2952AF01005C0558 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		3F19F8CF2952AF1B005C0558 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		3F19F8D12952B00C005C0558 /* Identifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Identifier.swift; sourceTree = "<group>"; };
+		3F25F1EF2962930B00F4DA02 /* HpaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HpaView.swift; sourceTree = "<group>"; };
 		3F2BE3E829595A040002DEEC /* PodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodView.swift; sourceTree = "<group>"; };
 		3F2BE3EA29595A320002DEEC /* DeploymentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeploymentView.swift; sourceTree = "<group>"; };
 		3F2BE3EC295996940002DEEC /* JobView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobView.swift; sourceTree = "<group>"; };
@@ -201,6 +203,7 @@
 				3F2BE402295AB8D20002DEEC /* CaptionText.swift */,
 				3F2BE425295DDCF80002DEEC /* PVView.swift */,
 				3F2BE427295DDD110002DEEC /* PVCView.swift */,
+				3F25F1EF2962930B00F4DA02 /* HpaView.swift */,
 			);
 			path = inner;
 			sourceTree = "<group>";
@@ -492,6 +495,7 @@
 				3F19F8CC2951E010005C0558 /* Ex.swift in Sources */,
 				3F19F8CA2951DE88005C0558 /* TabBarButton.swift in Sources */,
 				3F2BE428295DDD110002DEEC /* PVCView.swift in Sources */,
+				3F25F1F02962930B00F4DA02 /* HpaView.swift in Sources */,
 				3F19F8CE2952AF01005C0558 /* Model.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
