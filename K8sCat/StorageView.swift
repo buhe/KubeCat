@@ -31,7 +31,7 @@ struct StorageView: View {
                 switch tabIndex {
                 case 0:
                     List {
-                        ForEach(viewModel.pv) {
+                        ForEach(viewModel.pv.filter{$0.name.contains(search.lowercased()) || search == ""}) {
                             i in
                             NavigationLink {
                                 PVView(pv: i, viewModel: viewModel)
@@ -47,7 +47,7 @@ struct StorageView: View {
                     }
                 case 1:
                     List {
-                        ForEach(viewModel.pvc) {
+                        ForEach(viewModel.pvc.filter{$0.name.contains(search.lowercased()) || search == ""}) {
                             i in
                             NavigationLink {
 //                                DeploymentView(deployment: i, viewModel: viewModel)

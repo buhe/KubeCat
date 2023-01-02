@@ -74,13 +74,14 @@ struct NamespaceView: View {
                     }
                     
                 }
-                SearchBar(text: $search).padding(.horizontal)
+                SearchBar(text: $search)
+                    .padding(.horizontal)
                 NamespacesTabBar(tabIndex: $tabIndex).padding(.horizontal, 26)
                 Group {
                     switch tabIndex {
                     case 0:
                         List {
-                            ForEach(viewModel.pods(in: .namespace(viewModel.ns))) {
+                            ForEach(viewModel.pods(in: .namespace(viewModel.ns)).filter{$0.name.contains(search.lowercased()) || search == ""}) {
                                 i in
                                 NavigationLink {
                                     PodView(pod: i, viewModel: viewModel)
@@ -105,7 +106,7 @@ struct NamespaceView: View {
                         }
                     case 1:
                         List {
-                            ForEach(viewModel.deployment(in: .namespace(viewModel.ns))) {
+                            ForEach(viewModel.deployment(in: .namespace(viewModel.ns)).filter{$0.name.contains(search.lowercased()) || search == ""}) {
                                 i in
                                 NavigationLink {
                                     DeploymentView(deployment: i, viewModel: viewModel)
@@ -129,7 +130,7 @@ struct NamespaceView: View {
                         }
                     case 2:
                         List {
-                            ForEach(viewModel.job(in: .namespace(viewModel.ns))) {
+                            ForEach(viewModel.job(in: .namespace(viewModel.ns)).filter{$0.name.contains(search.lowercased()) || search == ""}) {
                                 i in
                                 NavigationLink {
                                     JobView(job: i, viewModel: viewModel)
@@ -146,7 +147,7 @@ struct NamespaceView: View {
                         }
                     case 3:
                         List {
-                            ForEach(viewModel.cronJob(in: .namespace(viewModel.ns))) {
+                            ForEach(viewModel.cronJob(in: .namespace(viewModel.ns)).filter{$0.name.contains(search.lowercased()) || search == ""}) {
                                 i in
                                 NavigationLink {
                                     CronJobView(cronJob: i, viewModel: viewModel)
@@ -166,7 +167,7 @@ struct NamespaceView: View {
                         }
                     case 4:
                         List {
-                            ForEach(viewModel.statefull(in: .namespace(viewModel.ns))) {
+                            ForEach(viewModel.statefull(in: .namespace(viewModel.ns)).filter{$0.name.contains(search.lowercased()) || search == ""}) {
                                 i in
                                 NavigationLink {
                                     StatefulView(stateful: i, viewModel: viewModel)
@@ -183,7 +184,7 @@ struct NamespaceView: View {
                         }
                     case 5:
                         List {
-                            ForEach(viewModel.service(in: .namespace(viewModel.ns))) {
+                            ForEach(viewModel.service(in: .namespace(viewModel.ns)).filter{$0.name.contains(search.lowercased()) || search == ""}) {
                                 i in
                                 NavigationLink {
                                     ServiceView(service: i, viewModel: viewModel)
@@ -221,7 +222,7 @@ struct NamespaceView: View {
                         }
                     case 6:
                         List {
-                            ForEach(viewModel.configMap(in: .namespace(viewModel.ns))) {
+                            ForEach(viewModel.configMap(in: .namespace(viewModel.ns)).filter{$0.name.contains(search.lowercased()) || search == ""}) {
                                 i in
                                 NavigationLink {
                                     ConfigMapView(configMap: i, viewModel: viewModel)
@@ -240,7 +241,7 @@ struct NamespaceView: View {
                         }
                     case 7:
                         List {
-                            ForEach(viewModel.secret(in: .namespace(viewModel.ns))) {
+                            ForEach(viewModel.secret(in: .namespace(viewModel.ns)).filter{$0.name.contains(search.lowercased()) || search == ""}) {
                                 i in
                                 NavigationLink {
                                     SecretView(secret: i, viewModel: viewModel)
@@ -259,7 +260,7 @@ struct NamespaceView: View {
                         }
                     case 8:
                         List {
-                            ForEach(viewModel.daemon(in: .namespace(viewModel.ns))) {
+                            ForEach(viewModel.daemon(in: .namespace(viewModel.ns)).filter{$0.name.contains(search.lowercased()) || search == ""}) {
                                 i in
                                 NavigationLink {
                                     DaemonView(daemon: i, viewModel: viewModel)
@@ -276,7 +277,7 @@ struct NamespaceView: View {
                         }
                     case 9:
                         List {
-                            ForEach(viewModel.replica(in: .namespace(viewModel.ns))) {
+                            ForEach(viewModel.replica(in: .namespace(viewModel.ns)).filter{$0.name.contains(search.lowercased()) || search == ""}) {
                                 i in
                                 NavigationLink {
                                     ReplicaView(replica: i, viewModel: viewModel)
@@ -293,7 +294,7 @@ struct NamespaceView: View {
                         }
                     case 10:
                         List {
-                            ForEach(viewModel.hpas(in: .namespace(viewModel.ns))) {
+                            ForEach(viewModel.hpas(in: .namespace(viewModel.ns)).filter{$0.name.contains(search.lowercased()) || search == ""}) {
                                 i in
                                 NavigationLink {
                                     HpaView(hpa: i)

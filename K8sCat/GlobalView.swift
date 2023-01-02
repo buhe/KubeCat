@@ -32,7 +32,7 @@ struct GlobalView: View {
                 switch tabIndex {
                 case 0:
                     List {
-                        ForEach(viewModel.nodes) {
+                        ForEach(viewModel.nodes.filter{$0.name.contains(search.lowercased()) || search == ""}) {
                             i in
                             NavigationLink {
                                 NodeView(node: i, viewModel: viewModel)
