@@ -18,7 +18,7 @@ struct ClusterTypeView: View {
                 ForEach(ClusterType.allCases, id: \.self) {
                     c in
                     switch c {
-                    case .KubeConfig, .Aliyun, .AWS:
+                    case .KubeConfig:
                         NavigationLink {
                             NewClusterView(first: first, type: c){
                                 presentationMode.wrappedValue.dismiss()
@@ -26,10 +26,36 @@ struct ClusterTypeView: View {
                             }
                                 .environment(\.managedObjectContext, viewContext)
                         } label: {
-                            VStack(alignment: .leading) {
-                                Text(c.rawValue)
+                            Image("config")
+                            Text(c.rawValue)
                                 
+                           
+                        }
+                    case .Aliyun:
+                        NavigationLink {
+                            NewClusterView(first: first, type: c){
+                                presentationMode.wrappedValue.dismiss()
+                                close()
                             }
+                                .environment(\.managedObjectContext, viewContext)
+                        } label: {
+                            Image("aliyun")
+                            Text(c.rawValue)
+                                
+                           
+                        }
+                    case .AWS:
+                        NavigationLink {
+                            NewClusterView(first: first, type: c){
+                                presentationMode.wrappedValue.dismiss()
+                                close()
+                            }
+                                .environment(\.managedObjectContext, viewContext)
+                        } label: {
+                            Image("aws")
+                            Text(c.rawValue)
+                                
+                           
                         }
                     default: EmptyView()
                     }
