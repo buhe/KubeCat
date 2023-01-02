@@ -43,6 +43,30 @@ class ViewModel: ObservableObject {
         }
         
     }
+    
+    func hpas(in ns: NamespaceSelector) -> [Hpa] {
+        switch ns {
+        case .namespace(let name):
+            if model.pods[name] == nil {
+                do{
+                    try model.hpa(in: ns)
+                }catch{
+                    model.hpas[name] = []
+                }
+            }
+            if model.hasAndSelectDemo {
+                return [Hpa(id: "demo", name: "demo", k8sName: "demo", labels: [:], annotations: [:], namespace: "demo1")]
+            }
+            return model.hpas[name]!.map {Hpa(id: $0.name!, name: $0.name!, k8sName: $0.metadata?.labels!["app.kubernetes.io/name"] ?? "unknow"
+                                              , labels: $0.metadata?.labels
+                                              , annotations: $0.metadata?.annotations
+                                              , namespace: ($0.metadata?.namespace)!
+            )}
+        default: return []
+        }
+        
+    }
+    
     var pv: [PersistentVolume] {
 
         if model.pvs == nil {

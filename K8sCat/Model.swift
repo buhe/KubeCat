@@ -34,6 +34,7 @@ struct Model {
     var replicas: [String: [apps.v1.ReplicaSet]] = ["": []]
     var pvs: [core.v1.PersistentVolume]?
     var pvcs: [core.v1.ObjectReference]?
+    var hpas: [String: [autoscaling.v2beta1.HorizontalPodAutoscaler]] = ["": []]
 //    var pvcs: [core.v1.PersistentVolumeClaim]?
 //    var replications: [String: [core.v1.ReplicationController]] = ["": []]
     
@@ -201,6 +202,7 @@ struct Model {
         secrets = ["": []]
         daemons = ["": []]
         replicas = ["": []]
+        hpas = ["": []]
         pvs = nil
         pvcs = nil
     }
@@ -260,6 +262,24 @@ struct Model {
             default: break
             }
         }
+    }
+    
+    mutating func hpa(in ns: NamespaceSelector) throws {
+        if let client = client {
+            let hpa = try client.autoScalingV2Beta1.horizontalPodAutoscalers.list(in: ns).wait().items
+            switch ns {
+            case .namespace(let name):
+                self.hpas[name] = hpa
+            default: break
+            }
+        } else{
+            switch ns {
+            case .namespace(let name):
+                self.hpas[name] = []
+            default: break
+            }
+        }
+        
     }
     
     mutating func deployment(in ns: NamespaceSelector) throws {
