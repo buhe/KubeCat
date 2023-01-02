@@ -85,6 +85,23 @@ struct PodView: View {
                 }
                 
             }
+        }.toolbar{
+            Menu {
+                Button {
+                    // do something
+                } label: {
+                    Text("View/Edit Yaml")
+                    Image(systemName: "note.text")
+                }
+                Button {
+                    // do something
+                } label: {
+                    Text("Delete Resource")
+                    Image(systemName: "trash")
+                }
+            } label: {
+                 Image(systemName: "ellipsis")
+            }
         }
     }
 }
