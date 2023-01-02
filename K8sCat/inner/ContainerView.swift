@@ -8,11 +8,13 @@
 import SwiftUI
 import SwiftkubeClient
 import SwiftkubeModel
+import SwiftUIX
 
 struct ContainerView: View {
     let pod: Pod
     let container: Container
     let viewModel: ViewModel
+    @State var search = ""
     
     @State var logTask: SwiftkubeClientTask?
     
@@ -77,10 +79,18 @@ struct ContainerView: View {
         }.sheet(isPresented: $showLogs, onDismiss: {
             logTask?.cancel()
         }) {
+            SearchBar(text: $search)
+                .padding()
             List {
                 ForEach(logsLines, id: \.self) {
                     l in
-                    Text(l)
+                    if l.contains(search) {
+                        Text(l)
+                            .foregroundColor(.systemYellow)
+                    } else {
+                        Text(l)
+                    }
+                    
                 }
             }
         }.sheet(isPresented: $showShell) {

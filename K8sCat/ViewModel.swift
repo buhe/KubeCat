@@ -27,7 +27,7 @@ class ViewModel: ObservableObject {
                 }
             }
             if model.hasAndSelectDemo {
-                return [Pod(id: "demo", name: "demo", k8sName: "demo", status: "Running", expect: 2, pending: 1, containers: [], clusterIP: "10.0.1.3", nodeIP: "1.2.3.4", labels: [:], annotations: [:], namespace: ns)]
+                return [Pod(id: "demo", name: "demo", k8sName: "demo", status: "Running", expect: 2, pending: 1, containers: [Container(id: "demo", name: "demo", image: "docker.io/hello", path: "/foo/bar", policy: "Restart", pullPolicy: "Restart")], clusterIP: "10.0.1.3", nodeIP: "1.2.3.4", labels: [:], annotations: [:], namespace: ns)]
             }
             return model.pods[ns]!.map {Pod(id: $0.name!, name: $0.name!, k8sName: $0.metadata?.labels!["app.kubernetes.io/name"] ?? "unknow", status: ($0.status?.phase)!, expect: $0.spec?.containers.count ?? 0, pending: $0.status?.containerStatuses?.filter{$0.ready == false}.count ?? 0, containers: ($0.spec?.containers.map{Container(
                 id: $0.name, name: $0.name, image: $0.image!
