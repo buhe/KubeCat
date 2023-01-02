@@ -11,10 +11,12 @@ struct ConfigView: View {
     @Environment(\.managedObjectContext) private var viewContext
     let first: Bool
     let close: () -> Void
-    @State var name: String?
-    @State var icon: String = "a.circle"
+    @State var name = ""
+    @State var icon = "a.circle"
     @State var importMsg: String = "Import Kube Config"
-    @State var content: String?
+    @State var content = ""
+    @State var showErrorMessage = false
+    @State var errorMessage = ""
     
     @State private var showingExporter = false
     
@@ -43,12 +45,17 @@ struct ConfigView: View {
                 Button{
                     // save to core data
                     addItem()
-                    close()
+                    
                 } label: {
                     Text("Save")
                 }
             }
             
+        }
+        .alert(errorMessage, isPresented: $showErrorMessage){
+            Button("OK", role: .cancel) {
+                showErrorMessage = false
+            }
         }
         .fileImporter(isPresented: $showingExporter, allowedContentTypes: [.yaml]) { result in
             switch result {
@@ -68,6 +75,16 @@ struct ConfigView: View {
     }
     
     private func addItem() {
+        if name.isEmpty {
+            showErrorMessage = true
+            errorMessage = "Input cluster name, please."
+            return
+        }
+        if content.isEmpty {
+            showErrorMessage = true
+            errorMessage = "Import kube config, please."
+            return
+        }
         withAnimation {
             let newItem = ClusterEntry(context: viewContext)
             newItem.name = self.name
@@ -87,6 +104,7 @@ struct ConfigView: View {
                 fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
             }
         }
+        close()
     }
 }
 
