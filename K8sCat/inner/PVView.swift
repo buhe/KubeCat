@@ -59,8 +59,8 @@ struct PVView: View {
     }
 }
 
-struct PVView_Previews: PreviewProvider {
-    static var previews: some View {
-        PVView(pv: PersistentVolume(id: "123", name: "123", labels: ["l1":"l1v"], annotations: ["l1":"l1v"],accessModes: "r/w",status: "B",storageClass: "M"), viewModel: ViewModel(viewContext: PersistenceController.preview.container.viewContext))
-    }
-}
+//struct PVView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        PVView(pv: PersistentVolume(id: "123", name: "123", labels: ["l1":"l1v"], annotations: ["l1":"l1v"],accessModes: "r/w",status: "B",storageClass: "M"), viewModel: ViewModel(viewContext: PersistenceController.preview.container.viewContext))
+//    }
+//}

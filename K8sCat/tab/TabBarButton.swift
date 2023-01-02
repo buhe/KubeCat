@@ -14,8 +14,8 @@ struct TabBarButton: View {
         Text(text)
             .fontWeight(isSelected ? .heavy : .regular)
             .font(.custom("Avenir", size: 16))
-            .padding(.bottom, 10)
-            .border(width: isSelected ? 2 : 1, edges: [.bottom], color: .black)
+            .padding(.bottom, 15)
+            .border(width: isSelected ? 2 : 1, edges: [.bottom], color: .systemGray)
     }
 }
 
@@ -53,7 +53,7 @@ struct NamespacesTabBar: View {
               
             }
         }
-        .border(width: 1, edges: [.bottom], color: .black)
+        .border(width: 1, edges: [.bottom], color: .systemGray)
     }
     
     private func onButtonTapped(index: Int) {
