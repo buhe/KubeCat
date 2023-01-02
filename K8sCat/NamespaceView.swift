@@ -100,9 +100,9 @@ struct NamespaceView: View {
                         
                             }
                         }.listStyle(PlainListStyle())
-                            .refreshable {
-                                viewModel.model.pods[viewModel.ns] = nil
-                                        }
+                        .refreshable {
+                            viewModel.model.pods[viewModel.ns] = nil
+                        }
                     case 1:
                         List {
                             ForEach(viewModel.deployment(in: .namespace(viewModel.ns))) {
@@ -124,6 +124,9 @@ struct NamespaceView: View {
                         
                             }
                         }.listStyle(PlainListStyle())
+                        .refreshable {
+                            viewModel.model.deployments[viewModel.ns] = nil
+                        }
                     case 2:
                         List {
                             ForEach(viewModel.job(in: .namespace(viewModel.ns))) {
@@ -138,6 +141,9 @@ struct NamespaceView: View {
                         
                             }
                         }.listStyle(PlainListStyle())
+                        .refreshable {
+                            viewModel.model.jobs[viewModel.ns] = nil
+                        }
                     case 3:
                         List {
                             ForEach(viewModel.cronJob(in: .namespace(viewModel.ns))) {
@@ -155,6 +161,9 @@ struct NamespaceView: View {
                         
                             }
                         }.listStyle(PlainListStyle())
+                        .refreshable {
+                            viewModel.model.cronJobs[viewModel.ns] = nil
+                        }
                     case 4:
                         List {
                             ForEach(viewModel.statefull(in: .namespace(viewModel.ns))) {
@@ -169,6 +178,9 @@ struct NamespaceView: View {
                         
                             }
                         }.listStyle(PlainListStyle())
+                        .refreshable {
+                            viewModel.model.statefulls[viewModel.ns] = nil
+                        }
                     case 5:
                         List {
                             ForEach(viewModel.service(in: .namespace(viewModel.ns))) {
@@ -204,6 +216,9 @@ struct NamespaceView: View {
                         
                             }
                         }.listStyle(PlainListStyle())
+                        .refreshable {
+                            viewModel.model.services[viewModel.ns] = nil
+                        }
                     case 6:
                         List {
                             ForEach(viewModel.configMap(in: .namespace(viewModel.ns))) {
@@ -220,6 +235,9 @@ struct NamespaceView: View {
                         
                             }
                         }.listStyle(PlainListStyle())
+                        .refreshable {
+                            viewModel.model.configMaps[viewModel.ns] = nil
+                        }
                     case 7:
                         List {
                             ForEach(viewModel.secret(in: .namespace(viewModel.ns))) {
@@ -236,6 +254,9 @@ struct NamespaceView: View {
                         
                             }
                         }.listStyle(PlainListStyle())
+                        .refreshable {
+                            viewModel.model.secrets[viewModel.ns] = nil
+                        }
                     case 8:
                         List {
                             ForEach(viewModel.daemon(in: .namespace(viewModel.ns))) {
@@ -250,6 +271,9 @@ struct NamespaceView: View {
                         
                             }
                         }.listStyle(PlainListStyle())
+                        .refreshable {
+                            viewModel.model.daemons[viewModel.ns] = nil
+                        }
                     case 9:
                         List {
                             ForEach(viewModel.replica(in: .namespace(viewModel.ns))) {
@@ -263,6 +287,9 @@ struct NamespaceView: View {
                         
                             }
                         }.listStyle(PlainListStyle())
+                        .refreshable {
+                            viewModel.model.replicas[viewModel.ns] = nil
+                        }
                     case 10:
                         List {
                             ForEach(viewModel.hpas(in: .namespace(viewModel.ns))) {
@@ -276,6 +303,9 @@ struct NamespaceView: View {
 
                             }
                         }.listStyle(PlainListStyle())
+                        .refreshable {
+                            viewModel.model.hpas[viewModel.ns] = nil
+                        }
                     default:
                         EmptyView()
                     }
