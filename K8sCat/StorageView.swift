@@ -42,6 +42,9 @@ struct StorageView: View {
                     
                         }
                     }.listStyle(PlainListStyle())
+                    .refreshable {
+                        viewModel.model.pvs = nil
+                    }
                 case 1:
                     List {
                         ForEach(viewModel.pvc) {
@@ -55,6 +58,9 @@ struct StorageView: View {
                     
                         }
                     }.listStyle(PlainListStyle())
+                    .refreshable {
+                        viewModel.model.pvcs = nil
+                    }
                 
                 default:
                     EmptyView()

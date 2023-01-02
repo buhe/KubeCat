@@ -46,6 +46,9 @@ struct GlobalView: View {
                     
                         }
                     }.listStyle(PlainListStyle())
+                    .refreshable {
+                        viewModel.model.nodes = nil
+                    }
                 default:
                     EmptyView()
                 }
