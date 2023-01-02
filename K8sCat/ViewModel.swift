@@ -55,11 +55,9 @@ class ViewModel: ObservableObject {
                 }
             }
             if model.hasAndSelectDemo {
-                return [Hpa(id: "demo", name: "demo", k8sName: "demo", labels: [:], annotations: [:], namespace: "demo1")]
+                return [Hpa(id: "demo", name: "demo", namespace: "demo1")]
             }
-            return model.hpas[name]!.map {Hpa(id: $0.name!, name: $0.name!, k8sName: $0.metadata?.labels!["app.kubernetes.io/name"] ?? "unknow"
-                                              , labels: $0.metadata?.labels
-                                              , annotations: $0.metadata?.annotations
+            return model.hpas[name]!.map {Hpa(id: $0.name!, name: $0.name!
                                               , namespace: ($0.metadata?.namespace)!
             )}
         default: return []

@@ -17,9 +17,9 @@ extension View {
 struct Hpa: Identifiable {
     var id: String
     var name: String
-    let k8sName: String
-    let labels: [String: String]?
-    let annotations: [String: String]?
+//    let k8sName: String
+//    let labels: [String: String]?
+//    let annotations: [String: String]?
     let namespace: String
 }
 

@@ -17,37 +17,37 @@ struct HpaView: View {
             Section(header: "Status") {
                 
             }
-           
-            Section(header: "Labels and Annotations") {
-                NavigationLink {
-                    List {
-                        ForEach((hpa.labels ?? [:]).sorted(by: >), id: \.key) {
-                            key, value in
-                            VStack(alignment: .leading) {
-                                Text(key)
-                                
-                                CaptionText(text: value)
-                            }
-                        }
-                    }
-                    
-                } label: {
-                    Text("Labels")
-                }
-                NavigationLink {
-                    List {
-                        ForEach((hpa.annotations ?? [:]).sorted(by: >), id: \.key) {
-                            key, value in
-                            VStack(alignment: .leading) {
-                                Text(key)
-                                CaptionText(text: value)
-                            }
-                        }
-                    }
-                } label: {
-                    Text("Annotations")
-                }
-            }
+//           
+//            Section(header: "Labels and Annotations") {
+//                NavigationLink {
+//                    List {
+//                        ForEach((hpa.labels ?? [:]).sorted(by: >), id: \.key) {
+//                            key, value in
+//                            VStack(alignment: .leading) {
+//                                Text(key)
+//                                
+//                                CaptionText(text: value)
+//                            }
+//                        }
+//                    }
+//                    
+//                } label: {
+//                    Text("Labels")
+//                }
+//                NavigationLink {
+//                    List {
+//                        ForEach((hpa.annotations ?? [:]).sorted(by: >), id: \.key) {
+//                            key, value in
+//                            VStack(alignment: .leading) {
+//                                Text(key)
+//                                CaptionText(text: value)
+//                            }
+//                        }
+//                    }
+//                } label: {
+//                    Text("Annotations")
+//                }
+//            }
           
             Section(header: "Misc") {
                 HStack{
@@ -63,6 +63,6 @@ struct HpaView: View {
 
 struct HpaView_Previews: PreviewProvider {
     static var previews: some View {
-        HpaView(hpa:  Hpa(id: "123", name: "123", k8sName: "123", labels: [:], annotations: [:], namespace: "default"))
+        HpaView(hpa:  Hpa(id: "123", name: "123", namespace: "default"))
     }
 }
