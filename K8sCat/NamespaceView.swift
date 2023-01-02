@@ -283,6 +283,7 @@ struct NamespaceView: View {
                                 } label: {
                                     Image(systemName: "square.3.layers.3d.down.left")
                                     Text(i.name)
+                                        .foregroundColor(i.status ? .green : .red)
                                 }
                         
                             }

@@ -339,12 +339,13 @@ class ViewModel: ObservableObject {
                 
             }
             if model.hasAndSelectDemo {
-                return [Replica(id: "demo", name: "demo", k8sName: "demo", labels: [:], annotations: [:], namespace: "demo")]
+                return [Replica(id: "demo", name: "demo", k8sName: "demo", labels: [:], annotations: [:], namespace: "demo", status: true)]
             }
             return model.replicas[name]!.map {Replica(id: $0.name!, name: $0.name!, k8sName: $0.metadata?.labels!["app.kubernetes.io/name"] ?? "unknow"
                                                       , labels: $0.metadata?.labels
                                                       , annotations: $0.metadata?.annotations
                                                       , namespace: ($0.metadata?.namespace)!
+                                                      , status: $0.status?.replicas == $0.status?.readyReplicas
             )}
         default: return []
         }

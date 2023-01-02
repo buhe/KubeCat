@@ -160,6 +160,7 @@ struct Replica: Identifiable {
     let labels: [String: String]?
     let annotations: [String: String]?
     let namespace: String
+    let status: Bool
 }
 
 //struct Replication: Identifiable {

@@ -17,7 +17,7 @@ struct ReplicaView: View {
                 Text(replica.name)
             }
             Section(header: "Status") {
-                
+                Text(replica.status ? "Ready" : "Pending")
             }
             Section(header: "Pods") {
                 List {
@@ -83,6 +83,6 @@ struct ReplicaView: View {
 
 struct ReplicaView_Previews: PreviewProvider {
     static var previews: some View {
-        ReplicaView(replica: Replica(id: "abc", name: "abc", k8sName: "abc", labels: ["l1":"l1v"],annotations: ["a1":"a1v"],namespace: "default"), viewModel: ViewModel(viewContext: PersistenceController.preview.container.viewContext))
+        ReplicaView(replica: Replica(id: "abc", name: "abc", k8sName: "abc", labels: ["l1":"l1v"],annotations: ["a1":"a1v"],namespace: "default", status: true), viewModel: ViewModel(viewContext: PersistenceController.preview.container.viewContext))
     }
 }
