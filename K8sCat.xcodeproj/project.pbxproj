@@ -19,14 +19,14 @@
 		3F19F8D22952B00C005C0558 /* Identifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F19F8D12952B00C005C0558 /* Identifier.swift */; };
 		3F25F1F02962930B00F4DA02 /* HpaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F25F1EF2962930B00F4DA02 /* HpaView.swift */; };
 		3F25F1F229630BA300F4DA02 /* Model+Yaml.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F25F1F129630BA300F4DA02 /* Model+Yaml.swift */; };
-		3F25F1FD2963EA2400F4DA02 /* asset-manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = 3F25F1F52963EA2300F4DA02 /* asset-manifest.json */; };
-		3F25F1FE2963EA2400F4DA02 /* robots.txt in Resources */ = {isa = PBXBuildFile; fileRef = 3F25F1F62963EA2300F4DA02 /* robots.txt */; };
-		3F25F1FF2963EA2400F4DA02 /* logo512.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F25F1F72963EA2300F4DA02 /* logo512.png */; };
-		3F25F2002963EA2400F4DA02 /* logo192.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F25F1F82963EA2300F4DA02 /* logo192.png */; };
-		3F25F2012963EA2400F4DA02 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = 3F25F1F92963EA2300F4DA02 /* manifest.json */; };
-		3F25F2022963EA2400F4DA02 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 3F25F1FA2963EA2300F4DA02 /* index.html */; };
-		3F25F2032963EA2400F4DA02 /* static in Resources */ = {isa = PBXBuildFile; fileRef = 3F25F1FB2963EA2300F4DA02 /* static */; };
-		3F25F2042963EA2400F4DA02 /* favicon.ico in Resources */ = {isa = PBXBuildFile; fileRef = 3F25F1FC2963EA2400F4DA02 /* favicon.ico */; };
+		3F25F21D29640FDF00F4DA02 /* favicon.ico in Resources */ = {isa = PBXBuildFile; fileRef = 3F25F21529640FDF00F4DA02 /* favicon.ico */; };
+		3F25F21E29640FDF00F4DA02 /* logo512.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F25F21629640FDF00F4DA02 /* logo512.png */; };
+		3F25F21F29640FDF00F4DA02 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 3F25F21729640FDF00F4DA02 /* index.html */; };
+		3F25F22029640FDF00F4DA02 /* robots.txt in Resources */ = {isa = PBXBuildFile; fileRef = 3F25F21829640FDF00F4DA02 /* robots.txt */; };
+		3F25F22129640FDF00F4DA02 /* asset-manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = 3F25F21929640FDF00F4DA02 /* asset-manifest.json */; };
+		3F25F22229640FDF00F4DA02 /* static in Resources */ = {isa = PBXBuildFile; fileRef = 3F25F21A29640FDF00F4DA02 /* static */; };
+		3F25F22329640FDF00F4DA02 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = 3F25F21B29640FDF00F4DA02 /* manifest.json */; };
+		3F25F22429640FDF00F4DA02 /* logo192.png in Resources */ = {isa = PBXBuildFile; fileRef = 3F25F21C29640FDF00F4DA02 /* logo192.png */; };
 		3F2BE3E929595A040002DEEC /* PodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2BE3E829595A040002DEEC /* PodView.swift */; };
 		3F2BE3EB29595A320002DEEC /* DeploymentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2BE3EA29595A320002DEEC /* DeploymentView.swift */; };
 		3F2BE3ED295996940002DEEC /* JobView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2BE3EC295996940002DEEC /* JobView.swift */; };
@@ -87,14 +87,14 @@
 		3F19F8D12952B00C005C0558 /* Identifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Identifier.swift; sourceTree = "<group>"; };
 		3F25F1EF2962930B00F4DA02 /* HpaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HpaView.swift; sourceTree = "<group>"; };
 		3F25F1F129630BA300F4DA02 /* Model+Yaml.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Model+Yaml.swift"; sourceTree = "<group>"; };
-		3F25F1F52963EA2300F4DA02 /* asset-manifest.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "asset-manifest.json"; sourceTree = "<group>"; };
-		3F25F1F62963EA2300F4DA02 /* robots.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = robots.txt; sourceTree = "<group>"; };
-		3F25F1F72963EA2300F4DA02 /* logo512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo512.png; sourceTree = "<group>"; };
-		3F25F1F82963EA2300F4DA02 /* logo192.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo192.png; sourceTree = "<group>"; };
-		3F25F1F92963EA2300F4DA02 /* manifest.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = manifest.json; sourceTree = "<group>"; };
-		3F25F1FA2963EA2300F4DA02 /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
-		3F25F1FB2963EA2300F4DA02 /* static */ = {isa = PBXFileReference; lastKnownFileType = folder; path = static; sourceTree = "<group>"; };
-		3F25F1FC2963EA2400F4DA02 /* favicon.ico */ = {isa = PBXFileReference; lastKnownFileType = image.ico; path = favicon.ico; sourceTree = "<group>"; };
+		3F25F21529640FDF00F4DA02 /* favicon.ico */ = {isa = PBXFileReference; lastKnownFileType = image.ico; path = favicon.ico; sourceTree = "<group>"; };
+		3F25F21629640FDF00F4DA02 /* logo512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo512.png; sourceTree = "<group>"; };
+		3F25F21729640FDF00F4DA02 /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
+		3F25F21829640FDF00F4DA02 /* robots.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = robots.txt; sourceTree = "<group>"; };
+		3F25F21929640FDF00F4DA02 /* asset-manifest.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "asset-manifest.json"; sourceTree = "<group>"; };
+		3F25F21A29640FDF00F4DA02 /* static */ = {isa = PBXFileReference; lastKnownFileType = folder; path = static; sourceTree = "<group>"; };
+		3F25F21B29640FDF00F4DA02 /* manifest.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = manifest.json; sourceTree = "<group>"; };
+		3F25F21C29640FDF00F4DA02 /* logo192.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo192.png; sourceTree = "<group>"; };
 		3F2BE3E829595A040002DEEC /* PodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodView.swift; sourceTree = "<group>"; };
 		3F2BE3EA29595A320002DEEC /* DeploymentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeploymentView.swift; sourceTree = "<group>"; };
 		3F2BE3EC295996940002DEEC /* JobView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobView.swift; sourceTree = "<group>"; };
@@ -254,14 +254,14 @@
 		3FFCCF8B294DFF6000FE6710 /* K8sCat */ = {
 			isa = PBXGroup;
 			children = (
-				3F25F1F52963EA2300F4DA02 /* asset-manifest.json */,
-				3F25F1FC2963EA2400F4DA02 /* favicon.ico */,
-				3F25F1FA2963EA2300F4DA02 /* index.html */,
-				3F25F1F82963EA2300F4DA02 /* logo192.png */,
-				3F25F1F72963EA2300F4DA02 /* logo512.png */,
-				3F25F1F92963EA2300F4DA02 /* manifest.json */,
-				3F25F1F62963EA2300F4DA02 /* robots.txt */,
-				3F25F1FB2963EA2300F4DA02 /* static */,
+				3F25F21929640FDF00F4DA02 /* asset-manifest.json */,
+				3F25F21529640FDF00F4DA02 /* favicon.ico */,
+				3F25F21729640FDF00F4DA02 /* index.html */,
+				3F25F21C29640FDF00F4DA02 /* logo192.png */,
+				3F25F21629640FDF00F4DA02 /* logo512.png */,
+				3F25F21B29640FDF00F4DA02 /* manifest.json */,
+				3F25F21829640FDF00F4DA02 /* robots.txt */,
+				3F25F21A29640FDF00F4DA02 /* static */,
 				3F25F1F42963DD3900F4DA02 /* exec */,
 				3F25F1F32963DD2000F4DA02 /* yaml */,
 				3F25F17B296049D700F4DA02 /* id */,
@@ -424,16 +424,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3F25F21F29640FDF00F4DA02 /* index.html in Resources */,
 				3FFCCF95294DFF6100FE6710 /* Preview Assets.xcassets in Resources */,
-				3F25F2012963EA2400F4DA02 /* manifest.json in Resources */,
-				3F25F1FE2963EA2400F4DA02 /* robots.txt in Resources */,
-				3F25F1FF2963EA2400F4DA02 /* logo512.png in Resources */,
-				3F25F2042963EA2400F4DA02 /* favicon.ico in Resources */,
-				3F25F1FD2963EA2400F4DA02 /* asset-manifest.json in Resources */,
-				3F25F2022963EA2400F4DA02 /* index.html in Resources */,
 				3FFCCF91294DFF6100FE6710 /* Assets.xcassets in Resources */,
-				3F25F2032963EA2400F4DA02 /* static in Resources */,
-				3F25F2002963EA2400F4DA02 /* logo192.png in Resources */,
+				3F25F22029640FDF00F4DA02 /* robots.txt in Resources */,
+				3F25F22329640FDF00F4DA02 /* manifest.json in Resources */,
+				3F25F22129640FDF00F4DA02 /* asset-manifest.json in Resources */,
+				3F25F21D29640FDF00F4DA02 /* favicon.ico in Resources */,
+				3F25F22429640FDF00F4DA02 /* logo192.png in Resources */,
+				3F25F22229640FDF00F4DA02 /* static in Resources */,
+				3F25F21E29640FDF00F4DA02 /* logo512.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
