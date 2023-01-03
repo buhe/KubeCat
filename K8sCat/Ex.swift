@@ -9,6 +9,11 @@ import SwiftUI
 import SwiftkubeClient
 import SwiftkubeModel
 
+protocol Yamlble {
+    func encodeYaml(client: KubernetesClient?) -> String
+    
+    func decodeYaml(client: KubernetesClient?, yaml: String)
+}
 
 extension View {
     func border(width: CGFloat, edges: [Edge], color: SwiftUI.Color) -> some View {
@@ -52,7 +57,7 @@ struct Container: Identifiable {
     let pullPolicy: String
 }
 
-struct Deployment: Identifiable {
+struct Deployment: Identifiable, Yamlble {
     var id: String
     var name: String
     let k8sName: String

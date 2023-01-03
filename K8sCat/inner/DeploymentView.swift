@@ -10,6 +10,8 @@ import SwiftUI
 struct DeploymentView: View {
     let deployment: Deployment
     let viewModel: ViewModel
+    
+    @State var showYaml = false
     var body: some View {
         Form {
             Section(header: "Name") {
@@ -82,7 +84,8 @@ struct DeploymentView: View {
                     // do something
                     let yaml = deployment.encodeYaml(client: viewModel.model.client)
                     print("Yaml: \(yaml)")
-                    deployment.decodeYaml(client: viewModel.model.client, yaml: yaml)
+                    showYaml = true
+//                    deployment.decodeYaml(client: viewModel.model.client, yaml: yaml)
                 } label: {
                     Text("View/Edit Yaml")
                     Image(systemName: "note.text")
@@ -96,6 +99,8 @@ struct DeploymentView: View {
             } label: {
                  Image(systemName: "ellipsis")
             }
+        }.sheet(isPresented: $showYaml){
+            WebView(yamlble: deployment, client: viewModel.model.client)
         }
     }
 }
