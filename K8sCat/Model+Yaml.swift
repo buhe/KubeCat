@@ -62,26 +62,7 @@ extension Deployment {
 }
 
 func urlScheme(yamlble: Yamlble, client: KubernetesClient?) {
-    let utf8str = """
-apiVersion: batch/v1
-kind: Job
-metadata:
-  name: kubernetes-job-example
-  labels:
-    jobgroup: jobexample
-spec:
-  template:
-    metadata:
-      name: kubejob
-      labels:
-        jobgroup: jobexample
-    spec:
-      containers:
-      - name: c
-        image: devopscube/kubernetes-job-demo:latest
-        args: ["100"]
-      restartPolicy: OnFailure
-""".data(using: .utf8)
+    let utf8str = yamlble.encodeYaml(client: client).data(using: .utf8)
     let base64Encoded = utf8str!.base64EncodedString(options: Data.Base64EncodingOptions(rawValue: 0))
     if let url = URL(string: "yamler://" + base64Encoded) {
         UIApplication.shared.open(url)
