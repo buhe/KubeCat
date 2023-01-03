@@ -100,9 +100,12 @@ struct DeploymentView: View {
                  Image(systemName: "ellipsis")
             }
         }.sheet(isPresented: $showYaml){
-            WebView(yamlble: deployment, model: viewModel.model) {
+            YamlWebView(yamlble: deployment, model: viewModel.model) {
                 showYaml = false
             }
+            Button{}label: {
+                Text("Load yaml via Yamler")
+            }.padding()
         }
     }
 }

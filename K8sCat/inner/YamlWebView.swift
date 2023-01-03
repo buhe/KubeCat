@@ -37,7 +37,7 @@ class WKHandler: NSObject, WKScriptMessageHandler {
         }
     }
 }
-struct WebView: UIViewRepresentable {
+struct YamlWebView: UIViewRepresentable {
     
     @Environment(\.colorScheme) private var colorScheme
 //    let pod: Pod
@@ -51,7 +51,7 @@ struct WebView: UIViewRepresentable {
         let yaml = yamlble.encodeYaml(client: model.client)
         
         webView.configuration.userContentController.add(WKHandler(yamlble: yamlble, model: model, lastYaml: yaml, close: close), name: "toggleMessageHandler")
-        let baseUrl = Bundle.main.url(forResource: "index", withExtension: "html")!
+        let baseUrl = Bundle.main.url(forResource: "index", withExtension: "html", subdirectory: "yaml")!
 //        print(baseUrl)
         var component = URLComponents(url: baseUrl, resolvingAgainstBaseURL: false)
         component?.queryItems = [URLQueryItem(name: "items", value: yaml), URLQueryItem(name: "theme", value: colorScheme == .dark ? "dark" : "light")]
