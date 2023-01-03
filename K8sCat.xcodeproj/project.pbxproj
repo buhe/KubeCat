@@ -158,6 +158,20 @@
 			path = id;
 			sourceTree = "<group>";
 		};
+		3F25F1F32963DD2000F4DA02 /* yaml */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = yaml;
+			sourceTree = "<group>";
+		};
+		3F25F1F42963DD3900F4DA02 /* exec */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = exec;
+			sourceTree = "<group>";
+		};
 		3F2BE3E529593C520002DEEC /* inner */ = {
 			isa = PBXGroup;
 			children = (
@@ -224,6 +238,8 @@
 		3FFCCF8B294DFF6000FE6710 /* K8sCat */ = {
 			isa = PBXGroup;
 			children = (
+				3F25F1F42963DD3900F4DA02 /* exec */,
+				3F25F1F32963DD2000F4DA02 /* yaml */,
 				3F25F17B296049D700F4DA02 /* id */,
 				3F2BE4352960152A0002DEEC /* cluster */,
 				3F2BE430295F2DA30002DEEC /* Persistence.swift */,
