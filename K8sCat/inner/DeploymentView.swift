@@ -100,7 +100,9 @@ struct DeploymentView: View {
                  Image(systemName: "ellipsis")
             }
         }.sheet(isPresented: $showYaml){
-            WebView(yamlble: deployment, model: viewModel.model)
+            WebView(yamlble: deployment, model: viewModel.model) {
+                showYaml = false
+            }
         }
     }
 }

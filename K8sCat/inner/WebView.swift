@@ -13,10 +13,12 @@ class WKHandler: NSObject, WKScriptMessageHandler {
     let yamlble: Yamlble
     let model: Model
     var lastYaml: String
-    init(yamlble: Yamlble, model: Model, lastYaml: String) {
+    let close: () -> Void
+    init(yamlble: Yamlble, model: Model, lastYaml: String, close: @escaping () -> Void) {
         self.yamlble = yamlble
         self.model = model
         self.lastYaml = lastYaml
+        self.close = close
     }
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         guard let dict = message.body as? [String : AnyObject] else {
@@ -27,9 +29,11 @@ class WKHandler: NSObject, WKScriptMessageHandler {
         if dict["message"] != nil {
             lastYaml = dict["message"]! as! String
         }
-        if dict["done"]! as! String == "true" {
+        if  dict["done"] != nil && dict["done"]! as! String == "true" {
             // download yaml
+            print("load via yaml \(lastYaml)")
             yamlble.decodeYaml(client: model.client, yaml: lastYaml)
+            close()
         }
     }
 }
@@ -40,16 +44,13 @@ struct WebView: UIViewRepresentable {
 //    let container: Container
     let yamlble: Yamlble
     let model: Model
+    let close: () -> Void
 
     func makeUIView(context: Context) -> WKWebView {
-        let wk = WKWebView()
-        
-        return wk
-    }
-
-    func updateUIView(_ webView: WKWebView, context: Context) {
+        let webView = WKWebView()
         let yaml = yamlble.encodeYaml(client: model.client)
-        webView.configuration.userContentController.add(WKHandler(yamlble: yamlble, model: model, lastYaml: yaml), name: "toggleMessageHandler")
+        
+        webView.configuration.userContentController.add(WKHandler(yamlble: yamlble, model: model, lastYaml: yaml, close: close), name: "toggleMessageHandler")
         let baseUrl = Bundle.main.url(forResource: "index", withExtension: "html")!
 //        print(baseUrl)
         var component = URLComponents(url: baseUrl, resolvingAgainstBaseURL: false)
@@ -59,6 +60,11 @@ struct WebView: UIViewRepresentable {
 //            print(url)
             webView.loadFileURL(url, allowingReadAccessTo: url)
         }
+        return webView
+    }
+
+    func updateUIView(_ webView: WKWebView, context: Context) {
+        
         
         
         
