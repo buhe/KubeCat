@@ -85,26 +85,6 @@ struct PodView: View {
                 }
                 
             }
-        }.toolbar{
-            Menu {
-                Button {
-                    // do something
-                    let yaml = pod.encodeYaml(client: viewModel.model.client)
-                    print("Yaml: \(yaml)")
-                    pod.decodeYaml(client: viewModel.model.client, yaml: yaml)
-                } label: {
-                    Text("View/Edit Yaml")
-                    Image(systemName: "note.text")
-                }
-                Button {
-                    // do something
-                } label: {
-                    Text("Delete Resource")
-                    Image(systemName: "trash")
-                }
-            } label: {
-                 Image(systemName: "ellipsis")
-            }
         }
     }
 }
