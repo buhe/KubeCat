@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import SwiftkubeClient
+import SwiftkubeModel
 
 
 extension View {
@@ -36,6 +38,7 @@ struct Pod: Identifiable {
     let labels: [String: String]?
     let annotations: [String: String]?
     let namespace: String
+    let raw: core.v1.Pod?
 }
 
 struct Container: Identifiable {
@@ -60,6 +63,7 @@ struct Deployment: Identifiable {
     let annotations: [String: String]?
     let namespace: String
     let status: Bool
+    let raw: apps.v1.Deployment?
 }
 
 struct PersistentVolume: Identifiable {

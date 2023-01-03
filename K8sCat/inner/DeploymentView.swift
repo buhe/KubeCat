@@ -76,12 +76,32 @@ struct DeploymentView: View {
                 }
                 
             }
+        }.toolbar{
+            Menu {
+                Button {
+                    // do something
+                    let yaml = deployment.encodeYaml(client: viewModel.model.client)
+                    print("Yaml: \(yaml)")
+                    deployment.decodeYaml(client: viewModel.model.client, yaml: yaml)
+                } label: {
+                    Text("View/Edit Yaml")
+                    Image(systemName: "note.text")
+                }
+                Button {
+                    // do something
+                } label: {
+                    Text("Delete Resource")
+                    Image(systemName: "trash")
+                }
+            } label: {
+                 Image(systemName: "ellipsis")
+            }
         }
     }
 }
 
 struct DeploymentView_Previews: PreviewProvider {
     static var previews: some View {
-        DeploymentView(deployment:  Deployment(id: "123", name: "123", k8sName: "123", expect: 1, pending: 0, labels: ["l1":"l1v"],annotations: ["a1":"a1v"],namespace: "default", status: false), viewModel: ViewModel(viewContext: PersistenceController.preview.container.viewContext))
+        DeploymentView(deployment:  Deployment(id: "123", name: "123", k8sName: "123", expect: 1, pending: 0, labels: ["l1":"l1v"],annotations: ["a1":"a1v"],namespace: "default", status: false, raw: nil), viewModel: ViewModel(viewContext: PersistenceController.preview.container.viewContext))
     }
 }

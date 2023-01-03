@@ -27,7 +27,7 @@ class ViewModel: ObservableObject {
                 }
             }
             if model.hasAndSelectDemo {
-                return [Pod(id: "demo", name: "demo", k8sName: "demo", status: "Running", expect: 2, pending: 1, containers: [Container(id: "demo", name: "demo", image: "docker.io/hello", path: "/foo/bar", policy: "Restart", pullPolicy: "Restart")], clusterIP: "10.0.1.3", nodeIP: "1.2.3.4", labels: [:], annotations: [:], namespace: ns)]
+                return [Pod(id: "demo", name: "demo", k8sName: "demo", status: "Running", expect: 2, pending: 1, containers: [Container(id: "demo", name: "demo", image: "docker.io/hello", path: "/foo/bar", policy: "Restart", pullPolicy: "Restart")], clusterIP: "10.0.1.3", nodeIP: "1.2.3.4", labels: [:], annotations: [:], namespace: ns, raw: nil)]
             }
             return model.pods[ns]!.map {Pod(id: $0.name!, name: $0.name!, k8sName: $0.metadata?.labels!["app.kubernetes.io/name"] ?? "unknow", status: ($0.status?.phase)!, expect: $0.spec?.containers.count ?? 0, pending: $0.status?.containerStatuses?.filter{$0.ready == false}.count ?? 0, containers: ($0.spec?.containers.map{Container(
                 id: $0.name, name: $0.name, image: $0.image!
@@ -37,6 +37,7 @@ class ViewModel: ObservableObject {
                                               , labels: $0.metadata?.labels
                                               , annotations: $0.metadata?.annotations
                                               , namespace: ($0.metadata?.namespace)!
+                                            , raw: $0
             )}
         
         
@@ -139,13 +140,14 @@ class ViewModel: ObservableObject {
                 
             }
             if model.hasAndSelectDemo {
-                return [Deployment(id: "demo1", name: "demo1", k8sName: "demo1", expect: 2, pending: 0, labels: [:], annotations: [:], namespace: "demo1", status: true), Deployment(id: "demo2", name: "demo2", k8sName: "demo2", expect: 2, pending: 1, labels: [:], annotations: [:], namespace: "demo1", status: false)]
+                return [Deployment(id: "demo1", name: "demo1", k8sName: "demo1", expect: 2, pending: 0, labels: [:], annotations: [:], namespace: "demo1", status: true, raw: nil), Deployment(id: "demo2", name: "demo2", k8sName: "demo2", expect: 2, pending: 1, labels: [:], annotations: [:], namespace: "demo1", status: false, raw: nil)]
             }
             return model.deployments[ns]!.map {Deployment(id: $0.name!, name: $0.name!, k8sName: $0.metadata?.labels!["app.kubernetes.io/name"] ?? "unknow", expect: Int($0.spec?.replicas ?? 0), pending: Int($0.status?.unavailableReplicas ?? 0)
                                                             , labels: $0.metadata?.labels
                                                             , annotations: $0.metadata?.annotations
                                                             , namespace: ($0.metadata?.namespace)!
                                                             , status: $0.status?.replicas == $0.status?.readyReplicas
+                                                          , raw: $0
             )}
     }
     
