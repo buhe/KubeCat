@@ -652,8 +652,8 @@
             filePath = "K8sCat/Model+Yaml.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "17"
-            endingLineNumber = "17"
+            startingLineNumber = "18"
+            endingLineNumber = "18"
             landmarkName = "encodeYaml(client:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -668,8 +668,8 @@
             filePath = "K8sCat/Model+Yaml.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "30"
-            endingLineNumber = "30"
+            startingLineNumber = "31"
+            endingLineNumber = "31"
             landmarkName = "decodeYaml(client:yaml:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -684,9 +684,9 @@
             filePath = "K8sCat/Model+Yaml.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "55"
-            endingLineNumber = "55"
-            landmarkName = "decodeYaml(client:yaml:)"
+            startingLineNumber = "56"
+            endingLineNumber = "56"
+            landmarkName = "decodeYamlAndUpdate(client:yaml:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -700,9 +700,9 @@
             filePath = "K8sCat/Model+Yaml.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "56"
-            endingLineNumber = "56"
-            landmarkName = "decodeYaml(client:yaml:)"
+            startingLineNumber = "57"
+            endingLineNumber = "57"
+            landmarkName = "decodeYamlAndUpdate(client:yaml:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -736,6 +736,38 @@
             endingLineNumber = "35"
             landmarkName = "userContentController(_:didReceive:)"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "748DE71E-3349-41A2-924D-D4CF8A5C2295"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "K8sCat/Model+Yaml.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "65"
+            endingLineNumber = "65"
+            landmarkName = "urlScheme(yamlble:client:)"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "DD59A3C9-79AC-416D-8BE5-BE3E55F8DABB"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "K8sCat/Model+Yaml.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "85"
+            endingLineNumber = "85"
+            landmarkName = "urlScheme(yamlble:client:)"
+            landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

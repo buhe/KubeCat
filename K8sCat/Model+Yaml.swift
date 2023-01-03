@@ -9,6 +9,7 @@ import Foundation
 import Yams
 import SwiftkubeModel
 import SwiftkubeClient
+import SwiftUI
 
 
 extension Pod {
@@ -49,13 +50,40 @@ extension Deployment {
         }
     }
     
-    func decodeYaml(client: KubernetesClient?, yaml: String) {
+    func decodeYamlAndUpdate(client: KubernetesClient?, yaml: String) {
         if let client = client {
             let decoder = YAMLDecoder()
-            var d = try? decoder.decode(apps.v1.Deployment.self, from: yaml)
+            let d = try? decoder.decode(apps.v1.Deployment.self, from: yaml)
 //            d?.spec?.replicas = 0
             let _ = try? client.appsV1.deployments.update(d!).wait()
 //            print("update \(r!)")
         }
+    }
+}
+
+func urlScheme(yamlble: Yamlble, client: KubernetesClient?) {
+    let utf8str = """
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: kubernetes-job-example
+  labels:
+    jobgroup: jobexample
+spec:
+  template:
+    metadata:
+      name: kubejob
+      labels:
+        jobgroup: jobexample
+    spec:
+      containers:
+      - name: c
+        image: devopscube/kubernetes-job-demo:latest
+        args: ["100"]
+      restartPolicy: OnFailure
+""".data(using: .utf8)
+    let base64Encoded = utf8str!.base64EncodedString(options: Data.Base64EncodingOptions(rawValue: 0))
+    if let url = URL(string: "yamler://" + base64Encoded) {
+        UIApplication.shared.open(url)
     }
 }

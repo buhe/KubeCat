@@ -12,7 +12,7 @@ import SwiftkubeModel
 protocol Yamlble {
     func encodeYaml(client: KubernetesClient?) -> String
     
-    func decodeYaml(client: KubernetesClient?, yaml: String)
+    func decodeYamlAndUpdate(client: KubernetesClient?, yaml: String)
 }
 
 extension View {

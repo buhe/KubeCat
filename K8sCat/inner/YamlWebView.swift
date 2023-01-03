@@ -32,7 +32,7 @@ class WKHandler: NSObject, WKScriptMessageHandler {
         if  dict["done"] != nil && dict["done"]! as! String == "true" {
             // download yaml
             print("load via yaml \(lastYaml)")
-            yamlble.decodeYaml(client: model.client, yaml: lastYaml)
+            yamlble.decodeYamlAndUpdate(client: model.client, yaml: lastYaml)
             close()
         }
     }

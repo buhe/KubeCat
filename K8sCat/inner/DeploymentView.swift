@@ -103,7 +103,9 @@ struct DeploymentView: View {
             YamlWebView(yamlble: deployment, model: viewModel.model) {
                 showYaml = false
             }
-            Button{}label: {
+            Button{
+                urlScheme(yamlble: deployment, client: viewModel.model.client)
+            }label: {
                 Text("Load yaml via Yamler")
             }.padding()
         }
