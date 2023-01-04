@@ -9,6 +9,9 @@ import SwiftUI
 
 struct HpaView: View {
     let hpa: Hpa
+    let viewModel: ViewModel
+    
+    @State var showYaml = false
     var body: some View {
         Form {
             Section(header: "Name") {
@@ -22,12 +25,42 @@ struct HpaView: View {
                 }
                 
             }
+        }.toolbar{
+            Menu {
+                Button {
+                    // do something
+                    let yaml = hpa.encodeYaml(client: viewModel.model.client)
+                    print("Yaml: \(yaml)")
+                    showYaml = true
+//                    deployment.decodeYaml(client: viewModel.model.client, yaml: yaml)
+                } label: {
+                    Text("View/Edit Yaml")
+                    Image(systemName: "note.text")
+                }
+                Button {
+                    // do something
+                } label: {
+                    Text("Delete Resource")
+                    Image(systemName: "trash")
+                }
+            } label: {
+                 Image(systemName: "ellipsis")
+            }
+        }.sheet(isPresented: $showYaml){
+            YamlWebView(yamlble: hpa, model: viewModel.model) {
+                showYaml = false
+            }
+            Button{
+                urlScheme(yamlble: hpa, client: viewModel.model.client)
+            }label: {
+                Text("Load yaml via Yamler")
+            }.padding()
         }
     }
 }
 
 struct HpaView_Previews: PreviewProvider {
     static var previews: some View {
-        HpaView(hpa:  Hpa(id: "123", name: "123", namespace: "default"))
+        HpaView(hpa:  Hpa(id: "123", name: "123", namespace: "default", raw: nil), viewModel: ViewModel(viewContext: PersistenceController.shared.container.viewContext))
     }
 }

@@ -297,7 +297,7 @@ struct NamespaceView: View {
                             ForEach(viewModel.hpas.filter{$0.name.contains(search.lowercased()) || search == ""}) {
                                 i in
                                 NavigationLink {
-                                    HpaView(hpa: i)
+                                    HpaView(hpa: i, viewModel: viewModel)
                                 } label: {
                                     Image(systemName: "scale.3d")
                                     Text(i.name)

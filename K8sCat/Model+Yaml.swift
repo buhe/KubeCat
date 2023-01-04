@@ -11,30 +11,30 @@ import SwiftkubeModel
 import SwiftkubeClient
 import SwiftUI
 
-
-extension Pod {
-    func encodeYaml(client: KubernetesClient?) -> String {
-        if let _ = client {
-            let encoder = YAMLEncoder()
-            
-            
-            let r = try? encoder.encode(raw!)
-            return r!
-            
-        } else {
-            return ""
-        }
-    }
-    
-    func decodeYaml(client: KubernetesClient?, yaml: String) {
-        if let client = client {
-            let decoder = YAMLDecoder()
-            let d = try? decoder.decode(core.v1.Pod.self, from: yaml)
-            let _ = try? client.pods.update(d!).wait()
-//            print("update \(r!)")
-        }
-    }
-}
+//
+//extension Pod {
+//    func encodeYaml(client: KubernetesClient?) -> String {
+//        if let _ = client {
+//            let encoder = YAMLEncoder()
+//
+//
+//            let r = try? encoder.encode(raw!)
+//            return r!
+//
+//        } else {
+//            return ""
+//        }
+//    }
+//
+//    func decodeYaml(client: KubernetesClient?, yaml: String) {
+//        if let client = client {
+//            let decoder = YAMLDecoder()
+//            let d = try? decoder.decode(core.v1.Pod.self, from: yaml)
+//            let _ = try? client.pods.update(d!).wait()
+////            print("update \(r!)")
+//        }
+//    }
+//}
 
 extension Deployment {
     func encodeYaml(client: KubernetesClient?) -> String {
@@ -56,6 +56,81 @@ extension Deployment {
             let d = try? decoder.decode(apps.v1.Deployment.self, from: yaml)
 //            d?.spec?.replicas = 0
             let _ = try? client.appsV1.deployments.update(d!).wait()
+//            print("update \(r!)")
+        }
+    }
+}
+
+extension Stateful {
+    func encodeYaml(client: KubernetesClient?) -> String {
+        if let _ = client {
+            let encoder = YAMLEncoder()
+            
+            
+            let r = try? encoder.encode(raw!)
+            return r!
+            
+        } else {
+            return ""
+        }
+    }
+    
+    func decodeYamlAndUpdate(client: KubernetesClient?, yaml: String) {
+        if let client = client {
+            let decoder = YAMLDecoder()
+            let d = try? decoder.decode(apps.v1.StatefulSet.self, from: yaml)
+//            d?.spec?.replicas = 0
+            let _ = try? client.appsV1.statefulSets.update(d!).wait()
+//            print("update \(r!)")
+        }
+    }
+}
+
+extension Daemon {
+    func encodeYaml(client: KubernetesClient?) -> String {
+        if let _ = client {
+            let encoder = YAMLEncoder()
+            
+            
+            let r = try? encoder.encode(raw!)
+            return r!
+            
+        } else {
+            return ""
+        }
+    }
+    
+    func decodeYamlAndUpdate(client: KubernetesClient?, yaml: String) {
+        if let client = client {
+            let decoder = YAMLDecoder()
+            let d = try? decoder.decode(apps.v1.DaemonSet.self, from: yaml)
+//            d?.spec?.replicas = 0
+            let _ = try? client.appsV1.daemonSets.update(d!).wait()
+//            print("update \(r!)")
+        }
+    }
+}
+
+extension Hpa {
+    func encodeYaml(client: KubernetesClient?) -> String {
+        if let _ = client {
+            let encoder = YAMLEncoder()
+            
+            
+            let r = try? encoder.encode(raw!)
+            return r!
+            
+        } else {
+            return ""
+        }
+    }
+    
+    func decodeYamlAndUpdate(client: KubernetesClient?, yaml: String) {
+        if let client = client {
+            let decoder = YAMLDecoder()
+            let d = try? decoder.decode(autoscaling.v2beta1.HorizontalPodAutoscaler.self, from: yaml)
+//            d?.spec?.replicas = 0
+            let _ = try? client.autoScalingV2Beta1.horizontalPodAutoscalers.update(d!).wait()
 //            print("update \(r!)")
         }
     }

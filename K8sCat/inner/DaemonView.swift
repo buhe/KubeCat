@@ -10,6 +10,8 @@ import SwiftUI
 struct DaemonView: View {
     let daemon: Daemon
     let viewModel: ViewModel
+    
+    @State var showYaml = false
     var body: some View {
         Form {
             Section(header: "Name") {
@@ -76,12 +78,42 @@ struct DaemonView: View {
                 }
                 
             }
+        }.toolbar{
+            Menu {
+                Button {
+                    // do something
+                    let yaml = daemon.encodeYaml(client: viewModel.model.client)
+                    print("Yaml: \(yaml)")
+                    showYaml = true
+//                    deployment.decodeYaml(client: viewModel.model.client, yaml: yaml)
+                } label: {
+                    Text("View/Edit Yaml")
+                    Image(systemName: "note.text")
+                }
+                Button {
+                    // do something
+                } label: {
+                    Text("Delete Resource")
+                    Image(systemName: "trash")
+                }
+            } label: {
+                 Image(systemName: "ellipsis")
+            }
+        }.sheet(isPresented: $showYaml){
+            YamlWebView(yamlble: daemon, model: viewModel.model) {
+                showYaml = false
+            }
+            Button{
+                urlScheme(yamlble: daemon, client: viewModel.model.client)
+            }label: {
+                Text("Load yaml via Yamler")
+            }.padding()
         }
     }
 }
 
 struct DaemonView_Previews: PreviewProvider {
     static var previews: some View {
-        DaemonView(daemon: Daemon(id: "123", name: "123", k8sName: "123", labels: ["l1":"l1v"],annotations: ["a1":"a1v"],namespace: "default", status: true), viewModel: ViewModel(viewContext: PersistenceController.preview.container.viewContext))
+        DaemonView(daemon: Daemon(id: "123", name: "123", k8sName: "123", labels: ["l1":"l1v"],annotations: ["a1":"a1v"],namespace: "default", status: true, raw: nil), viewModel: ViewModel(viewContext: PersistenceController.preview.container.viewContext))
     }
 }

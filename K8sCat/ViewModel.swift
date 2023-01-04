@@ -52,10 +52,11 @@ class ViewModel: ObservableObject {
                 }
             }
             if model.hasAndSelectDemo {
-                return [Hpa(id: "demo", name: "demo", namespace: "demo1")]
+                return [Hpa(id: "demo", name: "demo", namespace: "demo1", raw: nil)]
             }
             return model.hpas[ns]!.map {Hpa(id: $0.name!, name: $0.name!
                                               , namespace: ($0.metadata?.namespace)!
+                                            , raw: $0
             )}
 
         
@@ -208,13 +209,13 @@ class ViewModel: ObservableObject {
                 
             }
             if model.hasAndSelectDemo {
-                return [Stateful(id: "demo", name: "demo", k8sName: "demo", labels: [:], annotations: [:], namespace: "demo", status: false)]
+                return [Stateful(id: "demo", name: "demo", k8sName: "demo", labels: [:], annotations: [:], namespace: "demo", status: false, raw: nil)]
             }
             return model.statefulls[ns]!.map {Stateful(id: $0.name!, name: $0.name!, k8sName: ($0.metadata?.labels!["app.kubernetes.io/name"]!)!
                                                          , labels: $0.metadata?.labels
                                                          , annotations: $0.metadata?.annotations
                                                          , namespace: ($0.metadata?.namespace)!
-                                                         , status: $0.status?.readyReplicas == $0.status?.replicas
+                                                         , status: $0.status?.readyReplicas == $0.status?.replicas, raw: $0
             )}
         
     }
@@ -290,13 +291,14 @@ class ViewModel: ObservableObject {
                 
             }
             if model.hasAndSelectDemo {
-                return [Daemon(id: "demo", name: "demo", k8sName: "demo", labels: [:], annotations: [:], namespace: "demo", status: true)]
+                return [Daemon(id: "demo", name: "demo", k8sName: "demo", labels: [:], annotations: [:], namespace: "demo", status: true, raw: nil)]
             }
             return model.daemons[ns]!.map {Daemon(id: $0.name!, name: $0.name!, k8sName: $0.metadata?.labels!["app.kubernetes.io/name"] ?? "unknow"
                                                     , labels: $0.metadata?.labels
                                                     , annotations: $0.metadata?.annotations
                                                     , namespace: ($0.metadata?.namespace)!
                                                     , status: $0.status!.numberMisscheduled <= 0
+                                                  , raw: $0
             )}
     }
     

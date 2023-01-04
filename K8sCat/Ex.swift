@@ -21,13 +21,14 @@ extension View {
     }
 }
 
-struct Hpa: Identifiable {
+struct Hpa: Identifiable, Yamlble {
     var id: String
     var name: String
 //    let k8sName: String
 //    let labels: [String: String]?
 //    let annotations: [String: String]?
     let namespace: String
+    let raw: autoscaling.v2beta1.HorizontalPodAutoscaler?
 }
 
 struct Pod: Identifiable {
@@ -111,7 +112,7 @@ struct CronJob: Identifiable {
     let schedule: String
 }
 
-struct Stateful: Identifiable {
+struct Stateful: Identifiable, Yamlble {
     var id: String
     var name: String
     let k8sName: String
@@ -119,6 +120,7 @@ struct Stateful: Identifiable {
     let annotations: [String: String]?
     let namespace: String
     let status: Bool
+    let raw: apps.v1.StatefulSet?
 }
 
 struct Service: Identifiable {
@@ -152,7 +154,7 @@ struct Secret: Identifiable {
     let data: [String: String]?
 }
 
-struct Daemon: Identifiable {
+struct Daemon: Identifiable, Yamlble {
     var id: String
     var name: String
     let k8sName: String
@@ -160,6 +162,7 @@ struct Daemon: Identifiable {
     let annotations: [String: String]?
     let namespace: String
     let status: Bool
+    let raw: apps.v1.DaemonSet?
 }
 
 struct Replica: Identifiable {
