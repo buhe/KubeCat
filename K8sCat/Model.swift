@@ -25,7 +25,7 @@ struct Model {
     var pods: [String: [core.v1.Pod]] = ["": []]
     var deployments: [String: [apps.v1.Deployment]] = ["": []]
     var jobs: [String: [batch.v1.Job]] = ["": []]
-    var cronJobs: [String: [batch.v1beta1.CronJob]] = ["": []]
+    var cronJobs: [String: [batch.v1.CronJob]] = ["": []]
     var statefulls: [String: [apps.v1.StatefulSet]] = ["": []]
     var services: [String: [core.v1.Service]] = ["": []]
     var configMaps: [String: [core.v1.ConfigMap]] = ["": []]
@@ -320,7 +320,7 @@ struct Model {
     
     mutating func cronJob(in ns: NamespaceSelector) throws {
         if let client = client {
-            let cronJob = try client.batchV1Beta1.cronJobs.list(in: ns).wait().items
+            let cronJob = try client.batchV1.cronJobs.list(in: ns).wait().items
             switch ns {
             case .namespace(let name):
                 self.cronJobs[name] = cronJob

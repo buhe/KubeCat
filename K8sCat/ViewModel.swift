@@ -73,7 +73,7 @@ class ViewModel: ObservableObject {
             
         }
         if model.hasAndSelectDemo {
-            return [PersistentVolume(id: "demo", name: "demo", labels: [:], annotations: [:], accessModes: "r/w", status: "Bounded", storageClass: "auto")]
+            return [PersistentVolume(id: "demo", name: "demo", labels: [:], annotations: [:], accessModes: "r/w", status: "Bounded", storageClass: "auto", raw: nil)]
         }
         return model.pvs!.map {PersistentVolume(id: $0.name!, name: $0.name!
                                                         , labels: $0.metadata?.labels
@@ -81,6 +81,7 @@ class ViewModel: ObservableObject {
                                                 accessModes: ($0.spec?.accessModes?.first)!,
                                                 status: ($0.status?.phase)!,
                                                 storageClass: ($0.spec?.storageClassName)!
+                                                , raw: $0
                                                         
         )}
 
@@ -186,7 +187,7 @@ class ViewModel: ObservableObject {
                 
             }
             if model.hasAndSelectDemo {
-                return [CronJob(id: "demo", name: "demo", k8sName: "demo", labels: [:], annotations: [:], namespace: "demo", schedule: "10/5 * * * *")]
+                return [CronJob(id: "demo", name: "demo", k8sName: "demo", labels: [:], annotations: [:], namespace: "demo", schedule: "10/5 * * * *", raw: nil)]
             }
             return model.cronJobs[ns]!.map {CronJob(id: $0.name!, name: $0.name!,
                                                       k8sName: $0.metadata?.labels?["job-name"] ?? "unknow"
@@ -194,6 +195,7 @@ class ViewModel: ObservableObject {
                                                       , annotations: $0.metadata?.annotations
                                                       , namespace: ($0.metadata?.namespace)!
                                                       , schedule: $0.spec!.schedule
+                                                    , raw: $0
             )}
     
     }

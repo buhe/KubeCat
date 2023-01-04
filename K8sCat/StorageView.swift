@@ -50,7 +50,7 @@ struct StorageView: View {
                         ForEach(viewModel.pvc.filter{$0.name.contains(search.lowercased()) || search == ""}) {
                             i in
                             NavigationLink {
-//                                DeploymentView(deployment: i, viewModel: viewModel)
+                                PVCView(pvc: i, viewModel: viewModel)
                             } label: {
                                 Image(systemName: "shield")
                                 Text(i.name)

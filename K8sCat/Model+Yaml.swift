@@ -136,6 +136,81 @@ extension Hpa {
     }
 }
 
+extension CronJob {
+    func encodeYaml(client: KubernetesClient?) -> String {
+        if let _ = client {
+            let encoder = YAMLEncoder()
+            
+            
+            let r = try? encoder.encode(raw!)
+            return r!
+            
+        } else {
+            return ""
+        }
+    }
+    
+    func decodeYamlAndUpdate(client: KubernetesClient?, yaml: String) {
+        if let client = client {
+            let decoder = YAMLDecoder()
+            let d = try? decoder.decode(batch.v1.CronJob.self, from: yaml)
+//            d?.spec?.replicas = 0
+            let _ = try? client.batchV1.cronJobs.update(d!).wait()
+//            print("update \(r!)")
+        }
+    }
+}
+
+extension PersistentVolume {
+    func encodeYaml(client: KubernetesClient?) -> String {
+        if let _ = client {
+            let encoder = YAMLEncoder()
+            
+            
+            let r = try? encoder.encode(raw!)
+            return r!
+            
+        } else {
+            return ""
+        }
+    }
+    
+    func decodeYamlAndUpdate(client: KubernetesClient?, yaml: String) {
+        if let client = client {
+            let decoder = YAMLDecoder()
+            let d = try? decoder.decode(core.v1.PersistentVolume.self, from: yaml)
+//            d?.spec?.replicas = 0
+            let _ = try? client.persistentVolumes.update(d!).wait()
+//            print("update \(r!)")
+        }
+    }
+}
+
+//extension PersistentVolumeClaim {
+//    func encodeYaml(client: KubernetesClient?) -> String {
+//        if let _ = client {
+//            let encoder = YAMLEncoder()
+//
+//
+//            let r = try? encoder.encode(raw!)
+//            return r!
+//
+//        } else {
+//            return ""
+//        }
+//    }
+//
+//    func decodeYamlAndUpdate(client: KubernetesClient?, yaml: String) {
+//        if let client = client {
+//            let decoder = YAMLDecoder()
+//            let d = try? decoder.decode(core.v1.PersistentVolumeClaim.self, from: yaml)
+////            d?.spec?.replicas = 0
+//            let _ = try? client.persistentVolumeClaims.update(d!).wait()
+////            print("update \(r!)")
+//        }
+//    }
+//}
+
 func urlScheme(yamlble: Yamlble, client: KubernetesClient?) {
     let utf8str = yamlble.encodeYaml(client: client).data(using: .utf8)
     let base64Encoded = utf8str!.base64EncodedString(options: Data.Base64EncodingOptions(rawValue: 0))

@@ -72,7 +72,7 @@ struct Deployment: Identifiable, Yamlble {
     let raw: apps.v1.Deployment?
 }
 
-struct PersistentVolume: Identifiable {
+struct PersistentVolume: Identifiable, Yamlble {
     var id: String
     var name: String
     let labels: [String: String]?
@@ -83,6 +83,7 @@ struct PersistentVolume: Identifiable {
 //    let reclaim: String
     let status: String
     let storageClass: String
+    let raw: core.v1.PersistentVolume?
 }
 
 struct PersistentVolumeClaim: Identifiable {
@@ -102,7 +103,7 @@ struct Job: Identifiable {
     let status: Bool
 }
 
-struct CronJob: Identifiable {
+struct CronJob: Identifiable, Yamlble {
     var id: String
     var name: String
     let k8sName: String
@@ -110,6 +111,7 @@ struct CronJob: Identifiable {
     let annotations: [String: String]?
     let namespace: String
     let schedule: String
+    let raw: batch.v1.CronJob?
 }
 
 struct Stateful: Identifiable, Yamlble {
