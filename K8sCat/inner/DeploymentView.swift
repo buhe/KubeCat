@@ -105,9 +105,11 @@ struct DeploymentView: View {
                  Image(systemName: "ellipsis")
             }
         }.sheet(isPresented: $showYaml){
+            #if os(iOS)
             YamlWebView(yamlble: deployment, model: viewModel.model) {
                 showYaml = false
             }
+            #endif
             Button{
                 urlScheme(yamlble: deployment, client: viewModel.model.client)
             }label: {

@@ -100,9 +100,11 @@ struct StatefulView: View {
                  Image(systemName: "ellipsis")
             }
         }.sheet(isPresented: $showYaml){
+            #if os(iOS)
             YamlWebView(yamlble: stateful, model: viewModel.model) {
                 showYaml = false
             }
+            #endif
             Button{
                 urlScheme(yamlble: stateful, client: viewModel.model.client)
             }label: {

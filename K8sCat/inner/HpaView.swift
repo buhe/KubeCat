@@ -47,9 +47,11 @@ struct HpaView: View {
                  Image(systemName: "ellipsis")
             }
         }.sheet(isPresented: $showYaml){
+            #if os(iOS)
             YamlWebView(yamlble: hpa, model: viewModel.model) {
                 showYaml = false
             }
+            #endif
             Button{
                 urlScheme(yamlble: hpa, client: viewModel.model.client)
             }label: {

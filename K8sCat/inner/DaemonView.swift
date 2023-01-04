@@ -100,9 +100,11 @@ struct DaemonView: View {
                  Image(systemName: "ellipsis")
             }
         }.sheet(isPresented: $showYaml){
+            #if os(iOS)
             YamlWebView(yamlble: daemon, model: viewModel.model) {
                 showYaml = false
             }
+            #endif
             Button{
                 urlScheme(yamlble: daemon, client: viewModel.model.client)
             }label: {

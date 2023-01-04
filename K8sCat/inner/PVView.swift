@@ -79,9 +79,11 @@ struct PVView: View {
                  Image(systemName: "ellipsis")
             }
         }.sheet(isPresented: $showYaml){
+            #if os(iOS)
             YamlWebView(yamlble: pv, model: viewModel.model) {
                 showYaml = false
             }
+            #endif
             Button{
                 urlScheme(yamlble: pv, client: viewModel.model.client)
             }label: {

@@ -100,9 +100,11 @@ struct CronJobView: View {
                  Image(systemName: "ellipsis")
             }
         }.sheet(isPresented: $showYaml){
+            #if os(iOS)
             YamlWebView(yamlble: cronJob, model: viewModel.model) {
                 showYaml = false
             }
+            #endif
             Button{
                 urlScheme(yamlble: cronJob, client: viewModel.model.client)
             }label: {

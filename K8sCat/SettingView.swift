@@ -15,9 +15,11 @@ struct SettingView: View {
             Form{
                 Section(){
                     Button{
+                        #if os(iOS)
                         if let url = URL(string: "https://github.com/buhe/KubeCat/issues") {
                             UIApplication.shared.open(url)
                         }
+                        #endif
                     } label: {
                         
                         Text("Feedback")

@@ -27,7 +27,9 @@ struct ClusterView: View {
             }label:{
                 Image(systemName: "plus")
             }.padding(.trailing)
+            #if os(iOS)
             EditButton()
+            #endif
         }
         .sheet(isPresented: $showClusterType){
             ClusterTypeView(first: cluters.isEmpty){

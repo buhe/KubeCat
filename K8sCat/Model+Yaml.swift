@@ -214,6 +214,7 @@ extension PersistentVolume {
 func urlScheme(yamlble: Yamlble, client: KubernetesClient?) {
     let utf8str = yamlble.encodeYaml(client: client).data(using: .utf8)
     let base64Encoded = utf8str!.base64EncodedString(options: Data.Base64EncodingOptions(rawValue: 0))
+    #if os(iOS)
     if let url = URL(string: "yamler://" + base64Encoded) {
         if UIApplication.shared.canOpenURL(url) {
             UIApplication.shared.open(url)
@@ -222,4 +223,5 @@ func urlScheme(yamlble: Yamlble, client: KubernetesClient?) {
         }
         
     }
+    #endif
 }
