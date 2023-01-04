@@ -173,6 +173,7 @@ struct Model {
                 
                 if self.current != nil && c != self.current {
 //                    try self.client!.syncShutdown()
+                    try? self.client!.syncShutdown()
                     client = KubernetesClient(config: try! Config(content: c.config!).config()!)
                     self.current = c
                     clearAll()
