@@ -182,9 +182,15 @@ struct Model {
                 
                 
                 if self.current == nil {
-                    client = KubernetesClient(config: try! Config(content: c.config!).config()!)
-                    self.current = c
-                    try? namespace()
+                    let config = try? Config(content: c.config!).config()
+                    if config == nil {
+                        client = nil
+                    } else {
+                        client = KubernetesClient(config: config!)
+                        self.current = c
+                        try? namespace()
+                    }
+                    
                 }
                 
             }

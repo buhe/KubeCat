@@ -24,6 +24,9 @@ struct Config: CertIdentifier {
         guard let kubeConfig = try? decoder.decode(KubeConfig.self, from: content) else {
                 return nil
             }
+        if kubeConfig.clusters == nil || kubeConfig.contexts == nil || kubeConfig.users == nil {
+            return nil
+        }
 //        print("\(kubeConfig)")
         let currentContext = kubeConfig.currentContext
         let context = kubeConfig.contexts?.filter{$0.name == currentContext}.first!
