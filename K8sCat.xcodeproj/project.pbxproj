@@ -44,6 +44,7 @@
 		3F2BE439296015C20002DEEC /* NewClusterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2BE438296015C20002DEEC /* NewClusterView.swift */; };
 		3F2BE43B29601AB50002DEEC /* ConfigView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2BE43A29601AB50002DEEC /* ConfigView.swift */; };
 		3FC383562965430B00EC011A /* ExecWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC383552965430B00EC011A /* ExecWebView.swift */; };
+		3FC38358296546C400EC011A /* Model+Scale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC38357296546C400EC011A /* Model+Scale.swift */; };
 		3FFCCF8D294DFF6000FE6710 /* K8sCatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FFCCF8C294DFF6000FE6710 /* K8sCatApp.swift */; };
 		3FFCCF8F294DFF6000FE6710 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FFCCF8E294DFF6000FE6710 /* ContentView.swift */; };
 		3FFCCF91294DFF6100FE6710 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3FFCCF90294DFF6100FE6710 /* Assets.xcassets */; };
@@ -106,6 +107,7 @@
 		3F2BE438296015C20002DEEC /* NewClusterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewClusterView.swift; sourceTree = "<group>"; };
 		3F2BE43A29601AB50002DEEC /* ConfigView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigView.swift; sourceTree = "<group>"; };
 		3FC383552965430B00EC011A /* ExecWebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExecWebView.swift; sourceTree = "<group>"; };
+		3FC38357296546C400EC011A /* Model+Scale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Model+Scale.swift"; sourceTree = "<group>"; };
 		3FFCCF89294DFF6000FE6710 /* K8sCat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = K8sCat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FFCCF8C294DFF6000FE6710 /* K8sCatApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = K8sCatApp.swift; sourceTree = "<group>"; };
 		3FFCCF8E294DFF6000FE6710 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -249,6 +251,7 @@
 				3F19F8CD2952AF01005C0558 /* Model.swift */,
 				3F19F8CF2952AF1B005C0558 /* ViewModel.swift */,
 				3F25F1F129630BA300F4DA02 /* Model+Yaml.swift */,
+				3FC38357296546C400EC011A /* Model+Scale.swift */,
 			);
 			path = K8sCat;
 			sourceTree = "<group>";
@@ -420,6 +423,7 @@
 				3F2BE3F72959974A0002DEEC /* SecretView.swift in Sources */,
 				3F2BE42F295F2C260002DEEC /* Core.xcdatamodeld in Sources */,
 				3F2BE3ED295996940002DEEC /* JobView.swift in Sources */,
+				3FC38358296546C400EC011A /* Model+Scale.swift in Sources */,
 				3FFCCF8F294DFF6000FE6710 /* ContentView.swift in Sources */,
 				3F19F8D02952AF1B005C0558 /* ViewModel.swift in Sources */,
 				3F2BE3F52959972B0002DEEC /* ConfigMapView.swift in Sources */,

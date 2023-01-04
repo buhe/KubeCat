@@ -20,6 +20,11 @@ struct DeploymentView: View {
             Section(header: "Status") {
                 Text(deployment.status ? "Ready" : "Pending")
             }
+//            Button{
+//                viewModel.model.scaleDeployment(deployment: deployment, replicas: 1)
+//            } label: {
+//                Text("scale")
+//            }
             Section(header: "Pods") {
                 List {
                     ForEach(viewModel.model.podsByDeployment(in: .namespace(viewModel.ns), deployment: deployment.k8sName)) {
@@ -90,12 +95,12 @@ struct DeploymentView: View {
                     Text("View/Edit Yaml")
                     Image(systemName: "note.text")
                 }
-                Button {
-                    // do something
-                } label: {
-                    Text("Delete Resource")
-                    Image(systemName: "trash")
-                }
+//                Button {
+//                    // do something
+//                } label: {
+//                    Text("Delete Resource")
+//                    Image(systemName: "trash")
+//                }
             } label: {
                  Image(systemName: "ellipsis")
             }

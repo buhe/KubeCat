@@ -69,12 +69,12 @@ struct PVView: View {
                     Text("View/Edit Yaml")
                     Image(systemName: "note.text")
                 }
-                Button {
-                    // do something
-                } label: {
-                    Text("Delete Resource")
-                    Image(systemName: "trash")
-                }
+//                Button {
+//                    // do something
+//                } label: {
+//                    Text("Delete Resource")
+//                    Image(systemName: "trash")
+//                }
             } label: {
                  Image(systemName: "ellipsis")
             }

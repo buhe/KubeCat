@@ -70,7 +70,7 @@ struct Model {
     
     func podsByDeployment(in ns: NamespaceSelector, deployment: String) -> [Pod] {
         if let client = client {
-            return try! client.pods.list(in: ns,options: [.labelSelector(.eq(["app.kubernetes.io/name": deployment]))]).wait().items.map { Pod(id: $0.name!, name: $0.name!,k8sName: deployment, status: ($0.status?.phase)!, expect: $0.spec?.containers.count ?? 0, pending: 0, containers: ($0.spec?.containers.map{Container(id: $0.name, name: $0.name, image: $0.image!,path: $0.terminationMessagePath!, policy: $0.terminationMessagePolicy!, pullPolicy: $0.imagePullPolicy!)})!, clusterIP: ($0.status?.podIP)!, nodeIP: ($0.status?.hostIP)!, labels: $0.metadata?.labels
+            return try! client.pods.list(in: ns,options: [.labelSelector(.eq(["app.kubernetes.io/name": deployment]))]).wait().items.map { Pod(id: $0.name!, name: $0.name!,k8sName: deployment, status: ($0.status?.phase)!, expect: $0.spec?.containers.count ?? 0, pending: 0, containers: ($0.spec?.containers.map{Container(id: $0.name, name: $0.name, image: $0.image!,path: $0.terminationMessagePath!, policy: $0.terminationMessagePolicy!, pullPolicy: $0.imagePullPolicy!)})!, clusterIP: $0.status?.podIP ?? "", nodeIP: $0.status?.hostIP ?? "", labels: $0.metadata?.labels
                                                                                                                                         , annotations: $0.metadata?.annotations, namespace: ($0.metadata?.namespace)!,raw: $0)}
         } else {
             return []
