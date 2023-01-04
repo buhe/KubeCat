@@ -65,6 +65,11 @@ func urlScheme(yamlble: Yamlble, client: KubernetesClient?) {
     let utf8str = yamlble.encodeYaml(client: client).data(using: .utf8)
     let base64Encoded = utf8str!.base64EncodedString(options: Data.Base64EncodingOptions(rawValue: 0))
     if let url = URL(string: "yamler://" + base64Encoded) {
-        UIApplication.shared.open(url)
+        if UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url)
+        } else {
+            UIApplication.shared.open(URL(string: "https://apps.apple.com/cn/app/yamler/id1660009640")!)
+        }
+        
     }
 }
