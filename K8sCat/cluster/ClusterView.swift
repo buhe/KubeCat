@@ -77,6 +77,16 @@ struct ClusterView: View {
     
                 do {
                     try viewContext.save()
+                    var allUnSelected = true
+                    for cluster in cluters {
+                        if cluster.selected {
+                            allUnSelected = false
+                        }
+                    }
+                    if !cluters.isEmpty && allUnSelected {
+                        let id = cluters.first!.name!
+                        selectItem(id: id)
+                    }
                 } catch {
                     // Replace this implementation with code to handle the error appropriately.
                     // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
@@ -102,7 +112,7 @@ struct ClusterView: View {
 
             do {
                 try viewContext.save()
-                try viewModel.model.select(viewContext: viewContext)
+                viewModel.model.select(viewContext: viewContext)
             } catch {
                 // Replace this implementation with code to handle the error appropriately.
                 // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
