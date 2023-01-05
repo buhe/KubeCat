@@ -31,32 +31,32 @@ struct ClusterTypeView: View {
                                 
                            
                         }
-                    case .Aliyun:
-                        NavigationLink {
-                            NewClusterView(first: first, type: c){
-                                presentationMode.wrappedValue.dismiss()
-                                close()
-                            }
-                                .environment(\.managedObjectContext, viewContext)
-                        } label: {
-                            Image("aliyun")
-                            Text(c.rawValue)
-                                
-                           
-                        }
-                    case .AWS:
-                        NavigationLink {
-                            NewClusterView(first: first, type: c){
-                                presentationMode.wrappedValue.dismiss()
-                                close()
-                            }
-                                .environment(\.managedObjectContext, viewContext)
-                        } label: {
-                            Image("aws")
-                            Text(c.rawValue)
-                                
-                           
-                        }
+//                    case .Aliyun:
+//                        NavigationLink {
+//                            NewClusterView(first: first, type: c){
+//                                presentationMode.wrappedValue.dismiss()
+//                                close()
+//                            }
+//                                .environment(\.managedObjectContext, viewContext)
+//                        } label: {
+//                            Image("aliyun")
+//                            Text(c.rawValue)
+//                                
+//                           
+//                        }
+//                    case .AWS:
+//                        NavigationLink {
+//                            NewClusterView(first: first, type: c){
+//                                presentationMode.wrappedValue.dismiss()
+//                                close()
+//                            }
+//                                .environment(\.managedObjectContext, viewContext)
+//                        } label: {
+//                            Image("aws")
+//                            Text(c.rawValue)
+//                                
+//                           
+//                        }
                     default: EmptyView()
                     }
                     
