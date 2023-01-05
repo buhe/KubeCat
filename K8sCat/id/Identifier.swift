@@ -20,6 +20,7 @@ struct AWS: CertIdentifier {
     let awsId: String
     let awsSecret: String
     let region: String
+    let clusterName: String
     func config() throws -> SwiftkubeClient.KubernetesClientConfig? {
         let ca = "get ca"
         let server = "get url"
