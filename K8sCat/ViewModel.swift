@@ -29,14 +29,14 @@ class ViewModel: ObservableObject {
             if model.hasAndSelectDemo {
                 return [Pod(id: "demo", name: "demo", k8sName: "demo", status: "Running", expect: 2, pending: 1, containers: [Container(id: "demo", name: "demo", image: "docker.io/hello", path: "/foo/bar", policy: "Restart", pullPolicy: "Restart")], clusterIP: "10.0.1.3", nodeIP: "1.2.3.4", labels: [:], annotations: [:], namespace: ns, raw: nil)]
             }
-            return model.pods[ns]!.map {Pod(id: $0.name!, name: $0.name!, k8sName: $0.metadata?.labels!["app.kubernetes.io/name"] ?? "unknow", status: ($0.status?.phase)!, expect: $0.spec?.containers.count ?? 0, pending: $0.status?.containerStatuses?.filter{$0.ready == false}.count ?? 0, containers: ($0.spec?.containers.map{Container(
+            return model.pods[ns]!.map {Pod(id: $0.name!, name: $0.name!, k8sName: $0.metadata?.labels?["app.kubernetes.io/name"] ?? "unknow", status: ($0.status?.phase)!, expect: $0.spec?.containers.count ?? 0, pending: $0.status?.containerStatuses?.filter{$0.ready == false}.count ?? 0, containers: ($0.spec?.containers.map{Container(
                 id: $0.name, name: $0.name, image: $0.image!
-                ,path: $0.terminationMessagePath!, policy: $0.terminationMessagePolicy!, pullPolicy: $0.imagePullPolicy!
+                ,path: $0.terminationMessagePath ?? "unknow", policy: $0.terminationMessagePolicy ?? "unknow", pullPolicy: $0.imagePullPolicy ?? "unknow"
                 )})!
                                               , clusterIP: $0.status?.podIP ?? "unknow Pod IP", nodeIP: $0.status?.hostIP ?? "unknow Node IP"
                                               , labels: $0.metadata?.labels
                                               , annotations: $0.metadata?.annotations
-                                              , namespace: ($0.metadata?.namespace)!
+                                              , namespace: $0.metadata?.namespace ?? "unknow"
                                             , raw: $0
             )}
         
@@ -55,7 +55,7 @@ class ViewModel: ObservableObject {
                 return [Hpa(id: "demo", name: "demo", namespace: "demo1", raw: nil)]
             }
             return model.hpas[ns]!.map {Hpa(id: $0.name!, name: $0.name!
-                                              , namespace: ($0.metadata?.namespace)!
+                                              , namespace: $0.metadata?.namespace ?? "unknow"
                                             , raw: $0
             )}
 
@@ -78,9 +78,9 @@ class ViewModel: ObservableObject {
         return model.pvs!.map {PersistentVolume(id: $0.name!, name: $0.name!
                                                         , labels: $0.metadata?.labels
                                                         , annotations: $0.metadata?.annotations,
-                                                accessModes: ($0.spec?.accessModes?.first)!,
-                                                status: ($0.status?.phase)!,
-                                                storageClass: ($0.spec?.storageClassName)!
+                                                accessModes: $0.spec?.accessModes?.first ?? "unknow",
+                                                status: $0.status?.phase ?? "unknow",
+                                                storageClass: $0.spec?.storageClassName ?? "unknow"
                                                 , raw: $0
                                                         
         )}
@@ -116,13 +116,13 @@ class ViewModel: ObservableObject {
         if model.hasAndSelectDemo {
             return [Node(id: "demo1", name: "demo1", hostName: "1.2.3.4", arch: "x86", os: "Linux", labels: [:], annotations: [:], etcd: true, worker: false, controlPlane: true, version: "1.2.3"), Node(id: "demo2", name: "demo2", hostName: "5.6.7.8", arch: "x86", os: "Linux", labels: [:], annotations: [:], etcd: true, worker: true, controlPlane: true, version: "1.2.3")]
         }
-        return model.nodes!.map { Node(id: $0.name!, name: $0.name!, hostName: ($0.metadata?.labels!["kubernetes.io/hostname"]!)!, arch: ($0.metadata?.labels!["kubernetes.io/arch"]!)!, os: ($0.metadata?.labels!["kubernetes.io/os"]!)!
+        return model.nodes!.map { Node(id: $0.name!, name: $0.name!, hostName: $0.metadata?.labels!["kubernetes.io/hostname"] ?? "unknow", arch: $0.metadata?.labels!["kubernetes.io/arch"] ?? "unknow", os: ($0.metadata?.labels!["kubernetes.io/os"]!)!
                                , labels: $0.metadata?.labels
                                , annotations: $0.metadata?.annotations,
                                etcd: ($0.metadata?.labels!["node-role.kubernetes.io/etcd"] ?? "false") == "true",
                                worker: ($0.metadata?.labels!["node-role.kubernetes.io/worker"] ?? "false") == "true",
                                controlPlane: ($0.metadata?.labels!["node-role.kubernetes.io/controlplane"] ?? "false") == "true",
-                               version: ($0.status?.nodeInfo!.kubeletVersion)!
+                               version: $0.status?.nodeInfo?.kubeletVersion ?? "unknow"
         ) }
     }
     var namespaces: [String] {
@@ -144,10 +144,10 @@ class ViewModel: ObservableObject {
             if model.hasAndSelectDemo {
                 return [Deployment(id: "demo1", name: "demo1", k8sName: "demo1", expect: 2, pending: 0, labels: [:], annotations: [:], namespace: "demo1", status: true, raw: nil), Deployment(id: "demo2", name: "demo2", k8sName: "demo2", expect: 2, pending: 1, labels: [:], annotations: [:], namespace: "demo1", status: false, raw: nil)]
             }
-            return model.deployments[ns]!.map {Deployment(id: $0.name!, name: $0.name!, k8sName: $0.metadata?.labels!["app.kubernetes.io/name"] ?? "unknow", expect: Int($0.spec?.replicas ?? 0), pending: Int($0.status?.unavailableReplicas ?? 0)
+            return model.deployments[ns]!.map {Deployment(id: $0.name!, name: $0.name!, k8sName: $0.metadata?.labels?["app.kubernetes.io/name"] ?? "unknow", expect: Int($0.spec?.replicas ?? 0), pending: Int($0.status?.unavailableReplicas ?? 0)
                                                             , labels: $0.metadata?.labels
                                                             , annotations: $0.metadata?.annotations
-                                                            , namespace: ($0.metadata?.namespace)!
+                                                            , namespace: $0.metadata?.namespace ?? "unknow"
                                                             , status: $0.status?.replicas == $0.status?.readyReplicas
                                                           , raw: $0
             )}
@@ -170,7 +170,7 @@ class ViewModel: ObservableObject {
                                               k8sName: $0.metadata!.labels!["job-name"] ?? "unknow"
                                               , labels: $0.metadata?.labels
                                               , annotations: $0.metadata?.annotations
-                                              , namespace: ($0.metadata?.namespace)!
+                                              , namespace: $0.metadata?.namespace ?? "unknow"
                                               , status: $0.status?.succeeded != nil
             )}
        
@@ -193,8 +193,8 @@ class ViewModel: ObservableObject {
                                                       k8sName: $0.metadata?.labels?["job-name"] ?? "unknow"
                                                       , labels: $0.metadata?.labels
                                                       , annotations: $0.metadata?.annotations
-                                                      , namespace: ($0.metadata?.namespace)!
-                                                      , schedule: $0.spec!.schedule
+                                                      , namespace: $0.metadata?.namespace ?? "unknow"
+                                                      , schedule: $0.spec?.schedule ?? "unknow"
                                                     , raw: $0
             )}
     
@@ -213,10 +213,10 @@ class ViewModel: ObservableObject {
             if model.hasAndSelectDemo {
                 return [Stateful(id: "demo", name: "demo", k8sName: "demo", labels: [:], annotations: [:], namespace: "demo", status: false, raw: nil)]
             }
-            return model.statefulls[ns]!.map {Stateful(id: $0.name!, name: $0.name!, k8sName: ($0.metadata?.labels!["app.kubernetes.io/name"]!)!
+            return model.statefulls[ns]!.map {Stateful(id: $0.name!, name: $0.name!, k8sName: $0.metadata?.labels!["app.kubernetes.io/name"] ?? "unknow"
                                                          , labels: $0.metadata?.labels
                                                          , annotations: $0.metadata?.annotations
-                                                         , namespace: ($0.metadata?.namespace)!
+                                                         , namespace: $0.metadata?.namespace ?? "unknow"
                                                          , status: $0.status?.readyReplicas == $0.status?.replicas, raw: $0
             )}
         
@@ -238,7 +238,7 @@ class ViewModel: ObservableObject {
         return model.services[ns]!.map {Service(id: $0.name!, name: $0.name!, k8sName: $0.metadata?.labels!["app.kubernetes.io/name"] ?? "unknow", type: ($0.spec?.type!)!, clusterIps: $0.spec?.clusterIPs, externalIps: $0.spec?.externalIPs
                                                       , labels: $0.metadata?.labels
                                                       , annotations: $0.metadata?.annotations
-                                                      , namespace: ($0.metadata?.namespace)!
+                                                      , namespace: $0.metadata?.namespace ?? "unknow"
             )}
     }
     
@@ -257,7 +257,7 @@ class ViewModel: ObservableObject {
             return model.configMaps[ns]!.map {ConfigMap(id: $0.name!, name: $0.name!
                                                           , labels: $0.metadata?.labels
                                                           , annotations: $0.metadata?.annotations
-                                                          , namespace: ($0.metadata?.namespace)!
+                                                          , namespace: $0.metadata?.namespace ?? "unknow"
                                                           , data: $0.data
             )}
        
@@ -278,7 +278,7 @@ class ViewModel: ObservableObject {
             return model.secrets[ns]!.map {Secret(id: $0.name!, name: $0.name!
                                                     , labels: $0.metadata?.labels
                                                     , annotations: $0.metadata?.annotations
-                                                    , namespace: ($0.metadata?.namespace)!
+                                                    , namespace: $0.metadata?.namespace ?? "unknow"
                                                     , data: $0.data
             )}
     }
@@ -298,8 +298,8 @@ class ViewModel: ObservableObject {
             return model.daemons[ns]!.map {Daemon(id: $0.name!, name: $0.name!, k8sName: $0.metadata?.labels!["app.kubernetes.io/name"] ?? "unknow"
                                                     , labels: $0.metadata?.labels
                                                     , annotations: $0.metadata?.annotations
-                                                    , namespace: ($0.metadata?.namespace)!
-                                                    , status: $0.status!.numberMisscheduled <= 0
+                                                    , namespace: $0.metadata?.namespace ?? "unknow"
+                                                  , status: $0.status?.numberMisscheduled ?? 0 > 0
                                                   , raw: $0
             )}
     }
@@ -317,10 +317,10 @@ class ViewModel: ObservableObject {
             if model.hasAndSelectDemo {
                 return [Replica(id: "demo", name: "demo", k8sName: "demo", labels: [:], annotations: [:], namespace: "demo", status: true)]
             }
-            return model.replicas[ns]!.map {Replica(id: $0.name!, name: $0.name!, k8sName: $0.metadata?.labels!["app.kubernetes.io/name"] ?? "unknow"
+            return model.replicas[ns]!.map {Replica(id: $0.name!, name: $0.name!, k8sName: $0.metadata?.labels?["app.kubernetes.io/name"] ?? "unknow"
                                                       , labels: $0.metadata?.labels
                                                       , annotations: $0.metadata?.annotations
-                                                      , namespace: ($0.metadata?.namespace)!
+                                                      , namespace: $0.metadata?.namespace ?? "unknow"
                                                       , status: $0.status?.replicas == $0.status?.readyReplicas
             )}
     }

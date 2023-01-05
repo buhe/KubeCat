@@ -414,8 +414,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "228"
             endingLineNumber = "228"
-            landmarkName = "Model"
-            landmarkType = "14">
+            landmarkName = "namespace()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -482,34 +482,34 @@
             landmarkType = "24">
             <Locations>
                <Location
-                  uuid = "47149CD6-8793-4110-ABD1-1B56F49C4FC7 - 9c37d33434d6c61f"
+                  uuid = "47149CD6-8793-4110-ABD1-1B56F49C4FC7 - 404d3d2a7b0d4925"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "K8sCat.ViewModel.deployment(in: SwiftkubeClient.NamespaceSelector) -&gt; Swift.Array&lt;K8sCat.Deployment&gt;"
+                  symbolName = "K8sCat.ViewModel.deployment.getter : Swift.Array&lt;K8sCat.Deployment&gt;"
                   moduleName = "K8sCat"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/guyanhua/code/github/K8sCat/K8sCat/ViewModel.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "126"
-                  endingLineNumber = "126"
-                  offsetFromSymbolStart = "556">
+                  startingLineNumber = "147"
+                  endingLineNumber = "147"
+                  offsetFromSymbolStart = "1464">
                </Location>
                <Location
-                  uuid = "47149CD6-8793-4110-ABD1-1B56F49C4FC7 - ad646e25f24eefb2"
+                  uuid = "47149CD6-8793-4110-ABD1-1B56F49C4FC7 - a25533c2ae6fc153"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (SwiftkubeModel.apps.v1.Deployment) -&gt; K8sCat.Deployment in K8sCat.ViewModel.deployment(in: SwiftkubeClient.NamespaceSelector) -&gt; Swift.Array&lt;K8sCat.Deployment&gt;"
+                  symbolName = "closure #1 (SwiftkubeModel.apps.v1.Deployment) -&gt; K8sCat.Deployment in K8sCat.ViewModel.deployment.getter : Swift.Array&lt;K8sCat.Deployment&gt;"
                   moduleName = "K8sCat"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/guyanhua/code/github/K8sCat/K8sCat/ViewModel.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "126"
-                  endingLineNumber = "126"
-                  offsetFromSymbolStart = "616">
+                  startingLineNumber = "147"
+                  endingLineNumber = "147"
+                  offsetFromSymbolStart = "656">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -848,6 +848,22 @@
             endingLineNumber = "223"
             landmarkName = "namespace()"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "51035A61-DC77-4789-80F8-67205E80E634"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "K8sCat/ViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "148"
+            endingLineNumber = "148"
+            landmarkName = "deployment"
+            landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
