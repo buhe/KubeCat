@@ -14,6 +14,11 @@ struct NewClusterView: View {
     let close: () -> Void
     var body: some View {
         switch type {
+        case .Aliyun:
+            ConfigView(first: first){
+                close()
+            }
+                .environment(\.managedObjectContext, viewContext)
         case .KubeConfig:
             ConfigView(first: first){
                 close()

@@ -34,6 +34,11 @@ struct NodeView: View {
                     Spacer()
                     Text(String(node.worker))
                 }
+                HStack{
+                    Text("Agent")
+                    Spacer()
+                    Text(String(node.agent))
+                }
             }
 //            Section(header: "Pods") {
 //                List {

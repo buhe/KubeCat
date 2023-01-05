@@ -114,7 +114,7 @@ class ViewModel: ObservableObject {
             
         }
         if model.hasAndSelectDemo {
-            return [Node(id: "demo1", name: "demo1", hostName: "1.2.3.4", arch: "x86", os: "Linux", labels: [:], annotations: [:], etcd: true, worker: false, controlPlane: true, version: "1.2.3"), Node(id: "demo2", name: "demo2", hostName: "5.6.7.8", arch: "x86", os: "Linux", labels: [:], annotations: [:], etcd: true, worker: true, controlPlane: true, version: "1.2.3")]
+            return [Node(id: "demo1", name: "demo1", hostName: "1.2.3.4", arch: "x86", os: "Linux", labels: [:], annotations: [:], etcd: true, worker: false, controlPlane: true,agent: true, version: "1.2.3"), Node(id: "demo2", name: "demo2", hostName: "5.6.7.8", arch: "x86", os: "Linux", labels: [:], annotations: [:], etcd: true, worker: true, controlPlane: true, agent: false, version: "1.2.3")]
         }
         return model.nodes!.map { Node(id: $0.name!, name: $0.name!, hostName: $0.metadata?.labels!["kubernetes.io/hostname"] ?? "unknow", arch: $0.metadata?.labels!["kubernetes.io/arch"] ?? "unknow", os: ($0.metadata?.labels!["kubernetes.io/os"]!)!
                                , labels: $0.metadata?.labels
@@ -122,6 +122,7 @@ class ViewModel: ObservableObject {
                                etcd: ($0.metadata?.labels!["node-role.kubernetes.io/etcd"] ?? "false") == "true",
                                worker: ($0.metadata?.labels!["node-role.kubernetes.io/worker"] ?? "false") == "true",
                                controlPlane: ($0.metadata?.labels!["node-role.kubernetes.io/controlplane"] ?? "false") == "true",
+                                       agent: ($0.metadata?.labels!["kubernetes.io/role"] ?? "unkown") == "agent",
                                version: $0.status?.nodeInfo?.kubeletVersion ?? "unknow"
         ) }
     }

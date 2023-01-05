@@ -194,6 +194,8 @@ struct Node: Identifiable {
     let etcd: Bool
     let worker: Bool
     let controlPlane: Bool
+    let agent: Bool
     var version: String
+    
 //    var age: String
 }

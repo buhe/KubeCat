@@ -16,6 +16,31 @@ protocol CertIdentifier {
     func config() throws -> KubernetesClientConfig?
 }
 
+struct AWS: CertIdentifier {
+    let awsId: String
+    let awsSecret: String
+    let region: String
+    func config() throws -> SwiftkubeClient.KubernetesClientConfig? {
+        let ca = "get ca"
+        let server = "get url"
+        let caCert = try NIOSSLCertificate.fromPEMBytes([UInt8](ca.data(using: .utf8)!))
+        let userToken = "get token"
+        let authentication = KubernetesClientAuthentication.bearer(token: userToken)
+        
+        let config = KubernetesClientConfig(
+            masterURL: URL(string: server)!,
+            namespace: "default",
+            authentication: authentication,
+            trustRoots: NIOSSLTrustRoots.certificates(caCert),
+            insecureSkipTLSVerify: false
+        )
+        
+        return config
+    }
+    
+    
+}
+
 struct Config: CertIdentifier {
     let content: String
     
