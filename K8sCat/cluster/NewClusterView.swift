@@ -19,6 +19,11 @@ struct NewClusterView: View {
                 close()
             }
                 .environment(\.managedObjectContext, viewContext)
+        case .AWS:
+            AWSView(first: first){
+                close()
+            }
+                .environment(\.managedObjectContext, viewContext)
         case .KubeConfig:
             ConfigView(first: first){
                 close()

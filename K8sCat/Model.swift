@@ -174,7 +174,15 @@ struct Model {
                 if self.current != nil && c != self.current {
 //                    try self.client!.syncShutdown()
                     try? self.client!.syncShutdown()
-                    client = KubernetesClient(config: try! Config(content: c.config!).config()!)
+                    let type = ClusterType(rawValue: c.type!)
+                    switch type {
+                    case .KubeConfig, .Aliyun:
+                        client = KubernetesClient(config: try! Config(content: c.config!).config()!)
+                    case .AWS:
+                        client = KubernetesClient(config: try! AWS(awsId: "", awsSecret: "", region: "", clusterName: "", content: c.config!).config()!)
+                    default: break
+                    }
+                    
                     self.current = c
                     clearAll()
                     try? namespace()
@@ -183,7 +191,15 @@ struct Model {
                 
                 
                 if self.current == nil {
-                    let config = try? Config(content: c.config!).config()
+                    let type = ClusterType(rawValue: c.type!)
+                    var config: KubernetesClientConfig?
+                    switch type {
+                    case .KubeConfig, .Aliyun:
+                        config = try? Config(content: c.config!).config()
+                    case .AWS:
+                        config = try? AWS(awsId: "", awsSecret: "", region: "", clusterName: "", content: c.config!).config()
+                    default: break
+                    }
                     if config == nil {
                         client = nil
                     } else {
@@ -218,10 +234,14 @@ struct Model {
     
     mutating func namespace() throws {
         if let client = client {
-            
-            let namespaces = try client.namespaces.list().wait().items
+            do{
+                let namespaces = try client.namespaces.list().wait().items
+                self.namespaces = namespaces
+            }catch{
+                print(error)
+            }
             //        print("ns is \(namespaces)")
-            self.namespaces = namespaces
+            
         } else {
             self.namespaces = []
         }

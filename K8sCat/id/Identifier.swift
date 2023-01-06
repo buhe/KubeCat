@@ -21,16 +21,33 @@ struct AWS: CertIdentifier {
     let awsSecret: String
     let region: String
     let clusterName: String
+    let content: String
     func config() throws -> SwiftkubeClient.KubernetesClientConfig? {
-        let ca = "get ca"
-        let server = "get url"
-        let caCert = try NIOSSLCertificate.fromPEMBytes([UInt8](ca.data(using: .utf8)!))
-        let userToken = "get token"
+        let decoder = YAMLDecoder()
+        guard let kubeConfig = try? decoder.decode(KubeConfig.self, from: content) else {
+                return nil
+            }
+        if kubeConfig.clusters == nil || kubeConfig.contexts == nil || kubeConfig.users == nil {
+            return nil
+        }
+//        print("\(kubeConfig)")
+        let currentContext = kubeConfig.currentContext
+        let context = kubeConfig.contexts?.filter{$0.name == currentContext}.first!
+        let cluster = kubeConfig.clusters?.filter{$0.name == context?.context.cluster}.first!
+        let user = kubeConfig.users?.filter{$0.name == context?.context.user}.first!
+        
+//        let p = try NIOSSLCertificate(bytes: .init((user?.authInfo.clientCertificateData)!), format: NIOSSLSerializationFormats.pem)
+//        let k = try NIOSSLPrivateKey(bytes: .init((user?.authInfo.clientKeyData)!), format: NIOSSLSerializationFormats.pem)
+//
+//        let authentication = KubernetesClientAuthentication.x509(clientCertificate: p, clientKey: k)
+        
+        let caCert = try NIOSSLCertificate.fromPEMBytes([UInt8]((cluster?.cluster.certificateAuthorityData)!))
+        let userToken = "k8s-aws-v1.aHR0cHM6Ly9zdHMudXMtd2VzdC0xLmFtYXpvbmF3cy5jb20vP0FjdGlvbj1HZXRDYWxsZXJJZGVudGl0eSZWZXJzaW9uPTIwMTEtMDYtMTUmWC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVEZJWkZOU0lTRTNPVkdYQiUyRjIwMjMwMTA2JTJGdXMtd2VzdC0xJTJGc3RzJTJGYXdzNF9yZXF1ZXN0JlgtQW16LURhdGU9MjAyMzAxMDZUMTAyMTUzWiZYLUFtei1FeHBpcmVzPTYwJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCUzQngtazhzLWF3cy1pZCZYLUFtei1TaWduYXR1cmU9Mzc1MzY0YjI1MjA2NDBkNmUxYTEzMjcxZTExZWZkYjVkYzIxMjNjNGYzNTE0ZGFkZWY0ZWZjOTNlMzgwZDg0Ng"
         let authentication = KubernetesClientAuthentication.bearer(token: userToken)
         
         let config = KubernetesClientConfig(
-            masterURL: URL(string: server)!,
-            namespace: "default",
+            masterURL: URL(string: (cluster?.cluster.server)!)!,
+            namespace: context?.context.namespace ?? "default",
             authentication: authentication,
             trustRoots: NIOSSLTrustRoots.certificates(caCert),
             insecureSkipTLSVerify: false

@@ -19,12 +19,39 @@
       }
     },
     {
+      "identity" : "jmespath.swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/adam-fowler/jmespath.swift.git",
+      "state" : {
+        "revision" : "4513d319c4aaa6c3b2ac18e1e6566a803515ad91",
+        "version" : "1.0.2"
+      }
+    },
+    {
       "identity" : "model",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/swiftkube/model.git",
       "state" : {
         "revision" : "6566151d023be1c741fe720ad13e7f9817502401",
         "version" : "0.5.2"
+      }
+    },
+    {
+      "identity" : "soto",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/soto-project/soto",
+      "state" : {
+        "revision" : "258094b83797fb9ad4fe3882b1a6a46a92d2c2ae",
+        "version" : "6.4.0"
+      }
+    },
+    {
+      "identity" : "soto-core",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/soto-project/soto-core.git",
+      "state" : {
+        "revision" : "02d3054ed054a587ce1778bd946a783abd8f62e3",
+        "version" : "6.4.0"
       }
     },
     {

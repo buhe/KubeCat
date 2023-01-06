@@ -3,6 +3,14 @@
    version = "1.0">
    <ContextStates>
       <ContextState
+         contextName = "static NIOSSLCertificate.fromPEMFile(_:):SSLCertificate.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "CNIOBoringSSL_BIO_read_filename(bio, path)">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "closure #1 in ViewModel.nodes.getter:ViewModel.swift">
          <PersistentStrings>
             <PersistentString
@@ -12,6 +20,17 @@
       </ContextState>
       <ContextState
          contextName = "closure #1 in ViewModel.deployment.getter:ViewModel.swift">
+      </ContextState>
+      <ContextState
+         contextName = "CNIOBoringSSL_BIO_ctrl:bio.c">
+      </ContextState>
+      <ContextState
+         contextName = "NIOSSLCertificate.__allocating_init(bytes:format:):SSLCertificate.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = " bytes.withUnsafeBytes">
+            </PersistentString>
+         </PersistentStrings>
       </ContextState>
    </ContextStates>
 </VariablesViewState>

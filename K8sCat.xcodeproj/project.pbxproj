@@ -43,6 +43,10 @@
 		3F2BE437296015660002DEEC /* ClusterTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2BE436296015660002DEEC /* ClusterTypeView.swift */; };
 		3F2BE439296015C20002DEEC /* NewClusterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2BE438296015C20002DEEC /* NewClusterView.swift */; };
 		3F2BE43B29601AB50002DEEC /* ConfigView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2BE43A29601AB50002DEEC /* ConfigView.swift */; };
+		3F9DC5382967E47D00E00C31 /* AWSClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9DC5372967E47D00E00C31 /* AWSClient.swift */; };
+		3F9DC53B2967EF1900E00C31 /* SotoEKS in Frameworks */ = {isa = PBXBuildFile; productRef = 3F9DC53A2967EF1900E00C31 /* SotoEKS */; };
+		3F9DC53D2967EF1900E00C31 /* SotoSTS in Frameworks */ = {isa = PBXBuildFile; productRef = 3F9DC53C2967EF1900E00C31 /* SotoSTS */; };
+		3F9DC53F2967F14200E00C31 /* AWSView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9DC53E2967F14200E00C31 /* AWSView.swift */; };
 		3FC383562965430B00EC011A /* ExecWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC383552965430B00EC011A /* ExecWebView.swift */; platformFilter = ios; };
 		3FC38358296546C400EC011A /* Model+Scale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC38357296546C400EC011A /* Model+Scale.swift */; };
 		3FFCCF8D294DFF6000FE6710 /* K8sCatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FFCCF8C294DFF6000FE6710 /* K8sCatApp.swift */; };
@@ -106,6 +110,8 @@
 		3F2BE436296015660002DEEC /* ClusterTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClusterTypeView.swift; sourceTree = "<group>"; };
 		3F2BE438296015C20002DEEC /* NewClusterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewClusterView.swift; sourceTree = "<group>"; };
 		3F2BE43A29601AB50002DEEC /* ConfigView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigView.swift; sourceTree = "<group>"; };
+		3F9DC5372967E47D00E00C31 /* AWSClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWSClient.swift; sourceTree = "<group>"; };
+		3F9DC53E2967F14200E00C31 /* AWSView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AWSView.swift; sourceTree = "<group>"; };
 		3FC383552965430B00EC011A /* ExecWebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExecWebView.swift; sourceTree = "<group>"; };
 		3FC38357296546C400EC011A /* Model+Scale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Model+Scale.swift"; sourceTree = "<group>"; };
 		3FFCCF89294DFF6000FE6710 /* K8sCat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = K8sCat.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -126,7 +132,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3F9DC53B2967EF1900E00C31 /* SotoEKS in Frameworks */,
 				3F19F8BB295173CC005C0558 /* SwiftkubeClient in Frameworks */,
+				3F9DC53D2967EF1900E00C31 /* SotoSTS in Frameworks */,
 				3F19F8C62951D653005C0558 /* SwiftUIX in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -160,6 +168,7 @@
 			isa = PBXGroup;
 			children = (
 				3F19F8D12952B00C005C0558 /* Identifier.swift */,
+				3F9DC5372967E47D00E00C31 /* AWSClient.swift */,
 			);
 			path = id;
 			sourceTree = "<group>";
@@ -203,6 +212,7 @@
 				3F2BE436296015660002DEEC /* ClusterTypeView.swift */,
 				3F2BE438296015C20002DEEC /* NewClusterView.swift */,
 				3F2BE43A29601AB50002DEEC /* ConfigView.swift */,
+				3F9DC53E2967F14200E00C31 /* AWSView.swift */,
 			);
 			path = cluster;
 			sourceTree = "<group>";
@@ -300,6 +310,8 @@
 			packageProductDependencies = (
 				3F19F8BA295173CC005C0558 /* SwiftkubeClient */,
 				3F19F8C52951D653005C0558 /* SwiftUIX */,
+				3F9DC53A2967EF1900E00C31 /* SotoEKS */,
+				3F9DC53C2967EF1900E00C31 /* SotoSTS */,
 			);
 			productName = K8sCat;
 			productReference = 3FFCCF89294DFF6000FE6710 /* K8sCat.app */;
@@ -376,6 +388,7 @@
 			packageReferences = (
 				3F19F8B9295173CC005C0558 /* XCRemoteSwiftPackageReference "client" */,
 				3F19F8C42951D653005C0558 /* XCRemoteSwiftPackageReference "SwiftUIX" */,
+				3F9DC5392967EF1900E00C31 /* XCRemoteSwiftPackageReference "soto" */,
 			);
 			productRefGroup = 3FFCCF8A294DFF6000FE6710 /* Products */;
 			projectDirPath = "";
@@ -442,6 +455,7 @@
 				3F2BE42C295EF26A0002DEEC /* ClusterView.swift in Sources */,
 				3F2BE3F92959976A0002DEEC /* DaemonView.swift in Sources */,
 				3FFCCF8D294DFF6000FE6710 /* K8sCatApp.swift in Sources */,
+				3F9DC5382967E47D00E00C31 /* AWSClient.swift in Sources */,
 				3F2BE3EF295996BA0002DEEC /* CronJobView.swift in Sources */,
 				3F2BE3F1295996E20002DEEC /* StatefulView.swift in Sources */,
 				3F2BE3F3295997050002DEEC /* ServiceView.swift in Sources */,
@@ -450,6 +464,7 @@
 				3F19F8BF2951A5DC005C0558 /* GlobalView.swift in Sources */,
 				3F2BE3E929595A040002DEEC /* PodView.swift in Sources */,
 				3F2BE3FB295997940002DEEC /* ReplicaView.swift in Sources */,
+				3F9DC53F2967F14200E00C31 /* AWSView.swift in Sources */,
 				3F19F8D22952B00C005C0558 /* Identifier.swift in Sources */,
 				3FC383562965430B00EC011A /* ExecWebView.swift in Sources */,
 				3F19F8CC2951E010005C0558 /* Ex.swift in Sources */,
@@ -830,6 +845,14 @@
 				minimumVersion = 0.1.3;
 			};
 		};
+		3F9DC5392967EF1900E00C31 /* XCRemoteSwiftPackageReference "soto" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/soto-project/soto";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -842,6 +865,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3F19F8C42951D653005C0558 /* XCRemoteSwiftPackageReference "SwiftUIX" */;
 			productName = SwiftUIX;
+		};
+		3F9DC53A2967EF1900E00C31 /* SotoEKS */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3F9DC5392967EF1900E00C31 /* XCRemoteSwiftPackageReference "soto" */;
+			productName = SotoEKS;
+		};
+		3F9DC53C2967EF1900E00C31 /* SotoSTS */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3F9DC5392967EF1900E00C31 /* XCRemoteSwiftPackageReference "soto" */;
+			productName = SotoSTS;
 		};
 /* End XCSwiftPackageProductDependency section */
 
