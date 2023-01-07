@@ -23,7 +23,7 @@ struct AWS: CertIdentifier {
     let clusterName: String
     
     func config() throws -> SwiftkubeClient.KubernetesClientConfig? {
-        let token = MyAWSClient().getToken()
+//        let token = MyAWSClient().getToken()
         let c = MyAWSClient().getCluster()
         let data = Data(base64Encoded: c.ca)!
         

@@ -10,6 +10,8 @@ import SotoEKS
 import SotoSTS
 
 struct MyAWSClient {
+    
+    
     let ak = "AKIATFIZFNSISE3OVGXB"
     let sk = "sJ/XDebzWVD/RklpTiMeGSTvp7Sc8Ik+pq0SepVG"
     let clusterName = "dev-core"
@@ -35,9 +37,10 @@ struct MyAWSClient {
             httpClientProvider: .createNew
         )
         let sts = STS(client: client, region: .uswest1)
-        var r = STS.GetCallerIdentityRequest()
+        var r = TokenRequest(name: clusterName)
+        
 //        r.validate(name: clusterName)
-        let t = try! sts.getCallerIdentity(r).wait()
+        let t = try! sts.getCallerIdentityToken(r).wait()
         print("sts: \(t)")
         try! client.syncShutdown()
         return ""
