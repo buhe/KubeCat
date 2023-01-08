@@ -29,7 +29,7 @@ struct MyAWSClient {
         let c = try! eks.describeCluster(r).wait().cluster
         let server = c?.endpoint
         let ca = c?.certificateAuthority?.data
-        print("sever: \(server!) ca: \(ca!)")
+//        print("sever: \(server!) ca: \(ca!)")
         try! client.syncShutdown()
         return AWSCluster(sever: server!, ca: ca!)
     }
@@ -46,13 +46,11 @@ struct MyAWSClient {
             headers: ["x-k8s-aws-id": clusterName],
             expires: .seconds(60)
         ).wait()
-        print("signed: \(url.absoluteString)")
+//        print("signed: \(url.absoluteString)")
         var token = MyAWSClient.TOKEN_PREFIX + Base64FS.encodeString(str: url.absoluteString)
         token.remove(at: token.index(before: token.endIndex))
         token.remove(at: token.index(before: token.endIndex))
-//        let r = "vP0FjdGlvbj1HZXRDYWxsZXJJZGVudGl0eSZWZXJzaW9uPTIwMTEtMDYtMTUm"
-//        token = token.replacingOccurrences(of: "/", with: r)
-        print("sts: \(token)")
+//        print("sts: \(token)")
         try! client.syncShutdown()
         return token
     }
