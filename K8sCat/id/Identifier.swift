@@ -23,15 +23,15 @@ struct AWS: CertIdentifier {
     let clusterName: String
     
     func config() throws -> SwiftkubeClient.KubernetesClientConfig? {
-//        let token = MyAWSClient().getToken()
+        let token = MyAWSClient().getToken()
         let c = MyAWSClient().getCluster()
         let data = Data(base64Encoded: c.ca)!
         
         
 //        let d2 = [UInt8](ca.utf8)
         let caCert = try NIOSSLCertificate.fromPEMBytes([UInt8](data))
-        let userToken = "k8s-aws-v1.aHR0cHM6Ly9zdHMudXMtd2VzdC0xLmFtYXpvbmF3cy5jb20vP0FjdGlvbj1HZXRDYWxsZXJJZGVudGl0eSZWZXJzaW9uPTIwMTEtMDYtMTUmWC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVEZJWkZOU0lTRTNPVkdYQiUyRjIwMjMwMTA3JTJGdXMtd2VzdC0xJTJGc3RzJTJGYXdzNF9yZXF1ZXN0JlgtQW16LURhdGU9MjAyMzAxMDdUMDM0MzM4WiZYLUFtei1FeHBpcmVzPTYwJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCUzQngtazhzLWF3cy1pZCZYLUFtei1TaWduYXR1cmU9MTQ1MzYxMmZmMTdmNDcyYjExMGJjOTc2NGEwNjA2MjViNGZiOTNjOTMzYTcwMDI2NDhkODk1MTVhYmIwMmI0Mw"
-        let authentication = KubernetesClientAuthentication.bearer(token: userToken)
+//        let userToken = "k8s-aws-v1.aHR0cHM6Ly9zdHMudXMtd2VzdC0xLmFtYXpvbmF3cy5jb20vP0FjdGlvbj1HZXRDYWxsZXJJZGVudGl0eSZWZXJzaW9uPTIwMTEtMDYtMTUmWC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVEZJWkZOU0lTRTNPVkdYQiUyRjIwMjMwMTA3JTJGdXMtd2VzdC0xJTJGc3RzJTJGYXdzNF9yZXF1ZXN0JlgtQW16LURhdGU9MjAyMzAxMDdUMDM0MzM4WiZYLUFtei1FeHBpcmVzPTYwJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCUzQngtazhzLWF3cy1pZCZYLUFtei1TaWduYXR1cmU9MTQ1MzYxMmZmMTdmNDcyYjExMGJjOTc2NGEwNjA2MjViNGZiOTNjOTMzYTcwMDI2NDhkODk1MTVhYmIwMmI0Mw"
+        let authentication = KubernetesClientAuthentication.bearer(token: token)
         
         let config = KubernetesClientConfig(
             masterURL: URL(string: c.sever)!,
