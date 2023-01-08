@@ -15,7 +15,7 @@ struct AWSView: View {
     @State var icon = "a.circle"
     @State var accessKeyID = ""
     @State var secretAccessKey = ""
-    @State var region = ""
+    @State var region = "us-west-1"
     @State var clusterName = ""
     
 
@@ -53,6 +53,25 @@ struct AWSView: View {
                         ForEach([AWSResign(id: "us-east-1", render: "US East (N. Virginia)", value: "us-east-1")
                                 ,AWSResign(id: "us-east-2", render: "US East (Ohio)", value: "us-east-2")
                                 ,AWSResign(id: "us-west-1", render: "US West (N. California)", value: "us-west-1")
+                                ,AWSResign(id: "us-west-2", render: "US West (Oregon)", value: "us-west-2")
+                                ,AWSResign(id: "ca-central-1", render: "Canada (Central)", value: "ca-central-1")
+                                ,AWSResign(id: "eu-west-1", render: "EU (Ireland)", value: "eu-west-1")
+                                ,AWSResign(id: "eu-central-1", render: "EU (Frankfurt)", value: "eu-central-1")
+                                ,AWSResign(id: "eu-central-2", render: "EU (Zurich)", value: "eu-central-2")
+                                ,AWSResign(id: "eu-west-2", render: "EU (Frankfurt)", value: "eu-west-2")
+                                ,AWSResign(id: "eu-west-3", render: "EU (Paris)", value: "eu-west-3")
+                                ,AWSResign(id: "eu-north-1", render: "EU (Stockholm)", value: "eu-north-1")
+                                ,AWSResign(id: "eu-south-1", render: "EU (Milan)", value: "eu-south-1")
+                                ,AWSResign(id: "eu-south-2", render: "EU (Spain)", value: "eu-south-2")
+                                ,AWSResign(id: "ap-northeast-1", render: "Asia Pacific (Tokyo)", value: "ap-northeast-1")
+                                ,AWSResign(id: "ap-northeast-2", render: "Asia Pacific (Seoul)", value: "ap-northeast-2")
+                                ,AWSResign(id: "ap-northeast-3", render: "Asia Pacific (Osaka-Local)", value: "ap-northeast-3")
+                                ,AWSResign(id: "ap-southeast-1", render: "Asia Pacific (Singapore)", value: "ap-southeast-1")
+                                ,AWSResign(id: "ap-southeast-2", render: "Asia Pacific (Sydney)", value: "ap-southeast-2")
+                                ,AWSResign(id: "ap-southeast-3", render: "Asia Pacific (Jakarta)", value: "ap-southeast-3")
+                                ,AWSResign(id: "ap-south-1", render: "Asia Pacific (Mumbai)", value: "ap-south-1")
+                                ,AWSResign(id: "ap-south-2", render: "Asia Pacific (Hyderabad)", value: "ap-south-2")
+                                ,AWSResign(id: "sa-east-1", render: "South America (São Paulo)", value: "sa-east-1")
                                 ]) {
                             Text($0.render)
                         }
