@@ -7,7 +7,13 @@
 
 import Foundation
 
-enum AWSResign {
+struct AWSResign: Identifiable {
+    let id: String
+    let render: String
+    let value: String
+}
+
+//enum AWSResign {
     // case us-east-1 = "US East (N. Virginia)"
     // case us-east-2 = "US East (Ohio)"
     // case us-west-1 = "US West (N. California)",
@@ -26,4 +32,4 @@ enum AWSResign {
     // "sa-east-1" = "South America (São Paulo)",
     // "us-gov-west-1" = "US Gov West 1",
     // "us-gov-east-1" = "US Gov East 1"
-}
+//}

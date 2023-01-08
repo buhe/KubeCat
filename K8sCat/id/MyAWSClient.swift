@@ -24,9 +24,14 @@ struct MyAWSClient {
             credentialProvider: .static(accessKeyId: ak, secretAccessKey: sk),
             httpClientProvider: .createNew
         )
-        let eks = EKS(client: client, region: .uswest1)
+        var eks: EKS?
+        switch region {
+        case "us-west-1": eks = EKS(client: client, region: .uswest1)
+        default: break
+        }
+//        let eks = EKS(client: client, region: .uswest1)
         let r = EKS.DescribeClusterRequest(name: clusterName)
-        let c = try! eks.describeCluster(r).wait().cluster
+        let c = try! eks!.describeCluster(r).wait().cluster
         let server = c?.endpoint
         let ca = c?.certificateAuthority?.data
 //        print("sever: \(server!) ca: \(ca!)")

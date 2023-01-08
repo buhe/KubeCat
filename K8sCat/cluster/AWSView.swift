@@ -33,7 +33,7 @@ struct AWSView: View {
                     TextField(text: $name)
                 }
                 Section(header: "Icon"){
-                    Picker("icon", selection: $icon){
+                    Picker("Icon", selection: $icon){
                         ForEach(["a.circle", "b.circle", "c.circle", "e.circle", "f.circle", "g.circle", "h.circle", "i.circle", "j.circle", "k.circle", "l.circle", "m.circle", "n.circle", "o.circle", "p.circle", "q.circle", "r.circle", "s.circle", "t.circle", "u.circle", "v.circle", "w.circle", "x.circle", "y.circle"], id: \.self) {
                             Image(systemName: $0)
                         }
@@ -49,7 +49,15 @@ struct AWSView: View {
                 }
 
                 Section(header: "Region"){
-                    TextField(text: $region)
+                    Picker("Region", selection: $region){
+                        ForEach([AWSResign(id: "us-east-1", render: "US East (N. Virginia)", value: "us-east-1")
+                                ,AWSResign(id: "us-east-2", render: "US East (Ohio)", value: "us-east-2")
+                                ,AWSResign(id: "us-west-1", render: "US West (N. California)", value: "us-west-1")
+                                ]) {
+                            Text($0.render)
+                        }
+                        
+                    }
                 }
                 Section(header: "Cluster Name"){
                     TextField(text: $clusterName)
