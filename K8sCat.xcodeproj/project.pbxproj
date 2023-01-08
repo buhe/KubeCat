@@ -48,6 +48,7 @@
 		3F9DC53D2967EF1900E00C31 /* SotoSTS in Frameworks */ = {isa = PBXBuildFile; productRef = 3F9DC53C2967EF1900E00C31 /* SotoSTS */; };
 		3F9DC53F2967F14200E00C31 /* AWSView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9DC53E2967F14200E00C31 /* AWSView.swift */; };
 		3F9DC5432969287800E00C31 /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9DC5422969287800E00C31 /* Token.swift */; };
+		3F9DC545296A953600E00C31 /* AWSResign.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9DC544296A953600E00C31 /* AWSResign.swift */; };
 		3FC383562965430B00EC011A /* ExecWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC383552965430B00EC011A /* ExecWebView.swift */; platformFilter = ios; };
 		3FC38358296546C400EC011A /* Model+Scale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC38357296546C400EC011A /* Model+Scale.swift */; };
 		3FFCCF8D294DFF6000FE6710 /* K8sCatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FFCCF8C294DFF6000FE6710 /* K8sCatApp.swift */; };
@@ -114,6 +115,7 @@
 		3F9DC5372967E47D00E00C31 /* MyAWSClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAWSClient.swift; sourceTree = "<group>"; };
 		3F9DC53E2967F14200E00C31 /* AWSView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AWSView.swift; sourceTree = "<group>"; };
 		3F9DC5422969287800E00C31 /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
+		3F9DC544296A953600E00C31 /* AWSResign.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWSResign.swift; sourceTree = "<group>"; };
 		3FC383552965430B00EC011A /* ExecWebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExecWebView.swift; sourceTree = "<group>"; };
 		3FC38357296546C400EC011A /* Model+Scale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Model+Scale.swift"; sourceTree = "<group>"; };
 		3FFCCF89294DFF6000FE6710 /* K8sCat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = K8sCat.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -216,6 +218,7 @@
 				3F2BE438296015C20002DEEC /* NewClusterView.swift */,
 				3F2BE43A29601AB50002DEEC /* ConfigView.swift */,
 				3F9DC53E2967F14200E00C31 /* AWSView.swift */,
+				3F9DC544296A953600E00C31 /* AWSResign.swift */,
 			);
 			path = cluster;
 			sourceTree = "<group>";
@@ -473,6 +476,7 @@
 				3FC383562965430B00EC011A /* ExecWebView.swift in Sources */,
 				3F19F8CC2951E010005C0558 /* Ex.swift in Sources */,
 				3F19F8CA2951DE88005C0558 /* TabBarButton.swift in Sources */,
+				3F9DC545296A953600E00C31 /* AWSResign.swift in Sources */,
 				3F2BE428295DDD110002DEEC /* PVCView.swift in Sources */,
 				3F25F1F02962930B00F4DA02 /* HpaView.swift in Sources */,
 				3F19F8CE2952AF01005C0558 /* Model.swift in Sources */,

@@ -179,7 +179,7 @@ struct Model {
                     case .KubeConfig, .Aliyun:
                         client = KubernetesClient(config: try! Config(content: c.config!).config()!)
                     case .AWS:
-                        client = KubernetesClient(config: try! AWS(awsId: "", awsSecret: "", region: "", clusterName: "").config()!)
+                        client = KubernetesClient(config: try! AWS(awsId: c.accessKeyID!, awsSecret: c.secretAccessKey!, region: c.region!, clusterName: c.clusterName!).config()!)
                     default: break
                     }
                     
@@ -197,7 +197,7 @@ struct Model {
                     case .KubeConfig, .Aliyun:
                         config = try? Config(content: c.config!).config()
                     case .AWS:
-                        config = try? AWS(awsId: "", awsSecret: "", region: "", clusterName: "").config()
+                        config = try? AWS(awsId: c.accessKeyID!, awsSecret: c.secretAccessKey!, region: c.region!, clusterName: c.clusterName!).config()
                     default: break
                     }
                     if config == nil {

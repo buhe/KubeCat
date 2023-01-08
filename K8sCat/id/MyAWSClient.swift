@@ -12,10 +12,11 @@ import SotoSTS
 struct MyAWSClient {
     
     
-    let ak = "AKIATFIZFNSISE3OVGXB"
-    let sk = "sJ/XDebzWVD/RklpTiMeGSTvp7Sc8Ik+pq0SepVG"
-    let clusterName = "dev-core"
-    let region = "us-west-1"
+    let ak: String
+    let sk: String
+    let region: String
+    let clusterName: String
+    
     
     static let TOKEN_PREFIX = "k8s-aws-v1."
     func getCluster() -> AWSCluster{

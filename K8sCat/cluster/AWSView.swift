@@ -13,8 +13,12 @@ struct AWSView: View {
     let close: () -> Void
     @State var name = ""
     @State var icon = "a.circle"
-    @State var importMsg: String = "Import Kube Config"
-    @State var content = ""
+    @State var accessKeyID = ""
+    @State var secretAccessKey = ""
+    @State var region = ""
+    @State var clusterName = ""
+    
+
     @State var showErrorMessage = false
     @State var errorMessage = ""
     
@@ -37,10 +41,18 @@ struct AWSView: View {
                     }
                     
                 }
-                Section(header: "Kube Config"){
-                    Text(importMsg).onTapGesture {
-                        showingExporter = true
-                    }
+                Section(header: "Access Key ID"){
+                    TextField(text: $accessKeyID)
+                }
+                Section(header: "Secret Access key"){
+                    TextField(text: $secretAccessKey)
+                }
+
+                Section(header: "Region"){
+                    TextField(text: $region)
+                }
+                Section(header: "Cluster Name"){
+                    TextField(text: $clusterName)
                 }
                 Button{
                     // save to core data
@@ -57,27 +69,33 @@ struct AWSView: View {
                 showErrorMessage = false
             }
         }
-        .fileImporter(isPresented: $showingExporter, allowedContentTypes: [.yaml]) { result in
-            switch result {
-            case .success(let url):
-                let _ = url.startAccessingSecurityScopedResource()
-                if let content = try? String(contentsOf: url) {
-                    self.content = content
-                    importMsg = "Imported"
-                    print("Import content is \(content)")
-                }
-                url.stopAccessingSecurityScopedResource()
-                
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-        }
+        
     }
     
     private func addItem() {
         if name.isEmpty {
             showErrorMessage = true
             errorMessage = "Input cluster name, please."
+            return
+        }
+        if accessKeyID.isEmpty {
+            showErrorMessage = true
+            errorMessage = "Input AWS access key ID, please."
+            return
+        }
+        if secretAccessKey.isEmpty {
+            showErrorMessage = true
+            errorMessage = "Input AWS secret access key, please."
+            return
+        }
+        if region.isEmpty {
+            showErrorMessage = true
+            errorMessage = "Input AWS region, please."
+            return
+        }
+        if clusterName.isEmpty {
+            showErrorMessage = true
+            errorMessage = "Input AWS EKS cluster name, please."
             return
         }
 //        if content.isEmpty {
@@ -90,7 +108,11 @@ struct AWSView: View {
             newItem.name = self.name
             newItem.type = ClusterType.AWS.rawValue
             newItem.icon = icon
-            newItem.config = self.content
+            newItem.accessKeyID = accessKeyID
+            newItem.secretAccessKey = secretAccessKey
+            newItem.region = region
+            newItem.clusterName = clusterName
+            
             if first {
                 newItem.selected = true
             }
