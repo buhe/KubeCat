@@ -305,7 +305,7 @@ class ViewModel: ObservableObject {
                                                     , labels: $0.metadata?.labels
                                                     , annotations: $0.metadata?.annotations
                                                     , namespace: $0.metadata?.namespace ?? "unknow"
-                                                  , status: $0.status?.numberMisscheduled ?? 0 > 0
+                                                  , status: !($0.status?.numberMisscheduled ?? 0 > 0)
                                                   , raw: $0
             )}
     }

@@ -18,7 +18,7 @@ struct DeploymentView: View {
                 Text(deployment.name)
             }
             Section(header: "Status") {
-                Text(deployment.status ? "Ready" : "Pending")
+                Text(deployment.status ? "Ready" : "Failed")
             }
 //            Button{
 //                viewModel.model.scaleDeployment(deployment: deployment, replicas: 1)
@@ -33,7 +33,7 @@ struct DeploymentView: View {
                             PodView(pod: i, viewModel: viewModel)
                         } label: {
                             VStack(alignment: .leading) {
-                                Text(i.name)
+                                Text(i.name).foregroundColor(i.status == PodStatus.Failed.rawValue ? .red : (i.status == PodStatus.Running.rawValue || i.status == PodStatus.Succeeded.rawValue ? .green : .yellow))
                                 HStack{
                                     CaptionText(text: "expect: \(i.expect), ")
                                     CaptionText(text: "warning: \(i.warning)").foregroundColor(i.warning > 0 ? .red : .none)
