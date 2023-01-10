@@ -25,9 +25,11 @@ struct JobView: View {
                         NavigationLink {
                             PodView(pod: i, viewModel: viewModel)
                         } label: {
+                            Image(systemName: "tray.2")
                             VStack(alignment: .leading) {
                                 Text(i.name).foregroundColor(.green)
                                 HStack{
+                                    Text("containers -").font(.caption)
                                     CaptionText(text: "expect: \(i.expect), ")
                                     CaptionText(text: "warning: \(i.warning)").foregroundColor(i.warning > 0 ? .red : .none)
                                 }

@@ -26,9 +26,11 @@ struct ReplicaView: View {
                         NavigationLink {
                             PodView(pod: i, viewModel: viewModel)
                         } label: {
+                            Image(systemName: "tray.2")
                             VStack(alignment: .leading) {
                                 Text(i.name).foregroundColor(i.status == PodStatus.Failed.rawValue ? .red : (i.status == PodStatus.Running.rawValue || i.status == PodStatus.Succeeded.rawValue ? .green : .yellow))
                                 HStack{
+                                    Text("containers -").font(.caption)
                                     CaptionText(text: "expect: \(i.expect), ")
                                     CaptionText(text: "warning: \(i.warning)").foregroundColor(i.warning > 0 ? .red : .none)
                                 }
