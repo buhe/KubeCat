@@ -38,6 +38,9 @@ struct ContainerView: View {
             Section(header: "Name") {
                 Text(container.name)
             }
+            Section(header: "Status") {
+                Text(container.name)
+            }
             Section(header: "Image") {
                 Text(container.image).font(.caption)
             }
@@ -104,3 +107,9 @@ struct ContainerView: View {
 //        ContainerView()
 //    }
 //}
+
+enum ContainerStatus: String {
+    case Running
+    case Waiting
+    case Terminated
+}
