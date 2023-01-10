@@ -94,3 +94,11 @@ struct PodView_Previews: PreviewProvider {
         PodView(pod: Pod(id: "123", name: "123", k8sName: "123", status: "fail", expect: 8, pending: 7, containers: [Container(id: "abc", name: "abclong....", image: "hello",path: "/",policy: "r",pullPolicy: "r"), Container(id: "ef", name: "ef", image: "kkk", path: "/", policy: "r", pullPolicy: "r")],clusterIP: "10.0.0.3", nodeIP: "192.168.1.3", labels: ["l1":"l1v"],annotations: ["a1":"a1v"],namespace: "default", raw: nil), viewModel: ViewModel(viewContext: PersistenceController.preview.container.viewContext))
     }
 }
+
+enum PodStatus: String {
+    case Pending
+    case Running
+    case Succeeded
+    case Failed
+    case Unknown
+}

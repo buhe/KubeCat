@@ -88,8 +88,13 @@ struct NamespaceView: View {
                                 } label: {
                                     Image(systemName: "tray.2")
                                     VStack(alignment: .leading) {
-                                        
-                                        Text(i.name)
+//                                        var color = Clock.black
+//                                        switch i.status {
+//                                        case PodStatus.Failed: color = .red
+//                                        case PodStatus.Running, PodStatus.Succeeded: color = .green
+//                                        default: color = .yellow
+//                                        }
+                                        Text(i.name).foregroundColor(i.status == PodStatus.Failed.rawValue ? .red : (i.status == PodStatus.Running.rawValue || i.status == PodStatus.Succeeded.rawValue ? .green : .yellow))
                                         
                                         HStack{
                                             Text("expect: \(i.expect), ").font(.caption)
