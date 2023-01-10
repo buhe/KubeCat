@@ -133,11 +133,7 @@ struct Model {
         self.viewContext = viewContext
         workaroundChinaSpecialBug()
         select(viewContext: viewContext)
-        do{
-            try namespace()
-        }catch{
-            // network lose
-        }
+//        namespace()
     }
     
     mutating func select(viewContext: NSManagedObjectContext) {
@@ -168,10 +164,9 @@ struct Model {
                 if c.demo {
                     print("has demo")
                     hasAndSelectDemo = true
-                    continue
                 }
                 
-                if self.current != nil && c != self.current {
+                if self.client != nil && self.current != nil && c != self.current {
 //                    try self.client!.syncShutdown()
                     try? self.client!.syncShutdown()
                     let type = ClusterType(rawValue: c.type!)
@@ -180,12 +175,12 @@ struct Model {
                         client = KubernetesClient(config: try! Config(content: c.config!).config()!)
                     case .AWS:
                         client = KubernetesClient(config: try! AWS(awsId: c.accessKeyID!, awsSecret: c.secretAccessKey!, region: c.region!, clusterName: c.clusterName!).config()!)
-                    default: break
+                    default: client = nil
                     }
                     
                     self.current = c
                     clearAll()
-                    try? namespace()
+                    namespace()
                 }
                 
                 
@@ -205,7 +200,7 @@ struct Model {
                     } else {
                         client = KubernetesClient(config: config!)
                         self.current = c
-                        try? namespace()
+                        namespace()
                     }
                     
                 }
@@ -232,7 +227,7 @@ struct Model {
         pvcs = nil
     }
     
-    mutating func namespace() throws {
+    mutating func namespace() {
         if let client = client {
             do{
                 let namespaces = try client.namespaces.list().wait().items
