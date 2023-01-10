@@ -133,7 +133,14 @@ struct Model {
         self.viewContext = viewContext
         workaroundChinaSpecialBug()
         select(viewContext: viewContext)
-//        namespace()
+    }
+    
+    fileprivate func selectNotSome(c: ClusterEntry) -> (Bool) {
+        return (c != self.current)
+    }
+    
+    fileprivate func pervNoDemo() -> (Bool) {
+        return (self.client != nil)
     }
     
     mutating func select(viewContext: NSManagedObjectContext) {
@@ -166,44 +173,30 @@ struct Model {
                     hasAndSelectDemo = true
                 }
                 
-                if self.client != nil && self.current != nil && c != self.current {
-//                    try self.client!.syncShutdown()
+                if !selectNotSome(c: c) {
+                    break
+                }
+                
+                if pervNoDemo() {
                     try? self.client!.syncShutdown()
-                    let type = ClusterType(rawValue: c.type!)
-                    switch type {
-                    case .KubeConfig, .Aliyun:
-                        client = KubernetesClient(config: try! Config(content: c.config!).config()!)
-                    case .AWS:
-                        client = KubernetesClient(config: try! AWS(awsId: c.accessKeyID!, awsSecret: c.secretAccessKey!, region: c.region!, clusterName: c.clusterName!).config()!)
-                    default: client = nil
-                    }
-                    
-                    self.current = c
-                    clearAll()
-                    namespace()
+                    client = nil
                 }
-                
-                
-                
-                if self.current == nil {
-                    let type = ClusterType(rawValue: c.type!)
-                    var config: KubernetesClientConfig?
-                    switch type {
-                    case .KubeConfig, .Aliyun:
-                        config = try? Config(content: c.config!).config()
-                    case .AWS:
-                        config = try? AWS(awsId: c.accessKeyID!, awsSecret: c.secretAccessKey!, region: c.region!, clusterName: c.clusterName!).config()
-                    default: break
-                    }
-                    if config == nil {
-                        client = nil
-                    } else {
-                        client = KubernetesClient(config: config!)
-                        self.current = c
-                        namespace()
-                    }
-                    
+                clearAll()
+                let type = ClusterType(rawValue: c.type!)
+                var config: KubernetesClientConfig?
+                switch type {
+                case .KubeConfig, .Aliyun:
+                    config = try? Config(content: c.config!).config()
+                case .AWS:
+                    config = try? AWS(awsId: c.accessKeyID!, awsSecret: c.secretAccessKey!, region: c.region!, clusterName: c.clusterName!).config()
+                default: break
                 }
+                if config != nil {
+                    // no demo
+                    client = KubernetesClient(config: config!)
+                }
+                self.current = c
+                try? namespace()
                 
             }
         }
@@ -227,15 +220,11 @@ struct Model {
         pvcs = nil
     }
     
-    mutating func namespace() {
+    mutating func namespace() throws {
         if let client = client {
-            do{
-                let namespaces = try client.namespaces.list().wait().items
-                self.namespaces = namespaces
-            }catch{
-                print(error)
-            }
-            //        print("ns is \(namespaces)")
+
+            let namespaces = try client.namespaces.list().wait().items
+            self.namespaces = namespaces
             
         } else {
             self.namespaces = []
