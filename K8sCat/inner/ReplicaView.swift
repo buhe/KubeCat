@@ -30,7 +30,7 @@ struct ReplicaView: View {
                                 Text(i.name)
                                 HStack{
                                     CaptionText(text: "expect: \(i.expect), ")
-                                    CaptionText(text: "pendding: \(i.pending)").foregroundColor(i.pending > 0 ? .red : .none)
+                                    CaptionText(text: "warning: \(i.warning)").foregroundColor(i.warning > 0 ? .red : .none)
                                 }
                                 
                             }

@@ -1302,7 +1302,7 @@
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             uuid = "D398330A-1BA8-4FDB-ABCE-85498DDF4201"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "K8sCat/ViewModel.swift"

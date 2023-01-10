@@ -29,7 +29,7 @@ struct JobView: View {
                                 Text(i.name).foregroundColor(.green)
                                 HStack{
                                     CaptionText(text: "expect: \(i.expect), ")
-                                    CaptionText(text: "pendding: \(i.pending)").foregroundColor(i.pending > 0 ? .red : .none)
+                                    CaptionText(text: "warning: \(i.warning)").foregroundColor(i.warning > 0 ? .red : .none)
                                 }
                                 
                             }

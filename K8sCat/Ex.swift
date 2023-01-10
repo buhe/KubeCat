@@ -37,7 +37,7 @@ struct Pod: Identifiable {
     let k8sName: String
     let status: String
     let expect: Int
-    let pending: Int
+    let warning: Int // container other status
     let containers: [Container]
     let clusterIP: String
     let nodeIP: String
