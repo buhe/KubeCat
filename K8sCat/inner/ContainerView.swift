@@ -39,7 +39,7 @@ struct ContainerView: View {
                 Text(container.name)
             }
             Section(header: "Status") {
-                Text(container.name)
+                Text("")
             }
             Section(header: "Image") {
                 Text(container.image).font(.caption)
