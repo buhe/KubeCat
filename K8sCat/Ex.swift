@@ -64,7 +64,7 @@ struct Container: Identifiable {
 struct Deployment: Identifiable, Yamlble {
     var id: String
     var name: String
-    let k8sName: String
+    let k8sName: [String: String]
 //    let status: String
     let expect: Int
     let pending: Int
@@ -109,7 +109,7 @@ struct Job: Identifiable {
 struct CronJob: Identifiable, Yamlble {
     var id: String
     var name: String
-    let k8sName: String
+    let k8sName: [String: String]
     let labels: [String: String]?
     let annotations: [String: String]?
     let namespace: String
@@ -120,7 +120,7 @@ struct CronJob: Identifiable, Yamlble {
 struct Stateful: Identifiable, Yamlble {
     var id: String
     var name: String
-    let k8sName: String
+    let k8sName: [String: String]
     let labels: [String: String]?
     let annotations: [String: String]?
     let namespace: String
@@ -131,7 +131,7 @@ struct Stateful: Identifiable, Yamlble {
 struct Service: Identifiable {
     var id: String
     var name: String
-    let k8sName: String
+    let k8sName: [String: String]
     let type: String
     let clusterIps: [String]?
     let externalIps: [String]?
@@ -162,7 +162,7 @@ struct Secret: Identifiable {
 struct Daemon: Identifiable, Yamlble {
     var id: String
     var name: String
-    let k8sName: String
+    let k8sName: [String: String]
     let labels: [String: String]?
     let annotations: [String: String]?
     let namespace: String
@@ -173,7 +173,7 @@ struct Daemon: Identifiable, Yamlble {
 struct Replica: Identifiable {
     var id: String
     var name: String
-    var k8sName: String
+    var k8sName: [String: String]
     let labels: [String: String]?
     let annotations: [String: String]?
     let namespace: String

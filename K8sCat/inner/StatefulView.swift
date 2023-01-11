@@ -22,7 +22,7 @@ struct StatefulView: View {
             }
             Section(header: "Pods") {
                 List {
-                    ForEach(viewModel.model.podsByStateful(in: .namespace(viewModel.ns), stateful: stateful.k8sName)) {
+                    ForEach(viewModel.model.podsByStateful(in: .namespace(viewModel.ns), stateful: stateful.k8sName, name: stateful.name)) {
                         i in
                         NavigationLink {
                             PodView(pod: i, viewModel: viewModel)
@@ -118,6 +118,6 @@ struct StatefulView: View {
 
 struct StatefulView_Previews: PreviewProvider {
     static var previews: some View {
-        StatefulView(stateful: Stateful(id: "123", name: "123", k8sName: "123", labels: ["l1":"l1v"],annotations: ["a1":"a1v"],namespace: "default", status: true, raw: nil), viewModel: ViewModel(viewContext: PersistenceController.preview.container.viewContext))
+        StatefulView(stateful: Stateful(id: "123", name: "123", k8sName: [:], labels: ["l1":"l1v"],annotations: ["a1":"a1v"],namespace: "default", status: true, raw: nil), viewModel: ViewModel(viewContext: PersistenceController.preview.container.viewContext))
     }
 }

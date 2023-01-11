@@ -12,7 +12,7 @@ extension Model {
     func daemonByName(ns: String, name: String) -> Daemon {
         if let client = client {
             let daemon = try! client.appsV1.daemonSets.get(in: .namespace(ns), name: name).wait()
-            return Daemon(id: daemon.name!, name: daemon.name!, k8sName: daemon.metadata?.labels!["app.kubernetes.io/name"] ?? "unknow"
+            return Daemon(id: daemon.name!, name: daemon.name!, k8sName:  (daemon.spec?.selector.matchLabels)!
                           , labels: daemon.metadata?.labels
                           , annotations: daemon.metadata?.annotations
                           , namespace: daemon.metadata?.namespace ?? "unknow"
@@ -20,7 +20,7 @@ extension Model {
                         , raw: daemon
 )
         } else {
-            return Daemon(id: "demo", name: "demo", k8sName: "demo", labels: [:], annotations: [:], namespace: "demo", status: true, raw: nil)
+            return Daemon(id: "demo", name: "demo", k8sName: [:], labels: [:], annotations: [:], namespace: "demo", status: true, raw: nil)
         }
     }
 }

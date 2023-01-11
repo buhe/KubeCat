@@ -22,7 +22,7 @@ struct DaemonView: View {
             }
             Section(header: "Pods") {
                 List {
-                    ForEach(viewModel.model.podsByDaemon(in: .namespace(viewModel.ns), daemon: daemon.k8sName)) {
+                    ForEach(viewModel.model.podsByDaemon(in: .namespace(viewModel.ns), daemon: daemon.k8sName, name: daemon.name)) {
                         i in
                         NavigationLink {
                             PodView(pod: i, viewModel: viewModel)
@@ -118,6 +118,6 @@ struct DaemonView: View {
 
 struct DaemonView_Previews: PreviewProvider {
     static var previews: some View {
-        DaemonView(daemon: Daemon(id: "123", name: "123", k8sName: "123", labels: ["l1":"l1v"],annotations: ["a1":"a1v"],namespace: "default", status: true, raw: nil), viewModel: ViewModel(viewContext: PersistenceController.preview.container.viewContext))
+        DaemonView(daemon: Daemon(id: "123", name: "123", k8sName: [:], labels: ["l1":"l1v"],annotations: ["a1":"a1v"],namespace: "default", status: true, raw: nil), viewModel: ViewModel(viewContext: PersistenceController.preview.container.viewContext))
     }
 }

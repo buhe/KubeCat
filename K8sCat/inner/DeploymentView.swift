@@ -27,7 +27,7 @@ struct DeploymentView: View {
 //            }
             Section(header: "Pods") {
                 List {
-                    ForEach(viewModel.model.podsByDeployment(in: .namespace(viewModel.ns), deployment: deployment.k8sName)) {
+                    ForEach(viewModel.model.podsByDeployment(in: .namespace(viewModel.ns), deployment: deployment.k8sName, name: deployment.name)) {
                         i in
                         NavigationLink {
                             PodView(pod: i, viewModel: viewModel)
@@ -123,6 +123,6 @@ struct DeploymentView: View {
 
 struct DeploymentView_Previews: PreviewProvider {
     static var previews: some View {
-        DeploymentView(deployment:  Deployment(id: "123", name: "123", k8sName: "123", expect: 1, pending: 0, labels: ["l1":"l1v"],annotations: ["a1":"a1v"],namespace: "default", status: false, raw: nil), viewModel: ViewModel(viewContext: PersistenceController.preview.container.viewContext))
+        DeploymentView(deployment:  Deployment(id: "123", name: "123", k8sName: [:], expect: 1, pending: 0, labels: ["l1":"l1v"],annotations: ["a1":"a1v"],namespace: "default", status: false, raw: nil), viewModel: ViewModel(viewContext: PersistenceController.preview.container.viewContext))
     }
 }

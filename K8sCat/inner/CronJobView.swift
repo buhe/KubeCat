@@ -20,27 +20,28 @@ struct CronJobView: View {
             Section(header: "Schedule") {
                 Text(cronJob.schedule)
             }
-            Section(header: "Pods") {
-                List {
-                    ForEach(viewModel.model.podsByCronJob(in: .namespace(viewModel.ns), cronJob: cronJob.k8sName)) {
-                        i in
-                        NavigationLink {
-                            PodView(pod: i, viewModel: viewModel)
-                        } label: {
-                            Image(systemName: "tray.2")
-                            VStack(alignment: .leading) {
-                                Text(i.name).foregroundColor(.green)
-                                HStack{
-                                    Text("containers -").font(.caption)
-                                    CaptionText(text: "expect: \(i.expect), ")
-                                    CaptionText(text: "warning: \(i.warning)").foregroundColor(i.warning > 0 ? .red : .none)
-                                }
-                                
-                            }
-                        }
-                    }
-                }
-            }
+            // link job
+//            Section(header: "Pods") {
+//                List {
+//                    ForEach(viewModel.model.podsByCronJob(in: .namespace(viewModel.ns), cronJob: cronJob.k8sName)) {
+//                        i in
+//                        NavigationLink {
+//                            PodView(pod: i, viewModel: viewModel)
+//                        } label: {
+//                            Image(systemName: "tray.2")
+//                            VStack(alignment: .leading) {
+//                                Text(i.name).foregroundColor(.green)
+//                                HStack{
+//                                    Text("containers -").font(.caption)
+//                                    CaptionText(text: "expect: \(i.expect), ")
+//                                    CaptionText(text: "warning: \(i.warning)").foregroundColor(i.warning > 0 ? .red : .none)
+//                                }
+//
+//                            }
+//                        }
+//                    }
+//                }
+//            }
             Section(header: "Labels and Annotations") {
                 NavigationLink {
                     List {

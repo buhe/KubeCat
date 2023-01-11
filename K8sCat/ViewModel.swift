@@ -154,9 +154,9 @@ class ViewModel: ObservableObject {
                 
             }
             if model.hasAndSelectDemo {
-                return [Deployment(id: "demo1", name: "demo1", k8sName: "demo1", expect: 2, pending: 0, labels: [:], annotations: [:], namespace: "demo1", status: true, raw: nil), Deployment(id: "demo2", name: "demo2", k8sName: "demo2", expect: 2, pending: 1, labels: [:], annotations: [:], namespace: "demo1", status: false, raw: nil)]
+                return [Deployment(id: "demo1", name: "demo1", k8sName: [:], expect: 2, pending: 0, labels: [:], annotations: [:], namespace: "demo1", status: true, raw: nil), Deployment(id: "demo2", name: "demo2", k8sName: [:], expect: 2, pending: 1, labels: [:], annotations: [:], namespace: "demo1", status: false, raw: nil)]
             }
-            return model.deployments[ns]!.map {Deployment(id: $0.name!, name: $0.name!, k8sName: $0.metadata?.labels?["app.kubernetes.io/name"] ?? "unknow", expect: Int($0.spec?.replicas ?? 0), pending: Int($0.status?.unavailableReplicas ?? 0)
+        return model.deployments[ns]!.map {Deployment(id: $0.name!, name: $0.name!, k8sName: ($0.spec?.selector.matchLabels)!, expect: Int($0.spec?.replicas ?? 0), pending: Int($0.status?.unavailableReplicas ?? 0)
                                                             , labels: $0.metadata?.labels
                                                             , annotations: $0.metadata?.annotations
                                                             , namespace: $0.metadata?.namespace ?? "unknow"
@@ -199,10 +199,10 @@ class ViewModel: ObservableObject {
                 
             }
             if model.hasAndSelectDemo {
-                return [CronJob(id: "demo", name: "demo", k8sName: "demo", labels: [:], annotations: [:], namespace: "demo", schedule: "10/5 * * * *", raw: nil)]
+                return [CronJob(id: "demo", name: "demo", k8sName: [:], labels: [:], annotations: [:], namespace: "demo", schedule: "10/5 * * * *", raw: nil)]
             }
             return model.cronJobs[ns]!.map {CronJob(id: $0.name!, name: $0.name!,
-                                                      k8sName: $0.metadata?.labels?["job-name"] ?? "unknow"
+                                                    k8sName:  [:]
                                                       , labels: $0.metadata?.labels
                                                       , annotations: $0.metadata?.annotations
                                                       , namespace: $0.metadata?.namespace ?? "unknow"
@@ -223,9 +223,9 @@ class ViewModel: ObservableObject {
                 
             }
             if model.hasAndSelectDemo {
-                return [Stateful(id: "demo", name: "demo", k8sName: "demo", labels: [:], annotations: [:], namespace: "demo", status: false, raw: nil)]
+                return [Stateful(id: "demo", name: "demo", k8sName: [:], labels: [:], annotations: [:], namespace: "demo", status: false, raw: nil)]
             }
-            return model.statefulls[ns]!.map {Stateful(id: $0.name!, name: $0.name!, k8sName: $0.metadata?.labels!["app.kubernetes.io/name"] ?? "unknow"
+        return model.statefulls[ns]!.map {Stateful(id: $0.name!, name: $0.name!, k8sName:  ($0.spec?.selector.matchLabels)!
                                                          , labels: $0.metadata?.labels
                                                          , annotations: $0.metadata?.annotations
                                                          , namespace: $0.metadata?.namespace ?? "unknow"
@@ -245,9 +245,9 @@ class ViewModel: ObservableObject {
                 
             }
             if model.hasAndSelectDemo {
-                return [Service(id: "demo", name: "demo", k8sName: "demo", type: "Node", clusterIps: ["10.1.2.3"], externalIps: ["1.2.3.4"], labels: [:], annotations: [:], namespace: "demo")]
+                return [Service(id: "demo", name: "demo", k8sName: [:], type: "Node", clusterIps: ["10.1.2.3"], externalIps: ["1.2.3.4"], labels: [:], annotations: [:], namespace: "demo")]
             }
-        return model.services[ns]!.map {Service(id: $0.name!, name: $0.name!, k8sName: $0.metadata?.labels?["app.kubernetes.io/name"] ?? "unknow", type: ($0.spec?.type!)!, clusterIps: $0.spec?.clusterIPs, externalIps: $0.spec?.externalIPs
+        return model.services[ns]!.map {Service(id: $0.name!, name: $0.name!, k8sName:  ($0.spec?.selector)!, type: ($0.spec?.type!)!, clusterIps: $0.spec?.clusterIPs, externalIps: $0.spec?.externalIPs
                                                       , labels: $0.metadata?.labels
                                                       , annotations: $0.metadata?.annotations
                                                       , namespace: $0.metadata?.namespace ?? "unknow"
@@ -305,9 +305,9 @@ class ViewModel: ObservableObject {
                 
             }
             if model.hasAndSelectDemo {
-                return [Daemon(id: "demo", name: "demo", k8sName: "demo", labels: [:], annotations: [:], namespace: "demo", status: true, raw: nil)]
+                return [Daemon(id: "demo", name: "demo", k8sName: [:], labels: [:], annotations: [:], namespace: "demo", status: true, raw: nil)]
             }
-            return model.daemons[ns]!.map {Daemon(id: $0.name!, name: $0.name!, k8sName: $0.metadata?.labels!["app.kubernetes.io/name"] ?? "unknow"
+        return model.daemons[ns]!.map {Daemon(id: $0.name!, name: $0.name!, k8sName:  ($0.spec?.selector.matchLabels)!
                                                     , labels: $0.metadata?.labels
                                                     , annotations: $0.metadata?.annotations
                                                     , namespace: $0.metadata?.namespace ?? "unknow"
@@ -327,9 +327,9 @@ class ViewModel: ObservableObject {
                 
             }
             if model.hasAndSelectDemo {
-                return [Replica(id: "demo", name: "demo", k8sName: "demo", labels: [:], annotations: [:], namespace: "demo", status: true)]
+                return [Replica(id: "demo", name: "demo", k8sName: [:], labels: [:], annotations: [:], namespace: "demo", status: true)]
             }
-            return model.replicas[ns]!.map {Replica(id: $0.name!, name: $0.name!, k8sName: $0.metadata?.labels?["app.kubernetes.io/name"] ?? "unknow"
+        return model.replicas[ns]!.map {Replica(id: $0.name!, name: $0.name!, k8sName:  ($0.spec?.selector.matchLabels)!
                                                       , labels: $0.metadata?.labels
                                                       , annotations: $0.metadata?.annotations
                                                       , namespace: $0.metadata?.namespace ?? "unknow"

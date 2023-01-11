@@ -21,7 +21,7 @@ struct ReplicaView: View {
             }
             Section(header: "Pods") {
                 List {
-                    ForEach(viewModel.model.podsByReplica(in: .namespace(viewModel.ns), replica: replica.k8sName)) {
+                    ForEach(viewModel.model.podsByReplica(in: .namespace(viewModel.ns), replica: replica.k8sName, name: replica.name)) {
                         i in
                         NavigationLink {
                             PodView(pod: i, viewModel: viewModel)
@@ -85,6 +85,6 @@ struct ReplicaView: View {
 
 struct ReplicaView_Previews: PreviewProvider {
     static var previews: some View {
-        ReplicaView(replica: Replica(id: "abc", name: "abc", k8sName: "abc", labels: ["l1":"l1v"],annotations: ["a1":"a1v"],namespace: "default", status: true), viewModel: ViewModel(viewContext: PersistenceController.preview.container.viewContext))
+        ReplicaView(replica: Replica(id: "abc", name: "abc", k8sName: [:], labels: ["l1":"l1v"],annotations: ["a1":"a1v"],namespace: "default", status: true), viewModel: ViewModel(viewContext: PersistenceController.preview.container.viewContext))
     }
 }
