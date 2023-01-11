@@ -93,7 +93,7 @@ struct NamespaceView: View {
                                         HStack{
                                             Text("containers -").font(.caption)
                                             Text("expect: \(i.expect), ").font(.caption)
-                                            Text("warning: \(i.warning)").font(.caption).foregroundColor(i.warning > 0 ? .red : .none)
+                                            Text("warning: \(i.status == PodStatus.Succeeded.rawValue ? 0 : i.warning)").font(.caption).foregroundColor((i.status == PodStatus.Succeeded.rawValue ? 0 : i.warning) > 0 ? .red : .none)
                                         }
                                         
                                     }
