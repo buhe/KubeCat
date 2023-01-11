@@ -9,8 +9,10 @@ import Foundation
 import SwiftkubeClient
 import SwiftkubeModel
 import CoreData
+import SwiftUI
 
 struct Model {
+    @AppStorage(wrappedValue: true, "first") var first: Bool
     private var viewContext: NSManagedObjectContext
     private var current: ClusterEntry?
 //    @FetchRequest(
@@ -60,7 +62,11 @@ struct Model {
     
     init(viewContext: NSManagedObjectContext) {
         self.viewContext = viewContext
-        workaroundChinaSpecialBug()
+        if first {
+            workaroundChinaSpecialBug()
+            first = false
+        }
+        
         select(viewContext: viewContext)
     }
     
