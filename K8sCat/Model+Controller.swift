@@ -66,4 +66,21 @@ extension Model {
             return Job(id: "demo", name: "demo", k8sName: [:], labels: [:], annotations: [:], namespace: "demo", status: true)
         }
     }
+    
+    func deploymentByName(ns: String, name: String) -> Deployment {
+        if let client = client {
+            let deployment = try! client.appsV1.deployments.get(in: .namespace(ns), name: name).wait()
+            return Deployment(id: deployment.name!, name: deployment.name!, k8sName: (deployment.spec?.selector.matchLabels)!, expect: Int(deployment.spec?.replicas ?? 0), pending: Int(deployment.status?.unavailableReplicas ?? 0)
+                              , labels: deployment.metadata?.labels
+                              , annotations: deployment.metadata?.annotations
+                              , namespace: deployment.metadata?.namespace ?? "unknow"
+                              , status: deployment.status?.replicas == deployment.status?.readyReplicas
+                            , raw: deployment
+)
+        } else {
+            return Deployment(id: "demo1", name: "demo1", k8sName: [:], expect: 2, pending: 0, labels: [:], annotations: [:], namespace: "demo1", status: true, raw: nil)
+        }
+    }
 }
+
+

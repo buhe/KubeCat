@@ -65,10 +65,12 @@ class ViewModel: ObservableObject {
                 }
             }
             if model.hasAndSelectDemo {
-                return [Hpa(id: "demo", name: "demo", namespace: "demo1", raw: nil)]
+                return [Hpa(id: "demo", name: "demo", namespace: "demo1",reference: "demo" ,referenceType: .Deployment, raw: nil)]
             }
             return model.hpas[ns]!.map {Hpa(id: $0.name!, name: $0.name!
                                               , namespace: $0.metadata?.namespace ?? "unknow"
+                                            , reference: ($0.spec?.scaleTargetRef.name)!
+                                            , referenceType: HPAReference(rawValue: ($0.spec?.scaleTargetRef.kind)!) ?? .UnKnow
                                             , raw: $0
             )}
 

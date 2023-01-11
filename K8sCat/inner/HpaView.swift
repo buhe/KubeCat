@@ -17,6 +17,25 @@ struct HpaView: View {
             Section(header: "Name") {
                 Text(hpa.name)
             }
+            Section(header: "Reference") {
+                NavigationLink {
+                    switch hpa.referenceType {
+                    case .Deployment:
+                        DeploymentView(deployment: viewModel.model.deploymentByName(ns: viewModel.ns, name: hpa.reference), viewModel: viewModel)
+                    default:
+                        EmptyView()
+                    }
+                } label: {
+                    
+                    switch hpa.referenceType {
+                    case .Deployment:
+                        Image(systemName: "ipad.landscape.badge.play")
+                    default:
+                        EmptyView()
+                    }
+                    Text(hpa.reference)
+                }
+            }
             Section(header: "Misc") {
                 HStack{
                     Text("Namespace")
@@ -64,6 +83,11 @@ struct HpaView: View {
 
 struct HpaView_Previews: PreviewProvider {
     static var previews: some View {
-        HpaView(hpa:  Hpa(id: "123", name: "123", namespace: "default", raw: nil), viewModel: ViewModel(viewContext: PersistenceController.shared.container.viewContext))
+        HpaView(hpa:  Hpa(id: "123", name: "123", namespace: "default",reference: "123", referenceType: .Deployment, raw: nil), viewModel: ViewModel(viewContext: PersistenceController.shared.container.viewContext))
     }
+}
+
+enum HPAReference: String {
+    case Deployment
+    case UnKnow
 }

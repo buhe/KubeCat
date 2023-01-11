@@ -28,6 +28,8 @@ struct Hpa: Identifiable, Yamlble {
 //    let labels: [String: String]?
 //    let annotations: [String: String]?
     let namespace: String
+    let reference: String
+    let referenceType: HPAReference
     let raw: autoscaling.v2beta1.HorizontalPodAutoscaler?
 }
 
