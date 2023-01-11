@@ -25,6 +25,7 @@ struct PodView: View {
                         NavigationLink {
                             ContainerView(pod: pod, container: c, viewModel: viewModel)
                         } label: {
+                            Image(systemName: "tray.full")
                             VStack(alignment: .leading) {
                                 Text(c.name)
                                     .foregroundColor(c.ready ? .green : .red)
