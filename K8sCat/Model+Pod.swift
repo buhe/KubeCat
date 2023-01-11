@@ -22,6 +22,7 @@ extension Model {
                    ,path: $1.terminationMessagePath ?? "unknow", policy: $1.terminationMessagePolicy ?? "unknow", pullPolicy: $1.imagePullPolicy ?? "unknow"
                    , status: consainersStatus[$0].state?.running != nil ? .Running : (consainersStatus[$0].state?.waiting != nil ? .Waiting : .Terminated)
                    , ready: consainersStatus[$0].ready
+                   , error: consainersStatus[$0].state?.terminated != nil && consainersStatus[$0].state?.terminated?.exitCode != 0
                    )
                    
                } ?? [], clusterIP: $0.status?.podIP ?? "unknow", nodeIP: $0.status?.hostIP ?? "unknow", labels: $0.metadata?.labels
@@ -55,6 +56,7 @@ extension Model {
                 ,path: $1.terminationMessagePath ?? "unknow", policy: $1.terminationMessagePolicy ?? "unknow", pullPolicy: $1.imagePullPolicy ?? "unknow"
                 , status: consainersStatus[$0].state?.running != nil ? .Running : (consainersStatus[$0].state?.waiting != nil ? .Waiting : .Terminated)
                 , ready: consainersStatus[$0].ready
+                , error: consainersStatus[$0].state?.terminated != nil && consainersStatus[$0].state?.terminated?.exitCode != 0
                 )
                 
             } ?? [], clusterIP: $0.status?.podIP ?? "unknow", nodeIP: $0.status?.hostIP ?? "unknow", labels: $0.metadata?.labels
@@ -75,6 +77,7 @@ extension Model {
                 ,path: $1.terminationMessagePath ?? "unknow", policy: $1.terminationMessagePolicy ?? "unknow", pullPolicy: $1.imagePullPolicy ?? "unknow"
                 , status: consainersStatus[$0].state?.running != nil ? .Running : (consainersStatus[$0].state?.waiting != nil ? .Waiting : .Terminated)
                 , ready: consainersStatus[$0].ready
+                , error: consainersStatus[$0].state?.terminated != nil && consainersStatus[$0].state?.terminated?.exitCode != 0
                 )
                 
             } ?? [], clusterIP: $0.status?.podIP ?? "unknow", nodeIP: $0.status?.hostIP ?? "unknow", labels: $0.metadata?.labels
@@ -95,6 +98,7 @@ extension Model {
                 ,path: $1.terminationMessagePath ?? "unknow", policy: $1.terminationMessagePolicy ?? "unknow", pullPolicy: $1.imagePullPolicy ?? "unknow"
                 , status: consainersStatus[$0].state?.running != nil ? .Running : (consainersStatus[$0].state?.waiting != nil ? .Waiting : .Terminated)
                 , ready: consainersStatus[$0].ready
+                , error: consainersStatus[$0].state?.terminated != nil && consainersStatus[$0].state?.terminated?.exitCode != 0
                 )
                 
             } ?? [], clusterIP: $0.status?.podIP ?? "unknow", nodeIP: $0.status?.hostIP ?? "unknow", labels: $0.metadata?.labels
@@ -115,6 +119,7 @@ extension Model {
                     ,path: $1.terminationMessagePath ?? "unknow", policy: $1.terminationMessagePolicy ?? "unknow", pullPolicy: $1.imagePullPolicy ?? "unknow"
                     , status: consainersStatus[$0].state?.running != nil ? .Running : (consainersStatus[$0].state?.waiting != nil ? .Waiting : .Terminated)
                     , ready: consainersStatus[$0].ready
+                    , error: consainersStatus[$0].state?.terminated != nil && consainersStatus[$0].state?.terminated?.exitCode != 0
                     )
                   
                     
@@ -137,6 +142,7 @@ extension Model {
                 , status: consainersStatus[$0].state?.running != nil ? .Running : (consainersStatus[$0].state?.waiting != nil ? .Waiting : .Terminated)
                 
                     , ready: consainersStatus[$0].ready
+                , error: consainersStatus[$0].state?.terminated != nil && consainersStatus[$0].state?.terminated?.exitCode != 0
                 )
                 
             } ?? [], clusterIP: $0.status?.podIP ?? "unknow", nodeIP: $0.status?.hostIP ?? "unknow", labels: $0.metadata?.labels

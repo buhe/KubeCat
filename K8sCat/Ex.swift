@@ -62,6 +62,7 @@ struct Container: Identifiable {
     let pullPolicy: String
     let status: ContainerStatus
     let ready: Bool
+    let error: Bool
 }
 
 struct Deployment: Identifiable, Yamlble {

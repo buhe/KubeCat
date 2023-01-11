@@ -28,19 +28,20 @@ class ViewModel: ObservableObject {
             }
             if model.hasAndSelectDemo {
                 return [
-                    Pod(id: "demo", name: "demo", k8sName: "demo", status: "Running", expect: 2, warning: 1, containers: [Container(id: "demo", name: "demo", image: "docker.io/hello", path: "/foo/bar", policy: "Restart", pullPolicy: "Restart", status: ContainerStatus.Terminated, ready: true)], clusterIP: "10.0.1.3", nodeIP: "1.2.3.4", labels: [:], annotations: [:], namespace: ns, controllerType: .Job, controllerName: "demo", raw: nil),
-                    Pod(id: "demo2", name: "demo2", k8sName: "demo", status: "Failed", expect: 2, warning: 1, containers: [Container(id: "demo", name: "demo", image: "docker.io/hello", path: "/foo/bar", policy: "Restart", pullPolicy: "Restart", status: ContainerStatus.Terminated, ready: true)], clusterIP: "10.0.1.3", nodeIP: "1.2.3.4", labels: [:], annotations: [:], namespace: ns, controllerType: .Job, controllerName: "demo", raw: nil),
-                        Pod(id: "demo3", name: "demo3", k8sName: "demo", status: "Pending", expect: 2, warning: 1, containers: [Container(id: "demo", name: "demo", image: "docker.io/hello", path: "/foo/bar", policy: "Restart", pullPolicy: "Restart", status: ContainerStatus.Terminated, ready: true)], clusterIP: "10.0.1.3", nodeIP: "1.2.3.4", labels: [:], annotations: [:], namespace: ns, controllerType: .Job, controllerName: "demo", raw: nil)
+                    Pod(id: "demo", name: "demo", k8sName: "demo", status: "Running", expect: 2, warning: 1, containers: [Container(id: "demo", name: "demo", image: "docker.io/hello", path: "/foo/bar", policy: "Restart", pullPolicy: "Restart", status: ContainerStatus.Terminated, ready: true, error: false)], clusterIP: "10.0.1.3", nodeIP: "1.2.3.4", labels: [:], annotations: [:], namespace: ns, controllerType: .Job, controllerName: "demo", raw: nil),
+                    Pod(id: "demo2", name: "demo2", k8sName: "demo", status: "Failed", expect: 2, warning: 1, containers: [Container(id: "demo", name: "demo", image: "docker.io/hello", path: "/foo/bar", policy: "Restart", pullPolicy: "Restart", status: ContainerStatus.Terminated, ready: true, error: true)], clusterIP: "10.0.1.3", nodeIP: "1.2.3.4", labels: [:], annotations: [:], namespace: ns, controllerType: .Job, controllerName: "demo", raw: nil),
+                        Pod(id: "demo3", name: "demo3", k8sName: "demo", status: "Pending", expect: 2, warning: 1, containers: [Container(id: "demo", name: "demo", image: "docker.io/hello", path: "/foo/bar", policy: "Restart", pullPolicy: "Restart", status: ContainerStatus.Terminated, ready: true, error: false)], clusterIP: "10.0.1.3", nodeIP: "1.2.3.4", labels: [:], annotations: [:], namespace: ns, controllerType: .Job, controllerName: "demo", raw: nil)
                 ]
             }
         return model.pods[ns]!.map {
             let consainersStatus = $0.status?.containerStatuses ?? []
-            return Pod(id: $0.name!, name: $0.name!, k8sName: $0.metadata?.labels?["app.kubernetes.io/name"] ?? "unknow", status: ($0.status?.phase)!, expect: $0.spec?.containers.count ?? 0, warning: $0.status?.containerStatuses == nil ? $0.spec?.containers.count ?? 0 : $0.status?.containerStatuses?.filter{$0.ready == false}.count ?? 0, containers: $0.spec?.containers.enumerated().map{
+            return Pod(id: $0.name!, name: $0.name!, k8sName: $0.metadata?.labels?["app.kubernetes.io/name"] ?? "unknow", status: ($0.status?.phase)!, expect: $0.spec?.containers.count ?? 0, warning: $0.status?.containerStatuses == nil ? ($0.spec?.containers.count ?? 0) : $0.status?.containerStatuses?.filter{$0.ready == false}.count ?? 0, containers: $0.spec?.containers.enumerated().map{
                 Container(
                 id: $1.name, name: $1.name, image: $1.image!
                 ,path: $1.terminationMessagePath ?? "unknow", policy: $1.terminationMessagePolicy ?? "unknow", pullPolicy: $1.imagePullPolicy ?? "unknow"
                 , status: consainersStatus[$0].state?.running != nil ? .Running : (consainersStatus[$0].state?.waiting != nil ? .Waiting : .Terminated)
                 , ready: consainersStatus[$0].ready
+                ,error: consainersStatus[$0].state?.terminated != nil && consainersStatus[$0].state?.terminated?.exitCode != 0
                 )
                 
             } ?? []
