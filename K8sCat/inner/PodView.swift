@@ -27,6 +27,7 @@ struct PodView: View {
                         } label: {
                             VStack(alignment: .leading) {
                                 Text(c.name)
+                                    .foregroundColor(c.ready ? .green : .red)
                                 CaptionText(text: c.image)
                             }
                         }
