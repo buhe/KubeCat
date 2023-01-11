@@ -27,11 +27,15 @@ class ViewModel: ObservableObject {
                 }
             }
             if model.hasAndSelectDemo {
-                return [Pod(id: "demo", name: "demo", k8sName: "demo", status: "Running", expect: 2, warning: 1, containers: [Container(id: "demo", name: "demo", image: "docker.io/hello", path: "/foo/bar", policy: "Restart", pullPolicy: "Restart")], clusterIP: "10.0.1.3", nodeIP: "1.2.3.4", labels: [:], annotations: [:], namespace: ns, raw: nil),
-                        Pod(id: "demo2", name: "demo2", k8sName: "demo", status: "Failed", expect: 2, warning: 1, containers: [Container(id: "demo", name: "demo", image: "docker.io/hello", path: "/foo/bar", policy: "Restart", pullPolicy: "Restart")], clusterIP: "10.0.1.3", nodeIP: "1.2.3.4", labels: [:], annotations: [:], namespace: ns, raw: nil),
-                        Pod(id: "demo3", name: "demo3", k8sName: "demo", status: "Pending", expect: 2, warning: 1, containers: [Container(id: "demo", name: "demo", image: "docker.io/hello", path: "/foo/bar", policy: "Restart", pullPolicy: "Restart")], clusterIP: "10.0.1.3", nodeIP: "1.2.3.4", labels: [:], annotations: [:], namespace: ns, raw: nil)]
+                return [
+//                    Pod(id: "demo", name: "demo", k8sName: "demo", status: "Running", expect: 2, warning: 1, containers: [Container(id: "demo", name: "demo", image: "docker.io/hello", path: "/foo/bar", policy: "Restart", pullPolicy: "Restart")], clusterIP: "10.0.1.3", nodeIP: "1.2.3.4", labels: [:], annotations: [:], namespace: ns, raw: nil),
+//                        Pod(id: "demo2", name: "demo2", k8sName: "demo", status: "Failed", expect: 2, warning: 1, containers: [Container(id: "demo", name: "demo", image: "docker.io/hello", path: "/foo/bar", policy: "Restart", pullPolicy: "Restart")], clusterIP: "10.0.1.3", nodeIP: "1.2.3.4", labels: [:], annotations: [:], namespace: ns, raw: nil),
+//                        Pod(id: "demo3", name: "demo3", k8sName: "demo", status: "Pending", expect: 2, warning: 1, containers: [Container(id: "demo", name: "demo", image: "docker.io/hello", path: "/foo/bar", policy: "Restart", pullPolicy: "Restart")], clusterIP: "10.0.1.3", nodeIP: "1.2.3.4", labels: [:], annotations: [:], namespace: ns, raw: nil)
+                ]
             }
-        return model.pods[ns]!.map {Pod(id: $0.name!, name: $0.name!, k8sName: $0.metadata?.labels?["app.kubernetes.io/name"] ?? "unknow", status: ($0.status?.phase)!, expect: $0.spec?.containers.count ?? 0, warning: $0.status?.containerStatuses == nil ? $0.spec?.containers.count ?? 0 : $0.status?.containerStatuses?.filter{$0.ready == false}.count ?? 0, containers: ($0.spec?.containers.map{
+        return model.pods[ns]!.map {
+            
+            return Pod(id: $0.name!, name: $0.name!, k8sName: $0.metadata?.labels?["app.kubernetes.io/name"] ?? "unknow", status: ($0.status?.phase)!, expect: $0.spec?.containers.count ?? 0, warning: $0.status?.containerStatuses == nil ? $0.spec?.containers.count ?? 0 : $0.status?.containerStatuses?.filter{$0.ready == false}.count ?? 0, containers: ($0.spec?.containers.map{
                 Container(
                 id: $0.name, name: $0.name, image: $0.image!
                 ,path: $0.terminationMessagePath ?? "unknow", policy: $0.terminationMessagePolicy ?? "unknow", pullPolicy: $0.imagePullPolicy ?? "unknow"
@@ -42,6 +46,8 @@ class ViewModel: ObservableObject {
                                               , labels: $0.metadata?.labels
                                               , annotations: $0.metadata?.annotations
                                               , namespace: $0.metadata?.namespace ?? "unknow"
+                       , controllerType: PodControllerType(rawValue: ($0.metadata?.ownerReferences?.first!.kind)!)!
+                       , controllerName: ($0.metadata?.ownerReferences?.first!.name)!
                                             , raw: $0
             )}
         

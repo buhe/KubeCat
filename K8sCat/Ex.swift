@@ -44,6 +44,8 @@ struct Pod: Identifiable {
     let labels: [String: String]?
     let annotations: [String: String]?
     let namespace: String
+    let controllerType: PodControllerType
+    let controllerName: String
     let raw: core.v1.Pod?
 }
 

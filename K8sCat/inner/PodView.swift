@@ -35,6 +35,22 @@ struct PodView: View {
                     }
                 }
             }
+            Section(header: "Contoller") {
+                NavigationLink {
+                    switch pod.controllerType {
+                    case .DaemonSet:
+                        DaemonView(daemon: viewModel.model.daemonByName(ns: viewModel.ns, name: pod.controllerName), viewModel: viewModel)
+                    default: EmptyView()
+                    }
+                } label: {
+                    switch pod.controllerType {
+                    case .DaemonSet:
+                        Image(systemName: "xserve")
+                    default: EmptyView()
+                    }
+                    Text(pod.controllerName)
+                }
+            }
             Section(header: "Labels and Annotations") {
                 NavigationLink {
                     List {
@@ -89,11 +105,11 @@ struct PodView: View {
     }
 }
 
-struct PodView_Previews: PreviewProvider {
-    static var previews: some View {
-        PodView(pod: Pod(id: "123", name: "123", k8sName: "123", status: "fail", expect: 8, warning: 7, containers: [Container(id: "abc", name: "abclong....", image: "hello",path: "/",policy: "r",pullPolicy: "r"), Container(id: "ef", name: "ef", image: "kkk", path: "/", policy: "r", pullPolicy: "r")],clusterIP: "10.0.0.3", nodeIP: "192.168.1.3", labels: ["l1":"l1v"],annotations: ["a1":"a1v"],namespace: "default", raw: nil), viewModel: ViewModel(viewContext: PersistenceController.preview.container.viewContext))
-    }
-}
+//struct PodView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        PodView(pod: Pod(id: "123", name: "123", k8sName: "123", status: "fail", expect: 8, warning: 7, containers: [Container(id: "abc", name: "abclong....", image: "hello",path: "/",policy: "r",pullPolicy: "r"), Container(id: "ef", name: "ef", image: "kkk", path: "/", policy: "r", pullPolicy: "r")],clusterIP: "10.0.0.3", nodeIP: "192.168.1.3", labels: ["l1":"l1v"],annotations: ["a1":"a1v"],namespace: "default", raw: nil), viewModel: ViewModel(viewContext: PersistenceController.preview.container.viewContext))
+//    }
+//}
 
 enum PodStatus: String {
     case Pending
@@ -101,4 +117,12 @@ enum PodStatus: String {
     case Succeeded
     case Failed
     case Unknown
+}
+
+enum PodControllerType: String {
+    case ReplicaSet
+    case Job
+    case StatefulSet
+    case DaemonSet
+    case UnKonw
 }
