@@ -37,4 +37,33 @@ extension Model {
             return Replica(id: "demo", name: "demo", k8sName: [:], labels: [:], annotations: [:], namespace: "demo", status: true)
         }
     }
+    
+    func statefulByName(ns: String, name: String) -> Stateful {
+        if let client = client {
+            let stateful = try! client.appsV1.statefulSets.get(in: .namespace(ns), name: name).wait()
+            return Stateful(id: stateful.name!, name: stateful.name!, k8sName:  (stateful.spec?.selector.matchLabels)!
+                            , labels: stateful.metadata?.labels
+                            , annotations: stateful.metadata?.annotations
+                            , namespace: stateful.metadata?.namespace ?? "unknow"
+                            , status: stateful.status?.readyReplicas == stateful.status?.replicas, raw: stateful
+)
+        } else {
+            return Stateful(id: "demo", name: "demo", k8sName: [:], labels: [:], annotations: [:], namespace: "demo", status: false, raw: nil)
+        }
+    }
+    
+    func jobByName(ns: String, name: String) -> Job {
+        if let client = client {
+            let job = try! client.batchV1.jobs.get(in: .namespace(ns), name: name).wait()
+            return Job(id: job.name!, name: job.name!,
+                       k8sName: (job.spec?.selector?.matchLabels)!
+                         , labels: job.metadata?.labels
+                         , annotations: job.metadata?.annotations
+                         , namespace: job.metadata?.namespace ?? "unknow"
+                         , status: job.status?.succeeded != nil
+)
+        } else {
+            return Job(id: "demo", name: "demo", k8sName: [:], labels: [:], annotations: [:], namespace: "demo", status: true)
+        }
+    }
 }

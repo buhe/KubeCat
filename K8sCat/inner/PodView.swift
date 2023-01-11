@@ -42,6 +42,10 @@ struct PodView: View {
                         DaemonView(daemon: viewModel.model.daemonByName(ns: viewModel.ns, name: pod.controllerName), viewModel: viewModel)
                     case .ReplicaSet:
                         ReplicaView(replica: viewModel.model.replicaByName(ns: viewModel.ns, name: pod.controllerName), viewModel: viewModel)
+                    case .StatefulSet:
+                        StatefulView(stateful: viewModel.model.statefulByName(ns: viewModel.ns, name: pod.controllerName), viewModel: viewModel)
+                    case .Job:
+                        JobView(job: viewModel.model.jobByName(ns: viewModel.ns, name: pod.controllerName), viewModel: viewModel)
                     default: EmptyView()
                     }
                 } label: {
@@ -50,6 +54,10 @@ struct PodView: View {
                         Image(systemName: "xserve")
                     case .ReplicaSet:
                         Image(systemName: "square.3.layers.3d.down.left")
+                    case .StatefulSet:
+                        Image(systemName: "macpro.gen2.fill")
+                    case .Job:
+                        Image(systemName: "figure.run")
                     default: EmptyView()
                     }
                     Text(pod.controllerName)
