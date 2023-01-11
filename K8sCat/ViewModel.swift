@@ -28,9 +28,9 @@ class ViewModel: ObservableObject {
             }
             if model.hasAndSelectDemo {
                 return [
-//                    Pod(id: "demo", name: "demo", k8sName: "demo", status: "Running", expect: 2, warning: 1, containers: [Container(id: "demo", name: "demo", image: "docker.io/hello", path: "/foo/bar", policy: "Restart", pullPolicy: "Restart")], clusterIP: "10.0.1.3", nodeIP: "1.2.3.4", labels: [:], annotations: [:], namespace: ns, raw: nil),
-//                        Pod(id: "demo2", name: "demo2", k8sName: "demo", status: "Failed", expect: 2, warning: 1, containers: [Container(id: "demo", name: "demo", image: "docker.io/hello", path: "/foo/bar", policy: "Restart", pullPolicy: "Restart")], clusterIP: "10.0.1.3", nodeIP: "1.2.3.4", labels: [:], annotations: [:], namespace: ns, raw: nil),
-//                        Pod(id: "demo3", name: "demo3", k8sName: "demo", status: "Pending", expect: 2, warning: 1, containers: [Container(id: "demo", name: "demo", image: "docker.io/hello", path: "/foo/bar", policy: "Restart", pullPolicy: "Restart")], clusterIP: "10.0.1.3", nodeIP: "1.2.3.4", labels: [:], annotations: [:], namespace: ns, raw: nil)
+                    Pod(id: "demo", name: "demo", k8sName: "demo", status: "Running", expect: 2, warning: 1, containers: [Container(id: "demo", name: "demo", image: "docker.io/hello", path: "/foo/bar", policy: "Restart", pullPolicy: "Restart", status: ContainerStatus.Terminated, ready: true)], clusterIP: "10.0.1.3", nodeIP: "1.2.3.4", labels: [:], annotations: [:], namespace: ns, controllerType: .Job, controllerName: "demo", raw: nil),
+                    Pod(id: "demo2", name: "demo2", k8sName: "demo", status: "Failed", expect: 2, warning: 1, containers: [Container(id: "demo", name: "demo", image: "docker.io/hello", path: "/foo/bar", policy: "Restart", pullPolicy: "Restart", status: ContainerStatus.Terminated, ready: true)], clusterIP: "10.0.1.3", nodeIP: "1.2.3.4", labels: [:], annotations: [:], namespace: ns, controllerType: .Job, controllerName: "demo", raw: nil),
+                        Pod(id: "demo3", name: "demo3", k8sName: "demo", status: "Pending", expect: 2, warning: 1, containers: [Container(id: "demo", name: "demo", image: "docker.io/hello", path: "/foo/bar", policy: "Restart", pullPolicy: "Restart", status: ContainerStatus.Terminated, ready: true)], clusterIP: "10.0.1.3", nodeIP: "1.2.3.4", labels: [:], annotations: [:], namespace: ns, controllerType: .Job, controllerName: "demo", raw: nil)
                 ]
             }
         return model.pods[ns]!.map {
