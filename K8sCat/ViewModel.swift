@@ -176,10 +176,10 @@ class ViewModel: ObservableObject {
                 
             }
             if model.hasAndSelectDemo {
-                return [Job(id: "demo", name: "demo", k8sName: "demo", labels: [:], annotations: [:], namespace: "demo", status: true)]
+                return [Job(id: "demo", name: "demo", k8sName: [:], labels: [:], annotations: [:], namespace: "demo", status: true)]
             }
             return model.jobs[ns]!.map {Job(id: $0.name!, name: $0.name!,
-                                              k8sName: $0.metadata!.labels!["job-name"] ?? "unknow"
+                                            k8sName: ($0.spec?.selector?.matchLabels)!
                                               , labels: $0.metadata?.labels
                                               , annotations: $0.metadata?.annotations
                                               , namespace: $0.metadata?.namespace ?? "unknow"

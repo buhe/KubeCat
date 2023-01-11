@@ -99,7 +99,7 @@ struct PersistentVolumeClaim: Identifiable {
 struct Job: Identifiable {
     var id: String
     var name: String
-    let k8sName: String
+    let k8sName: [String: String]
     let labels: [String: String]?
     let annotations: [String: String]?
     let namespace: String
