@@ -23,4 +23,18 @@ extension Model {
             return Daemon(id: "demo", name: "demo", k8sName: [:], labels: [:], annotations: [:], namespace: "demo", status: true, raw: nil)
         }
     }
+    
+    func replicaByName(ns: String, name: String) -> Replica {
+        if let client = client {
+            let replica = try! client.appsV1.replicaSets.get(in: .namespace(ns), name: name).wait()
+            return Replica(id: replica.name!, name: replica.name!, k8sName:  (replica.spec?.selector.matchLabels)!
+                           , labels: replica.metadata?.labels
+                           , annotations: replica.metadata?.annotations
+                           , namespace: replica.metadata?.namespace ?? "unknow"
+                           , status: replica.status?.replicas == replica.status?.readyReplicas
+)
+        } else {
+            return Replica(id: "demo", name: "demo", k8sName: [:], labels: [:], annotations: [:], namespace: "demo", status: true)
+        }
+    }
 }

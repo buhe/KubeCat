@@ -40,12 +40,16 @@ struct PodView: View {
                     switch pod.controllerType {
                     case .DaemonSet:
                         DaemonView(daemon: viewModel.model.daemonByName(ns: viewModel.ns, name: pod.controllerName), viewModel: viewModel)
+                    case .ReplicaSet:
+                        ReplicaView(replica: viewModel.model.replicaByName(ns: viewModel.ns, name: pod.controllerName), viewModel: viewModel)
                     default: EmptyView()
                     }
                 } label: {
                     switch pod.controllerType {
                     case .DaemonSet:
                         Image(systemName: "xserve")
+                    case .ReplicaSet:
+                        Image(systemName: "square.3.layers.3d.down.left")
                     default: EmptyView()
                     }
                     Text(pod.controllerName)

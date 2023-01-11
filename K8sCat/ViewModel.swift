@@ -247,7 +247,7 @@ class ViewModel: ObservableObject {
             if model.hasAndSelectDemo {
                 return [Service(id: "demo", name: "demo", k8sName: [:], type: "Node", clusterIps: ["10.1.2.3"], externalIps: ["1.2.3.4"], labels: [:], annotations: [:], namespace: "demo")]
             }
-        return model.services[ns]!.map {Service(id: $0.name!, name: $0.name!, k8sName:  ($0.spec?.selector)!, type: ($0.spec?.type!)!, clusterIps: $0.spec?.clusterIPs, externalIps: $0.spec?.externalIPs
+        return model.services[ns]!.map {Service(id: $0.name!, name: $0.name!, k8sName:  $0.spec?.selector ?? [:], type: ($0.spec?.type!)!, clusterIps: $0.spec?.clusterIPs, externalIps: $0.spec?.externalIPs
                                                       , labels: $0.metadata?.labels
                                                       , annotations: $0.metadata?.annotations
                                                       , namespace: $0.metadata?.namespace ?? "unknow"
