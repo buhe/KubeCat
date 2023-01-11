@@ -83,6 +83,7 @@ struct ConfigMapView: View {
                 
             }
         }
+        .navigationTitle("Config Map")
     }
 }
 

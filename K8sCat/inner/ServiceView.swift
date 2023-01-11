@@ -99,6 +99,7 @@ struct ServiceView: View {
                 
             }
         }
+        .navigationTitle("Service")
     }
 }
 

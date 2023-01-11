@@ -20,6 +20,7 @@ struct PVCView: View {
             
             
         }
+        .navigationTitle("Persistent Volume Claim")
 //            .toolbar{
 //            Menu {
 //                Button {

@@ -113,6 +113,7 @@ struct StatefulView: View {
                 Text("Load yaml via Yamler")
             }.padding()
         }
+        .navigationTitle("Stateful Set")
     }
 }
 

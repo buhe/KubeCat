@@ -118,6 +118,7 @@ struct DeploymentView: View {
                 Text("Load yaml via Yamler")
             }.padding()
         }
+        .navigationTitle("Deployment")
     }
 }
 

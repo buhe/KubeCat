@@ -79,6 +79,7 @@ struct JobView: View {
                 
             }
         }
+        .navigationTitle("Job")
     }
 }
 

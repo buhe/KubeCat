@@ -113,6 +113,7 @@ struct NodeView: View {
                 }
             }
         }
+        .navigationTitle("Node")
     }
 }
 

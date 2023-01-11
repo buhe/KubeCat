@@ -113,7 +113,7 @@ struct PodView: View {
                 }
                 
             }
-        }
+        }.navigationTitle("Pod")
     }
 }
 

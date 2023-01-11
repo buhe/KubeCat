@@ -90,6 +90,7 @@ struct PVView: View {
                 Text("Load yaml via Yamler")
             }.padding()
         }
+        .navigationTitle("Persistent Volume")
     }
 }
 

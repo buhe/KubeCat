@@ -114,6 +114,7 @@ struct CronJobView: View {
                 Text("Load yaml via Yamler")
             }.padding()
         }
+        .navigationTitle("Cron Job")
     }
 }
 

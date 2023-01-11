@@ -58,6 +58,7 @@ struct HpaView: View {
                 Text("Load yaml via Yamler")
             }.padding()
         }
+        .navigationTitle("‎Horizontal Pod Autoscaler")
     }
 }
 

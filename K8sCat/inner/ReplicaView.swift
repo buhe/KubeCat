@@ -80,6 +80,7 @@ struct ReplicaView: View {
                 
             }
         }
+        .navigationTitle("Replica Set")
     }
 }
 

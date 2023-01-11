@@ -82,6 +82,7 @@ struct SecretView: View {
                 
             }
         }
+        .navigationTitle("Secret")
     }
 }
 

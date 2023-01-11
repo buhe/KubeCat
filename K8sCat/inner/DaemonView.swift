@@ -113,6 +113,7 @@ struct DaemonView: View {
                 Text("Load yaml via Yamler")
             }.padding()
         }
+        .navigationTitle("Daemon Set")
     }
 }
 
