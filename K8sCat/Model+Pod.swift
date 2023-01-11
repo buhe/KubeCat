@@ -21,6 +21,7 @@ extension Model {
                    id: $1.name, name: $1.name, image: $1.image!
                    ,path: $1.terminationMessagePath ?? "unknow", policy: $1.terminationMessagePolicy ?? "unknow", pullPolicy: $1.imagePullPolicy ?? "unknow"
                    , status: consainersStatus[$0].state?.running != nil ? .Running : (consainersStatus[$0].state?.waiting != nil ? .Waiting : .Terminated)
+                   , ready: consainersStatus[$0].ready
                    )
                    
                } ?? [], clusterIP: $0.status?.podIP ?? "unknow", nodeIP: $0.status?.hostIP ?? "unknow", labels: $0.metadata?.labels
@@ -53,6 +54,7 @@ extension Model {
                 id: $1.name, name: $1.name, image: $1.image!
                 ,path: $1.terminationMessagePath ?? "unknow", policy: $1.terminationMessagePolicy ?? "unknow", pullPolicy: $1.imagePullPolicy ?? "unknow"
                 , status: consainersStatus[$0].state?.running != nil ? .Running : (consainersStatus[$0].state?.waiting != nil ? .Waiting : .Terminated)
+                , ready: consainersStatus[$0].ready
                 )
                 
             } ?? [], clusterIP: $0.status?.podIP ?? "unknow", nodeIP: $0.status?.hostIP ?? "unknow", labels: $0.metadata?.labels
@@ -72,6 +74,7 @@ extension Model {
                 id: $1.name, name: $1.name, image: $1.image!
                 ,path: $1.terminationMessagePath ?? "unknow", policy: $1.terminationMessagePolicy ?? "unknow", pullPolicy: $1.imagePullPolicy ?? "unknow"
                 , status: consainersStatus[$0].state?.running != nil ? .Running : (consainersStatus[$0].state?.waiting != nil ? .Waiting : .Terminated)
+                , ready: consainersStatus[$0].ready
                 )
                 
             } ?? [], clusterIP: $0.status?.podIP ?? "unknow", nodeIP: $0.status?.hostIP ?? "unknow", labels: $0.metadata?.labels
@@ -91,6 +94,7 @@ extension Model {
                 id: $1.name, name: $1.name, image: $1.image!
                 ,path: $1.terminationMessagePath ?? "unknow", policy: $1.terminationMessagePolicy ?? "unknow", pullPolicy: $1.imagePullPolicy ?? "unknow"
                 , status: consainersStatus[$0].state?.running != nil ? .Running : (consainersStatus[$0].state?.waiting != nil ? .Waiting : .Terminated)
+                , ready: consainersStatus[$0].ready
                 )
                 
             } ?? [], clusterIP: $0.status?.podIP ?? "unknow", nodeIP: $0.status?.hostIP ?? "unknow", labels: $0.metadata?.labels
@@ -110,7 +114,9 @@ extension Model {
                     id: $1.name, name: $1.name, image: $1.image!
                     ,path: $1.terminationMessagePath ?? "unknow", policy: $1.terminationMessagePolicy ?? "unknow", pullPolicy: $1.imagePullPolicy ?? "unknow"
                     , status: consainersStatus[$0].state?.running != nil ? .Running : (consainersStatus[$0].state?.waiting != nil ? .Waiting : .Terminated)
+                    , ready: consainersStatus[$0].ready
                     )
+                  
                     
                 } ?? [], clusterIP: $0.status?.podIP ?? "unknow", nodeIP: $0.status?.hostIP ?? "unknow", labels: $0.metadata?.labels
                                                                                                                 , annotations: $0.metadata?.annotations, namespace: $0.metadata?.namespace ?? "unknow", controllerType: .ReplicaSet   , controllerName: ($0.metadata?.ownerReferences?.first!.name)!, raw: $0)}
@@ -129,6 +135,8 @@ extension Model {
                 id: $1.name, name: $1.name, image: $1.image!
                 ,path: $1.terminationMessagePath ?? "unknow", policy: $1.terminationMessagePolicy ?? "unknow", pullPolicy: $1.imagePullPolicy ?? "unknow"
                 , status: consainersStatus[$0].state?.running != nil ? .Running : (consainersStatus[$0].state?.waiting != nil ? .Waiting : .Terminated)
+                
+                    , ready: consainersStatus[$0].ready
                 )
                 
             } ?? [], clusterIP: $0.status?.podIP ?? "unknow", nodeIP: $0.status?.hostIP ?? "unknow", labels: $0.metadata?.labels

@@ -40,6 +40,7 @@ class ViewModel: ObservableObject {
                 id: $1.name, name: $1.name, image: $1.image!
                 ,path: $1.terminationMessagePath ?? "unknow", policy: $1.terminationMessagePolicy ?? "unknow", pullPolicy: $1.imagePullPolicy ?? "unknow"
                 , status: consainersStatus[$0].state?.running != nil ? .Running : (consainersStatus[$0].state?.waiting != nil ? .Waiting : .Terminated)
+                , ready: consainersStatus[$0].ready
                 )
                 
             } ?? []

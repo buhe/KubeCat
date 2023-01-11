@@ -41,6 +41,10 @@ struct ContainerView: View {
             Section(header: "Status") {
                 Text(container.status.rawValue)
             }
+            Section(header: "Ready") {
+                Text(container.ready ? "True" : "False")
+                    .foregroundColor(container.ready ? .green : .red)
+            }
             Section(header: "Image") {
                 Text(container.image).font(.caption)
             }

@@ -220,8 +220,8 @@
             filePath = "K8sCat/ViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "136"
-            endingLineNumber = "136"
+            startingLineNumber = "137"
+            endingLineNumber = "137"
             landmarkName = "nodes"
             landmarkType = "24">
          </BreakpointContent>
@@ -252,8 +252,8 @@
             filePath = "K8sCat/ViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "97"
-            endingLineNumber = "97"
+            startingLineNumber = "98"
+            endingLineNumber = "98"
             landmarkName = "pv"
             landmarkType = "24">
          </BreakpointContent>
@@ -284,8 +284,8 @@
             filePath = "K8sCat/ViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "91"
-            endingLineNumber = "91"
+            startingLineNumber = "92"
+            endingLineNumber = "92"
             landmarkName = "pv"
             landmarkType = "24">
          </BreakpointContent>
@@ -444,8 +444,8 @@
             filePath = "K8sCat/ViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "160"
-            endingLineNumber = "160"
+            startingLineNumber = "161"
+            endingLineNumber = "161"
             landmarkName = "deployment"
             landmarkType = "24">
             <Locations>
@@ -812,8 +812,8 @@
             filePath = "K8sCat/ViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "161"
-            endingLineNumber = "161"
+            startingLineNumber = "162"
+            endingLineNumber = "162"
             landmarkName = "deployment"
             landmarkType = "24">
          </BreakpointContent>
@@ -1196,8 +1196,8 @@
             filePath = "K8sCat/ViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "47"
-            endingLineNumber = "47"
+            startingLineNumber = "48"
+            endingLineNumber = "48"
             landmarkName = "pods"
             landmarkType = "24">
          </BreakpointContent>
@@ -1212,8 +1212,8 @@
             filePath = "K8sCat/ViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "48"
-            endingLineNumber = "48"
+            startingLineNumber = "49"
+            endingLineNumber = "49"
             landmarkName = "pods"
             landmarkType = "24">
          </BreakpointContent>
@@ -1228,8 +1228,8 @@
             filePath = "K8sCat/ViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "312"
-            endingLineNumber = "312"
+            startingLineNumber = "313"
+            endingLineNumber = "313"
             landmarkName = "daemon"
             landmarkType = "24">
          </BreakpointContent>
@@ -1260,8 +1260,8 @@
             filePath = "K8sCat/ViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "208"
-            endingLineNumber = "208"
+            startingLineNumber = "209"
+            endingLineNumber = "209"
             landmarkName = "cronJob"
             landmarkType = "24">
          </BreakpointContent>
@@ -1371,8 +1371,8 @@
             filePath = "K8sCat/ViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "184"
-            endingLineNumber = "184"
+            startingLineNumber = "185"
+            endingLineNumber = "185"
             landmarkName = "job"
             landmarkType = "24">
          </BreakpointContent>
@@ -1387,8 +1387,8 @@
             filePath = "K8sCat/ViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "335"
-            endingLineNumber = "335"
+            startingLineNumber = "336"
+            endingLineNumber = "336"
             landmarkName = "replica"
             landmarkType = "24">
          </BreakpointContent>
@@ -1403,8 +1403,8 @@
             filePath = "K8sCat/Model+Pod.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "78"
-            endingLineNumber = "78"
+            startingLineNumber = "81"
+            endingLineNumber = "81"
             landmarkName = "podsByReplica(in:replica:name:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1419,8 +1419,8 @@
             filePath = "K8sCat/Model+Pod.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "67"
-            endingLineNumber = "67"
+            startingLineNumber = "69"
+            endingLineNumber = "69"
             landmarkName = "podsByReplica(in:replica:name:)"
             landmarkType = "7">
             <Locations>
@@ -1467,8 +1467,8 @@
             filePath = "K8sCat/Model+Pod.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "59"
-            endingLineNumber = "59"
+            startingLineNumber = "61"
+            endingLineNumber = "61"
             landmarkName = "podsByDeployment(in:deployment:name:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1483,9 +1483,9 @@
             filePath = "K8sCat/Model+Pod.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "116"
-            endingLineNumber = "116"
-            landmarkName = "podsByStateful(in:stateful:name:)"
+            startingLineNumber = "122"
+            endingLineNumber = "122"
+            landmarkName = "podsByService(in:service:name:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
