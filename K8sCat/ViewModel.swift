@@ -34,14 +34,15 @@ class ViewModel: ObservableObject {
                 ]
             }
         return model.pods[ns]!.map {
-            
-            return Pod(id: $0.name!, name: $0.name!, k8sName: $0.metadata?.labels?["app.kubernetes.io/name"] ?? "unknow", status: ($0.status?.phase)!, expect: $0.spec?.containers.count ?? 0, warning: $0.status?.containerStatuses == nil ? $0.spec?.containers.count ?? 0 : $0.status?.containerStatuses?.filter{$0.ready == false}.count ?? 0, containers: ($0.spec?.containers.map{
+            let consainersStatus = $0.status?.containerStatuses ?? []
+            return Pod(id: $0.name!, name: $0.name!, k8sName: $0.metadata?.labels?["app.kubernetes.io/name"] ?? "unknow", status: ($0.status?.phase)!, expect: $0.spec?.containers.count ?? 0, warning: $0.status?.containerStatuses == nil ? $0.spec?.containers.count ?? 0 : $0.status?.containerStatuses?.filter{$0.ready == false}.count ?? 0, containers: $0.spec?.containers.enumerated().map{
                 Container(
-                id: $0.name, name: $0.name, image: $0.image!
-                ,path: $0.terminationMessagePath ?? "unknow", policy: $0.terminationMessagePolicy ?? "unknow", pullPolicy: $0.imagePullPolicy ?? "unknow"
+                id: $1.name, name: $1.name, image: $1.image!
+                ,path: $1.terminationMessagePath ?? "unknow", policy: $1.terminationMessagePolicy ?? "unknow", pullPolicy: $1.imagePullPolicy ?? "unknow"
+                , status: consainersStatus[$0].state?.running != nil ? .Running : (consainersStatus[$0].state?.waiting != nil ? .Waiting : .Terminated)
                 )
                 
-            })!
+            } ?? []
                                               , clusterIP: $0.status?.podIP ?? "unknow Pod IP", nodeIP: $0.status?.hostIP ?? "unknow Node IP"
                                               , labels: $0.metadata?.labels
                                               , annotations: $0.metadata?.annotations
