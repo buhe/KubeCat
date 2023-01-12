@@ -35,7 +35,7 @@ class ViewModel: ObservableObject {
             }
         return model.pods[ns]!.map {
             let consainersStatus = $0.status?.containerStatuses ?? []
-            return Pod(id: $0.name!, name: $0.name!, k8sName: $0.metadata?.labels?["app.kubernetes.io/name"] ?? "unknow", status: ($0.status?.phase)!, expect: $0.spec?.containers.count ?? 0, warning: $0.status?.containerStatuses == nil ? ($0.spec?.containers.count ?? 0) : $0.status?.containerStatuses?.filter{$0.ready == false}.count ?? 0, containers: $0.spec?.containers.enumerated().map{
+            return Pod(id: $0.name!, name: $0.name!, k8sName: $0.metadata?.labels?["app.kubernetes.io/name"] ?? "unknow", status: ($0.status?.phase)!, expect: $0.spec?.containers.count ?? 0, warning: $0.status?.containerStatuses == nil ? ($0.spec?.containers.count ?? 0) : $0.status?.containerStatuses?.filter{$0.started == false}.count ?? 0, containers: $0.spec?.containers.enumerated().map{
                 Container(
                 id: $1.name, name: $1.name, image: $1.image!
                 ,path: $1.terminationMessagePath ?? "unknow", policy: $1.terminationMessagePolicy ?? "unknow", pullPolicy: $1.imagePullPolicy ?? "unknow"

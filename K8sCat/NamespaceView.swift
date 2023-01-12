@@ -118,7 +118,7 @@ struct NamespaceView: View {
                                         HStack{
                                             Text("pods -").font(.caption)
                                             Text("expect: \(i.expect), ").font(.caption)
-                                            Text("pendding: \(i.pending)").font(.caption).foregroundColor(i.pending > 0 ? .red : .none)
+                                            Text("unavailable: \(i.pending)").font(.caption).foregroundColor(i.pending > 0 ? .red : .none)
                                         }
                                         
                                     }

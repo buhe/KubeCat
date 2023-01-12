@@ -19,7 +19,7 @@ struct MyAWSClient {
     
     
     static let TOKEN_PREFIX = "k8s-aws-v1."
-    func getCluster() -> AWSCluster{
+    func getCluster() -> AWSCluster? {
         let client = AWSClient(
             credentialProvider: .static(accessKeyId: ak, secretAccessKey: sk),
             httpClientProvider: .createNew
@@ -56,6 +56,9 @@ struct MyAWSClient {
         let ca = c?.certificateAuthority?.data
 //        print("sever: \(server!) ca: \(ca!)")
         try! client.syncShutdown()
+        if c == nil {
+            return nil
+        }
         return AWSCluster(sever: server!, ca: ca!)
     }
 

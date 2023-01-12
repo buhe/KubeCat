@@ -157,9 +157,13 @@ struct Model {
     
     mutating func namespace() throws {
         if let client = client {
-
-            let namespaces = try client.namespaces.list().wait().items
-            self.namespaces = namespaces
+            do{
+                let namespaces = try client.namespaces.list().wait().items
+                self.namespaces = namespaces
+            }catch{
+                print(error)
+            }
+        
             
         } else {
             self.namespaces = []

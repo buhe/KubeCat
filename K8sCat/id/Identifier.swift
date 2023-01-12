@@ -25,12 +25,15 @@ struct AWS: CertIdentifier {
     func config() throws -> SwiftkubeClient.KubernetesClientConfig? {
         let token = MyAWSClient(ak: awsId, sk: awsSecret, region: region, clusterName: clusterName).getToken()
         let c = MyAWSClient(ak: awsId, sk: awsSecret, region: region, clusterName: clusterName).getCluster()
-        let data = Data(base64Encoded: c.ca)!
+        if c == nil {
+            return nil
+        }
+        let data = Data(base64Encoded: c!.ca)!
         let caCert = try NIOSSLCertificate.fromPEMBytes([UInt8](data))
         let authentication = KubernetesClientAuthentication.bearer(token: token)
         
         let config = KubernetesClientConfig(
-            masterURL: URL(string: c.sever)!,
+            masterURL: URL(string: c!.sever)!,
             namespace: "default",
             authentication: authentication,
             trustRoots: NIOSSLTrustRoots.certificates(caCert),
