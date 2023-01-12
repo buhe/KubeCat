@@ -177,12 +177,22 @@ struct AWSView: View {
 struct AWSHelpView: View {
     var body: some View {
         VStack(alignment: .leading){
-            Text("Help").font(.title)
+            Text("Overview").font(.title)
+                .padding(.vertical)
             Text("""
-                 It is recommended to use eksctl to build a cluster, refer to: https://docs.aws.amazon.com/eks/latest/userguide/getting-started-eksctl.html.
-                 Use the Access key ID and Secret access key of the account used by eksctl.
+                AWS provides a managed Kubernetes service called Amazon EKS (Amazon Elastic Container Service for Kubernetes) making it easy to deploy, manage, and scale containerized applications using Kubernetes on AWS. It's pretty straightforward to import them to Kuber if you're running Kubernetes clusters with EKS.
+
+                It is recommended to use eksctl to build a cluster, refer to: https://docs.aws.amazon.com/eks/latest/userguide/getting-started-eksctl.html.
+                
+                Use the Access key ID and Secret access key of the account used by eksctl.
+                
+                Install eksctl: https://docs.aws.amazon.com/eks/latest/userguide/eksctl.html
                 """)
-            
+            Text("Select a region").font(.title)
+                .padding(.vertical)
+            Text("""
+                Each EKS powered Kubernetes belongs to a region, so you need to select a region first. Notice that AWS China regions are not supported at this time
+                """)
             Spacer()
         }
         .padding()
