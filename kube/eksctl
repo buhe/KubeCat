@@ -1,0 +1,2 @@
+eksctl create cluster --name demo-cat  --region us-west-1
+eksctl delete cluster --name demo-cat --region us-west-1
