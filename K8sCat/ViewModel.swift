@@ -28,14 +28,14 @@ class ViewModel: ObservableObject {
             }
             if model.hasAndSelectDemo {
                 return [
-                    Pod(id: "demo", name: "demo", k8sName: "demo", status: "Running", expect: 2, warning: 1, containers: [Container(id: "demo", name: "demo", image: "docker.io/hello", path: "/foo/bar", policy: "Restart", pullPolicy: "Restart", status: ContainerStatus.Terminated, ready: true, error: false)], clusterIP: "10.0.1.3", nodeIP: "1.2.3.4", labels: [:], annotations: [:], namespace: ns, controllerType: .Job, controllerName: "demo", raw: nil),
-                    Pod(id: "demo2", name: "demo2", k8sName: "demo", status: "Failed", expect: 2, warning: 1, containers: [Container(id: "demo", name: "demo", image: "docker.io/hello", path: "/foo/bar", policy: "Restart", pullPolicy: "Restart", status: ContainerStatus.Terminated, ready: true, error: true)], clusterIP: "10.0.1.3", nodeIP: "1.2.3.4", labels: [:], annotations: [:], namespace: ns, controllerType: .Job, controllerName: "demo", raw: nil),
-                        Pod(id: "demo3", name: "demo3", k8sName: "demo", status: "Pending", expect: 2, warning: 1, containers: [Container(id: "demo", name: "demo", image: "docker.io/hello", path: "/foo/bar", policy: "Restart", pullPolicy: "Restart", status: ContainerStatus.Terminated, ready: true, error: false)], clusterIP: "10.0.1.3", nodeIP: "1.2.3.4", labels: [:], annotations: [:], namespace: ns, controllerType: .Job, controllerName: "demo", raw: nil)
+                    Pod(id: "demo", name: "demo", k8sName: "demo", status: "Running", expect: 2, error: 1, notReady: 1, containers: [Container(id: "demo", name: "demo", image: "docker.io/hello", path: "/foo/bar", policy: "Restart", pullPolicy: "Restart", status: ContainerStatus.Terminated, ready: true, error: false)], clusterIP: "10.0.1.3", nodeIP: "1.2.3.4", labels: [:], annotations: [:], namespace: ns, controllerType: .Job, controllerName: "demo", raw: nil),
+                    Pod(id: "demo2", name: "demo2", k8sName: "demo", status: "Failed", expect: 2, error: 1,notReady: 1, containers: [Container(id: "demo", name: "demo", image: "docker.io/hello", path: "/foo/bar", policy: "Restart", pullPolicy: "Restart", status: ContainerStatus.Terminated, ready: true, error: true)], clusterIP: "10.0.1.3", nodeIP: "1.2.3.4", labels: [:], annotations: [:], namespace: ns, controllerType: .Job, controllerName: "demo", raw: nil),
+                        Pod(id: "demo3", name: "demo3", k8sName: "demo", status: "Pending", expect: 2, error: 1,notReady: 1, containers: [Container(id: "demo", name: "demo", image: "docker.io/hello", path: "/foo/bar", policy: "Restart", pullPolicy: "Restart", status: ContainerStatus.Terminated, ready: true, error: false)], clusterIP: "10.0.1.3", nodeIP: "1.2.3.4", labels: [:], annotations: [:], namespace: ns, controllerType: .Job, controllerName: "demo", raw: nil)
                 ]
             }
         return model.pods[ns]!.map {
             let consainersStatus = $0.status?.containerStatuses ?? []
-            return Pod(id: $0.name!, name: $0.name!, k8sName: $0.metadata?.labels?["app.kubernetes.io/name"] ?? "unknow", status: ($0.status?.phase)!, expect: $0.spec?.containers.count ?? 0, warning: $0.status?.containerStatuses == nil ? ($0.spec?.containers.count ?? 0) : $0.status?.containerStatuses?.filter{$0.started == false}.count ?? 0, containers: $0.spec?.containers.enumerated().map{
+            return Pod(id: $0.name!, name: $0.name!, k8sName: $0.metadata?.labels?["app.kubernetes.io/name"] ?? "unknow", status: ($0.status?.phase)!, expect: $0.spec?.containers.count ?? 0, error: $0.status?.containerStatuses == nil ? ($0.spec?.containers.count ?? 0) : $0.status?.containerStatuses?.filter{$0.started == false}.count ?? 0,notReady: $0.status?.containerStatuses == nil ? ($0.spec?.containers.count ?? 0) : $0.status?.containerStatuses?.filter{$0.ready == false}.count ?? 0, containers: $0.spec?.containers.enumerated().map{
                 Container(
                 id: $1.name, name: $1.name, image: $1.image!
                 ,path: $1.terminationMessagePath ?? "unknow", policy: $1.terminationMessagePolicy ?? "unknow", pullPolicy: $1.imagePullPolicy ?? "unknow"
@@ -159,9 +159,9 @@ class ViewModel: ObservableObject {
                 
             }
             if model.hasAndSelectDemo {
-                return [Deployment(id: "demo1", name: "demo1", k8sName: [:], expect: 2, pending: 0, labels: [:], annotations: [:], namespace: "demo1", status: true, raw: nil), Deployment(id: "demo2", name: "demo2", k8sName: [:], expect: 2, pending: 1, labels: [:], annotations: [:], namespace: "demo1", status: false, raw: nil)]
+                return [Deployment(id: "demo1", name: "demo1", k8sName: [:], expect: 2, unavailable: 0, labels: [:], annotations: [:], namespace: "demo1", status: true, raw: nil), Deployment(id: "demo2", name: "demo2", k8sName: [:], expect: 2, unavailable: 1, labels: [:], annotations: [:], namespace: "demo1", status: false, raw: nil)]
             }
-        return model.deployments[ns]!.map {Deployment(id: $0.name!, name: $0.name!, k8sName: ($0.spec?.selector.matchLabels)!, expect: Int($0.spec?.replicas ?? 0), pending: Int($0.status?.unavailableReplicas ?? 0)
+        return model.deployments[ns]!.map {Deployment(id: $0.name!, name: $0.name!, k8sName: ($0.spec?.selector.matchLabels)!, expect: Int($0.spec?.replicas ?? 0), unavailable: Int($0.status?.unavailableReplicas ?? 0)
                                                             , labels: $0.metadata?.labels
                                                             , annotations: $0.metadata?.annotations
                                                             , namespace: $0.metadata?.namespace ?? "unknow"

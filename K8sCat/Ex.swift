@@ -39,7 +39,8 @@ struct Pod: Identifiable {
     let k8sName: String
     let status: String
     let expect: Int
-    let warning: Int // container other status
+    let error: Int // container other status
+    let notReady: Int
     let containers: [Container]
     let clusterIP: String
     let nodeIP: String
@@ -71,7 +72,7 @@ struct Deployment: Identifiable, Yamlble {
     let k8sName: [String: String]
 //    let status: String
     let expect: Int
-    let pending: Int
+    let unavailable: Int
     let labels: [String: String]?
     let annotations: [String: String]?
     let namespace: String

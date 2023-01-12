@@ -16,7 +16,7 @@ extension Model {
         if let client = client {
            return try! client.pods.list(in: ns,options: [.labelSelector(.eq(job))]).wait().items.map {
                let consainersStatus = $0.status?.containerStatuses ?? []
-               return Pod(id: $0.name!, name: $0.name!,k8sName: "", status: $0.status?.phase ?? "unknow", expect: $0.spec?.containers.count ?? 0, warning: $0.status?.containerStatuses == nil ? $0.spec?.containers.count ?? 0 : $0.status?.containerStatuses?.filter{$0.started == false}.count ?? 0, containers: $0.spec?.containers.enumerated().map{
+               return Pod(id: $0.name!, name: $0.name!,k8sName: "", status: $0.status?.phase ?? "unknow", expect: $0.spec?.containers.count ?? 0, error: $0.status?.containerStatuses == nil ? $0.spec?.containers.count ?? 0 : $0.status?.containerStatuses?.filter{$0.started == false}.count ?? 0,notReady: $0.status?.containerStatuses == nil ? ($0.spec?.containers.count ?? 0) : $0.status?.containerStatuses?.filter{$0.ready == false}.count ?? 0, containers: $0.spec?.containers.enumerated().map{
                    Container(
                    id: $1.name, name: $1.name, image: $1.image!
                    ,path: $1.terminationMessagePath ?? "unknow", policy: $1.terminationMessagePolicy ?? "unknow", pullPolicy: $1.imagePullPolicy ?? "unknow"
@@ -52,7 +52,7 @@ extension Model {
             let pods = try? client.pods.list(in: ns,options: [.labelSelector(.eq(deployment))]).wait().items
             return (pods ?? []).map {
                 let consainersStatus = $0.status?.containerStatuses ?? []
-                return Pod(id: $0.name!, name: $0.name!,k8sName: "", status: ($0.status?.phase)!, expect: $0.spec?.containers.count ?? 0, warning: $0.status?.containerStatuses == nil ? $0.spec?.containers.count ?? 0 : $0.status?.containerStatuses?.filter{$0.started == false}.count ?? 0, containers: $0.spec?.containers.enumerated().map{
+                return Pod(id: $0.name!, name: $0.name!,k8sName: "", status: ($0.status?.phase)!, expect: $0.spec?.containers.count ?? 0, error: $0.status?.containerStatuses == nil ? $0.spec?.containers.count ?? 0 : $0.status?.containerStatuses?.filter{$0.started == false}.count ?? 0,notReady: $0.status?.containerStatuses == nil ? ($0.spec?.containers.count ?? 0) : $0.status?.containerStatuses?.filter{$0.ready == false}.count ?? 0, containers: $0.spec?.containers.enumerated().map{
                 Container(
                 id: $1.name, name: $1.name, image: $1.image!
                 ,path: $1.terminationMessagePath ?? "unknow", policy: $1.terminationMessagePolicy ?? "unknow", pullPolicy: $1.imagePullPolicy ?? "unknow"
@@ -74,7 +74,7 @@ extension Model {
         if let client = client {
             return ((try? client.pods.list(in: ns,options: [.labelSelector(.eq(replica))]).wait().items) ?? []).map {
                 let consainersStatus = $0.status?.containerStatuses ?? []
-                return Pod(id: $0.name!, name: $0.name!, k8sName: "",status: ($0.status?.phase)!, expect: $0.spec?.containers.count ?? 0, warning: $0.status?.containerStatuses == nil ? $0.spec?.containers.count ?? 0 : $0.status?.containerStatuses?.filter{$0.started == false}.count ?? 0, containers: $0.spec?.containers.enumerated().map{
+                return Pod(id: $0.name!, name: $0.name!, k8sName: "",status: ($0.status?.phase)!, expect: $0.spec?.containers.count ?? 0, error: $0.status?.containerStatuses == nil ? $0.spec?.containers.count ?? 0 : $0.status?.containerStatuses?.filter{$0.started == false}.count ?? 0, notReady: $0.status?.containerStatuses == nil ? ($0.spec?.containers.count ?? 0) : $0.status?.containerStatuses?.filter{$0.ready == false}.count ?? 0,containers: $0.spec?.containers.enumerated().map{
                 Container(
                 id: $1.name, name: $1.name, image: $1.image!
                 ,path: $1.terminationMessagePath ?? "unknow", policy: $1.terminationMessagePolicy ?? "unknow", pullPolicy: $1.imagePullPolicy ?? "unknow"
@@ -96,7 +96,7 @@ extension Model {
         if let client = client {
             return ((try? client.pods.list(in: ns,options: [.labelSelector(.eq(daemon))]).wait().items) ?? []).map {
                 let consainersStatus = $0.status?.containerStatuses ?? []
-                return Pod(id: $0.name!, name: $0.name!, k8sName: "",status: ($0.status?.phase)!, expect: $0.spec?.containers.count ?? 0, warning: $0.status?.containerStatuses == nil ? $0.spec?.containers.count ?? 0 : $0.status?.containerStatuses?.filter{$0.started == false}.count ?? 0, containers:$0.spec?.containers.enumerated().map{
+                return Pod(id: $0.name!, name: $0.name!, k8sName: "",status: ($0.status?.phase)!, expect: $0.spec?.containers.count ?? 0, error: $0.status?.containerStatuses == nil ? $0.spec?.containers.count ?? 0 : $0.status?.containerStatuses?.filter{$0.started == false}.count ?? 0,notReady: $0.status?.containerStatuses == nil ? ($0.spec?.containers.count ?? 0) : $0.status?.containerStatuses?.filter{$0.ready == false}.count ?? 0, containers:$0.spec?.containers.enumerated().map{
                 Container(
                 id: $1.name, name: $1.name, image: $1.image!
                 ,path: $1.terminationMessagePath ?? "unknow", policy: $1.terminationMessagePolicy ?? "unknow", pullPolicy: $1.imagePullPolicy ?? "unknow"
@@ -118,7 +118,7 @@ extension Model {
         if let client = client {
             return ((try? client.pods.list(in: ns,options: [.labelSelector(.eq(service))]).wait().items) ?? []).map {
                 let consainersStatus = $0.status?.containerStatuses ?? []
-                return Pod(id: $0.name!, name: $0.name!, k8sName: "",status: ($0.status?.phase)!, expect: $0.spec?.containers.count ?? 0, warning: $0.status?.containerStatuses == nil ? $0.spec?.containers.count ?? 0 : $0.status?.containerStatuses?.filter{$0.started == false}.count ?? 0, containers: $0.spec?.containers.enumerated().map{
+                return Pod(id: $0.name!, name: $0.name!, k8sName: "",status: ($0.status?.phase)!, expect: $0.spec?.containers.count ?? 0, error: $0.status?.containerStatuses == nil ? $0.spec?.containers.count ?? 0 : $0.status?.containerStatuses?.filter{$0.started == false}.count ?? 0, notReady: $0.status?.containerStatuses == nil ? ($0.spec?.containers.count ?? 0) : $0.status?.containerStatuses?.filter{$0.ready == false}.count ?? 0,containers: $0.spec?.containers.enumerated().map{
                     Container(
                     id: $1.name, name: $1.name, image: $1.image!
                     ,path: $1.terminationMessagePath ?? "unknow", policy: $1.terminationMessagePolicy ?? "unknow", pullPolicy: $1.imagePullPolicy ?? "unknow"
@@ -141,7 +141,7 @@ extension Model {
         if let client = client {
             return ((try? client.pods.list(in: ns,options: [.labelSelector(.eq(stateful))]).wait().items) ?? []).map {
                 let consainersStatus = $0.status?.containerStatuses ?? []
-                return Pod(id: $0.name!, name: $0.name!, k8sName: "",status: ($0.status?.phase)!, expect: $0.spec?.containers.count ?? 0, warning: $0.status?.containerStatuses == nil ? $0.spec?.containers.count ?? 0 : $0.status?.containerStatuses?.filter{$0.started == false}.count ?? 0, containers:$0.spec?.containers.enumerated().map{
+                return Pod(id: $0.name!, name: $0.name!, k8sName: "",status: ($0.status?.phase)!, expect: $0.spec?.containers.count ?? 0, error: $0.status?.containerStatuses == nil ? $0.spec?.containers.count ?? 0 : $0.status?.containerStatuses?.filter{$0.started == false}.count ?? 0,notReady: $0.status?.containerStatuses == nil ? ($0.spec?.containers.count ?? 0) : $0.status?.containerStatuses?.filter{$0.ready == false}.count ?? 0, containers:$0.spec?.containers.enumerated().map{
                 Container(
                 id: $1.name, name: $1.name, image: $1.image!
                 ,path: $1.terminationMessagePath ?? "unknow", policy: $1.terminationMessagePolicy ?? "unknow", pullPolicy: $1.imagePullPolicy ?? "unknow"

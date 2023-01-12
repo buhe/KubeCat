@@ -28,7 +28,7 @@ struct PodView: View {
                             Image(systemName: "tray.full")
                             VStack(alignment: .leading) {
                                 Text(c.name)
-                                    .foregroundColor(c.error ? .red : .green)
+                                    .foregroundColor(c.ready ? .green : (c.error ? .red : .yellow))
                                 CaptionText(text: c.image)
                             }
                         }

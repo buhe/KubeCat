@@ -92,7 +92,7 @@ extension Model {
         if let client = client {
             let deploymentOrNil = try? client.appsV1.deployments.get(in: .namespace(ns), name: name).wait()
             if let deployment = deploymentOrNil {
-                return Deployment(id: deployment.name!, name: deployment.name!, k8sName: (deployment.spec?.selector.matchLabels)!, expect: Int(deployment.spec?.replicas ?? 0), pending: Int(deployment.status?.unavailableReplicas ?? 0)
+                return Deployment(id: deployment.name!, name: deployment.name!, k8sName: (deployment.spec?.selector.matchLabels)!, expect: Int(deployment.spec?.replicas ?? 0), unavailable: Int(deployment.status?.unavailableReplicas ?? 0)
                                   , labels: deployment.metadata?.labels
                                   , annotations: deployment.metadata?.annotations
                                   , namespace: deployment.metadata?.namespace ?? "unknow"
@@ -100,10 +100,10 @@ extension Model {
                                   , raw: deployment
                 )
             } else {
-                return Deployment(id: "demo1", name: "demo1", k8sName: [:], expect: 2, pending: 0, labels: [:], annotations: [:], namespace: "demo1", status: true, raw: nil)
+                return Deployment(id: "demo1", name: "demo1", k8sName: [:], expect: 2, unavailable: 0, labels: [:], annotations: [:], namespace: "demo1", status: true, raw: nil)
             }
         } else {
-            return Deployment(id: "demo1", name: "demo1", k8sName: [:], expect: 2, pending: 0, labels: [:], annotations: [:], namespace: "demo1", status: true, raw: nil)
+            return Deployment(id: "demo1", name: "demo1", k8sName: [:], expect: 2, unavailable: 0, labels: [:], annotations: [:], namespace: "demo1", status: true, raw: nil)
         }
     }
 }

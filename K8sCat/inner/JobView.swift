@@ -27,11 +27,12 @@ struct JobView: View {
                         } label: {
                             Image(systemName: "tray.2")
                             VStack(alignment: .leading) {
-                                Text(i.name).foregroundColor(.green)
+                                Text(i.name)
                                 HStack{
                                     Text("containers -").font(.caption)
                                     CaptionText(text: "expect: \(i.expect), ")
-                                    Text("warning: \(i.status == PodStatus.Succeeded.rawValue ? 0 : i.warning)").font(.caption).foregroundColor((i.status == PodStatus.Succeeded.rawValue ? 0 : i.warning) > 0 ? .red : .none)
+                                    Text("error: \(i.status == PodStatus.Succeeded.rawValue ? 0 : i.error)").font(.caption).foregroundColor((i.status == PodStatus.Succeeded.rawValue ? 0 : i.error) > 0 ? .red : .none)
+                                    Text("not ready: \(i.status == PodStatus.Succeeded.rawValue ? 0 :i.notReady)").font(.caption).foregroundColor((i.status == PodStatus.Succeeded.rawValue ? 0 : i.notReady) > 0 ? .yellow : .none)
                                 }
                                 
                             }
