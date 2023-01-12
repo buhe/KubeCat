@@ -104,8 +104,8 @@ struct DeploymentView: View {
             Menu {
                 Button {
                     // do something
-                    let yaml = deployment.encodeYaml(client: viewModel.model.client)
-                    print("Yaml: \(yaml)")
+//                    let yaml = deployment.encodeYaml(client: viewModel.model.client)
+//                    print("Yaml: \(yaml)")
                     showYaml = true
 //                    deployment.decodeYaml(client: viewModel.model.client, yaml: yaml)
                 } label: {

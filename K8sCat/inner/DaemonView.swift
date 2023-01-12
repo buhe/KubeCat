@@ -85,8 +85,8 @@ struct DaemonView: View {
             Menu {
                 Button {
                     // do something
-                    let yaml = daemon.encodeYaml(client: viewModel.model.client)
-                    print("Yaml: \(yaml)")
+//                    let yaml = daemon.encodeYaml(client: viewModel.model.client)
+//                    print("Yaml: \(yaml)")
                     showYaml = true
 //                    deployment.decodeYaml(client: viewModel.model.client, yaml: yaml)
                 } label: {

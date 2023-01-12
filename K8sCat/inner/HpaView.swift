@@ -48,8 +48,8 @@ struct HpaView: View {
             Menu {
                 Button {
                     // do something
-                    let yaml = hpa.encodeYaml(client: viewModel.model.client)
-                    print("Yaml: \(yaml)")
+//                    let yaml = hpa.encodeYaml(client: viewModel.model.client)
+//                    print("Yaml: \(yaml)")
                     showYaml = true
 //                    deployment.decodeYaml(client: viewModel.model.client, yaml: yaml)
                 } label: {

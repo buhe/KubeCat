@@ -85,8 +85,8 @@ struct StatefulView: View {
             Menu {
                 Button {
                     // do something
-                    let yaml = stateful.encodeYaml(client: viewModel.model.client)
-                    print("Yaml: \(yaml)")
+//                    let yaml = stateful.encodeYaml(client: viewModel.model.client)
+//                    print("Yaml: \(yaml)")
                     showYaml = true
 //                    deployment.decodeYaml(client: viewModel.model.client, yaml: yaml)
                 } label: {
