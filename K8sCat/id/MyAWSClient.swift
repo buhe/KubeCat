@@ -56,7 +56,7 @@ struct MyAWSClient {
         let ca = c?.certificateAuthority?.data
 //        print("sever: \(server!) ca: \(ca!)")
         try! client.syncShutdown()
-        if c == nil {
+        if c == nil || server == nil || ca == nil {
             return nil
         }
         return AWSCluster(sever: server!, ca: ca!)

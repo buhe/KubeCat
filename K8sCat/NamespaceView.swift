@@ -44,27 +44,27 @@ struct NamespaceView: View {
                             
                             switch tabIndex {
                             case 0:
-                                try! viewModel.model.pod(in: .namespace(c))
+                                try? viewModel.model.pod(in: .namespace(c))
                             case 1:
-                                try! viewModel.model.deployment(in: .namespace(c))
+                                try? viewModel.model.deployment(in: .namespace(c))
                             case 2:
-                                try! viewModel.model.job(in: .namespace(c))
+                                try? viewModel.model.job(in: .namespace(c))
                             case 3:
-                                try! viewModel.model.cronJob(in: .namespace(c))
+                                try? viewModel.model.cronJob(in: .namespace(c))
                             case 4:
-                                try! viewModel.model.statefull(in: .namespace(c))
+                                try? viewModel.model.statefull(in: .namespace(c))
                             case 5:
-                                try! viewModel.model.service(in: .namespace(c))
+                                try? viewModel.model.service(in: .namespace(c))
                             case 6:
-                                try! viewModel.model.configMap(in: .namespace(c))
+                                try? viewModel.model.configMap(in: .namespace(c))
                             case 7:
-                                try! viewModel.model.secret(in: .namespace(c))
+                                try? viewModel.model.secret(in: .namespace(c))
                             case 8:
-                                try! viewModel.model.daemon(in: .namespace(c))
+                                try? viewModel.model.daemon(in: .namespace(c))
                             case 9:
-                                try! viewModel.model.replica(in: .namespace(c))
+                                try? viewModel.model.replica(in: .namespace(c))
                             case 10:
-                                try! viewModel.model.hpa(in: .namespace(c))
+                                try? viewModel.model.hpa(in: .namespace(c))
                             default: break
                             }
                             

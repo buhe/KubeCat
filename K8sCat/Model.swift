@@ -16,6 +16,7 @@ struct Model {
     @AppStorage(wrappedValue: true, "first") var first: Bool
     private var viewContext: NSManagedObjectContext
     private var current: ClusterEntry?
+    private var date = Date()
 //    @FetchRequest(
 //        sortDescriptors: [],
 //        animation: .default)
@@ -69,6 +70,24 @@ struct Model {
         }
         
         select(viewContext: viewContext)
+    }
+    
+    mutating func checkAWSToken() {
+        if current != nil && ClusterType(rawValue: current!.type!) == .AWS {
+            if Date().timeIntervalSince1970 - date.timeIntervalSince1970  > 30 {
+                if client != nil {
+                    try? client!.syncShutdown()
+                }
+                
+                let config = try? AWS(awsId: current!.accessKeyID!, awsSecret: current!.secretAccessKey!, region: current!.region!, clusterName: current!.clusterName!).config()
+                if config != nil {
+                    client = KubernetesClient(config: config!)
+                }
+                
+                date = Date()
+            }
+            
+        }
     }
     
     fileprivate func selectNotSome(c: ClusterEntry) -> (Bool) {
@@ -125,6 +144,7 @@ struct Model {
                 case .KubeConfig, .Aliyun:
                     config = try? Config(content: c.config!).config()
                 case .AWS:
+                    date = Date()
                     config = try? AWS(awsId: c.accessKeyID!, awsSecret: c.secretAccessKey!, region: c.region!, clusterName: c.clusterName!).config()
                 default: break
                 }
@@ -158,6 +178,7 @@ struct Model {
     }
     
     mutating func namespace() throws {
+        checkAWSToken()
         if let client = client {
             do{
                 retry = retry - 1
@@ -182,6 +203,7 @@ struct Model {
     }
     
     mutating func node() throws {
+        checkAWSToken()
         if let client = client {
             self.nodes = try client.nodes.list().wait().items
         } else {
@@ -190,6 +212,7 @@ struct Model {
     }
     
     mutating func pv() throws {
+        checkAWSToken()
         if let client = client {
             let pvs = try client.persistentVolumes.list().wait().items
             self.pvs = pvs
@@ -200,6 +223,7 @@ struct Model {
     }
     
     mutating func pvc() throws {
+        checkAWSToken()
         if let client = client {
             let pvcs = try client.persistentVolumes.list().wait().items.map{($0.spec?.claimRef)!}
             
@@ -211,6 +235,7 @@ struct Model {
     }
     
     mutating func pod(in ns: NamespaceSelector) throws {
+        checkAWSToken()
         if let client = client {
             let pods = try client.pods.list(in: ns).wait().items
             switch ns {
@@ -228,6 +253,7 @@ struct Model {
     }
     
     mutating func hpa(in ns: NamespaceSelector) throws {
+        checkAWSToken()
         if let client = client {
             let hpa = try client.autoScalingV2Beta1.horizontalPodAutoscalers.list(in: ns).wait().items
             switch ns {
@@ -246,6 +272,7 @@ struct Model {
     }
     
     mutating func deployment(in ns: NamespaceSelector) throws {
+        checkAWSToken()
         if let client = client {
             let deployments = try client.appsV1.deployments.list(in: ns).wait().items
             switch ns {
@@ -263,6 +290,7 @@ struct Model {
     }
     
     mutating func job(in ns: NamespaceSelector) throws {
+        checkAWSToken()
         if let client = client {
             let job = try client.batchV1.jobs.list(in: ns).wait().items
             switch ns {
@@ -280,6 +308,7 @@ struct Model {
     }
     
     mutating func cronJob(in ns: NamespaceSelector) throws {
+        checkAWSToken()
         if let client = client {
             let cronJob = try client.batchV1.cronJobs.list(in: ns).wait().items
             switch ns {
@@ -297,6 +326,7 @@ struct Model {
     }
     
     mutating func statefull(in ns: NamespaceSelector) throws {
+        checkAWSToken()
         if let client = client {
             let statefull = try client.appsV1.statefulSets.list(in: ns).wait().items
             switch ns {
@@ -314,6 +344,7 @@ struct Model {
     }
     
     mutating func service(in ns: NamespaceSelector) throws {
+        checkAWSToken()
         if let client = client {
             let service = try client.services.list(in: ns).wait().items
             switch ns {
@@ -331,6 +362,7 @@ struct Model {
     }
     
     mutating func configMap(in ns: NamespaceSelector) throws {
+        checkAWSToken()
         if let client = client {
             let configMap = try client.configMaps.list(in: ns).wait().items
             switch ns {
@@ -348,6 +380,7 @@ struct Model {
     }
     
     mutating func secret(in ns: NamespaceSelector) throws {
+        checkAWSToken()
         if let client = client {
             let secret = try client.secrets.list(in: ns).wait().items
             switch ns {
@@ -365,6 +398,7 @@ struct Model {
     }
     
     mutating func daemon(in ns: NamespaceSelector) throws {
+        checkAWSToken()
         if let client = client {
             let daemon = try client.appsV1.daemonSets.list(in: ns).wait().items
             switch ns {
@@ -382,6 +416,7 @@ struct Model {
     }
     
     mutating func replica(in ns: NamespaceSelector) throws {
+        checkAWSToken()
         if let client = client {
             let replica = try client.appsV1.replicaSets.list(in: ns).wait().items
             switch ns {
