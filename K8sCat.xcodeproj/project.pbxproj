@@ -47,7 +47,7 @@
 		3F9DC53B2967EF1900E00C31 /* SotoEKS in Frameworks */ = {isa = PBXBuildFile; productRef = 3F9DC53A2967EF1900E00C31 /* SotoEKS */; };
 		3F9DC53D2967EF1900E00C31 /* SotoSTS in Frameworks */ = {isa = PBXBuildFile; productRef = 3F9DC53C2967EF1900E00C31 /* SotoSTS */; };
 		3F9DC53F2967F14200E00C31 /* AWSView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9DC53E2967F14200E00C31 /* AWSView.swift */; };
-		3F9DC5432969287800E00C31 /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9DC5422969287800E00C31 /* Token.swift */; };
+		3F9DC5432969287800E00C31 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9DC5422969287800E00C31 /* Utils.swift */; };
 		3F9DC545296A953600E00C31 /* AWSResign.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9DC544296A953600E00C31 /* AWSResign.swift */; };
 		3F9DC547296E65B700E00C31 /* Model+Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9DC546296E65B700E00C31 /* Model+Controller.swift */; };
 		3F9DC549296E7C0300E00C31 /* Model+Pod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9DC548296E7C0300E00C31 /* Model+Pod.swift */; };
@@ -116,7 +116,7 @@
 		3F2BE43A29601AB50002DEEC /* ConfigView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigView.swift; sourceTree = "<group>"; };
 		3F9DC5372967E47D00E00C31 /* MyAWSClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyAWSClient.swift; sourceTree = "<group>"; };
 		3F9DC53E2967F14200E00C31 /* AWSView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AWSView.swift; sourceTree = "<group>"; };
-		3F9DC5422969287800E00C31 /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
+		3F9DC5422969287800E00C31 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		3F9DC544296A953600E00C31 /* AWSResign.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWSResign.swift; sourceTree = "<group>"; };
 		3F9DC546296E65B700E00C31 /* Model+Controller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Model+Controller.swift"; sourceTree = "<group>"; };
 		3F9DC548296E7C0300E00C31 /* Model+Pod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Model+Pod.swift"; sourceTree = "<group>"; };
@@ -175,9 +175,10 @@
 		3F25F17B296049D700F4DA02 /* id */ = {
 			isa = PBXGroup;
 			children = (
+				3F9DC544296A953600E00C31 /* AWSResign.swift */,
 				3F19F8D12952B00C005C0558 /* Identifier.swift */,
 				3F9DC5372967E47D00E00C31 /* MyAWSClient.swift */,
-				3F9DC5422969287800E00C31 /* Token.swift */,
+				3F9DC5422969287800E00C31 /* Utils.swift */,
 			);
 			path = id;
 			sourceTree = "<group>";
@@ -222,7 +223,6 @@
 				3F2BE438296015C20002DEEC /* NewClusterView.swift */,
 				3F2BE43A29601AB50002DEEC /* ConfigView.swift */,
 				3F9DC53E2967F14200E00C31 /* AWSView.swift */,
-				3F9DC544296A953600E00C31 /* AWSResign.swift */,
 			);
 			path = cluster;
 			sourceTree = "<group>";
@@ -476,7 +476,7 @@
 				3F19F8BF2951A5DC005C0558 /* GlobalView.swift in Sources */,
 				3F2BE3E929595A040002DEEC /* PodView.swift in Sources */,
 				3F2BE3FB295997940002DEEC /* ReplicaView.swift in Sources */,
-				3F9DC5432969287800E00C31 /* Token.swift in Sources */,
+				3F9DC5432969287800E00C31 /* Utils.swift in Sources */,
 				3F9DC547296E65B700E00C31 /* Model+Controller.swift in Sources */,
 				3F9DC53F2967F14200E00C31 /* AWSView.swift in Sources */,
 				3F19F8D22952B00C005C0558 /* Identifier.swift in Sources */,

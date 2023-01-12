@@ -18,7 +18,7 @@ struct AWSView: View {
     @State var region = "us-west-1"
     @State var clusterName = ""
     
-
+    @State var showHelp = false
     @State var showErrorMessage = false
     @State var errorMessage = ""
     
@@ -96,6 +96,17 @@ struct AWSView: View {
                 showErrorMessage = false
             }
         }
+        .toolbar{
+            Button {
+                showHelp = true
+            }label: {
+                Image(systemName: "questionmark.circle")
+            }
+        
+        }
+        .sheet(isPresented: $showHelp){
+            AWSHelpView()
+        }
         
     }
     
@@ -162,3 +173,20 @@ struct AWSView: View {
 //        ConfigView(first: true){}
 //    }
 //}
+
+struct AWSHelpView: View {
+    var body: some View {
+        VStack(alignment: .leading){
+            Text("Help").font(.title)
+            Text("""
+                 It is recommended to use eksctl to build a cluster, refer to: https://docs.aws.amazon.com/eks/latest/userguide/getting-started-eksctl.html.
+                 Use the Access key ID and Secret access key of the account used by eksctl.
+                """)
+            
+            Spacer()
+        }
+        .padding()
+        
+        
+    }
+}
