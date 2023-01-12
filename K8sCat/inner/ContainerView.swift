@@ -43,7 +43,11 @@ struct ContainerView: View {
             }
             Section(header: "Error") {
                 Text(container.error ? "True" : "False")
-                    .foregroundColor(container.ready ? .red : .none)
+                    .foregroundColor(container.error ? .red : .none)
+            }
+            Section(header: "Ready") {
+                Text(container.ready ? "True" : "False")
+                    .foregroundColor(container.error ? .none : .red)
             }
             Section(header: "Image") {
                 Text(container.image).font(.caption)

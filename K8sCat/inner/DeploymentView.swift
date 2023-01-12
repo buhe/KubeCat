@@ -38,7 +38,7 @@ struct DeploymentView: View {
                                 HStack{
                                     Text("containers -").font(.caption)
                                     CaptionText(text: "expect: \(i.expect), ")
-                                    CaptionText(text: "warning: \(i.warning)").foregroundColor(i.warning > 0 ? .red : .none)
+                                    Text("warning: \(i.status == PodStatus.Succeeded.rawValue ? 0 : i.warning)").font(.caption).foregroundColor((i.status == PodStatus.Succeeded.rawValue ? 0 : i.warning) > 0 ? .red : .none)
                                 }
                                 
                             }
