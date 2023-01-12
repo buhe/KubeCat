@@ -115,7 +115,11 @@ struct PodView: View {
                 }
                 
             }
-        }.navigationTitle("Pod")
+        }
+        .navigationTitle("Pod")
+        .onAppear {
+            viewModel.model.checkAWSToken()
+        }
     }
 }
 

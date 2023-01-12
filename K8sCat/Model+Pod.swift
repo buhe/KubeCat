@@ -49,7 +49,8 @@ extension Model {
     mutating func podsByDeployment(in ns: NamespaceSelector, deployment: [String: String], name: String) -> [Pod] {
         checkAWSToken()
         if let client = client {
-            return try! client.pods.list(in: ns,options: [.labelSelector(.eq(deployment))]).wait().items.map {
+            let pods = try? client.pods.list(in: ns,options: [.labelSelector(.eq(deployment))]).wait().items
+            return (pods ?? []).map {
                 let consainersStatus = $0.status?.containerStatuses ?? []
                 return Pod(id: $0.name!, name: $0.name!,k8sName: "", status: ($0.status?.phase)!, expect: $0.spec?.containers.count ?? 0, warning: $0.status?.containerStatuses == nil ? $0.spec?.containers.count ?? 0 : $0.status?.containerStatuses?.filter{$0.ready == false}.count ?? 0, containers: $0.spec?.containers.enumerated().map{
                 Container(
@@ -71,7 +72,7 @@ extension Model {
     mutating func podsByReplica(in ns: NamespaceSelector, replica: [String: String], name: String) -> [Pod] {
         checkAWSToken()
         if let client = client {
-            return try! client.pods.list(in: ns,options: [.labelSelector(.eq(replica))]).wait().items.map {
+            return ((try? client.pods.list(in: ns,options: [.labelSelector(.eq(replica))]).wait().items) ?? []).map {
                 let consainersStatus = $0.status?.containerStatuses ?? []
                 return Pod(id: $0.name!, name: $0.name!, k8sName: "",status: ($0.status?.phase)!, expect: $0.spec?.containers.count ?? 0, warning: $0.status?.containerStatuses == nil ? $0.spec?.containers.count ?? 0 : $0.status?.containerStatuses?.filter{$0.ready == false}.count ?? 0, containers: $0.spec?.containers.enumerated().map{
                 Container(
@@ -93,7 +94,7 @@ extension Model {
     mutating func podsByDaemon(in ns: NamespaceSelector, daemon: [String: String], name: String) -> [Pod] {
         checkAWSToken()
         if let client = client {
-            return try! client.pods.list(in: ns,options: [.labelSelector(.eq(daemon))]).wait().items.map {
+            return ((try? client.pods.list(in: ns,options: [.labelSelector(.eq(daemon))]).wait().items) ?? []).map {
                 let consainersStatus = $0.status?.containerStatuses ?? []
                 return Pod(id: $0.name!, name: $0.name!, k8sName: "",status: ($0.status?.phase)!, expect: $0.spec?.containers.count ?? 0, warning: $0.status?.containerStatuses == nil ? $0.spec?.containers.count ?? 0 : $0.status?.containerStatuses?.filter{$0.ready == false}.count ?? 0, containers:$0.spec?.containers.enumerated().map{
                 Container(
@@ -115,7 +116,7 @@ extension Model {
     mutating func podsByService(in ns: NamespaceSelector, service: [String: String], name: String) -> [Pod] {
         checkAWSToken()
         if let client = client {
-            return try! client.pods.list(in: ns,options: [.labelSelector(.eq(service))]).wait().items.map {
+            return ((try? client.pods.list(in: ns,options: [.labelSelector(.eq(service))]).wait().items) ?? []).map {
                 let consainersStatus = $0.status?.containerStatuses ?? []
                 return Pod(id: $0.name!, name: $0.name!, k8sName: "",status: ($0.status?.phase)!, expect: $0.spec?.containers.count ?? 0, warning: $0.status?.containerStatuses == nil ? $0.spec?.containers.count ?? 0 : $0.status?.containerStatuses?.filter{$0.ready == false}.count ?? 0, containers: $0.spec?.containers.enumerated().map{
                     Container(
@@ -138,7 +139,7 @@ extension Model {
     mutating func podsByStateful(in ns: NamespaceSelector, stateful: [String: String], name: String) -> [Pod] {
         checkAWSToken()
         if let client = client {
-            return try! client.pods.list(in: ns,options: [.labelSelector(.eq(stateful))]).wait().items.map {
+            return ((try? client.pods.list(in: ns,options: [.labelSelector(.eq(stateful))]).wait().items) ?? []).map {
                 let consainersStatus = $0.status?.containerStatuses ?? []
                 return Pod(id: $0.name!, name: $0.name!, k8sName: "",status: ($0.status?.phase)!, expect: $0.spec?.containers.count ?? 0, warning: $0.status?.containerStatuses == nil ? $0.spec?.containers.count ?? 0 : $0.status?.containerStatuses?.filter{$0.ready == false}.count ?? 0, containers:$0.spec?.containers.enumerated().map{
                 Container(
