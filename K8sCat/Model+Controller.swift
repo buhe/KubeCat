@@ -9,7 +9,8 @@ import Foundation
 import SwiftkubeModel
 
 extension Model {
-    func daemonByName(ns: String, name: String) -> Daemon {
+    mutating func daemonByName(ns: String, name: String) -> Daemon {
+//        checkAWSToken()
         if let client = client {
             let daemon = try! client.appsV1.daemonSets.get(in: .namespace(ns), name: name).wait()
             return Daemon(id: daemon.name!, name: daemon.name!, k8sName:  (daemon.spec?.selector.matchLabels)!
@@ -24,7 +25,8 @@ extension Model {
         }
     }
     
-    func replicaByName(ns: String, name: String) -> Replica {
+    mutating func replicaByName(ns: String, name: String) -> Replica {
+        checkAWSToken()
         if let client = client {
             let replica = try! client.appsV1.replicaSets.get(in: .namespace(ns), name: name).wait()
             return Replica(id: replica.name!, name: replica.name!, k8sName:  (replica.spec?.selector.matchLabels)!
@@ -38,7 +40,8 @@ extension Model {
         }
     }
     
-    func statefulByName(ns: String, name: String) -> Stateful {
+    mutating func statefulByName(ns: String, name: String) -> Stateful {
+        checkAWSToken()
         if let client = client {
             let stateful = try! client.appsV1.statefulSets.get(in: .namespace(ns), name: name).wait()
             return Stateful(id: stateful.name!, name: stateful.name!, k8sName:  (stateful.spec?.selector.matchLabels)!
@@ -52,7 +55,8 @@ extension Model {
         }
     }
     
-    func jobByName(ns: String, name: String) -> Job {
+    mutating func jobByName(ns: String, name: String) -> Job {
+        checkAWSToken()
         if let client = client {
             let job = try! client.batchV1.jobs.get(in: .namespace(ns), name: name).wait()
             return Job(id: job.name!, name: job.name!,
@@ -67,7 +71,8 @@ extension Model {
         }
     }
     
-    func deploymentByName(ns: String, name: String) -> Deployment {
+    mutating func deploymentByName(ns: String, name: String) -> Deployment {
+        checkAWSToken()
         if let client = client {
             let deployment = try! client.appsV1.deployments.get(in: .namespace(ns), name: name).wait()
             return Deployment(id: deployment.name!, name: deployment.name!, k8sName: (deployment.spec?.selector.matchLabels)!, expect: Int(deployment.spec?.replicas ?? 0), pending: Int(deployment.status?.unavailableReplicas ?? 0)

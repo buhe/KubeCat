@@ -1340,8 +1340,8 @@
             filePath = "K8sCat/Model+Pod.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "84"
-            endingLineNumber = "84"
+            startingLineNumber = "86"
+            endingLineNumber = "86"
             landmarkName = "podsByReplica(in:replica:name:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1356,8 +1356,8 @@
             filePath = "K8sCat/Model+Pod.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "71"
-            endingLineNumber = "71"
+            startingLineNumber = "72"
+            endingLineNumber = "72"
             landmarkName = "podsByReplica(in:replica:name:)"
             landmarkType = "7">
             <Locations>
@@ -1404,8 +1404,8 @@
             filePath = "K8sCat/Model+Pod.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "63"
-            endingLineNumber = "63"
+            startingLineNumber = "64"
+            endingLineNumber = "64"
             landmarkName = "podsByDeployment(in:deployment:name:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1420,8 +1420,8 @@
             filePath = "K8sCat/Model+Pod.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "127"
-            endingLineNumber = "127"
+            startingLineNumber = "131"
+            endingLineNumber = "131"
             landmarkName = "podsByService(in:service:name:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1567,6 +1567,22 @@
             startingLineNumber = "83"
             endingLineNumber = "83"
             landmarkName = "checkAWSToken()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "5EA21618-8B4E-42A1-8604-08BC0014E037"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "K8sCat/Model+Controller.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "13"
+            endingLineNumber = "13"
+            landmarkName = "daemonByName(ns:name:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

@@ -11,8 +11,8 @@ import SwiftkubeClient
 
 extension Model {
     
-    func podsByJob(in ns: NamespaceSelector, job: [String: String], name: String) -> [Pod] {
-        
+    mutating func podsByJob(in ns: NamespaceSelector, job: [String: String], name: String) -> [Pod] {
+        checkAWSToken()
         if let client = client {
            return try! client.pods.list(in: ns,options: [.labelSelector(.eq(job))]).wait().items.map {
                let consainersStatus = $0.status?.containerStatuses ?? []
@@ -46,7 +46,8 @@ extension Model {
         
 //    }
     
-    func podsByDeployment(in ns: NamespaceSelector, deployment: [String: String], name: String) -> [Pod] {
+    mutating func podsByDeployment(in ns: NamespaceSelector, deployment: [String: String], name: String) -> [Pod] {
+        checkAWSToken()
         if let client = client {
             return try! client.pods.list(in: ns,options: [.labelSelector(.eq(deployment))]).wait().items.map {
                 let consainersStatus = $0.status?.containerStatuses ?? []
@@ -67,7 +68,8 @@ extension Model {
         
     }
     
-    func podsByReplica(in ns: NamespaceSelector, replica: [String: String], name: String) -> [Pod] {
+    mutating func podsByReplica(in ns: NamespaceSelector, replica: [String: String], name: String) -> [Pod] {
+        checkAWSToken()
         if let client = client {
             return try! client.pods.list(in: ns,options: [.labelSelector(.eq(replica))]).wait().items.map {
                 let consainersStatus = $0.status?.containerStatuses ?? []
@@ -88,7 +90,8 @@ extension Model {
         
     }
     
-    func podsByDaemon(in ns: NamespaceSelector, daemon: [String: String], name: String) -> [Pod] {
+    mutating func podsByDaemon(in ns: NamespaceSelector, daemon: [String: String], name: String) -> [Pod] {
+        checkAWSToken()
         if let client = client {
             return try! client.pods.list(in: ns,options: [.labelSelector(.eq(daemon))]).wait().items.map {
                 let consainersStatus = $0.status?.containerStatuses ?? []
@@ -109,7 +112,8 @@ extension Model {
         
     }
     
-    func podsByService(in ns: NamespaceSelector, service: [String: String], name: String) -> [Pod] {
+    mutating func podsByService(in ns: NamespaceSelector, service: [String: String], name: String) -> [Pod] {
+        checkAWSToken()
         if let client = client {
             return try! client.pods.list(in: ns,options: [.labelSelector(.eq(service))]).wait().items.map {
                 let consainersStatus = $0.status?.containerStatuses ?? []
@@ -131,7 +135,8 @@ extension Model {
        
     }
     
-    func podsByStateful(in ns: NamespaceSelector, stateful: [String: String], name: String) -> [Pod] {
+    mutating func podsByStateful(in ns: NamespaceSelector, stateful: [String: String], name: String) -> [Pod] {
+        checkAWSToken()
         if let client = client {
             return try! client.pods.list(in: ns,options: [.labelSelector(.eq(stateful))]).wait().items.map {
                 let consainersStatus = $0.status?.containerStatuses ?? []
