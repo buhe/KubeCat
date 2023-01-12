@@ -12,6 +12,7 @@ import CoreData
 import SwiftUI
 
 struct Model {
+    var retry = 10
     @AppStorage(wrappedValue: true, "first") var first: Bool
     private var viewContext: NSManagedObjectContext
     private var current: ClusterEntry?
@@ -79,6 +80,7 @@ struct Model {
     }
     
     mutating func select(viewContext: NSManagedObjectContext) {
+        retry = 10
         var clusters = try! viewContext.fetch(NSFetchRequest(entityName: "ClusterEntry")) as! [ClusterEntry]
         if clusters.isEmpty {
             let newItem = ClusterEntry(context: viewContext)
@@ -158,10 +160,19 @@ struct Model {
     mutating func namespace() throws {
         if let client = client {
             do{
+                retry = retry - 1
                 let namespaces = try client.namespaces.list().wait().items
                 self.namespaces = namespaces
+    
             }catch{
                 print(error)
+                if retry > 0 {
+                    print("retry \(retry)")
+                    try? namespace()
+                } else {
+                    print("retry end.")
+                }
+                
             }
         
             
