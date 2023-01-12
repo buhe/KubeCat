@@ -158,4 +158,22 @@ extension Model {
         }
         
     }
+    
+    mutating func replicaByDeployment(in ns: NamespaceSelector, deployment: [String: String], name: String) -> [Replica] {
+        checkAWSToken()
+        if let client = client {
+            let replicas = try? client.appsV1.replicaSets.list(in: ns,options: [.labelSelector(.eq(deployment))]).wait().items
+            return (replicas ?? []).map {
+                Replica(id: $0.name!, name: $0.name!, k8sName:  ($0.spec?.selector.matchLabels)!
+                                                              , labels: $0.metadata?.labels
+                                                              , annotations: $0.metadata?.annotations
+                                                              , namespace: $0.metadata?.namespace ?? "unknow"
+                                                              , status: $0.status?.replicas == $0.status?.readyReplicas
+                    )
+            }
+        } else {
+            return []
+        }
+        
+    }
 }

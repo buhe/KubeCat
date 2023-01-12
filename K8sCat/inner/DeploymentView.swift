@@ -25,6 +25,20 @@ struct DeploymentView: View {
 //            } label: {
 //                Text("scale")
 //            }
+            Section(header: "Replica Sets") {
+                List {
+                    ForEach(viewModel.model.replicaByDeployment(in: .namespace(viewModel.ns), deployment: deployment.k8sName, name: deployment.name)) {
+                        i in
+                        NavigationLink {
+                            ReplicaView(replica: i, viewModel: viewModel)
+                        } label: {
+                            Image(systemName: "square.3.layers.3d.down.left")
+                            Text(i.name)
+                                .foregroundColor(i.status ? .green : .red)
+                        }
+                    }
+                }
+            }
             Section(header: "Pods") {
                 List {
                     ForEach(viewModel.model.podsByDeployment(in: .namespace(viewModel.ns), deployment: deployment.k8sName, name: deployment.name)) {
