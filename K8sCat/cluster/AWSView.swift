@@ -31,6 +31,8 @@ struct AWSView: View {
             
                 Section(header: "Name"){
                     TextField(text: $name)
+                        .disableAutocorrection(true)
+                        .textInputAutocapitalization(.never)
                 }
                 Section(header: "Icon"){
                     Picker("Icon", selection: $icon){
@@ -43,9 +45,13 @@ struct AWSView: View {
                 }
                 Section(header: "Access Key ID"){
                     TextField(text: $accessKeyID)
+                        .disableAutocorrection(true)
+                        .textInputAutocapitalization(.never)
                 }
                 Section(header: "Secret Access key"){
                     TextField(text: $secretAccessKey)
+                        .disableAutocorrection(true)
+                        .textInputAutocapitalization(.never)
                 }
 
                 Section(header: "Region"){
@@ -80,6 +86,8 @@ struct AWSView: View {
                 }
                 Section(header: "Cluster Name"){
                     TextField(text: $clusterName)
+                        .disableAutocorrection(true)
+                        .textInputAutocapitalization(.never)
                 }
                 Button{
                     // save to core data
