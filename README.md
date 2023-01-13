@@ -1,7 +1,6 @@
 ## Kube Cat
 
-Kube Cat helps you manage Kubernetes clusters easily via your mobile device, making it possible to view the status of clusters and quickly fix issues from the comfort of your couch.
-Kube Cat has many features (and there are more to come!:
+Kube Cat helps you easily manage Kubernetes clusters from your mobile device, allowing you to view cluster status and quickly resolve issues while you're on the go. Kube Cat has a lot of features and more to come!:
 
 - View the status of almost any resources. e.g.
 Pods, Deployments, PVs, PVCs, HPA, Jobs, CronJobs, Nodes, Config Maps, Docker containers and so on.
