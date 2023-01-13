@@ -14,7 +14,7 @@ struct TabBarButton: View {
         Text(text)
             .fontWeight(isSelected ? .heavy : .regular)
             .font(.custom("Avenir", size: 16))
-            .padding(.bottom, 15)
+            .padding(.vertical, 10)
             .border(width: isSelected ? 2 : 1, edges: [.bottom], color: .systemGray)
     }
 }
