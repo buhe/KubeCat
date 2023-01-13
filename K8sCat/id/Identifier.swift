@@ -59,20 +59,32 @@ struct Config: CertIdentifier {
         }
 //        print("\(kubeConfig)")
         let currentContext = kubeConfig.currentContext
-        let context = kubeConfig.contexts?.filter{$0.name == currentContext}.first!
-        let cluster = kubeConfig.clusters?.filter{$0.name == context?.context.cluster}.first!
-        let user = kubeConfig.users?.filter{$0.name == context?.context.user}.first!
+        let ctxs = kubeConfig.contexts?.filter{$0.name == currentContext}
+        if ctxs == nil || ctxs!.isEmpty {
+            return nil
+        }
+        let context = ctxs!.first!
+        let cluters = kubeConfig.clusters?.filter{$0.name == context.context.cluster}
+        if cluters == nil || cluters!.isEmpty {
+            return nil
+        }
+        let cluster = cluters!.first!
+        let users = kubeConfig.users?.filter{$0.name == context.context.user}
+        if users == nil || users!.isEmpty {
+            return nil
+        }
+        let user = users!.first!
         
-        let p = try NIOSSLCertificate(bytes: .init((user?.authInfo.clientCertificateData)!), format: NIOSSLSerializationFormats.pem)
-        let k = try NIOSSLPrivateKey(bytes: .init((user?.authInfo.clientKeyData)!), format: NIOSSLSerializationFormats.pem)
+        let p = try NIOSSLCertificate(bytes: .init((user.authInfo.clientCertificateData)!), format: NIOSSLSerializationFormats.pem)
+        let k = try NIOSSLPrivateKey(bytes: .init((user.authInfo.clientKeyData)!), format: NIOSSLSerializationFormats.pem)
         
         let authentication = KubernetesClientAuthentication.x509(clientCertificate: p, clientKey: k)
         
-        let caCert = try NIOSSLCertificate.fromPEMBytes([UInt8]((cluster?.cluster.certificateAuthorityData)!))
+        let caCert = try NIOSSLCertificate.fromPEMBytes([UInt8]((cluster.cluster.certificateAuthorityData)!))
         
         let config = KubernetesClientConfig(
-            masterURL: URL(string: (cluster?.cluster.server)!)!,
-            namespace: context?.context.namespace ?? "default",
+            masterURL: URL(string: cluster.cluster.server)!,
+            namespace: context.context.namespace ?? "default",
             authentication: authentication,
             trustRoots: NIOSSLTrustRoots.certificates(caCert),
             insecureSkipTLSVerify: false
