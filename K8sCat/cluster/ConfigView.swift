@@ -27,6 +27,8 @@ struct ConfigView: View {
             
                 Section(header: "Name"){
                     TextField(text: $name)
+                        .disableAutocorrection(true)
+                        .textInputAutocapitalization(.never)
                 }
                 Section(header: "Icon"){
                     Picker("icon", selection: $icon){
