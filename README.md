@@ -9,4 +9,6 @@ Pods, Deployments, PVs, PVCs, HPAs, Jobs, CronJobs, Nodes, Config Maps, Docker c
 - Support managing multiple clusters.
 - Supported authentication providers, Kube Config, AWS IAM Authenticator (EKS), Aliyun etc.
 
+Who need it, please compile it by yourself. If you find it troublesome or want to support me, go to https://apps.apple.com/us/app/kube-cat/id1665033555 , the price is 6 Dollar.
+
 ![Apple iPhone 11 Screenshot 1](https://p.ipic.vip/j9wyq6.png)  ![Apple iPhone 11 Screenshot 2](https://p.ipic.vip/70bdon.png)  ![Apple iPhone 11 Screenshot 3](https://p.ipic.vip/8ej3sb.png)  ![Apple iPhone 11 Screenshot 4](https://p.ipic.vip/rmfu9v.png)  ![Apple iPhone 11 Screenshot 5](https://p.ipic.vip/w3kykg.png)  ![Apple iPhone 11 Screenshot 6](https://p.ipic.vip/0qt66j.png)  ![Apple iPhone 11 Screenshot 7](https://p.ipic.vip/deuaxh.png)
