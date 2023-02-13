@@ -11,6 +11,7 @@ struct DaemonView: View {
     let daemon: Daemon
     let viewModel: ViewModel
     
+    @State var pods: [Pod] = []
     @State var showYaml = false
     var body: some View {
         Form {
@@ -22,7 +23,7 @@ struct DaemonView: View {
             }
             Section(header: "Pods") {
                 List {
-                    ForEach(viewModel.model.podsByDaemon(in: .namespace(viewModel.ns), daemon: daemon.k8sName, name: daemon.name)) {
+                    ForEach(pods) {
                         i in
                         NavigationLink {
                             PodView(pod: i, viewModel: viewModel)
@@ -40,7 +41,11 @@ struct DaemonView: View {
                             }
                         }
                     }
+                    
                 }
+            }
+            .task {
+                pods = await viewModel.model.podsByDaemon(in: .namespace(viewModel.ns), daemon: daemon.k8sName)
             }
             Section(header: "Labels and Annotations") {
                 NavigationLink {

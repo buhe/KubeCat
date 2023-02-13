@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct JobView: View {
+    @State var pods: [Pod] = []
     let job: Job
     let viewModel: ViewModel
     var body: some View {
@@ -20,7 +21,7 @@ struct JobView: View {
             }
             Section(header: "Pods") {
                 List {
-                    ForEach(viewModel.model.podsByJob(in: .namespace(viewModel.ns), job: job.k8sName, name: job.name)) {
+                    ForEach(pods) {
                         i in
                         NavigationLink {
                             PodView(pod: i, viewModel: viewModel)
@@ -38,7 +39,11 @@ struct JobView: View {
                             }
                         }
                     }
+                    
                 }
+            }
+            .task {
+                pods = await viewModel.model.podsByJob(in: .namespace(viewModel.ns), job: job.k8sName)
             }
             Section(header: "Labels and Annotations") {
                 NavigationLink {

@@ -53,6 +53,7 @@
 		3F9DC549296E7C0300E00C31 /* Model+Pod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9DC548296E7C0300E00C31 /* Model+Pod.swift */; };
 		3FC383562965430B00EC011A /* ExecWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC383552965430B00EC011A /* ExecWebView.swift */; platformFilter = ios; };
 		3FC38358296546C400EC011A /* Model+Scale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC38357296546C400EC011A /* Model+Scale.swift */; };
+		3FD4DB93299A215F009AB33E /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD4DB92299A215F009AB33E /* Cache.swift */; };
 		3FFCCF8D294DFF6000FE6710 /* K8sCatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FFCCF8C294DFF6000FE6710 /* K8sCatApp.swift */; };
 		3FFCCF8F294DFF6000FE6710 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FFCCF8E294DFF6000FE6710 /* ContentView.swift */; };
 		3FFCCF91294DFF6100FE6710 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3FFCCF90294DFF6100FE6710 /* Assets.xcassets */; };
@@ -122,6 +123,7 @@
 		3F9DC548296E7C0300E00C31 /* Model+Pod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Model+Pod.swift"; sourceTree = "<group>"; };
 		3FC383552965430B00EC011A /* ExecWebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExecWebView.swift; sourceTree = "<group>"; };
 		3FC38357296546C400EC011A /* Model+Scale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Model+Scale.swift"; sourceTree = "<group>"; };
+		3FD4DB92299A215F009AB33E /* Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
 		3FFCCF89294DFF6000FE6710 /* K8sCat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = K8sCat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FFCCF8C294DFF6000FE6710 /* K8sCatApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = K8sCatApp.swift; sourceTree = "<group>"; };
 		3FFCCF8E294DFF6000FE6710 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -204,6 +206,7 @@
 				3F2BE425295DDCF80002DEEC /* PVView.swift */,
 				3F2BE427295DDD110002DEEC /* PVCView.swift */,
 				3F25F1EF2962930B00F4DA02 /* HpaView.swift */,
+				3FD4DB92299A215F009AB33E /* Cache.swift */,
 			);
 			path = inner;
 			sourceTree = "<group>";
@@ -471,6 +474,7 @@
 				3F2BE3EF295996BA0002DEEC /* CronJobView.swift in Sources */,
 				3F2BE3F1295996E20002DEEC /* StatefulView.swift in Sources */,
 				3F2BE3F3295997050002DEEC /* ServiceView.swift in Sources */,
+				3FD4DB93299A215F009AB33E /* Cache.swift in Sources */,
 				3F2BE439296015C20002DEEC /* NewClusterView.swift in Sources */,
 				3F19F8C12951A617005C0558 /* NamespaceView.swift in Sources */,
 				3F19F8BF2951A5DC005C0558 /* GlobalView.swift in Sources */,

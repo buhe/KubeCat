@@ -10,6 +10,8 @@ import SwiftUI
 struct ServiceView: View {
     let service: Service
     let viewModel: ViewModel
+    
+    @State var pods: [Pod] = []
     var body: some View {
         Form {
             Section(header: "Name") {
@@ -17,7 +19,7 @@ struct ServiceView: View {
             }
             Section(header: "Pods") {
                 List {
-                    ForEach(viewModel.model.podsByService(in: .namespace(viewModel.ns), service: service.k8sName, name: service.name)) {
+                    ForEach(pods) {
                         i in
                         NavigationLink {
                             PodView(pod: i, viewModel: viewModel)
@@ -36,6 +38,10 @@ struct ServiceView: View {
                         }
                     }
                 }
+                
+            }
+            .task {
+                pods = await viewModel.model.podsByService(in: .namespace(viewModel.ns), service: service.k8sName)
             }
             Section(header: "Labels and Annotations") {
                 NavigationLink {

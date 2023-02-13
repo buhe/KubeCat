@@ -11,6 +11,8 @@ struct StatefulView: View {
     let stateful: Stateful
     let viewModel: ViewModel
     
+    @State var pods: [Pod] = []
+    
     @State var showYaml = false
     var body: some View {
         Form {
@@ -22,7 +24,7 @@ struct StatefulView: View {
             }
             Section(header: "Pods") {
                 List {
-                    ForEach(viewModel.model.podsByStateful(in: .namespace(viewModel.ns), stateful: stateful.k8sName, name: stateful.name)) {
+                    ForEach(pods) {
                         i in
                         NavigationLink {
                             PodView(pod: i, viewModel: viewModel)
@@ -41,6 +43,9 @@ struct StatefulView: View {
                         }
                     }
                 }
+            }
+            .task {
+                pods = await viewModel.model.podsByStateful(in: .namespace(viewModel.ns), stateful: stateful.k8sName)
             }
             Section(header: "Labels and Annotations") {
                 NavigationLink {

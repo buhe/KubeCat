@@ -11,6 +11,9 @@ struct DeploymentView: View {
     let deployment: Deployment
     let viewModel: ViewModel
     
+    @State var pods: [Pod] = []
+    @State var replicas: [Replica] = []
+    
     @State var showYaml = false
     var body: some View {
         Form {
@@ -27,7 +30,7 @@ struct DeploymentView: View {
 //            }
             Section(header: "Replica Sets") {
                 List {
-                    ForEach(viewModel.model.replicaByDeployment(in: .namespace(viewModel.ns), deployment: deployment.k8sName, name: deployment.name)) {
+                    ForEach(replicas) {
                         i in
                         NavigationLink {
                             ReplicaView(replica: i, viewModel: viewModel)
@@ -39,9 +42,12 @@ struct DeploymentView: View {
                     }
                 }
             }
+            .task {
+                replicas = await viewModel.model.replicaByDeployment(in: .namespace(viewModel.ns), deployment: deployment.k8sName)
+            }
             Section(header: "Pods") {
                 List {
-                    ForEach(viewModel.model.podsByDeployment(in: .namespace(viewModel.ns), deployment: deployment.k8sName, name: deployment.name)) {
+                    ForEach(pods) {
                         i in
                         NavigationLink {
                             PodView(pod: i, viewModel: viewModel)
@@ -59,7 +65,11 @@ struct DeploymentView: View {
                             }
                         }
                     }
+                    
                 }
+            }
+            .task {
+                pods = await viewModel.model.podsByDeployment(in: .namespace(viewModel.ns), deployment: deployment.k8sName)
             }
             Section(header: "Labels and Annotations") {
                 NavigationLink {

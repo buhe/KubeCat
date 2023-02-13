@@ -11,6 +11,8 @@ struct ReplicaView: View {
     let replica: Replica
     let viewModel: ViewModel
     
+    @State var pods: [Pod] = []
+    
     var body: some View {
         Form {
             Section(header: "Name") {
@@ -21,7 +23,7 @@ struct ReplicaView: View {
             }
             Section(header: "Pods") {
                 List {
-                    ForEach(viewModel.model.podsByReplica(in: .namespace(viewModel.ns), replica: replica.k8sName, name: replica.name)) {
+                    ForEach(pods) {
                         i in
                         NavigationLink {
                             PodView(pod: i, viewModel: viewModel)
@@ -39,7 +41,11 @@ struct ReplicaView: View {
                             }
                         }
                     }
+                    
                 }
+            }
+            .task {
+                pods = await viewModel.model.podsByReplica(in: .namespace(viewModel.ns), replica: replica.k8sName)
             }
             Section(header: "Labels and Annotations") {
                 NavigationLink {
