@@ -207,27 +207,30 @@ extension Model {
        
     }
     
-    var cronJob: [CronJob] {
-        
-            if model.cronJobs[ns] == nil {
-                do{
-                    try model.cronJob(in: .namespace(ns))
-                }catch{
-                    model.cronJobs[ns] = []
-                }
-                
-            }
-            if model.hasAndSelectDemo {
+    mutating func cronJob() async ->  [CronJob] {
+            if hasAndSelectDemo {
                 return [CronJob(id: "demo", name: "demo", k8sName: [:], labels: [:], annotations: [:], namespace: "demo", schedule: "10/5 * * * *", raw: nil)]
+            } else {
+                checkAWSToken()
+                if let client = client {
+                    let cronJobOrNil = try? await client.batchV1.cronJobs.list(in: .namespace(ns)).get().items
+                    if let cronJob = cronJobOrNil {
+                        return cronJob.map {CronJob(id: $0.name!, name: $0.name!,
+                                                                k8sName:  [:]
+                                                                  , labels: $0.metadata?.labels
+                                                                  , annotations: $0.metadata?.annotations
+                                                                  , namespace: $0.metadata?.namespace ?? "unknow"
+                                                                  , schedule: $0.spec?.schedule ?? "unknow"
+                                                                , raw: $0
+                        )}
+                    } else {
+                        return []
+                    }
+                } else {
+                    return []
+                }
             }
-            return model.cronJobs[ns]!.map {CronJob(id: $0.name!, name: $0.name!,
-                                                    k8sName:  [:]
-                                                      , labels: $0.metadata?.labels
-                                                      , annotations: $0.metadata?.annotations
-                                                      , namespace: $0.metadata?.namespace ?? "unknow"
-                                                      , schedule: $0.spec?.schedule ?? "unknow"
-                                                    , raw: $0
-            )}
+           
     
     }
     
