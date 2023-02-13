@@ -9,10 +9,10 @@ import Foundation
 import SwiftkubeModel
 
 extension Model {
-    func daemonByName(ns: String, name: String) -> Daemon {
+    func daemonByName(ns: String, name: String) async -> Daemon {
 //        checkAWSToken()
         if let client = client {
-            let daemonOrNil = try? client.appsV1.daemonSets.get(in: .namespace(ns), name: name).wait()
+            let daemonOrNil = try? await client.appsV1.daemonSets.get(in: .namespace(ns), name: name).get()
             if let daemon = daemonOrNil {
             return Daemon(id: daemon.name!, name: daemon.name!, k8sName:  (daemon.spec?.selector.matchLabels)!
                           , labels: daemon.metadata?.labels

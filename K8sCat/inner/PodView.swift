@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct PodView: View {
+    @State var daemon: Daemon = Daemon(id: "demo", name: "demo", k8sName: [:], labels: [:], annotations: [:], namespace: "demo", status: true, raw: nil)
     let pod: Pod
     let viewModel: ViewModel
     var body: some View {
@@ -41,7 +42,10 @@ struct PodView: View {
                 NavigationLink {
                     switch pod.controllerType {
                     case .DaemonSet:
-                        DaemonView(daemon: viewModel.model.daemonByName(ns: viewModel.ns, name: pod.controllerName), viewModel: viewModel)
+                        DaemonView(daemon: daemon, viewModel: viewModel)
+                            .task {
+                                daemon = await viewModel.model.daemonByName(ns: viewModel.ns, name: pod.controllerName)
+                            }
                     case .ReplicaSet:
                         ReplicaView(replica: viewModel.model.replicaByName(ns: viewModel.ns, name: pod.controllerName), viewModel: viewModel)
                     case .StatefulSet:
