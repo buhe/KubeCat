@@ -17,28 +17,26 @@ struct Model {
     private var viewContext: NSManagedObjectContext
     private var current: ClusterEntry?
     private var date = Date()
-//    @FetchRequest(
-//        sortDescriptors: [],
-//        animation: .default)
-//    private var cluters: FetchedResults<ClusterEntry>
+    
+    var ns: String = "default"
     var client: KubernetesClient?
     var hasAndSelectDemo = false
     
-    var nodes: [core.v1.Node]?
+//    var nodes: [core.v1.Node]?
     var namespaces: [core.v1.Namespace] = []
-    var pods: [String: [core.v1.Pod]] = ["": []]
-    var deployments: [String: [apps.v1.Deployment]] = ["": []]
-    var jobs: [String: [batch.v1.Job]] = ["": []]
-    var cronJobs: [String: [batch.v1.CronJob]] = ["": []]
-    var statefulls: [String: [apps.v1.StatefulSet]] = ["": []]
-    var services: [String: [core.v1.Service]] = ["": []]
-    var configMaps: [String: [core.v1.ConfigMap]] = ["": []]
-    var secrets: [String: [core.v1.Secret]] = ["": []]
-    var daemons: [String: [apps.v1.DaemonSet]] = ["": []]
-    var replicas: [String: [apps.v1.ReplicaSet]] = ["": []]
-    var pvs: [core.v1.PersistentVolume]?
-    var pvcs: [core.v1.ObjectReference]?
-    var hpas: [String: [autoscaling.v2beta1.HorizontalPodAutoscaler]] = ["": []]
+//    var pods: [String: [core.v1.Pod]] = ["": []]
+//    var deployments: [String: [apps.v1.Deployment]] = ["": []]
+//    var jobs: [String: [batch.v1.Job]] = ["": []]
+//    var cronJobs: [String: [batch.v1.CronJob]] = ["": []]
+//    var statefulls: [String: [apps.v1.StatefulSet]] = ["": []]
+//    var services: [String: [core.v1.Service]] = ["": []]
+//    var configMaps: [String: [core.v1.ConfigMap]] = ["": []]
+//    var secrets: [String: [core.v1.Secret]] = ["": []]
+//    var daemons: [String: [apps.v1.DaemonSet]] = ["": []]
+//    var replicas: [String: [apps.v1.ReplicaSet]] = ["": []]
+//    var pvs: [core.v1.PersistentVolume]?
+//    var pvcs: [core.v1.ObjectReference]?
+//    var hpas: [String: [autoscaling.v2beta1.HorizontalPodAutoscaler]] = ["": []]
 //    var pvcs: [core.v1.PersistentVolumeClaim]?
 //    var replications: [String: [core.v1.ReplicationController]] = ["": []]
     
@@ -138,7 +136,7 @@ struct Model {
                     try? self.client!.syncShutdown()
                     client = nil
                 }
-                clearAll()
+//                clearAll()
                 let type = ClusterType(rawValue: c.type!)
                 var config: KubernetesClientConfig?
                 switch type {
@@ -160,23 +158,23 @@ struct Model {
         }
     }
     
-    mutating func clearAll() {
-        nodes = nil
-        namespaces = []
-        pods = ["": []]
-        deployments = ["": []]
-        jobs = ["": []]
-        cronJobs = ["": []]
-        statefulls = ["": []]
-        services = ["": []]
-        configMaps = ["": []]
-        secrets = ["": []]
-        daemons = ["": []]
-        replicas = ["": []]
-        hpas = ["": []]
-        pvs = nil
-        pvcs = nil
-    }
+//    mutating func clearAll() {
+//        nodes = nil
+//        namespaces = []
+//        pods = ["": []]
+//        deployments = ["": []]
+//        jobs = ["": []]
+//        cronJobs = ["": []]
+//        statefulls = ["": []]
+//        services = ["": []]
+//        configMaps = ["": []]
+//        secrets = ["": []]
+//        daemons = ["": []]
+//        replicas = ["": []]
+//        hpas = ["": []]
+//        pvs = nil
+//        pvcs = nil
+//    }
     
     mutating func namespace() throws {
         checkAWSToken()
@@ -203,236 +201,236 @@ struct Model {
         }
     }
     
-    mutating func node() throws {
-        checkAWSToken()
-        if let client = client {
-            self.nodes = try client.nodes.list().wait().items
-        } else {
-            self.nodes = []
-        }
-    }
-    
-    mutating func pv() throws {
-        checkAWSToken()
-        if let client = client {
-            let pvs = try client.persistentVolumes.list().wait().items
-            self.pvs = pvs
-        } else {
-            self.pvs = []
-        }
-
-    }
-    
-    mutating func pvc() throws {
-        checkAWSToken()
-        if let client = client {
-            let pvcs = try client.persistentVolumes.list().wait().items.map{($0.spec?.claimRef)!}
-            
-            self.pvcs = pvcs
-        } else {
-            self.pvcs = []
-        }
-
-    }
-    
-    mutating func pod(in ns: NamespaceSelector) throws {
-        checkAWSToken()
-        if let client = client {
-            let pods = try client.pods.list(in: ns).wait().items
-            switch ns {
-            case .namespace(let name):
-                self.pods[name] = pods
-            default: break
-            }
-        } else {
-            switch ns {
-            case .namespace(let name):
-                self.pods[name] = []
-            default: break
-            }
-        }
-    }
-    
-    mutating func hpa(in ns: NamespaceSelector) throws {
-        checkAWSToken()
-        if let client = client {
-            let hpa = try client.autoScalingV2Beta1.horizontalPodAutoscalers.list(in: ns).wait().items
-            switch ns {
-            case .namespace(let name):
-                self.hpas[name] = hpa
-            default: break
-            }
-        } else{
-            switch ns {
-            case .namespace(let name):
-                self.hpas[name] = []
-            default: break
-            }
-        }
-        
-    }
-    
-    mutating func deployment(in ns: NamespaceSelector) throws {
-        checkAWSToken()
-        if let client = client {
-            let deployments = try client.appsV1.deployments.list(in: ns).wait().items
-            switch ns {
-            case .namespace(let name):
-                self.deployments[name] = deployments
-            default: break
-            }
-        } else {
-            switch ns {
-            case .namespace(let name):
-                self.deployments[name] = []
-            default: break
-            }
-        }
-    }
-    
-    mutating func job(in ns: NamespaceSelector) throws {
-        checkAWSToken()
-        if let client = client {
-            let job = try client.batchV1.jobs.list(in: ns).wait().items
-            switch ns {
-            case .namespace(let name):
-                self.jobs[name] = job
-            default: break
-            }
-        } else {
-            switch ns {
-            case .namespace(let name):
-                self.jobs[name] = []
-            default: break
-            }
-        }
-    }
-    
-    mutating func cronJob(in ns: NamespaceSelector) throws {
-        checkAWSToken()
-        if let client = client {
-            let cronJob = try client.batchV1.cronJobs.list(in: ns).wait().items
-            switch ns {
-            case .namespace(let name):
-                self.cronJobs[name] = cronJob
-            default: break
-            }
-        } else {
-            switch ns {
-            case .namespace(let name):
-                self.cronJobs[name] = []
-            default: break
-            }
-        }
-    }
-    
-    mutating func statefull(in ns: NamespaceSelector) throws {
-        checkAWSToken()
-        if let client = client {
-            let statefull = try client.appsV1.statefulSets.list(in: ns).wait().items
-            switch ns {
-            case .namespace(let name):
-                self.statefulls[name] = statefull
-            default: break
-            }
-        } else {
-            switch ns {
-            case .namespace(let name):
-                self.statefulls[name] = []
-            default: break
-            }
-        }
-    }
-    
-    mutating func service(in ns: NamespaceSelector) throws {
-        checkAWSToken()
-        if let client = client {
-            let service = try client.services.list(in: ns).wait().items
-            switch ns {
-            case .namespace(let name):
-                self.services[name] = service
-            default: break
-            }
-        } else {
-            switch ns {
-            case .namespace(let name):
-                self.services[name] = []
-            default: break
-            }
-        }
-    }
-    
-    mutating func configMap(in ns: NamespaceSelector) throws {
-        checkAWSToken()
-        if let client = client {
-            let configMap = try client.configMaps.list(in: ns).wait().items
-            switch ns {
-            case .namespace(let name):
-                self.configMaps[name] = configMap
-            default: break
-            }
-        } else {
-            switch ns {
-            case .namespace(let name):
-                self.configMaps[name] = []
-            default: break
-            }
-        }
-    }
-    
-    mutating func secret(in ns: NamespaceSelector) throws {
-        checkAWSToken()
-        if let client = client {
-            let secret = try client.secrets.list(in: ns).wait().items
-            switch ns {
-            case .namespace(let name):
-                self.secrets[name] = secret
-            default: break
-            }
-        } else {
-            switch ns {
-            case .namespace(let name):
-                self.secrets[name] = []
-            default: break
-            }
-        }
-    }
-    
-    mutating func daemon(in ns: NamespaceSelector) throws {
-        checkAWSToken()
-        if let client = client {
-            let daemon = try client.appsV1.daemonSets.list(in: ns).wait().items
-            switch ns {
-            case .namespace(let name):
-                self.daemons[name] = daemon
-            default: break
-            }
-        } else {
-            switch ns {
-            case .namespace(let name):
-                self.daemons[name] = []
-            default: break
-            }
-        }
-    }
-    
-    mutating func replica(in ns: NamespaceSelector) throws {
-        checkAWSToken()
-        if let client = client {
-            let replica = try client.appsV1.replicaSets.list(in: ns).wait().items
-            switch ns {
-            case .namespace(let name):
-                self.replicas[name] = replica
-            default: break
-            }
-        } else {
-            switch ns {
-            case .namespace(let name):
-                self.replicas[name] = []
-            default: break
-            }
-        }
-    }
+//    mutating func node() throws {
+//        checkAWSToken()
+//        if let client = client {
+//            self.nodes = try client.nodes.list().wait().items
+//        } else {
+//            self.nodes = []
+//        }
+//    }
+//    
+//    mutating func pv() throws {
+//        checkAWSToken()
+//        if let client = client {
+//            let pvs = try client.persistentVolumes.list().wait().items
+//            self.pvs = pvs
+//        } else {
+//            self.pvs = []
+//        }
+//
+//    }
+//    
+//    mutating func pvc() throws {
+//        checkAWSToken()
+//        if let client = client {
+//            let pvcs = try client.persistentVolumes.list().wait().items.map{($0.spec?.claimRef)!}
+//            
+//            self.pvcs = pvcs
+//        } else {
+//            self.pvcs = []
+//        }
+//
+//    }
+//    
+//    mutating func pod(in ns: NamespaceSelector) throws {
+//        checkAWSToken()
+//        if let client = client {
+//            let pods = try client.pods.list(in: ns).wait().items
+//            switch ns {
+//            case .namespace(let name):
+//                self.pods[name] = pods
+//            default: break
+//            }
+//        } else {
+//            switch ns {
+//            case .namespace(let name):
+//                self.pods[name] = []
+//            default: break
+//            }
+//        }
+//    }
+//    
+//    mutating func hpa(in ns: NamespaceSelector) throws {
+//        checkAWSToken()
+//        if let client = client {
+//            let hpa = try client.autoScalingV2Beta1.horizontalPodAutoscalers.list(in: ns).wait().items
+//            switch ns {
+//            case .namespace(let name):
+//                self.hpas[name] = hpa
+//            default: break
+//            }
+//        } else{
+//            switch ns {
+//            case .namespace(let name):
+//                self.hpas[name] = []
+//            default: break
+//            }
+//        }
+//        
+//    }
+//    
+//    mutating func deployment(in ns: NamespaceSelector) throws {
+//        checkAWSToken()
+//        if let client = client {
+//            let deployments = try client.appsV1.deployments.list(in: ns).wait().items
+//            switch ns {
+//            case .namespace(let name):
+//                self.deployments[name] = deployments
+//            default: break
+//            }
+//        } else {
+//            switch ns {
+//            case .namespace(let name):
+//                self.deployments[name] = []
+//            default: break
+//            }
+//        }
+//    }
+//    
+//    mutating func job(in ns: NamespaceSelector) throws {
+//        checkAWSToken()
+//        if let client = client {
+//            let job = try client.batchV1.jobs.list(in: ns).wait().items
+//            switch ns {
+//            case .namespace(let name):
+//                self.jobs[name] = job
+//            default: break
+//            }
+//        } else {
+//            switch ns {
+//            case .namespace(let name):
+//                self.jobs[name] = []
+//            default: break
+//            }
+//        }
+//    }
+//    
+//    mutating func cronJob(in ns: NamespaceSelector) throws {
+//        checkAWSToken()
+//        if let client = client {
+//            let cronJob = try client.batchV1.cronJobs.list(in: ns).wait().items
+//            switch ns {
+//            case .namespace(let name):
+//                self.cronJobs[name] = cronJob
+//            default: break
+//            }
+//        } else {
+//            switch ns {
+//            case .namespace(let name):
+//                self.cronJobs[name] = []
+//            default: break
+//            }
+//        }
+//    }
+//    
+//    mutating func statefull(in ns: NamespaceSelector) throws {
+//        checkAWSToken()
+//        if let client = client {
+//            let statefull = try client.appsV1.statefulSets.list(in: ns).wait().items
+//            switch ns {
+//            case .namespace(let name):
+//                self.statefulls[name] = statefull
+//            default: break
+//            }
+//        } else {
+//            switch ns {
+//            case .namespace(let name):
+//                self.statefulls[name] = []
+//            default: break
+//            }
+//        }
+//    }
+//    
+//    mutating func service(in ns: NamespaceSelector) throws {
+//        checkAWSToken()
+//        if let client = client {
+//            let service = try client.services.list(in: ns).wait().items
+//            switch ns {
+//            case .namespace(let name):
+//                self.services[name] = service
+//            default: break
+//            }
+//        } else {
+//            switch ns {
+//            case .namespace(let name):
+//                self.services[name] = []
+//            default: break
+//            }
+//        }
+//    }
+//    
+//    mutating func configMap(in ns: NamespaceSelector) throws {
+//        checkAWSToken()
+//        if let client = client {
+//            let configMap = try client.configMaps.list(in: ns).wait().items
+//            switch ns {
+//            case .namespace(let name):
+//                self.configMaps[name] = configMap
+//            default: break
+//            }
+//        } else {
+//            switch ns {
+//            case .namespace(let name):
+//                self.configMaps[name] = []
+//            default: break
+//            }
+//        }
+//    }
+//    
+//    mutating func secret(in ns: NamespaceSelector) throws {
+//        checkAWSToken()
+//        if let client = client {
+//            let secret = try client.secrets.list(in: ns).wait().items
+//            switch ns {
+//            case .namespace(let name):
+//                self.secrets[name] = secret
+//            default: break
+//            }
+//        } else {
+//            switch ns {
+//            case .namespace(let name):
+//                self.secrets[name] = []
+//            default: break
+//            }
+//        }
+//    }
+//    
+//    mutating func daemon(in ns: NamespaceSelector) throws {
+//        checkAWSToken()
+//        if let client = client {
+//            let daemon = try client.appsV1.daemonSets.list(in: ns).wait().items
+//            switch ns {
+//            case .namespace(let name):
+//                self.daemons[name] = daemon
+//            default: break
+//            }
+//        } else {
+//            switch ns {
+//            case .namespace(let name):
+//                self.daemons[name] = []
+//            default: break
+//            }
+//        }
+//    }
+//    
+//    mutating func replica(in ns: NamespaceSelector) throws {
+//        checkAWSToken()
+//        if let client = client {
+//            let replica = try client.appsV1.replicaSets.list(in: ns).wait().items
+//            switch ns {
+//            case .namespace(let name):
+//                self.replicas[name] = replica
+//            default: break
+//            }
+//        } else {
+//            switch ns {
+//            case .namespace(let name):
+//                self.replicas[name] = []
+//            default: break
+//            }
+//        }
+//    }
     
 //    mutating func replication(in ns: NamespaceSelector) throws {
 //        let replication = try client.replicationControllers.list(in: ns).wait().items
