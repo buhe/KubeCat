@@ -181,26 +181,29 @@ extension Model {
 
     }
     
-    var job: [Job] {
-    
-            if model.jobs[ns] == nil {
-                do{
-                    try model.job(in: .namespace(ns))
-                }catch{
-                    model.jobs[ns] = []
-                }
-                
-            }
-            if model.hasAndSelectDemo {
+    mutating func job() async -> [Job] {
+            if hasAndSelectDemo {
                 return [Job(id: "demo", name: "demo", k8sName: [:], labels: [:], annotations: [:], namespace: "demo", status: true)]
+            } else {
+                checkAWSToken()
+                if let client = client {
+                    let jobOrNil = try? await client.batchV1.jobs.list(in: .namespace(ns)).get().items
+                    if let job = jobOrNil {
+                        return job.map {Job(id: $0.name!, name: $0.name!,
+                                                        k8sName: ($0.spec?.selector?.matchLabels)!
+                                                          , labels: $0.metadata?.labels
+                                                          , annotations: $0.metadata?.annotations
+                                                          , namespace: $0.metadata?.namespace ?? "unknow"
+                                                          , status: $0.status?.succeeded != nil
+                        )}
+                    } else{
+                        return []
+                    }
+                } else {
+                    return []
+                }
             }
-            return model.jobs[ns]!.map {Job(id: $0.name!, name: $0.name!,
-                                            k8sName: ($0.spec?.selector?.matchLabels)!
-                                              , labels: $0.metadata?.labels
-                                              , annotations: $0.metadata?.annotations
-                                              , namespace: $0.metadata?.namespace ?? "unknow"
-                                              , status: $0.status?.succeeded != nil
-            )}
+            
        
     }
     
