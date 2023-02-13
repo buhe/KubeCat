@@ -234,87 +234,100 @@ extension Model {
     
     }
     
-    var statefull: [Stateful] {
-
-            if model.statefulls[ns] == nil {
-                do{
-                    try model.statefull(in: .namespace(ns))
-                }catch{
-                    model.statefulls[ns] = []
-                }
+    mutating func statefull() async ->  [Stateful] {
+        if hasAndSelectDemo {
+            return [Stateful(id: "demo", name: "demo", k8sName: [:], labels: [:], annotations: [:], namespace: "demo", status: false, raw: nil)]
+        } else{
+            checkAWSToken()
+            if let client = client {
+                let statefullOrNil = try? await client.appsV1.statefulSets.list(in: .namespace(ns)).get().items
                 
+                if let statefull = statefullOrNil {
+                    return statefull.map {Stateful(id: $0.name!, name: $0.name!, k8sName:  ($0.spec?.selector.matchLabels)!
+                                                                     , labels: $0.metadata?.labels
+                                                                     , annotations: $0.metadata?.annotations
+                                                                     , namespace: $0.metadata?.namespace ?? "unknow"
+                                                                     , status: $0.status?.readyReplicas == $0.status?.replicas, raw: $0
+                        )}
+                }else{
+                    return []
+                }
+            } else {
+                return []
             }
-            if model.hasAndSelectDemo {
-                return [Stateful(id: "demo", name: "demo", k8sName: [:], labels: [:], annotations: [:], namespace: "demo", status: false, raw: nil)]
+        }
+    }
+    
+    mutating func service() async ->  [Service] {
+             
+            if hasAndSelectDemo {
+                return [Service(id: "demo", name: "demo", k8sName: [:], type: "Node", clusterIps: ["10.1.2.3"], externalIps: ["1.2.3.4"], labels: [:], annotations: [:], namespace: "demo")]
             }
-        return model.statefulls[ns]!.map {Stateful(id: $0.name!, name: $0.name!, k8sName:  ($0.spec?.selector.matchLabels)!
-                                                         , labels: $0.metadata?.labels
-                                                         , annotations: $0.metadata?.annotations
-                                                         , namespace: $0.metadata?.namespace ?? "unknow"
-                                                         , status: $0.status?.readyReplicas == $0.status?.replicas, raw: $0
-            )}
+        checkAWSToken()
+       if let client = client {
+           let serviceOrNil = try? await client.services.list(in: .namespace(ns)).get().items
+           if let service = serviceOrNil{
+               return service.map {Service(id: $0.name!, name: $0.name!, k8sName:  $0.spec?.selector ?? [:], type: ($0.spec?.type!)!, clusterIps: $0.spec?.clusterIPs, externalIps: $0.spec?.externalIPs
+                                                             , labels: $0.metadata?.labels
+                                                             , annotations: $0.metadata?.annotations
+                                                             , namespace: $0.metadata?.namespace ?? "unknow"
+                   )}
+           } else {
+               return []
+           }
+       } else {
+           return []
+       }
         
     }
     
-    var service: [Service] {
-
-            if model.services[ns] == nil {
-                do{
-                    try model.service(in: .namespace(ns))
-                }catch{
-                    model.services[ns] = []
-                }
-                
-            }
-            if model.hasAndSelectDemo {
-                return [Service(id: "demo", name: "demo", k8sName: [:], type: "Node", clusterIps: ["10.1.2.3"], externalIps: ["1.2.3.4"], labels: [:], annotations: [:], namespace: "demo")]
-            }
-        return model.services[ns]!.map {Service(id: $0.name!, name: $0.name!, k8sName:  $0.spec?.selector ?? [:], type: ($0.spec?.type!)!, clusterIps: $0.spec?.clusterIPs, externalIps: $0.spec?.externalIPs
-                                                      , labels: $0.metadata?.labels
-                                                      , annotations: $0.metadata?.annotations
-                                                      , namespace: $0.metadata?.namespace ?? "unknow"
-            )}
-    }
-    
-    var configMap: [ConfigMap] {
-            if model.configMaps[ns] == nil {
-                do{
-                    try model.configMap(in: .namespace(ns))
-                }catch{
-                    model.configMaps[ns] = []
-                }
-                
-            }
-            if model.hasAndSelectDemo {
+    mutating func configMap() async -> [ConfigMap] {
+            
+            if hasAndSelectDemo {
                 return [ConfigMap(id: "demo", name: "demo", labels: [:], annotations: [:], namespace: "demo", data: ["demo": "abc=123"])]
             }
-            return model.configMaps[ns]!.map {ConfigMap(id: $0.name!, name: $0.name!
-                                                          , labels: $0.metadata?.labels
-                                                          , annotations: $0.metadata?.annotations
-                                                          , namespace: $0.metadata?.namespace ?? "unknow"
-                                                          , data: $0.data
-            )}
+        checkAWSToken()
+            if let client = client {
+                let configMapOrNil = try? await client.configMaps.list(in: .namespace(ns)).get().items
+                if let configMap  = configMapOrNil {
+                    return configMap.map {ConfigMap(id: $0.name!, name: $0.name!
+                                                                  , labels: $0.metadata?.labels
+                                                                  , annotations: $0.metadata?.annotations
+                                                                  , namespace: $0.metadata?.namespace ?? "unknow"
+                                                                  , data: $0.data
+                    )}
+                } else {
+                    return []
+                }
+            } else {
+                return []
+            }
+  
        
     }
     
-    var secret: [Secret] {
-            if model.secrets[ns] == nil {
-                do{
-                    try model.secret(in: .namespace(ns))
-                }catch{
-                    model.secrets[ns] = []
-                }
-                
-            }
-            if model.hasAndSelectDemo {
+    mutating func secret() async -> [Secret] {
+    
+            if hasAndSelectDemo {
                 return [Secret(id: "demo", name: "demo", labels: [:], annotations: [:], namespace: "demo", data: ["demo": "qwertyuiop"])]
             }
-            return model.secrets[ns]!.map {Secret(id: $0.name!, name: $0.name!
-                                                    , labels: $0.metadata?.labels
-                                                    , annotations: $0.metadata?.annotations
-                                                    , namespace: $0.metadata?.namespace ?? "unknow"
-                                                    , data: $0.data
-            )}
+        checkAWSToken()
+            if let client = client {
+                let secretOrNil = try? await client.secrets.list(in: .namespace(ns)).get().items
+                if let secret = secretOrNil {
+                    return secret.map {Secret(id: $0.name!, name: $0.name!
+                                                            , labels: $0.metadata?.labels
+                                                            , annotations: $0.metadata?.annotations
+                                                            , namespace: $0.metadata?.namespace ?? "unknow"
+                                                            , data: $0.data
+                    )}
+                } else {
+                    return []
+                }
+            } else {
+                return []
+            }
+            
     }
     
     var daemon: [Daemon] {
