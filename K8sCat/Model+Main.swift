@@ -330,45 +330,50 @@ extension Model {
             
     }
     
-    var daemon: [Daemon] {
-            if model.daemons[ns] == nil {
-                do{
-                    try model.daemon(in: .namespace(ns))
-                }catch{
-                    model.daemons[ns] = []
-                }
-                
-            }
-            if model.hasAndSelectDemo {
+    mutating func daemon() async -> [Daemon] {
+            if hasAndSelectDemo {
                 return [Daemon(id: "demo", name: "demo", k8sName: [:], labels: [:], annotations: [:], namespace: "demo", status: true, raw: nil)]
             }
-        return model.daemons[ns]!.map {Daemon(id: $0.name!, name: $0.name!, k8sName:  ($0.spec?.selector.matchLabels)!
-                                                    , labels: $0.metadata?.labels
-                                                    , annotations: $0.metadata?.annotations
-                                                    , namespace: $0.metadata?.namespace ?? "unknow"
-                                                  , status: !($0.status?.numberMisscheduled ?? 0 > 0)
-                                                  , raw: $0
-            )}
+        checkAWSToken()
+            if let client = client {
+                let daemonOrNil = try? await client.appsV1.daemonSets.list(in: .namespace(ns)).get().items
+                if let daemon = daemonOrNil {
+                    return daemon.map {Daemon(id: $0.name!, name: $0.name!, k8sName:  ($0.spec?.selector.matchLabels)!
+                                                                , labels: $0.metadata?.labels
+                                                                , annotations: $0.metadata?.annotations
+                                                                , namespace: $0.metadata?.namespace ?? "unknow"
+                                                              , status: !($0.status?.numberMisscheduled ?? 0 > 0)
+                                                              , raw: $0
+                        )}
+                } else {
+                    return []
+                }
+            } else {
+               return []
+            }
+        
     }
     
-    var replica: [Replica] {
-        
-            if model.replicas[ns] == nil {
-                do{
-                    try model.replica(in: .namespace(ns))
-                }catch{
-                    model.replicas[ns] = []
-                }
-                
-            }
-            if model.hasAndSelectDemo {
+    mutating func replica() async -> [Replica] {
+            if hasAndSelectDemo {
                 return [Replica(id: "demo", name: "demo", k8sName: [:], labels: [:], annotations: [:], namespace: "demo", status: true)]
             }
-        return model.replicas[ns]!.map {Replica(id: $0.name!, name: $0.name!, k8sName:  ($0.spec?.selector.matchLabels)!
-                                                      , labels: $0.metadata?.labels
-                                                      , annotations: $0.metadata?.annotations
-                                                      , namespace: $0.metadata?.namespace ?? "unknow"
-                                                      , status: $0.status?.replicas == $0.status?.readyReplicas
-            )}
+        checkAWSToken()
+               if let client = client {
+                   let replicaOrNil = try? await client.appsV1.replicaSets.list(in: .namespace(ns)).get().items
+                   if let replica = replicaOrNil {
+                       return replica.map {Replica(id: $0.name!, name: $0.name!, k8sName:  ($0.spec?.selector.matchLabels)!
+                                                                     , labels: $0.metadata?.labels
+                                                                     , annotations: $0.metadata?.annotations
+                                                                     , namespace: $0.metadata?.namespace ?? "unknow"
+                                                                     , status: $0.status?.replicas == $0.status?.readyReplicas
+                           )}
+                   } else {
+                       return []
+                   }
+               } else {
+                   return []
+               }
+
     }
 }

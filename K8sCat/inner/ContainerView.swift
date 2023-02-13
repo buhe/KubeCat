@@ -30,7 +30,7 @@ struct ContainerView: View {
     }
     
     func logs() -> SwiftkubeClientTask? {
-        try! viewModel.model.logs(in: .namespace(viewModel.ns), pod: pod, container: container, delegate: delegate)
+        try! viewModel.model.logs(in: .namespace(viewModel.model.ns), pod: pod, container: container, delegate: delegate)
     }
     
     var body: some View {
