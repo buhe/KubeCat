@@ -29,10 +29,10 @@ extension Model {
         }
     }
     
-    func replicaByName(ns: String, name: String) -> Replica {
+    func replicaByName(ns: String, name: String) async -> Replica {
 //        checkAWSToken()
         if let client = client {
-            let replicaOrNil = try? client.appsV1.replicaSets.get(in: .namespace(ns), name: name).wait()
+            let replicaOrNil = try? await client.appsV1.replicaSets.get(in: .namespace(ns), name: name).get()
             if let replica = replicaOrNil {
                 return Replica(id: replica.name!, name: replica.name!, k8sName:  (replica.spec?.selector.matchLabels)!
                                , labels: replica.metadata?.labels
@@ -48,10 +48,10 @@ extension Model {
         }
     }
     
-    func statefulByName(ns: String, name: String) -> Stateful {
+    func statefulByName(ns: String, name: String) async -> Stateful {
 //        checkAWSToken()
         if let client = client {
-            let statefulOrNil = try? client.appsV1.statefulSets.get(in: .namespace(ns), name: name).wait()
+            let statefulOrNil = try? await client.appsV1.statefulSets.get(in: .namespace(ns), name: name).get()
             if let stateful = statefulOrNil {
                 return Stateful(id: stateful.name!, name: stateful.name!, k8sName:  (stateful.spec?.selector.matchLabels)!
                                 , labels: stateful.metadata?.labels
@@ -67,10 +67,10 @@ extension Model {
         }
     }
     
-    func jobByName(ns: String, name: String) -> Job {
+    func jobByName(ns: String, name: String) async -> Job {
 //        checkAWSToken()
         if let client = client {
-            let jobOrNil = try? client.batchV1.jobs.get(in: .namespace(ns), name: name).wait()
+            let jobOrNil = try? await client.batchV1.jobs.get(in: .namespace(ns), name: name).get()
             if let job = jobOrNil {
                 return Job(id: job.name!, name: job.name!,
                            k8sName: (job.spec?.selector?.matchLabels)!

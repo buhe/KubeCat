@@ -9,6 +9,10 @@ import SwiftUI
 
 struct PodView: View {
     @State var daemon: Daemon = Daemon(id: "demo", name: "demo", k8sName: [:], labels: [:], annotations: [:], namespace: "demo", status: true, raw: nil)
+    @State var replica: Replica = Replica(id: "demo", name: "demo", k8sName: [:], labels: [:], annotations: [:], namespace: "demo", status: true)
+    @State var stateful = Stateful(id: "demo", name: "demo", k8sName: [:], labels: [:], annotations: [:], namespace: "demo", status: false, raw: nil)
+    @State var job = Job(id: "demo", name: "demo", k8sName: [:], labels: [:], annotations: [:], namespace: "demo", status: true)
+    
     let pod: Pod
     let viewModel: ViewModel
     var body: some View {
@@ -47,11 +51,20 @@ struct PodView: View {
                                 daemon = await viewModel.model.daemonByName(ns: viewModel.ns, name: pod.controllerName)
                             }
                     case .ReplicaSet:
-                        ReplicaView(replica: viewModel.model.replicaByName(ns: viewModel.ns, name: pod.controllerName), viewModel: viewModel)
+                        ReplicaView(replica: replica, viewModel: viewModel)
+                            .task {
+                                replica = await viewModel.model.replicaByName(ns: viewModel.ns, name: pod.controllerName)
+                            }
                     case .StatefulSet:
-                        StatefulView(stateful: viewModel.model.statefulByName(ns: viewModel.ns, name: pod.controllerName), viewModel: viewModel)
+                        StatefulView(stateful: stateful, viewModel: viewModel)
+                            .task {
+                                stateful = await viewModel.model.statefulByName(ns: viewModel.ns, name: pod.controllerName)
+                            }
                     case .Job:
-                        JobView(job: viewModel.model.jobByName(ns: viewModel.ns, name: pod.controllerName), viewModel: viewModel)
+                        JobView(job: job, viewModel: viewModel)
+                            .task {
+                                job = await viewModel.model.jobByName(ns: viewModel.ns, name: pod.controllerName)
+                            }
                     default: EmptyView()
                     }
                 } label: {
