@@ -6,10 +6,13 @@
 //
 
 import SwiftUI
+import StoreKit
 
 struct SettingView: View {
     let viewModel: ViewModel
     @Environment(\.managedObjectContext) private var viewContext
+    @Environment(\.requestReview) var requestReview
+    
     var body: some View {
         NavigationStack {
             Form{
@@ -25,10 +28,17 @@ struct SettingView: View {
                         Text("Feedback")
                         
                     }.buttonStyle(PlainButtonStyle())
+                    Button{
+                        requestReview()
+                    } label: {
+                        
+                        Text("Rate")
+                        
+                    }.buttonStyle(PlainButtonStyle())
                     HStack{
                         Text("Version")
                         Spacer()
-                        Text("1")
+                        Text(Bundle.main.releaseVersionNumber!)
                     }
                     HStack{
                         Text("License")

@@ -15,6 +15,15 @@ protocol Yamlble {
     func decodeYamlAndUpdate(client: KubernetesClient?, yaml: String)
 }
 
+extension Bundle {
+    var releaseVersionNumber: String? {
+        return infoDictionary?["CFBundleShortVersionString"] as? String
+    }
+    var buildVersionNumber: String? {
+        return infoDictionary?["CFBundleVersion"] as? String
+    }
+}
+
 extension View {
     func border(width: CGFloat, edges: [Edge], color: SwiftUI.Color) -> some View {
         overlay(EdgeBorder(width: width, edges: edges).foregroundColor(color))
