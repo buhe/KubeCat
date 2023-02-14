@@ -19,12 +19,12 @@ struct HpaView: View {
             }
             Section(header: "Reference") {
                 NavigationLink {
-                    switch hpa.referenceType {
-                    case .Deployment:
-                        DeploymentView(deployment: viewModel.model.deploymentByName(ns: viewModel.ns, name: hpa.reference), viewModel: viewModel)
-                    default:
-                        EmptyView()
-                    }
+//                    switch hpa.referenceType {
+//                    case .Deployment:
+//                        DeploymentView(deployment: viewModel.model.deploymentByName(ns: viewModel.ns, name: hpa.reference), viewModel: viewModel)
+//                    default:
+//                        EmptyView()
+//                    }
                 } label: {
                     
                     switch hpa.referenceType {

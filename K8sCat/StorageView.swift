@@ -18,6 +18,15 @@ struct StorageView: View {
     @ObservedObject var viewModel: ViewModel
     @State var showCluster = false
     @Environment(\.managedObjectContext) private var viewContext
+    
+    @State var pv: [PersistentVolume] = []
+    mutating func loadData() async {
+        
+    }
+    
+    mutating func loadPv() async {
+        pv = await viewModel.model.pv()
+    }
     var body: some View {
         VStack {
             NavigationStack {

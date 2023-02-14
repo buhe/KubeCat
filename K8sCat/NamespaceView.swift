@@ -9,6 +9,8 @@ import SwiftUI
 import SwiftUIX
 
 struct NamespaceView: View {
+    @State var pods: [Pod] = []
+    
     
     @State var search = ""
     @State var tabIndex = 0
@@ -20,7 +22,12 @@ struct NamespaceView: View {
         sortDescriptors: [],
         animation: .default)
     private var cluters: FetchedResults<ClusterEntry>
-   
+    func loadPods() async {
+        self.pods = await viewModel.model.pods().filter{$0.name.contains(search.lowercased()) || search == ""}
+    }
+    
+    
+    
     var body: some View {
         VStack {
             NavigationStack {
@@ -35,40 +42,41 @@ struct NamespaceView: View {
                     }
                     HStack{
                         Spacer()
-                        Picker("ns", selection: $viewModel.ns) {
+                        Picker("ns", selection: $viewModel.model.ns) {
                             ForEach(viewModel.namespaces, id: \.self) {
                                 Text($0)
                             }
-                        }.onChange(of: viewModel.ns) {
-                            c in
-                            
-                            switch tabIndex {
-                            case 0:
-                                try? viewModel.model.pod(in: .namespace(c))
-                            case 1:
-                                try? viewModel.model.deployment(in: .namespace(c))
-                            case 2:
-                                try? viewModel.model.job(in: .namespace(c))
-                            case 3:
-                                try? viewModel.model.cronJob(in: .namespace(c))
-                            case 4:
-                                try? viewModel.model.statefull(in: .namespace(c))
-                            case 5:
-                                try? viewModel.model.service(in: .namespace(c))
-                            case 6:
-                                try? viewModel.model.configMap(in: .namespace(c))
-                            case 7:
-                                try? viewModel.model.secret(in: .namespace(c))
-                            case 8:
-                                try? viewModel.model.daemon(in: .namespace(c))
-                            case 9:
-                                try? viewModel.model.replica(in: .namespace(c))
-                            case 10:
-                                try? viewModel.model.hpa(in: .namespace(c))
-                            default: break
-                            }
-                            
                         }
+//                        .onChange(of: viewModel.ns) {
+//                            c in
+//
+//                            switch tabIndex {
+//                            case 0:
+//                                // load pods by ns
+//                            case 1:
+//
+//                            case 2:
+//
+//                            case 3:
+//
+//                            case 4:
+//
+//                            case 5:
+//
+//                            case 6:
+//
+//                            case 7:
+//
+//                            case 8:
+//
+//                            case 9:
+//
+//                            case 10:
+//
+//                            default: break
+//                            }
+//
+//                        }
                         Spacer()
                         
                     }
@@ -81,7 +89,7 @@ struct NamespaceView: View {
                     switch tabIndex {
                     case 0:
                         List {
-                            ForEach(viewModel.pods.filter{$0.name.contains(search.lowercased()) || search == ""}) {
+                            ForEach(pods) {
                                 i in
                                 NavigationLink {
                                     PodView(pod: i, viewModel: viewModel)
@@ -103,7 +111,11 @@ struct NamespaceView: View {
                             }
                         }.listStyle(PlainListStyle())
                         .refreshable {
-                            viewModel.model.pods[viewModel.ns] = nil
+                            Task {
+                                await loadPods()
+                            }
+                        }.task {
+                            await loadPods()
                         }
                     case 1:
                         List {
