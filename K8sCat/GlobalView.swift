@@ -11,28 +11,30 @@ import SwiftUIX
 struct GlobalView: View {
     @State var search = ""
     @State var tabIndex = 0
-    @ObservedObject var viewModel: ViewModel
+    var viewModel: ViewModel
     @State var showCluster = false
-    @FetchRequest(
-        sortDescriptors: [],
-        animation: .default)
-    private var cluters: FetchedResults<ClusterEntry>
-    @Environment(\.managedObjectContext) private var viewContext
     
+    @State var nodes: [Node] = []
+    
+    @Environment(\.managedObjectContext) private var viewContext
+    func loadNode() async {
+        self.nodes = await viewModel.model.nodes().filter{$0.name.contains(search.lowercased()) || search == ""}
+    }
     var body: some View {
         VStack {
             NavigationStack {
                 HStack{
                     SearchBar(text: $search).padding(.horizontal)
-                    Button{ showCluster = true }label: {
-                        Image(systemName: cluters.filter{$0.selected}.first?.icon! ?? "0.circle")
-                    }.padding(.trailing)
+                    ClusterSelectView{
+                        showCluster = true
+                    }
+                    .environment(\.managedObjectContext, viewContext)
                 }
                 NodesTabBar(tabIndex: $tabIndex).padding(.horizontal, 26)
                 switch tabIndex {
                 case 0:
                     List {
-                        ForEach(viewModel.nodes.filter{$0.name.contains(search.lowercased()) || search == ""}) {
+                        ForEach(nodes) {
                             i in
                             NavigationLink {
                                 NodeView(node: i, viewModel: viewModel)
@@ -47,7 +49,7 @@ struct GlobalView: View {
                         }
                     }.listStyle(PlainListStyle())
                     .refreshable {
-                        viewModel.model.nodes = nil
+                        
                     }
                 default:
                     EmptyView()
@@ -58,6 +60,9 @@ struct GlobalView: View {
                 showCluster = false
             }
                 .environment(\.managedObjectContext, viewContext)
+        }
+        .task {
+            await loadNode()
         }
     }
 }

@@ -10,23 +10,40 @@ import SwiftUIX
 
 struct NamespaceView: View {
     @State var pods: [Pod] = []
+    @State var deploments: [Deployment] = []
+    @State var jobs: [Job] = []
+    @State var cronJobs: [CronJob] = []
+
     
     
     @State var search = ""
     @State var tabIndex = 0
     @Environment(\.managedObjectContext) private var viewContext
     // must add @ObservedObject
-    @ObservedObject var viewModel: ViewModel
+    @State var viewModel: ViewModel
     @State var showCluster = false
-    @FetchRequest(
-        sortDescriptors: [],
-        animation: .default)
-    private var cluters: FetchedResults<ClusterEntry>
+    
+    func loadData() async {
+        switch tabIndex {
+        case 0:
+            await loadPods()
+        case 1:
+            await loadDeplotment()
+        default: break
+        }
+    }
+
     func loadPods() async {
         self.pods = await viewModel.model.pods().filter{$0.name.contains(search.lowercased()) || search == ""}
     }
     
+    func loadDeplotment() async {
+        self.deploments = await viewModel.model.deployment().filter{$0.name.contains(search.lowercased()) || search == ""}
+    }
     
+    func loadJob() async {
+        self.jobs = await viewModel.model.job().filter{$0.name.contains(search.lowercased()) || search == ""}
+    }
     
     var body: some View {
         VStack {
@@ -34,11 +51,10 @@ struct NamespaceView: View {
                 ZStack(){
                     HStack{
                         Spacer()
-                        Button{showCluster = true}label: {
-                            
-                            
-                            Image(systemName: cluters.filter{$0.selected}.first?.icon! ?? "0.circle")
-                        }.padding(.trailing)
+                        ClusterSelectView{
+                            showCluster = true
+                        }
+                        .environment(\.managedObjectContext, viewContext)
                     }
                     HStack{
                         Spacer()
@@ -47,36 +63,10 @@ struct NamespaceView: View {
                                 Text($0)
                             }
                         }
-//                        .onChange(of: viewModel.ns) {
-//                            c in
-//
-//                            switch tabIndex {
-//                            case 0:
-//                                // load pods by ns
-//                            case 1:
-//
-//                            case 2:
-//
-//                            case 3:
-//
-//                            case 4:
-//
-//                            case 5:
-//
-//                            case 6:
-//
-//                            case 7:
-//
-//                            case 8:
-//
-//                            case 9:
-//
-//                            case 10:
-//
-//                            default: break
-//                            }
-//
-//                        }
+                        .onChange(of: viewModel.model.ns){
+                            c in
+                            print(c)
+                        }
                         Spacer()
                         
                     }
@@ -114,12 +104,10 @@ struct NamespaceView: View {
                             Task {
                                 await loadPods()
                             }
-                        }.task {
-                            await loadPods()
                         }
                     case 1:
                         List {
-                            ForEach(viewModel.deployment.filter{$0.name.contains(search.lowercased()) || search == ""}) {
+                            ForEach(deploments) {
                                 i in
                                 NavigationLink {
                                     DeploymentView(deployment: i, viewModel: viewModel)
@@ -140,11 +128,13 @@ struct NamespaceView: View {
                             }
                         }.listStyle(PlainListStyle())
                         .refreshable {
-                            viewModel.model.deployments[viewModel.ns] = nil
+                            Task {
+                                await loadDeplotment()
+                            }
                         }
                     case 2:
                         List {
-                            ForEach(viewModel.job.filter{$0.name.contains(search.lowercased()) || search == ""}) {
+                            ForEach(jobs) {
                                 i in
                                 NavigationLink {
                                     JobView(job: i, viewModel: viewModel)
@@ -157,11 +147,12 @@ struct NamespaceView: View {
                             }
                         }.listStyle(PlainListStyle())
                         .refreshable {
-                            viewModel.model.jobs[viewModel.ns] = nil
+                            
                         }
                     case 3:
                         List {
-                            ForEach(viewModel.cronJob.filter{$0.name.contains(search.lowercased()) || search == ""}) {
+                            ForEach(cronJobs) {
+//                            ForEach(viewModel.cronJob.filter{$0.name.contains(search.lowercased()) || search == ""}) {
                                 i in
                                 NavigationLink {
                                     CronJobView(cronJob: i, viewModel: viewModel)
@@ -177,151 +168,152 @@ struct NamespaceView: View {
                             }
                         }.listStyle(PlainListStyle())
                         .refreshable {
-                            viewModel.model.cronJobs[viewModel.ns] = nil
+                            
                         }
-                    case 4:
-                        List {
-                            ForEach(viewModel.statefull.filter{$0.name.contains(search.lowercased()) || search == ""}) {
-                                i in
-                                NavigationLink {
-                                    StatefulView(stateful: i, viewModel: viewModel)
-                                } label: {
-                                    Image(systemName: "macpro.gen2.fill")
-                                    Text(i.name)
-                                        .foregroundColor(i.status ? .green : .red)
-                                }
-                        
-                            }
-                        }.listStyle(PlainListStyle())
-                        .refreshable {
-                            viewModel.model.statefulls[viewModel.ns] = nil
-                        }
-                    case 5:
-                        List {
-                            ForEach(viewModel.service.filter{$0.name.contains(search.lowercased()) || search == ""}) {
-                                i in
-                                NavigationLink {
-                                    ServiceView(service: i, viewModel: viewModel)
-                                } label: {
-                                    Image(systemName: "paperplane")
-                                    VStack(alignment: .leading) {
-                                        Text(i.name)
-                                        VStack(alignment: .leading) {
-                                            Text("Cluster IPs").font(.caption)
-                                            ForEach(i.clusterIps ?? ["None"], id: \.self) {
-                                                ip in
-                                                
-                                                Text(ip).font(.caption2)
-                                                
-                                            }
-                                        }
-                                        
-                                        VStack(alignment: .leading) {
-                                            Text("External IPs").font(.caption)
-                                            ForEach(i.externalIps ?? ["None"], id: \.self) {
-                                                ip in
-                                                
-                                                Text(ip).font(.caption2)
-                                                
-                                            }
-                                        }
-                                    }
-                                   
-                                }
-                        
-                            }
-                        }.listStyle(PlainListStyle())
-                        .refreshable {
-                            viewModel.model.services[viewModel.ns] = nil
-                        }
-                    case 6:
-                        List {
-                            ForEach(viewModel.configMap.filter{$0.name.contains(search.lowercased()) || search == ""}) {
-                                i in
-                                NavigationLink {
-                                    ConfigMapView(configMap: i, viewModel: viewModel)
-                                } label: {
-                                    Image(systemName: "note.text")
-                                    VStack(alignment: .leading) {
-                                        Text(i.name)
-                                        CaptionText(text: "\(i.data?.count ?? 0) keys")
-                                    }
-                                }
-                        
-                            }
-                        }.listStyle(PlainListStyle())
-                        .refreshable {
-                            viewModel.model.configMaps[viewModel.ns] = nil
-                        }
-                    case 7:
-                        List {
-                            ForEach(viewModel.secret.filter{$0.name.contains(search.lowercased()) || search == ""}) {
-                                i in
-                                NavigationLink {
-                                    SecretView(secret: i, viewModel: viewModel)
-                                } label: {
-                                    Image(systemName: "lock.doc")
-                                    VStack(alignment: .leading) {
-                                        Text(i.name)
-                                        CaptionText(text: "\(i.data?.count ?? 0) keys")
-                                    }
-                                }
-                        
-                            }
-                        }.listStyle(PlainListStyle())
-                        .refreshable {
-                            viewModel.model.secrets[viewModel.ns] = nil
-                        }
-                    case 8:
-                        List {
-                            ForEach(viewModel.daemon.filter{$0.name.contains(search.lowercased()) || search == ""}) {
-                                i in
-                                NavigationLink {
-                                    DaemonView(daemon: i, viewModel: viewModel)
-                                } label: {
-                                    Image(systemName: "xserve")
-                                    Text(i.name)
-                                        .foregroundColor(i.status ? .green : .red)
-                                }
-                        
-                            }
-                        }.listStyle(PlainListStyle())
-                        .refreshable {
-                            viewModel.model.daemons[viewModel.ns] = nil
-                        }
-                    case 9:
-                        List {
-                            ForEach(viewModel.replica.filter{$0.name.contains(search.lowercased()) || search == ""}) {
-                                i in
-                                NavigationLink {
-                                    ReplicaView(replica: i, viewModel: viewModel)
-                                } label: {
-                                    Image(systemName: "square.3.layers.3d.down.left")
-                                    Text(i.name)
-                                        .foregroundColor(i.status ? .green : .red)
-                                }
-                        
-                            }
-                        }.listStyle(PlainListStyle())
-                        .refreshable {
-                            viewModel.model.replicas[viewModel.ns] = nil
-                        }
-                    case 10:
-                        List {
-                            ForEach(viewModel.hpas.filter{$0.name.contains(search.lowercased()) || search == ""}) {
-                                i in
-                                NavigationLink {
-                                    HpaView(hpa: i, viewModel: viewModel)
-                                } label: {
-                                    Image(systemName: "scale.3d")
-                                    Text(i.name)
-                                }
-
-                            }
-                        }.listStyle(PlainListStyle())
-                        .refreshable {
-                            viewModel.model.hpas[viewModel.ns] = nil
-                        }
+//                    case 4:
+//                        List {
+//                            ForEach(jobs) {
+////                            ForEach(viewModel.statefull.filter{$0.name.contains(search.lowercased()) || search == ""}) {
+//                                i in
+//                                NavigationLink {
+//                                    StatefulView(stateful: i, viewModel: viewModel)
+//                                } label: {
+//                                    Image(systemName: "macpro.gen2.fill")
+//                                    Text(i.name)
+//                                        .foregroundColor(i.status ? .green : .red)
+//                                }
+//
+//                            }
+//                        }.listStyle(PlainListStyle())
+//                        .refreshable {
+//                            viewModel.model.statefulls[viewModel.ns] = nil
+//                        }
+//                    case 5:
+//                        List {
+//                            ForEach(viewModel.service.filter{$0.name.contains(search.lowercased()) || search == ""}) {
+//                                i in
+//                                NavigationLink {
+//                                    ServiceView(service: i, viewModel: viewModel)
+//                                } label: {
+//                                    Image(systemName: "paperplane")
+//                                    VStack(alignment: .leading) {
+//                                        Text(i.name)
+//                                        VStack(alignment: .leading) {
+//                                            Text("Cluster IPs").font(.caption)
+//                                            ForEach(i.clusterIps ?? ["None"], id: \.self) {
+//                                                ip in
+//
+//                                                Text(ip).font(.caption2)
+//
+//                                            }
+//                                        }
+//
+//                                        VStack(alignment: .leading) {
+//                                            Text("External IPs").font(.caption)
+//                                            ForEach(i.externalIps ?? ["None"], id: \.self) {
+//                                                ip in
+//
+//                                                Text(ip).font(.caption2)
+//
+//                                            }
+//                                        }
+//                                    }
+//
+//                                }
+//
+//                            }
+//                        }.listStyle(PlainListStyle())
+//                        .refreshable {
+//                            viewModel.model.services[viewModel.ns] = nil
+//                        }
+//                    case 6:
+//                        List {
+//                            ForEach(viewModel.configMap.filter{$0.name.contains(search.lowercased()) || search == ""}) {
+//                                i in
+//                                NavigationLink {
+//                                    ConfigMapView(configMap: i, viewModel: viewModel)
+//                                } label: {
+//                                    Image(systemName: "note.text")
+//                                    VStack(alignment: .leading) {
+//                                        Text(i.name)
+//                                        CaptionText(text: "\(i.data?.count ?? 0) keys")
+//                                    }
+//                                }
+//
+//                            }
+//                        }.listStyle(PlainListStyle())
+//                        .refreshable {
+//                            viewModel.model.configMaps[viewModel.ns] = nil
+//                        }
+//                    case 7:
+//                        List {
+//                            ForEach(viewModel.secret.filter{$0.name.contains(search.lowercased()) || search == ""}) {
+//                                i in
+//                                NavigationLink {
+//                                    SecretView(secret: i, viewModel: viewModel)
+//                                } label: {
+//                                    Image(systemName: "lock.doc")
+//                                    VStack(alignment: .leading) {
+//                                        Text(i.name)
+//                                        CaptionText(text: "\(i.data?.count ?? 0) keys")
+//                                    }
+//                                }
+//
+//                            }
+//                        }.listStyle(PlainListStyle())
+//                        .refreshable {
+//                            viewModel.model.secrets[viewModel.ns] = nil
+//                        }
+//                    case 8:
+//                        List {
+//                            ForEach(viewModel.daemon.filter{$0.name.contains(search.lowercased()) || search == ""}) {
+//                                i in
+//                                NavigationLink {
+//                                    DaemonView(daemon: i, viewModel: viewModel)
+//                                } label: {
+//                                    Image(systemName: "xserve")
+//                                    Text(i.name)
+//                                        .foregroundColor(i.status ? .green : .red)
+//                                }
+//
+//                            }
+//                        }.listStyle(PlainListStyle())
+//                        .refreshable {
+//                            viewModel.model.daemons[viewModel.ns] = nil
+//                        }
+//                    case 9:
+//                        List {
+//                            ForEach(viewModel.replica.filter{$0.name.contains(search.lowercased()) || search == ""}) {
+//                                i in
+//                                NavigationLink {
+//                                    ReplicaView(replica: i, viewModel: viewModel)
+//                                } label: {
+//                                    Image(systemName: "square.3.layers.3d.down.left")
+//                                    Text(i.name)
+//                                        .foregroundColor(i.status ? .green : .red)
+//                                }
+//
+//                            }
+//                        }.listStyle(PlainListStyle())
+//                        .refreshable {
+//                            viewModel.model.replicas[viewModel.ns] = nil
+//                        }
+//                    case 10:
+//                        List {
+//                            ForEach(viewModel.hpas.filter{$0.name.contains(search.lowercased()) || search == ""}) {
+//                                i in
+//                                NavigationLink {
+//                                    HpaView(hpa: i, viewModel: viewModel)
+//                                } label: {
+//                                    Image(systemName: "scale.3d")
+//                                    Text(i.name)
+//                                }
+//
+//                            }
+//                        }.listStyle(PlainListStyle())
+//                        .refreshable {
+//                            viewModel.model.hpas[viewModel.ns] = nil
+//                        }
                     default:
                         EmptyView()
                     }
@@ -332,7 +324,10 @@ struct NamespaceView: View {
             ClusterView(viewModel: viewModel){
                 showCluster = false
             }
-                .environment(\.managedObjectContext, viewContext)
+            .environment(\.managedObjectContext, viewContext)
+        }
+        .task {
+            await loadData()
         }
         
         
