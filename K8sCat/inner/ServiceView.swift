@@ -41,7 +41,7 @@ struct ServiceView: View {
                 
             }
             .task {
-                pods = await viewModel.model.podsByService(in: .namespace(viewModel.ns), service: service.k8sName)
+                pods = await viewModel.model.podsByService(in: .namespace(viewModel.model.ns), service: service.k8sName)
             }
             Section(header: "Labels and Annotations") {
                 NavigationLink {

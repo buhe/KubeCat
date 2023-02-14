@@ -42,9 +42,9 @@ struct JobView: View {
                     
                 }
             }
-            .task {
-                pods = await viewModel.model.podsByJob(in: .namespace(viewModel.ns), job: job.k8sName)
-            }
+//            .task {
+//                pods = await viewModel.model.podsByJob(in: .namespace(viewModel.ns), job: job.k8sName)
+//            }
             Section(header: "Labels and Annotations") {
                 NavigationLink {
                     List {
@@ -84,6 +84,9 @@ struct JobView: View {
                 }
                 
             }
+        }
+        .task {
+            pods = await viewModel.model.podsByJob(in: .namespace(viewModel.model.ns), job: job.k8sName)
         }
         .navigationTitle("Job")
     }

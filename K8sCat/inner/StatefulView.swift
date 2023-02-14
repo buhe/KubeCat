@@ -45,7 +45,7 @@ struct StatefulView: View {
                 }
             }
             .task {
-                pods = await viewModel.model.podsByStateful(in: .namespace(viewModel.ns), stateful: stateful.k8sName)
+                pods = await viewModel.model.podsByStateful(in: .namespace(viewModel.model.ns), stateful: stateful.k8sName)
             }
             Section(header: "Labels and Annotations") {
                 NavigationLink {

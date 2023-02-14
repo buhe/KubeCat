@@ -45,7 +45,7 @@ struct ReplicaView: View {
                 }
             }
             .task {
-                pods = await viewModel.model.podsByReplica(in: .namespace(viewModel.ns), replica: replica.k8sName)
+                pods = await viewModel.model.podsByReplica(in: .namespace(viewModel.model.ns), replica: replica.k8sName)
             }
             Section(header: "Labels and Annotations") {
                 NavigationLink {

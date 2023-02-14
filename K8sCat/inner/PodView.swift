@@ -48,22 +48,22 @@ struct PodView: View {
                     case .DaemonSet:
                         DaemonView(daemon: daemon, viewModel: viewModel)
                             .task {
-                                daemon = await viewModel.model.daemonByName(ns: viewModel.ns, name: pod.controllerName)
+                                daemon = await viewModel.model.daemonByName(ns: viewModel.model.ns, name: pod.controllerName)
                             }
                     case .ReplicaSet:
                         ReplicaView(replica: replica, viewModel: viewModel)
                             .task {
-                                replica = await viewModel.model.replicaByName(ns: viewModel.ns, name: pod.controllerName)
+                                replica = await viewModel.model.replicaByName(ns: viewModel.model.ns, name: pod.controllerName)
                             }
                     case .StatefulSet:
                         StatefulView(stateful: stateful, viewModel: viewModel)
                             .task {
-                                stateful = await viewModel.model.statefulByName(ns: viewModel.ns, name: pod.controllerName)
+                                stateful = await viewModel.model.statefulByName(ns: viewModel.model.ns, name: pod.controllerName)
                             }
                     case .Job:
                         JobView(job: job, viewModel: viewModel)
                             .task {
-                                job = await viewModel.model.jobByName(ns: viewModel.ns, name: pod.controllerName)
+                                job = await viewModel.model.jobByName(ns: viewModel.model.ns, name: pod.controllerName)
                             }
                     default: EmptyView()
                     }

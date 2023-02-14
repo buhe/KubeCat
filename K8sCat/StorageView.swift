@@ -9,38 +9,47 @@ import SwiftUI
 import SwiftUIX
 
 struct StorageView: View {
-    @FetchRequest(
-        sortDescriptors: [],
-        animation: .default)
-    private var cluters: FetchedResults<ClusterEntry>
     @State var search = ""
     @State var tabIndex = 0
-    @ObservedObject var viewModel: ViewModel
+    let viewModel: ViewModel
     @State var showCluster = false
     @Environment(\.managedObjectContext) private var viewContext
-    
+
     @State var pv: [PersistentVolume] = []
-    mutating func loadData() async {
-        
+    @State var pvc: [PersistentVolumeClaim] = []
+
+    func loadData() async {
+        switch tabIndex {
+        case 0:
+            await loadPv()
+        case 1:
+            await loadPvc()
+        default: break
+        }
     }
-    
-    mutating func loadPv() async {
-        pv = await viewModel.model.pv()
+
+    func loadPv() async {
+        self.pv = await viewModel.model.pv().filter{$0.name.contains(search.lowercased()) || search == ""}
+    }
+
+    func loadPvc() async {
+        self.pvc = await viewModel.model.pvc().filter{$0.name.contains(search.lowercased()) || search == ""}
     }
     var body: some View {
         VStack {
             NavigationStack {
                 HStack{
                     SearchBar(text: $search).padding(.horizontal)
-                    Button{showCluster = true}label: {
-                        Image(systemName: cluters.filter{$0.selected}.first?.icon! ?? "0.circle")
-                    }.padding(.trailing)
+                    ClusterSelectView{
+                        showCluster = true
+                    }
+                    .environment(\.managedObjectContext, viewContext)
                 }
                 StorageTabBar(tabIndex: $tabIndex).padding(.horizontal, 26)
                 switch tabIndex {
                 case 0:
                     List {
-                        ForEach(viewModel.pv.filter{$0.name.contains(search.lowercased()) || search == ""}) {
+                        ForEach(pv) {
                             i in
                             NavigationLink {
                                 PVView(pv: i, viewModel: viewModel)
@@ -48,15 +57,17 @@ struct StorageView: View {
                                 Image(systemName: "capsule.portrait")
                                 Text(i.name)
                             }
-                    
+
                         }
                     }.listStyle(PlainListStyle())
                     .refreshable {
-                        viewModel.model.pvs = nil
+                        Task{
+                            await loadPv()
+                        }
                     }
                 case 1:
                     List {
-                        ForEach(viewModel.pvc.filter{$0.name.contains(search.lowercased()) || search == ""}) {
+                        ForEach(pvc) {
                             i in
                             NavigationLink {
                                 PVCView(pvc: i, viewModel: viewModel)
@@ -64,13 +75,15 @@ struct StorageView: View {
                                 Image(systemName: "shield")
                                 Text(i.name)
                             }
-                    
+
                         }
                     }.listStyle(PlainListStyle())
                     .refreshable {
-                        viewModel.model.pvcs = nil
+                        Task {
+                            await loadPvc()
+                        }
                     }
-                
+
                 default:
                     EmptyView()
                 }
@@ -80,6 +93,9 @@ struct StorageView: View {
                 showCluster = false
             }
                 .environment(\.managedObjectContext, viewContext)
+        }
+        .task {
+            await loadData()
         }
     }
 }

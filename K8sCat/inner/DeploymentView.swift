@@ -43,7 +43,7 @@ struct DeploymentView: View {
                 }
             }
             .task {
-                replicas = await viewModel.model.replicaByDeployment(in: .namespace(viewModel.ns), deployment: deployment.k8sName)
+                replicas = await viewModel.model.replicaByDeployment(in: .namespace(viewModel.model.ns), deployment: deployment.k8sName)
             }
             Section(header: "Pods") {
                 List {
@@ -69,7 +69,7 @@ struct DeploymentView: View {
                 }
             }
             .task {
-                pods = await viewModel.model.podsByDeployment(in: .namespace(viewModel.ns), deployment: deployment.k8sName)
+                pods = await viewModel.model.podsByDeployment(in: .namespace(viewModel.model.ns), deployment: deployment.k8sName)
             }
             Section(header: "Labels and Annotations") {
                 NavigationLink {

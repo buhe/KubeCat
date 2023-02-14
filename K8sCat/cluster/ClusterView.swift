@@ -83,11 +83,11 @@ struct ClusterView: View {
                     viewModel.model.hasAndSelectDemo = false
                     
                 }}
-                delete.forEach{
-                    if $0.selected {
-                        viewModel.model.clearAll()
-                    }
-                }
+//                delete.forEach{
+//                    if $0.selected {
+//                        viewModel.model.clearAll()
+//                    }
+//                }
                 delete.forEach(viewContext.delete)
     
                 do {

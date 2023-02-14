@@ -45,7 +45,7 @@ struct DaemonView: View {
                 }
             }
             .task {
-                pods = await viewModel.model.podsByDaemon(in: .namespace(viewModel.ns), daemon: daemon.k8sName)
+                pods = await viewModel.model.podsByDaemon(in: .namespace(viewModel.model.ns), daemon: daemon.k8sName)
             }
             Section(header: "Labels and Annotations") {
                 NavigationLink {
