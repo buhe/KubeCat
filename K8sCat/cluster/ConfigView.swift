@@ -20,7 +20,6 @@ struct ConfigView: View {
     
     @State private var showingExporter = false
     
-    var columns = Array(repeating: GridItem(.flexible(), spacing: 10), count: 5)
     var body: some View {
         NavigationStack {
         Form {
