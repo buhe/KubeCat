@@ -37,7 +37,7 @@ struct Model {
     var daemons: [String: [apps.v1.DaemonSet]] = ["": []]
     var replicas: [String: [apps.v1.ReplicaSet]] = ["": []]
     var pvs: [core.v1.PersistentVolume]?
-    var pvcs: [core.v1.ObjectReference]?
+    var pvcs: [core.v1.ObjectReference?]?
     var hpas: [String: [autoscaling.v2beta1.HorizontalPodAutoscaler]] = ["": []]
 //    var pvcs: [core.v1.PersistentVolumeClaim]?
 //    var replications: [String: [core.v1.ReplicationController]] = ["": []]
@@ -57,7 +57,6 @@ struct Model {
         
         let task = URLSession.shared.dataTask(with: url) {(data, response, error) in
             guard let _ = data else { return }
-//            print(String(data: data, encoding: .utf8)!)
         }
         
         task.resume()
@@ -99,64 +98,77 @@ struct Model {
         return (self.client != nil)
     }
     
+    fileprivate func createDemoCluster(_ viewContext: NSManagedObjectContext, _ clusters: inout [ClusterEntry]) {
+        let newItem = ClusterEntry(context: viewContext)
+        newItem.name = "demo"
+        newItem.type = ClusterType.Demo.rawValue
+        newItem.icon = "d.circle"
+        
+        newItem.selected = true
+        newItem.demo = true
+        
+        clusters.append(newItem)
+        
+        do {
+            try viewContext.save()
+        } catch {
+            // Replace this implementation with code to handle the error appropriately.
+            // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+            let nsError = error as NSError
+            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+        }
+    }
+    
     mutating func select(viewContext: NSManagedObjectContext) {
         retry = 10
-        var clusters = try! viewContext.fetch(NSFetchRequest(entityName: "ClusterEntry")) as! [ClusterEntry]
-        if clusters.isEmpty {
-            let newItem = ClusterEntry(context: viewContext)
-            newItem.name = "demo"
-            newItem.type = ClusterType.Demo.rawValue
-            newItem.icon = "d.circle"
-
-            newItem.selected = true
-            newItem.demo = true
-            
-            clusters.append(newItem)
-
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+        do {
+            var clusters = try viewContext.fetch(NSFetchRequest(entityName: "ClusterEntry")) as! [ClusterEntry]
+            if clusters.isEmpty {
+                createDemoCluster(viewContext, &clusters)
             }
-        }
-        for c in clusters {
-            if c.selected {
-                print("found cluster: \(c)")
-                if c.demo {
-                    print("has demo")
-                    hasAndSelectDemo = true
+            for c in clusters {
+                if c.selected {
+                    print("found cluster: \(c)")
+                    if c.demo {
+                        print("has demo")
+                        hasAndSelectDemo = true
+                    }
+                    
+                    if !selectNotSome(c: c) {
+                        break
+                    }
+                    
+                    if pervNoDemo() {
+                        if let client = self.client {
+                            try? client.syncShutdown()
+                        }
+                        client = nil
+                    }
+                    clearAll()
+                    let type = ClusterType(rawValue: c.type ?? "")
+                    var config: KubernetesClientConfig?
+                    switch type {
+                    case .KubeConfig, .Aliyun:
+                        config = try? Config(content: c.config ?? "").config()
+                    case .AWS:
+                        date = Date()
+                        config = try? AWS(awsId: c.accessKeyID ?? "", awsSecret: c.secretAccessKey ?? "", region: c.region ?? "", clusterName: c.clusterName ?? "").config()
+                    default: break
+                    }
+                    if config != nil {
+                        // no demo
+                        client = KubernetesClient(config: config!)
+                    }
+                    self.current = c
+                    try? namespace()
+                    
                 }
-                
-                if !selectNotSome(c: c) {
-                    break
-                }
-                
-                if pervNoDemo() {
-                    try? self.client!.syncShutdown()
-                    client = nil
-                }
-                clearAll()
-                let type = ClusterType(rawValue: c.type!)
-                var config: KubernetesClientConfig?
-                switch type {
-                case .KubeConfig, .Aliyun:
-                    config = try? Config(content: c.config!).config()
-                case .AWS:
-                    date = Date()
-                    config = try? AWS(awsId: c.accessKeyID!, awsSecret: c.secretAccessKey!, region: c.region!, clusterName: c.clusterName!).config()
-                default: break
-                }
-                if config != nil {
-                    // no demo
-                    client = KubernetesClient(config: config!)
-                }
-                self.current = c
-                try? namespace()
-                
             }
+        } catch {
+            // Replace this implementation with code to handle the error appropriately.
+            // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+            let nsError = error as NSError
+            fatalError("Fetch error \(nsError), \(nsError.userInfo)")
         }
     }
     
@@ -226,7 +238,7 @@ struct Model {
     mutating func pvc() throws {
         checkAWSToken()
         if let client = client {
-            let pvcs = try client.persistentVolumes.list().wait().items.map{($0.spec?.claimRef)!}
+            let pvcs = try client.persistentVolumes.list().wait().items.map{$0.spec?.claimRef}
             
             self.pvcs = pvcs
         } else {

@@ -114,7 +114,7 @@ class ViewModel: ObservableObject {
         if model.hasAndSelectDemo {
             return [PersistentVolumeClaim(id: "demo", name: "demo")]
         }
-        return model.pvcs!.map {PersistentVolumeClaim(id: $0.name!, name: $0.name!
+        return model.pvcs!.map {PersistentVolumeClaim(id: $0?.name ?? "", name: $0?.name ?? ""
                                                         
                                                         
         )}
