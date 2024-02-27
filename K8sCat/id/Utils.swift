@@ -147,16 +147,17 @@ public class Base64FS {
     ]
     
     
-    public static func encodeString(str: String) -> String {
+    public static func encodeString(str: String) -> String? {
         
         // Get the ascii representation and return
-        let data = str.data(using: .ascii)!
-        
-        let encData = encode(data: [UInt8](data))
-        
-        let retStr = String(data: Data(encData), encoding: .ascii)!
-        
-        return retStr
+        let data = str.data(using: .ascii)
+        if let data = data {
+            let encData = encode(data: [UInt8](data))
+            
+            return String(data: Data(encData), encoding: .ascii)
+        } else {
+            return nil
+        }
     }
     
     public static func encode(data: [UInt8]) -> [UInt8] {

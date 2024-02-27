@@ -49,20 +49,25 @@ struct MyAWSClient {
         case "sa-east-1": eks = EKS(client: client, region: .saeast1)
         default: break
         }
-//        let eks = EKS(client: client, region: .uswest1)
         let r = EKS.DescribeClusterRequest(name: clusterName)
-        let c = try? eks!.describeCluster(r).wait().cluster
-        let server = c?.endpoint
-        let ca = c?.certificateAuthority?.data
-//        print("sever: \(server!) ca: \(ca!)")
-        try! client.syncShutdown()
-        if c == nil || server == nil || ca == nil {
+        if let eks = eks {
+            let c = try? eks.describeCluster(r).wait().cluster
+            let server = c?.endpoint
+            let ca = c?.certificateAuthority?.data
+            try? client.syncShutdown()
+            if let c = c,let server = server,let ca = ca {
+                return AWSCluster(sever: server, ca: ca)
+            } else {
+                return nil
+            }
+            
+        } else {
             return nil
         }
-        return AWSCluster(sever: server!, ca: ca!)
+        
     }
 
-    func getToken() -> String {
+    func getToken() -> String? {
         let client = AWSClient(
             credentialProvider: .static(accessKeyId: ak, secretAccessKey: sk),
             httpClientProvider: .createNew
@@ -92,19 +97,27 @@ struct MyAWSClient {
         case "sa-east-1": sts = STS(client: client, region: .saeast1)
         default: break
         }
-        let url = try! sts!.signURL(
-            url: URL(string: sts!.endpoint+"/?Action=GetCallerIdentity&Version=2011-06-15")!,
-            httpMethod: .GET,
-            headers: ["x-k8s-aws-id": clusterName],
-            expires: .seconds(60)
-        ).wait()
-//        print("signed: \(url.absoluteString)")
-        var token = MyAWSClient.TOKEN_PREFIX + Base64FS.encodeString(str: url.absoluteString)
-        token.remove(at: token.index(before: token.endIndex))
-        token.remove(at: token.index(before: token.endIndex))
-//        print("sts: \(token)")
-        try! client.syncShutdown()
-        return token
+        if let sts = sts,let stsEndpoint = URL(string: sts.endpoint+"/?Action=GetCallerIdentity&Version=2011-06-15") {
+            let url = try? sts.signURL(
+                url: stsEndpoint,
+                httpMethod: .GET,
+                headers: ["x-k8s-aws-id": clusterName],
+                expires: .seconds(60)
+            ).wait()
+            //        print("signed: \(url.absoluteString)")
+            if let url = url, let tokenSurfix = Base64FS.encodeString(str: url.absoluteString) {
+                var token = MyAWSClient.TOKEN_PREFIX + tokenSurfix
+                token.remove(at: token.index(before: token.endIndex))
+                token.remove(at: token.index(before: token.endIndex))
+                //        print("sts: \(token)")
+                try? client.syncShutdown()
+                return token
+            } else {
+                return nil
+            }
+        } else {
+            return nil
+        }
     }
 }
 
