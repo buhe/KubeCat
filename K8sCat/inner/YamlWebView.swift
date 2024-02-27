@@ -51,30 +51,21 @@ struct YamlWebView: UIViewRepresentable {
         let yaml = yamlble.encodeYaml(client: model.client)
         
         webView.configuration.userContentController.add(WKHandler(yamlble: yamlble, model: model, lastYaml: yaml, close: close), name: "toggleMessageHandler")
-        let baseUrl = Bundle.main.url(forResource: "index", withExtension: "html", subdirectory: "yaml")!
-//        print(baseUrl)
-        var component = URLComponents(url: baseUrl, resolvingAgainstBaseURL: false)
-        component?.queryItems = [URLQueryItem(name: "items", value: yaml), URLQueryItem(name: "theme", value: colorScheme == .dark ? "dark" : "light")]
-        
-        if let url = component?.url {
-//            print(url)
-            webView.loadFileURL(url, allowingReadAccessTo: url)
+        if let baseUrl = Bundle.main.url(forResource: "index", withExtension: "html", subdirectory: "yaml") {
+            //        print(baseUrl)
+            var component = URLComponents(url: baseUrl, resolvingAgainstBaseURL: false)
+            component?.queryItems = [URLQueryItem(name: "items", value: yaml), URLQueryItem(name: "theme", value: colorScheme == .dark ? "dark" : "light")]
+            
+            if let url = component?.url {
+                //            print(url)
+                webView.loadFileURL(url, allowingReadAccessTo: url)
+            }
+            
         }
         return webView
     }
 
     func updateUIView(_ webView: WKWebView, context: Context) {
-        
-        
-        
-        
-//        let baseUrl = URL(string: "http://localhost:3000")!
-//        var component = URLComponents(url: baseUrl, resolvingAgainstBaseURL: false)
-//        component?.queryItems = [URLQueryItem(name: "items", value: string)]
-//        if let url = component?.url {
-//            print(url)
-//            webView.load(URLRequest(url: url))
-//        }
         
     }
 }

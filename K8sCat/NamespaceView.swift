@@ -30,7 +30,7 @@ struct NamespaceView: View {
                         Button{showCluster = true}label: {
                             
                             
-                            Image(systemName: cluters.filter{$0.selected}.first?.icon! ?? "0.circle")
+                            Image(systemName: cluters.filter{$0.selected}.first?.icon ?? "0.circle")
                         }.padding(.trailing)
                     }
                     HStack{

@@ -80,7 +80,7 @@ struct Model {
                     try? client!.syncShutdown()
                 }
                 
-                let config = try? AWS(awsId: current!.accessKeyID!, awsSecret: current!.secretAccessKey!, region: current!.region!, clusterName: current!.clusterName!).config()
+                let config = try? AWS(awsId: current!.accessKeyID ?? "", awsSecret: current!.secretAccessKey ?? "", region: current!.region ?? "", clusterName: current!.clusterName ?? "").config()
                 if config != nil {
                     client = KubernetesClient(config: config!)
                 }
