@@ -380,8 +380,8 @@
             filePath = "K8sCat/id/Identifier.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "61"
-            endingLineNumber = "61"
+            startingLineNumber = "69"
+            endingLineNumber = "69"
             landmarkName = "config()"
             landmarkType = "7">
          </BreakpointContent>
@@ -700,8 +700,8 @@
             filePath = "K8sCat/id/Identifier.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "55"
-            endingLineNumber = "55"
+            startingLineNumber = "63"
+            endingLineNumber = "63"
             landmarkName = "config()"
             landmarkType = "7">
          </BreakpointContent>
@@ -933,24 +933,8 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "349139FB-187D-4CCA-A8D6-21F893A33338"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "K8sCat/id/Identifier.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "32"
-            endingLineNumber = "32"
-            landmarkName = "config()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "3C5CE896-A433-4778-A5E0-ACF8A29A7972"
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../../../Library/Developer/Xcode/DerivedData/K8sCat-etgzwtphprabtldxigauhyrbzzqz/SourcePackages/checkouts/client/Sources/SwiftkubeClient/Config/KubeConfig.swift"
@@ -1084,8 +1068,8 @@
             filePath = "K8sCat/id/Identifier.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "54"
-            endingLineNumber = "54"
+            startingLineNumber = "62"
+            endingLineNumber = "62"
             landmarkName = "config()"
             landmarkType = "7">
          </BreakpointContent>
@@ -1100,8 +1084,8 @@
             filePath = "K8sCat/id/Identifier.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "93"
-            endingLineNumber = "93"
+            startingLineNumber = "100"
+            endingLineNumber = "100"
             landmarkName = "config()"
             landmarkType = "7">
          </BreakpointContent>

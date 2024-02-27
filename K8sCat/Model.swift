@@ -74,7 +74,7 @@ struct Model {
     }
     
     mutating func checkAWSToken() {
-        if current != nil && ClusterType(rawValue: current!.type!) == .AWS {
+        if current != nil && current!.type != nil && ClusterType(rawValue: current!.type!) == .AWS {
             if Date().timeIntervalSince1970 - date.timeIntervalSince1970  > 30 {
                 if client != nil {
                     try? client!.syncShutdown()
