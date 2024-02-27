@@ -39,8 +39,8 @@ struct ClusterView: View {
         }
         .padding()
         List(selection: $selectedItem)  {
-            ForEach(cluters.map{Cluster(id: $0.name!, name: $0.name!, icon:
-                                            $0.icon!, kubeConfig: $0.config, selected: $0.selected )}) {
+            ForEach(cluters.map{Cluster(id: $0.name ?? "", name: $0.name ?? "", icon:
+                                            $0.icon ?? "", kubeConfig: $0.config, selected: $0.selected )}) {
                 i in
                 HStack {
 //                    Image(systemName: i.selected ? "circle.fill" : "circle")
@@ -71,8 +71,9 @@ struct ClusterView: View {
             }
         }
         if !cluters.isEmpty && allUnSelected {
-            let id = cluters.first!.name!
-            selectItem(id: id)
+            if let id = cluters.first?.name {
+                selectItem(id: id)
+            }
         }
     }
     
