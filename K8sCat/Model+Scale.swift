@@ -11,9 +11,10 @@ import SwiftkubeModel
 extension Model {
     func scaleDeployment(deployment: Deployment, replicas: Int32) {
         if let client = client {
-            var scale = try! client.appsV1.deployments.getScale(in: .namespace(deployment.namespace), name: deployment.name).wait()
-            scale.spec?.replicas = replicas
-            let _ = try! client.appsV1.deployments.updateScale(in: .namespace(deployment.namespace), name: deployment.name, scale: scale)
+            if var scale = try? client.appsV1.deployments.getScale(in: .namespace(deployment.namespace), name: deployment.name).wait() {
+                scale.spec?.replicas = replicas
+                let _ = try? client.appsV1.deployments.updateScale(in: .namespace(deployment.namespace), name: deployment.name, scale: scale)
+            }
         }
     }
 }

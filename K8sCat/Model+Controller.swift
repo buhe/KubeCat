@@ -14,7 +14,7 @@ extension Model {
         if let client = client {
             let daemonOrNil = try? await client.appsV1.daemonSets.get(in: .namespace(ns), name: name).get()
             if let daemon = daemonOrNil {
-            return Daemon(id: daemon.name!, name: daemon.name!, k8sName:  (daemon.spec?.selector.matchLabels)!
+                return Daemon(id: daemon.name ?? "", name: daemon.name ?? "", k8sName:  (daemon.spec?.selector.matchLabels) ?? [:]
                           , labels: daemon.metadata?.labels
                           , annotations: daemon.metadata?.annotations
                           , namespace: daemon.metadata?.namespace ?? "unknow"
@@ -34,7 +34,7 @@ extension Model {
         if let client = client {
             let replicaOrNil = try? await client.appsV1.replicaSets.get(in: .namespace(ns), name: name).get()
             if let replica = replicaOrNil {
-                return Replica(id: replica.name!, name: replica.name!, k8sName:  (replica.spec?.selector.matchLabels)!
+                return Replica(id: replica.name ?? "", name: replica.name ?? "", k8sName:  (replica.spec?.selector.matchLabels) ?? [:]
                                , labels: replica.metadata?.labels
                                , annotations: replica.metadata?.annotations
                                , namespace: replica.metadata?.namespace ?? "unknow"
@@ -53,7 +53,7 @@ extension Model {
         if let client = client {
             let statefulOrNil = try? await client.appsV1.statefulSets.get(in: .namespace(ns), name: name).get()
             if let stateful = statefulOrNil {
-                return Stateful(id: stateful.name!, name: stateful.name!, k8sName:  (stateful.spec?.selector.matchLabels)!
+                return Stateful(id: stateful.name ?? "", name: stateful.name ?? "", k8sName:  (stateful.spec?.selector.matchLabels) ?? [:]
                                 , labels: stateful.metadata?.labels
                                 , annotations: stateful.metadata?.annotations
                                 , namespace: stateful.metadata?.namespace ?? "unknow"
@@ -72,8 +72,8 @@ extension Model {
         if let client = client {
             let jobOrNil = try? await client.batchV1.jobs.get(in: .namespace(ns), name: name).get()
             if let job = jobOrNil {
-                return Job(id: job.name!, name: job.name!,
-                           k8sName: (job.spec?.selector?.matchLabels)!
+                return Job(id: job.name ?? "", name: job.name ?? "",
+                           k8sName: (job.spec?.selector?.matchLabels) ?? [:]
                            , labels: job.metadata?.labels
                            , annotations: job.metadata?.annotations
                            , namespace: job.metadata?.namespace ?? "unknow"
@@ -92,7 +92,7 @@ extension Model {
         if let client = client {
             let deploymentOrNil = try? client.appsV1.deployments.get(in: .namespace(ns), name: name).wait()
             if let deployment = deploymentOrNil {
-                return Deployment(id: deployment.name!, name: deployment.name!, k8sName: (deployment.spec?.selector.matchLabels)!, expect: Int(deployment.spec?.replicas ?? 0), unavailable: Int(deployment.status?.unavailableReplicas ?? 0)
+                return Deployment(id: deployment.name ?? "", name: deployment.name ?? "", k8sName: (deployment.spec?.selector.matchLabels) ?? [:], expect: Int(deployment.spec?.replicas ?? 0), unavailable: Int(deployment.status?.unavailableReplicas ?? 0)
                                   , labels: deployment.metadata?.labels
                                   , annotations: deployment.metadata?.annotations
                                   , namespace: deployment.metadata?.namespace ?? "unknow"
