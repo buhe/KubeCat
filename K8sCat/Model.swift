@@ -42,10 +42,10 @@ struct Model {
 //    var pvcs: [core.v1.PersistentVolumeClaim]?
 //    var replications: [String: [core.v1.ReplicationController]] = ["": []]
     
-    mutating func logs(in ns: NamespaceSelector, pod: Pod, container: Container, delegate:  LogWatcherDelegate) throws -> SwiftkubeClientTask? {
+    mutating func logs(in ns: NamespaceSelector, pod: Pod, container: Container, delegate:  LogWatcherDelegate) -> SwiftkubeClientTask? {
         checkAWSToken()
         if let client = client {
-            return try client.pods.follow(in: ns, name: pod.name, container: container.name, delegate: delegate)
+            return try? client.pods.follow(in: ns, name: pod.name, container: container.name, delegate: delegate)
         } else {
             return nil
         }
