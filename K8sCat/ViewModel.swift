@@ -383,23 +383,6 @@ class ViewModel: ObservableObject {
             )}
     }
     
-    func hpa() async {
-        
-        if model.hpas[ns] == nil {
-                do{
-                    try await model.hpa(in: .namespace(ns))
-                }catch{
-                    model.hpas[ns] = []
-                }
-                
-            }
-    }
-    var hpa: [Hpa] {
-            if model.hasAndSelectDemo {
-                return [Hpa(id: "demo", name: "demo", namespace: "demo", reference: "demo", referenceType: .Deployment, raw: nil)]
-            }
-        return (model.hpas[ns] ?? []).map {Hpa(id: $0.name ?? "", name: $0.name ?? "", namespace: $0.metadata?.namespace ?? "unknow", reference: "", referenceType: .Deployment, raw: nil)}
-    }
 }
 
 
