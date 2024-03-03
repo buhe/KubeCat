@@ -64,7 +64,7 @@ struct NamespaceView: View {
                                 case 9:
                                     await viewModel.replica()
                                 case 10:
-                                    await viewModel.hpa()
+                                    await viewModel.hpas()
                                 default: break
                                 }
                             }
