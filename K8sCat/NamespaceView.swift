@@ -69,6 +69,11 @@ struct NamespaceView: View {
                                 }
                             }
                         }
+//                        .onAppear {
+//                            Task {
+//                                await viewModel.namespace()
+//                            }
+//                        }
                         Spacer()
                         
                     }
@@ -109,6 +114,9 @@ struct NamespaceView: View {
                             }
                         .refreshable {
                             viewModel.model.pods[viewModel.ns] = nil
+                            Task {
+                                await viewModel.pods()
+                            }
                         }
                     case 1:
                         List {
@@ -132,8 +140,16 @@ struct NamespaceView: View {
                         
                             }
                         }.listStyle(PlainListStyle())
+                            .onAppear{
+                                Task {
+                                    await viewModel.deployment()
+                                }
+                            }
                         .refreshable {
                             viewModel.model.deployments[viewModel.ns] = nil
+                            Task {
+                                await viewModel.deployment()
+                            }
                         }
                     case 2:
                         List {

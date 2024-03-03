@@ -162,7 +162,7 @@ struct Model {
                     // Move to UI
                     // TODO
 //                    Task {
-//                        try? await namespace()
+//                        try? await node()
 //                    }
                 }
             }
@@ -198,6 +198,7 @@ struct Model {
             do{
                 retry = retry - 1
                 let namespaces = try await client.namespaces.list().items
+                print("set")
                 self.namespaces = namespaces
     
             }catch{

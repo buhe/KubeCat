@@ -14,9 +14,25 @@ class ViewModel: ObservableObject {
     @Published var model: Model
     @Published var ns: String = "default"
     init(viewContext: NSManagedObjectContext) {
-        model = Model(viewContext: viewContext)
-            
+        self.model = Model(viewContext: viewContext)
+        Task {
+            try? await model.namespace()
+        }
     }
+    
+//    func namespaces() async {
+//       try? await model.namespace()
+//    }
+    
+    var namespaces: [String] {
+        if model.hasAndSelectDemo {
+            return ["demo1", "demo2"]
+        } else {
+            print("get \(model.namespaces.map { $0.name ?? "unknow" })")
+            return model.namespaces.map { $0.name ?? "unknow" }
+        }
+    }
+    
     func pods() async {
         
             if model.pods[ns] == nil {
@@ -160,13 +176,7 @@ class ViewModel: ObservableObject {
                                version: $0.status?.nodeInfo?.kubeletVersion ?? "unknow"
         ) }
     }
-    var namespaces: [String] {
-        if model.hasAndSelectDemo {
-            return ["demo1", "demo2"]
-        } else {
-            return model.namespaces.map { $0.name ?? "unknow" }
-        }
-    }
+
     func deployment() async {
             if model.deployments[ns] == nil {
                 do{
