@@ -41,33 +41,33 @@ struct NamespaceView: View {
                             }
                         }.onChange(of: viewModel.ns) {
                             c in
-                            
-                            switch tabIndex {
-                            case 0:
-                                try? viewModel.model.pod(in: .namespace(c))
-                            case 1:
-                                try? viewModel.model.deployment(in: .namespace(c))
-                            case 2:
-                                try? viewModel.model.job(in: .namespace(c))
-                            case 3:
-                                try? viewModel.model.cronJob(in: .namespace(c))
-                            case 4:
-                                try? viewModel.model.statefull(in: .namespace(c))
-                            case 5:
-                                try? viewModel.model.service(in: .namespace(c))
-                            case 6:
-                                try? viewModel.model.configMap(in: .namespace(c))
-                            case 7:
-                                try? viewModel.model.secret(in: .namespace(c))
-                            case 8:
-                                try? viewModel.model.daemon(in: .namespace(c))
-                            case 9:
-                                try? viewModel.model.replica(in: .namespace(c))
-                            case 10:
-                                try? viewModel.model.hpa(in: .namespace(c))
-                            default: break
+                            Task {
+                                switch tabIndex {
+                                case 0:
+                                    await viewModel.pods()
+                                case 1:
+                                    await viewModel.deployment()
+                                case 2:
+                                    await viewModel.job()
+                                case 3:
+                                    await viewModel.cronJob()
+                                case 4:
+                                    await viewModel.statefull()
+                                case 5:
+                                    await viewModel.service()
+                                case 6:
+                                    await viewModel.configMap()
+                                case 7:
+                                    await viewModel.secret()
+                                case 8:
+                                    await viewModel.daemon()
+                                case 9:
+                                    await viewModel.replica()
+                                case 10:
+                                    await viewModel.hpa()
+                                default: break
+                                }
                             }
-                            
                         }
                         Spacer()
                         
@@ -102,6 +102,11 @@ struct NamespaceView: View {
                         
                             }
                         }.listStyle(PlainListStyle())
+                            .onAppear {
+                                Task {
+                                    await viewModel.pods()
+                                }
+                            }
                         .refreshable {
                             viewModel.model.pods[viewModel.ns] = nil
                         }

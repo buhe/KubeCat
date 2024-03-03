@@ -220,10 +220,10 @@
             filePath = "K8sCat/ViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "151"
-            endingLineNumber = "151"
-            landmarkName = "nodes()"
-            landmarkType = "7">
+            startingLineNumber = "158"
+            endingLineNumber = "158"
+            landmarkName = "nodes"
+            landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -318,8 +318,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "219"
             endingLineNumber = "219"
-            landmarkName = "Model"
-            landmarkType = "14">
+            landmarkName = "namespace()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -352,54 +352,6 @@
             endingLineNumber = "72"
             landmarkName = "config()"
             landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "47149CD6-8793-4110-ABD1-1B56F49C4FC7"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "K8sCat/ViewModel.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "175"
-            endingLineNumber = "175"
-            landmarkName = "deployment()"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "47149CD6-8793-4110-ABD1-1B56F49C4FC7 - 404d3d2a7b0d4925"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "K8sCat.ViewModel.deployment.getter : Swift.Array&lt;K8sCat.Deployment&gt;"
-                  moduleName = "K8sCat"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/guyanhua/code/github/K8sCat/K8sCat/ViewModel.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "147"
-                  endingLineNumber = "147"
-                  offsetFromSymbolStart = "1464">
-               </Location>
-               <Location
-                  uuid = "47149CD6-8793-4110-ABD1-1B56F49C4FC7 - a25533c2ae6fc153"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (SwiftkubeModel.apps.v1.Deployment) -&gt; K8sCat.Deployment in K8sCat.ViewModel.deployment.getter : Swift.Array&lt;K8sCat.Deployment&gt;"
-                  moduleName = "K8sCat"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/guyanhua/code/github/K8sCat/K8sCat/ViewModel.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "147"
-                  endingLineNumber = "147"
-                  offsetFromSymbolStart = "656">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -672,22 +624,6 @@
                   offsetFromSymbolStart = "524">
                </Location>
             </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "51035A61-DC77-4789-80F8-67205E80E634"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "K8sCat/ViewModel.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "176"
-            endingLineNumber = "176"
-            landmarkName = "deployment()"
-            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -988,10 +924,10 @@
             filePath = "K8sCat/ViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "40"
-            endingLineNumber = "40"
-            landmarkName = "pods()"
-            landmarkType = "7">
+            startingLineNumber = "43"
+            endingLineNumber = "43"
+            landmarkName = "pods"
+            landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1004,10 +940,10 @@
             filePath = "K8sCat/ViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "41"
-            endingLineNumber = "41"
-            landmarkName = "pods()"
-            landmarkType = "7">
+            startingLineNumber = "44"
+            endingLineNumber = "44"
+            landmarkName = "pods"
+            landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1020,10 +956,10 @@
             filePath = "K8sCat/ViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "49"
-            endingLineNumber = "49"
-            landmarkName = "pods()"
-            landmarkType = "7">
+            startingLineNumber = "52"
+            endingLineNumber = "52"
+            landmarkName = "pods"
+            landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1036,26 +972,10 @@
             filePath = "K8sCat/ViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "50"
-            endingLineNumber = "50"
-            landmarkName = "pods()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "32EDC28E-A9C4-4A1B-9363-F3200767B1EF"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "K8sCat/ViewModel.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "327"
-            endingLineNumber = "327"
-            landmarkName = "daemon()"
-            landmarkType = "7">
+            startingLineNumber = "53"
+            endingLineNumber = "53"
+            landmarkName = "pods"
+            landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1072,22 +992,6 @@
             endingLineNumber = "34"
             landmarkName = "body"
             landmarkType = "24">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "7CA60401-F10A-4FBE-8196-B156E76C3030"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "K8sCat/ViewModel.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "223"
-            endingLineNumber = "223"
-            landmarkName = "cronJob()"
-            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1132,10 +1036,10 @@
             filePath = "K8sCat/ViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "37"
-            endingLineNumber = "37"
-            landmarkName = "pods()"
-            landmarkType = "7">
+            startingLineNumber = "40"
+            endingLineNumber = "40"
+            landmarkName = "pods"
+            landmarkType = "24">
             <Locations>
                <Location
                   uuid = "081CB02D-4A2F-4CB7-8547-96C0B7222E9B - 617c4312f83f8567"
@@ -1168,38 +1072,6 @@
                   offsetFromSymbolStart = "716">
                </Location>
             </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "12D820E1-814C-44AE-AA92-56227BE368FD"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "K8sCat/ViewModel.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "199"
-            endingLineNumber = "199"
-            landmarkName = "job()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "12C91700-ADAD-4B88-8F3B-63DC2F605922"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "K8sCat/ViewModel.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "350"
-            endingLineNumber = "350"
-            landmarkName = "replica()"
-            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1340,10 +1212,10 @@
             filePath = "K8sCat/ViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "72"
-            endingLineNumber = "72"
-            landmarkName = "hpas()"
-            landmarkType = "7">
+            startingLineNumber = "68"
+            endingLineNumber = "68"
+            landmarkName = "hpas"
+            landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

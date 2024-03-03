@@ -14,7 +14,7 @@ extension Model {
     mutating func podsByJob(in ns: NamespaceSelector, job: [String: String]) async -> [Pod] {
         checkAWSToken()
         if let client = client, !job.isEmpty {
-            let pods = try? await client.pods.list(in: ns,options: [.labelSelector(.eq(job))]).get().items
+            let pods = try? await client.pods.list(in: ns,options: [.labelSelector(.eq(job))]).items
             return (pods ?? []).map {
                let consainersStatus = $0.status?.containerStatuses ?? []
                return Pod(id: $0.name ?? "", name: $0.name ?? "",k8sName: "", status: $0.status?.phase ?? "unknow", expect: $0.spec?.containers.count ?? 0, error: $0.status?.containerStatuses == nil ? $0.spec?.containers.count ?? 0 : $0.status?.containerStatuses?.filter{$0.started == false}.count ?? 0,notReady: $0.status?.containerStatuses == nil ? ($0.spec?.containers.count ?? 0) : $0.status?.containerStatuses?.filter{$0.ready == false}.count ?? 0, containers: $0.spec?.containers.enumerated().map{
@@ -41,7 +41,7 @@ extension Model {
     mutating func podsByDeployment(in ns: NamespaceSelector, deployment: [String: String]) async -> [Pod] {
         checkAWSToken()
         if let client = client, !deployment.isEmpty {
-            let pods = try? await client.pods.list(in: ns,options: [.labelSelector(.eq(deployment))]).get().items
+            let pods = try? await client.pods.list(in: ns,options: [.labelSelector(.eq(deployment))]).items
             return (pods ?? []).map {
                 let consainersStatus = $0.status?.containerStatuses ?? []
                 return Pod(id: $0.name ?? "", name: $0.name ?? "",k8sName: "", status: ($0.status?.phase) ?? "", expect: $0.spec?.containers.count ?? 0, error: $0.status?.containerStatuses == nil ? $0.spec?.containers.count ?? 0 : $0.status?.containerStatuses?.filter{$0.started == false}.count ?? 0,notReady: $0.status?.containerStatuses == nil ? ($0.spec?.containers.count ?? 0) : $0.status?.containerStatuses?.filter{$0.ready == false}.count ?? 0, containers: $0.spec?.containers.enumerated().map{
@@ -64,7 +64,7 @@ extension Model {
     mutating func podsByReplica(in ns: NamespaceSelector, replica: [String: String]) async -> [Pod] {
         checkAWSToken()
         if let client = client, !replica.isEmpty {
-            return ((try? await client.pods.list(in: ns,options: [.labelSelector(.eq(replica))]).get().items) ?? []).map {
+            return ((try? await client.pods.list(in: ns,options: [.labelSelector(.eq(replica))]).items) ?? []).map {
                 let consainersStatus = $0.status?.containerStatuses ?? []
                 return Pod(id: $0.name ?? "", name: $0.name ?? "", k8sName: "",status: ($0.status?.phase) ?? "", expect: $0.spec?.containers.count ?? 0, error: $0.status?.containerStatuses == nil ? $0.spec?.containers.count ?? 0 : $0.status?.containerStatuses?.filter{$0.started == false}.count ?? 0, notReady: $0.status?.containerStatuses == nil ? ($0.spec?.containers.count ?? 0) : $0.status?.containerStatuses?.filter{$0.ready == false}.count ?? 0,containers: $0.spec?.containers.enumerated().map{
                 Container(
@@ -86,7 +86,7 @@ extension Model {
     mutating func podsByDaemon(in ns: NamespaceSelector, daemon: [String: String]) async -> [Pod] {
         checkAWSToken()
         if let client = client, !daemon.isEmpty {
-            return ((try? await client.pods.list(in: ns,options: [.labelSelector(.eq(daemon))]).get().items) ?? []).map {
+            return ((try? await client.pods.list(in: ns,options: [.labelSelector(.eq(daemon))]).items) ?? []).map {
                 let consainersStatus = $0.status?.containerStatuses ?? []
                 return Pod(id: $0.name ?? "", name: $0.name ?? "", k8sName: "",status: ($0.status?.phase) ?? "", expect: $0.spec?.containers.count ?? 0, error: $0.status?.containerStatuses == nil ? $0.spec?.containers.count ?? 0 : $0.status?.containerStatuses?.filter{$0.started == false}.count ?? 0,notReady: $0.status?.containerStatuses == nil ? ($0.spec?.containers.count ?? 0) : $0.status?.containerStatuses?.filter{$0.ready == false}.count ?? 0, containers:$0.spec?.containers.enumerated().map{
                 Container(
@@ -108,7 +108,7 @@ extension Model {
     mutating func podsByService(in ns: NamespaceSelector, service: [String: String]) async -> [Pod] {
         checkAWSToken()
         if let client = client, !service.isEmpty {
-            return ((try? await client.pods.list(in: ns,options: [.labelSelector(.eq(service))]).get().items) ?? []).map {
+            return ((try? await client.pods.list(in: ns,options: [.labelSelector(.eq(service))]).items) ?? []).map {
                 let consainersStatus = $0.status?.containerStatuses ?? []
                 return Pod(id: $0.name ?? "", name: $0.name ?? "", k8sName: "",status: ($0.status?.phase) ?? "", expect: $0.spec?.containers.count ?? 0, error: $0.status?.containerStatuses == nil ? $0.spec?.containers.count ?? 0 : $0.status?.containerStatuses?.filter{$0.started == false}.count ?? 0, notReady: $0.status?.containerStatuses == nil ? ($0.spec?.containers.count ?? 0) : $0.status?.containerStatuses?.filter{$0.ready == false}.count ?? 0,containers: $0.spec?.containers.enumerated().map{
                     Container(
@@ -131,7 +131,7 @@ extension Model {
     mutating func podsByStateful(in ns: NamespaceSelector, stateful: [String: String]) async -> [Pod] {
         checkAWSToken()
         if let client = client, !stateful.isEmpty {
-            return ((try? await client.pods.list(in: ns,options: [.labelSelector(.eq(stateful))]).get().items) ?? []).map {
+            return ((try? await client.pods.list(in: ns,options: [.labelSelector(.eq(stateful))]).items) ?? []).map {
                 let consainersStatus = $0.status?.containerStatuses ?? []
                 return Pod(id: $0.name ?? "", name: $0.name ?? "", k8sName: "",status: ($0.status?.phase) ?? "", expect: $0.spec?.containers.count ?? 0, error: $0.status?.containerStatuses == nil ? $0.spec?.containers.count ?? 0 : $0.status?.containerStatuses?.filter{$0.started == false}.count ?? 0,notReady: $0.status?.containerStatuses == nil ? ($0.spec?.containers.count ?? 0) : $0.status?.containerStatuses?.filter{$0.ready == false}.count ?? 0, containers:$0.spec?.containers.enumerated().map{
                 Container(
@@ -154,7 +154,7 @@ extension Model {
     mutating func replicaByDeployment(in ns: NamespaceSelector, deployment: [String: String]) async -> [Replica] {
         checkAWSToken()
         if let client = client, !deployment.isEmpty {
-            let replicas = try? await client.appsV1.replicaSets.list(in: ns,options: [.labelSelector(.eq(deployment))]).get().items
+            let replicas = try? await client.appsV1.replicaSets.list(in: ns,options: [.labelSelector(.eq(deployment))]).items
             return (replicas ?? []).map {
                 Replica(id: $0.name ?? "", name: $0.name ?? "", k8sName:  ($0.spec?.selector.matchLabels) ?? [:]
                                                               , labels: $0.metadata?.labels

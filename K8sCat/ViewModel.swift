@@ -17,7 +17,7 @@ class ViewModel: ObservableObject {
         model = Model(viewContext: viewContext)
             
     }
-    func pods() async -> [Pod] {
+    func pods() async {
         
             if model.pods[ns] == nil {
                 do{
@@ -26,6 +26,9 @@ class ViewModel: ObservableObject {
                     model.pods[ns] = []
                 }
             }
+      
+    }
+    var pods: [Pod] {
             if model.hasAndSelectDemo {
                 return [
                     Pod(id: "demo", name: "demo", k8sName: "demo", status: "Running", expect: 2, error: 1, notReady: 1, containers: [Container(id: "demo", name: "demo", image: "docker.io/hello", path: "/foo/bar", policy: "Restart", pullPolicy: "Restart", status: ContainerStatus.Terminated, ready: true, error: false)], clusterIP: "10.0.1.3", nodeIP: "1.2.3.4", labels: [:], annotations: [:], namespace: ns, controllerType: .Job, controllerName: "demo", raw: nil),
@@ -57,14 +60,7 @@ class ViewModel: ObservableObject {
         
     }
     
-    func hpas() async -> [Hpa] {
-            if model.hpas[ns] == nil {
-                do{
-                    try await model.hpa(in: .namespace(ns))
-                }catch{
-                    model.hpas[ns] = []
-                }
-            }
+    var hpas: [Hpa] {
             if model.hasAndSelectDemo {
                 return [Hpa(id: "demo", name: "demo", namespace: "demo1",reference: "demo" ,referenceType: .Deployment, raw: nil)]
             }
@@ -76,6 +72,15 @@ class ViewModel: ObservableObject {
             )}
 
         
+    }
+    func hpas() async {
+            if model.hpas[ns] == nil {
+                do{
+                    try await model.hpa(in: .namespace(ns))
+                }catch{
+                    model.hpas[ns] = []
+                }
+            }
     }
     var pv: [PersistentVolume] {
         if model.hasAndSelectDemo {
@@ -131,7 +136,7 @@ class ViewModel: ObservableObject {
         )}
         
     }
-    func nodes() async -> [Node] {
+    func nodes() async {
         if model.nodes == nil {
             do{
                 try await model.node()
@@ -140,6 +145,8 @@ class ViewModel: ObservableObject {
             }
             
         }
+    }
+    var nodes: [Node] {
         if model.hasAndSelectDemo {
             return [Node(id: "demo1", name: "demo1", hostName: "1.2.3.4", arch: "x86", os: "Linux", labels: [:], annotations: [:], etcd: true, worker: false, controlPlane: true,agent: true, version: "1.2.3"), Node(id: "demo2", name: "demo2", hostName: "5.6.7.8", arch: "x86", os: "Linux", labels: [:], annotations: [:], etcd: true, worker: true, controlPlane: true, agent: false, version: "1.2.3")]
         }
@@ -160,7 +167,7 @@ class ViewModel: ObservableObject {
             return model.namespaces.map { $0.name ?? "unknow" }
         }
     }
-    func deployment() async -> [Deployment] {
+    func deployment() async {
             if model.deployments[ns] == nil {
                 do{
                     try await model.deployment(in: .namespace(ns))
@@ -169,6 +176,8 @@ class ViewModel: ObservableObject {
                 }
                 
             }
+    }
+    var deployment: [Deployment] {
             if model.hasAndSelectDemo {
                 return [Deployment(id: "demo1", name: "demo1", k8sName: [:], expect: 2, unavailable: 0, labels: [:], annotations: [:], namespace: "demo1", status: true, raw: nil), Deployment(id: "demo2", name: "demo2", k8sName: [:], expect: 2, unavailable: 1, labels: [:], annotations: [:], namespace: "demo1", status: false, raw: nil)]
             }
@@ -180,8 +189,7 @@ class ViewModel: ObservableObject {
                                                           , raw: $0
             )}
     }
-    
-    func job() async -> [Job] {
+    func job() async {
     
             if model.jobs[ns] == nil {
                 do{
@@ -191,6 +199,9 @@ class ViewModel: ObservableObject {
                 }
                 
             }
+       
+    }
+    var job: [Job] {
             if model.hasAndSelectDemo {
                 return [Job(id: "demo", name: "demo", k8sName: [:], labels: [:], annotations: [:], namespace: "demo", status: true)]
             }
@@ -203,8 +214,7 @@ class ViewModel: ObservableObject {
             )}
        
     }
-    
-    func cronJob() async -> [CronJob] {
+    func cronJob() async {
         
             if model.cronJobs[ns] == nil {
                 do{
@@ -214,6 +224,10 @@ class ViewModel: ObservableObject {
                 }
                 
             }
+    
+    }
+    
+    var cronJob: [CronJob] {
             if model.hasAndSelectDemo {
                 return [CronJob(id: "demo", name: "demo", k8sName: [:], labels: [:], annotations: [:], namespace: "demo", schedule: "10/5 * * * *", raw: nil)]
             }
@@ -228,7 +242,7 @@ class ViewModel: ObservableObject {
     
     }
     
-    func statefull() async -> [Stateful] {
+    func statefull() async {
 
             if model.statefulls[ns] == nil {
                 do{
@@ -238,6 +252,10 @@ class ViewModel: ObservableObject {
                 }
                 
             }
+        
+    }
+    
+    var statefull: [Stateful] {
             if model.hasAndSelectDemo {
                 return [Stateful(id: "demo", name: "demo", k8sName: [:], labels: [:], annotations: [:], namespace: "demo", status: false, raw: nil)]
             }
@@ -250,7 +268,7 @@ class ViewModel: ObservableObject {
         
     }
     
-    func service() async -> [Service] {
+    func service() async  {
 
             if model.services[ns] == nil {
                 do{
@@ -260,6 +278,9 @@ class ViewModel: ObservableObject {
                 }
                 
             }
+    }
+    
+    var service: [Service] {
             if model.hasAndSelectDemo {
                 return [Service(id: "demo", name: "demo", k8sName: [:], type: "Node", clusterIps: ["10.1.2.3"], externalIps: ["1.2.3.4"], labels: [:], annotations: [:], namespace: "demo")]
             }
@@ -270,7 +291,7 @@ class ViewModel: ObservableObject {
             )}
     }
     
-    func configMap() async -> [ConfigMap] {
+    func configMap() async {
             if model.configMaps[ns] == nil {
                 do{
                     try await model.configMap(in: .namespace(ns))
@@ -279,6 +300,9 @@ class ViewModel: ObservableObject {
                 }
                 
             }
+    }
+    
+    var configMap: [ConfigMap] {
             if model.hasAndSelectDemo {
                 return [ConfigMap(id: "demo", name: "demo", labels: [:], annotations: [:], namespace: "demo", data: ["demo": "abc=123"])]
             }
@@ -291,7 +315,7 @@ class ViewModel: ObservableObject {
        
     }
     
-    func secret() async -> [Secret] {
+    func secret() async {
             if model.secrets[ns] == nil {
                 do{
                     try await model.secret(in: .namespace(ns))
@@ -300,6 +324,9 @@ class ViewModel: ObservableObject {
                 }
                 
             }
+    }
+    
+    var secret: [Secret] {
             if model.hasAndSelectDemo {
                 return [Secret(id: "demo", name: "demo", labels: [:], annotations: [:], namespace: "demo", data: ["demo": "qwertyuiop"])]
             }
@@ -311,7 +338,7 @@ class ViewModel: ObservableObject {
             )}
     }
     
-    func daemon() async -> [Daemon] {
+    func daemon() async {
             if model.daemons[ns] == nil {
                 do{
                     try await model.daemon(in: .namespace(ns))
@@ -320,6 +347,8 @@ class ViewModel: ObservableObject {
                 }
                 
             }
+    }
+    var daemon: [Daemon] {
             if model.hasAndSelectDemo {
                 return [Daemon(id: "demo", name: "demo", k8sName: [:], labels: [:], annotations: [:], namespace: "demo", status: true, raw: nil)]
             }
@@ -331,8 +360,7 @@ class ViewModel: ObservableObject {
                                                   , raw: $0
             )}
     }
-    
-    func replica() async -> [Replica] {
+    func replica() async {
         
             if model.replicas[ns] == nil {
                 do{
@@ -342,6 +370,8 @@ class ViewModel: ObservableObject {
                 }
                 
             }
+    }
+    var replica: [Replica] {
             if model.hasAndSelectDemo {
                 return [Replica(id: "demo", name: "demo", k8sName: [:], labels: [:], annotations: [:], namespace: "demo", status: true)]
             }
@@ -353,6 +383,23 @@ class ViewModel: ObservableObject {
             )}
     }
     
+    func hpa() async {
+        
+        if model.hpas[ns] == nil {
+                do{
+                    try await model.hpa(in: .namespace(ns))
+                }catch{
+                    model.hpas[ns] = []
+                }
+                
+            }
+    }
+    var hpa: [Hpa] {
+            if model.hasAndSelectDemo {
+                return [Hpa(id: "demo", name: "demo", namespace: "demo", reference: "demo", referenceType: .Deployment, raw: nil)]
+            }
+        return (model.hpas[ns] ?? []).map {Hpa(id: $0.name ?? "", name: $0.name ?? "", namespace: $0.metadata?.namespace ?? "unknow", reference: "", referenceType: .Deployment, raw: nil)}
+    }
 }
 
 
