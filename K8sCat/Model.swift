@@ -39,8 +39,6 @@ struct Model {
     var pvs: [core.v1.PersistentVolume]?
     var pvcs: [core.v1.ObjectReference?]?
     var hpas: [String: [autoscaling.v2.HorizontalPodAutoscaler]] = ["": []]
-//    var pvcs: [core.v1.PersistentVolumeClaim]?
-//    var replications: [String: [core.v1.ReplicationController]] = ["": []]
     
     mutating func logs(in ns: NamespaceSelector, pod: Pod, container: Container) -> SwiftkubeClientTask<String>? {
         checkAWSToken()
@@ -162,6 +160,7 @@ struct Model {
                     }
                     self.current = c
                     // Move to UI
+                    // TODO
 //                    Task {
 //                        try? await namespace()
 //                    }
