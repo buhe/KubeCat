@@ -109,7 +109,9 @@ struct CronJobView: View {
             }
             #endif
             Button{
-                urlScheme(yamlble: cronJob, client: viewModel.model.client)
+                Task {
+                    await urlScheme(yamlble: cronJob, client: viewModel.model.client)
+                }
             }label: {
                 Text("Load yaml via Yamler")
             }.padding()

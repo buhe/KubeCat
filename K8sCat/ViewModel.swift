@@ -17,11 +17,11 @@ class ViewModel: ObservableObject {
         model = Model(viewContext: viewContext)
             
     }
-    var pods: [Pod] {
+    func pods() async -> [Pod] {
         
             if model.pods[ns] == nil {
                 do{
-                    try model.pod(in: .namespace(ns))
+                    try await model.pod(in: .namespace(ns))
                 }catch{
                     model.pods[ns] = []
                 }
@@ -57,10 +57,10 @@ class ViewModel: ObservableObject {
         
     }
     
-    var hpas: [Hpa] {
+    func hpas() async -> [Hpa] {
             if model.hpas[ns] == nil {
                 do{
-                    try model.hpa(in: .namespace(ns))
+                    try await model.hpa(in: .namespace(ns))
                 }catch{
                     model.hpas[ns] = []
                 }
@@ -77,17 +77,7 @@ class ViewModel: ObservableObject {
 
         
     }
-    
     var pv: [PersistentVolume] {
-
-        if model.pvs == nil {
-            do{
-                try model.pv()
-            }catch{
-                model.pvs = []
-            }
-            
-        }
         if model.hasAndSelectDemo {
             return [PersistentVolume(id: "demo", name: "demo", labels: [:], annotations: [:], accessModes: "r/w", status: "Bounded", storageClass: "auto", raw: nil)]
         }
@@ -102,10 +92,31 @@ class ViewModel: ObservableObject {
         )}
 
     }
+    func pv() async {
+
+        if model.pvs == nil {
+            do{
+                try await model.pv()
+            }catch{
+                model.pvs = []
+            }
+            
+        }
+    }
     var pvc: [PersistentVolumeClaim] {
+        if model.hasAndSelectDemo {
+            return [PersistentVolumeClaim(id: "demo", name: "demo")]
+        }
+        return (model.pvcs ?? []).map {PersistentVolumeClaim(id: $0?.name ?? "", name: $0?.name ?? ""
+                                                        
+                                                        
+        )}
+        
+    }
+    func pvc() async -> [PersistentVolumeClaim] {
         if model.pvcs == nil {
             do{
-                try model.pvc()
+                try await model.pvc()
             } catch{
                 model.pvcs = []
             }
@@ -120,10 +131,10 @@ class ViewModel: ObservableObject {
         )}
         
     }
-    var nodes: [Node] {
+    func nodes() async -> [Node] {
         if model.nodes == nil {
             do{
-                try model.node()
+                try await model.node()
             }catch{
                 model.nodes = []
             }
@@ -149,10 +160,10 @@ class ViewModel: ObservableObject {
             return model.namespaces.map { $0.name ?? "unknow" }
         }
     }
-    var deployment: [Deployment] {
+    func deployment() async -> [Deployment] {
             if model.deployments[ns] == nil {
                 do{
-                    try model.deployment(in: .namespace(ns))
+                    try await model.deployment(in: .namespace(ns))
                 }catch{
                     model.deployments[ns] = []
                 }
@@ -170,11 +181,11 @@ class ViewModel: ObservableObject {
             )}
     }
     
-    var job: [Job] {
+    func job() async -> [Job] {
     
             if model.jobs[ns] == nil {
                 do{
-                    try model.job(in: .namespace(ns))
+                    try await model.job(in: .namespace(ns))
                 }catch{
                     model.jobs[ns] = []
                 }
@@ -193,11 +204,11 @@ class ViewModel: ObservableObject {
        
     }
     
-    var cronJob: [CronJob] {
+    func cronJob() async -> [CronJob] {
         
             if model.cronJobs[ns] == nil {
                 do{
-                    try model.cronJob(in: .namespace(ns))
+                    try await model.cronJob(in: .namespace(ns))
                 }catch{
                     model.cronJobs[ns] = []
                 }
@@ -217,11 +228,11 @@ class ViewModel: ObservableObject {
     
     }
     
-    var statefull: [Stateful] {
+    func statefull() async -> [Stateful] {
 
             if model.statefulls[ns] == nil {
                 do{
-                    try model.statefull(in: .namespace(ns))
+                    try await model.statefull(in: .namespace(ns))
                 }catch{
                     model.statefulls[ns] = []
                 }
@@ -239,11 +250,11 @@ class ViewModel: ObservableObject {
         
     }
     
-    var service: [Service] {
+    func service() async -> [Service] {
 
             if model.services[ns] == nil {
                 do{
-                    try model.service(in: .namespace(ns))
+                    try await model.service(in: .namespace(ns))
                 }catch{
                     model.services[ns] = []
                 }
@@ -259,10 +270,10 @@ class ViewModel: ObservableObject {
             )}
     }
     
-    var configMap: [ConfigMap] {
+    func configMap() async -> [ConfigMap] {
             if model.configMaps[ns] == nil {
                 do{
-                    try model.configMap(in: .namespace(ns))
+                    try await model.configMap(in: .namespace(ns))
                 }catch{
                     model.configMaps[ns] = []
                 }
@@ -280,10 +291,10 @@ class ViewModel: ObservableObject {
        
     }
     
-    var secret: [Secret] {
+    func secret() async -> [Secret] {
             if model.secrets[ns] == nil {
                 do{
-                    try model.secret(in: .namespace(ns))
+                    try await model.secret(in: .namespace(ns))
                 }catch{
                     model.secrets[ns] = []
                 }
@@ -300,10 +311,10 @@ class ViewModel: ObservableObject {
             )}
     }
     
-    var daemon: [Daemon] {
+    func daemon() async -> [Daemon] {
             if model.daemons[ns] == nil {
                 do{
-                    try model.daemon(in: .namespace(ns))
+                    try await model.daemon(in: .namespace(ns))
                 }catch{
                     model.daemons[ns] = []
                 }
@@ -321,11 +332,11 @@ class ViewModel: ObservableObject {
             )}
     }
     
-    var replica: [Replica] {
+    func replica() async -> [Replica] {
         
             if model.replicas[ns] == nil {
                 do{
-                    try model.replica(in: .namespace(ns))
+                    try await model.replica(in: .namespace(ns))
                 }catch{
                     model.replicas[ns] = []
                 }

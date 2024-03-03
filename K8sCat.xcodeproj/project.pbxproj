@@ -850,7 +850,7 @@
 			repositoryURL = "https://github.com/swiftkube/client";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.9.0;
+				minimumVersion = 0.17.0;
 			};
 		};
 		3F19F8C42951D653005C0558 /* XCRemoteSwiftPackageReference "SwiftUIX" */ = {

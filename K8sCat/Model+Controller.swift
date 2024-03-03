@@ -9,10 +9,10 @@ import Foundation
 import SwiftkubeModel
 
 extension Model {
-    func daemonByName(ns: String, name: String) async -> Daemon {
-//        checkAWSToken()
+    mutating func daemonByName(ns: String, name: String) async -> Daemon {
+        checkAWSToken()
         if let client = client {
-            let daemonOrNil = try? await client.appsV1.daemonSets.get(in: .namespace(ns), name: name).get()
+            let daemonOrNil = try? await client.appsV1.daemonSets.get(in: .namespace(ns), name: name)
             if let daemon = daemonOrNil {
                 return Daemon(id: daemon.name ?? "", name: daemon.name ?? "", k8sName:  (daemon.spec?.selector.matchLabels) ?? [:]
                           , labels: daemon.metadata?.labels
@@ -29,10 +29,10 @@ extension Model {
         }
     }
     
-    func replicaByName(ns: String, name: String) async -> Replica {
-//        checkAWSToken()
+    mutating func replicaByName(ns: String, name: String) async -> Replica {
+        checkAWSToken()
         if let client = client {
-            let replicaOrNil = try? await client.appsV1.replicaSets.get(in: .namespace(ns), name: name).get()
+            let replicaOrNil = try? await client.appsV1.replicaSets.get(in: .namespace(ns), name: name)
             if let replica = replicaOrNil {
                 return Replica(id: replica.name ?? "", name: replica.name ?? "", k8sName:  (replica.spec?.selector.matchLabels) ?? [:]
                                , labels: replica.metadata?.labels
@@ -48,10 +48,10 @@ extension Model {
         }
     }
     
-    func statefulByName(ns: String, name: String) async -> Stateful {
-//        checkAWSToken()
+    mutating func statefulByName(ns: String, name: String) async -> Stateful {
+        checkAWSToken()
         if let client = client {
-            let statefulOrNil = try? await client.appsV1.statefulSets.get(in: .namespace(ns), name: name).get()
+            let statefulOrNil = try? await client.appsV1.statefulSets.get(in: .namespace(ns), name: name)
             if let stateful = statefulOrNil {
                 return Stateful(id: stateful.name ?? "", name: stateful.name ?? "", k8sName:  (stateful.spec?.selector.matchLabels) ?? [:]
                                 , labels: stateful.metadata?.labels
@@ -67,10 +67,10 @@ extension Model {
         }
     }
     
-    func jobByName(ns: String, name: String) async -> Job {
-//        checkAWSToken()
+    mutating func jobByName(ns: String, name: String) async -> Job {
+        checkAWSToken()
         if let client = client {
-            let jobOrNil = try? await client.batchV1.jobs.get(in: .namespace(ns), name: name).get()
+            let jobOrNil = try? await client.batchV1.jobs.get(in: .namespace(ns), name: name)
             if let job = jobOrNil {
                 return Job(id: job.name ?? "", name: job.name ?? "",
                            k8sName: (job.spec?.selector?.matchLabels) ?? [:]
@@ -87,10 +87,10 @@ extension Model {
         }
     }
     
-    func deploymentByName(ns: String, name: String) -> Deployment {
-//        checkAWSToken()
+    mutating func deploymentByName(ns: String, name: String) async -> Deployment {
+        checkAWSToken()
         if let client = client {
-            let deploymentOrNil = try? client.appsV1.deployments.get(in: .namespace(ns), name: name).wait()
+            let deploymentOrNil = try? await client.appsV1.deployments.get(in: .namespace(ns), name: name)
             if let deployment = deploymentOrNil {
                 return Deployment(id: deployment.name ?? "", name: deployment.name ?? "", k8sName: (deployment.spec?.selector.matchLabels) ?? [:], expect: Int(deployment.spec?.replicas ?? 0), unavailable: Int(deployment.status?.unavailableReplicas ?? 0)
                                   , labels: deployment.metadata?.labels

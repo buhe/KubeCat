@@ -114,7 +114,9 @@ struct DaemonView: View {
             }
             #endif
             Button{
-                urlScheme(yamlble: daemon, client: viewModel.model.client)
+                Task {
+                    await urlScheme(yamlble: daemon, client: viewModel.model.client)
+                }
             }label: {
                 Text("Load yaml via Yamler")
             }.padding()

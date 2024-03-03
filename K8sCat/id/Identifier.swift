@@ -10,6 +10,7 @@ import SwiftkubeClient
 import NIO
 import Yams
 import NIOSSL
+import AsyncHTTPClient
 
 
 protocol CertIdentifier {
@@ -22,7 +23,7 @@ struct AWS: CertIdentifier {
     let region: String
     let clusterName: String
     
-    func config() throws -> SwiftkubeClient.KubernetesClientConfig? {
+    func config() throws -> KubernetesClientConfig? {
         let token = MyAWSClient(ak: awsId, sk: awsSecret, region: region, clusterName: clusterName).getToken()
         let c = MyAWSClient(ak: awsId, sk: awsSecret, region: region, clusterName: clusterName).getCluster()
         if let c = c,let token = token {
@@ -35,7 +36,9 @@ struct AWS: CertIdentifier {
                         namespace: "default",
                         authentication: authentication,
                         trustRoots: NIOSSLTrustRoots.certificates(caCert),
-                        insecureSkipTLSVerify: false
+                        insecureSkipTLSVerify: false,
+                        timeout: HTTPClient.Configuration.Timeout.init(connect: .seconds(1), read: .seconds(10)),
+                           redirectConfiguration: HTTPClient.Configuration.RedirectConfiguration.follow(max: 5, allowCycles: false)
                     )
                     
                     return config
@@ -57,7 +60,7 @@ struct AWS: CertIdentifier {
 struct Config: CertIdentifier {
     let content: String
     
-    func config() throws -> SwiftkubeClient.KubernetesClientConfig? {
+    func config() throws -> KubernetesClientConfig? {
         let decoder = YAMLDecoder()
         guard let kubeConfig = try? decoder.decode(KubeConfig.self, from: content) else {
                 return nil
@@ -95,7 +98,9 @@ struct Config: CertIdentifier {
                     namespace: context.context.namespace ?? "default",
                     authentication: authentication,
                     trustRoots: NIOSSLTrustRoots.certificates(caCert),
-                    insecureSkipTLSVerify: false
+                    insecureSkipTLSVerify: false,
+                    timeout: HTTPClient.Configuration.Timeout.init(connect: .seconds(1), read: .seconds(10)),
+                    redirectConfiguration: HTTPClient.Configuration.RedirectConfiguration.follow(max: 5, allowCycles: false)
                 )
                 return config
             } else {

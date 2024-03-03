@@ -32,8 +32,8 @@ class WKHandler: NSObject, WKScriptMessageHandler {
         if  dict["done"] != nil && dict["done"]! as! String == "true" {
             // download yaml
 //            print("load via yaml \(lastYaml)")
-            yamlble.decodeYamlAndUpdate(client: model.client, yaml: lastYaml)
-            close()
+//            yamlble.decodeYamlAndUpdate(client: model.client, yaml: lastYaml)
+//            close()
         }
     }
 }
@@ -48,13 +48,13 @@ struct YamlWebView: UIViewRepresentable {
 
     func makeUIView(context: Context) -> WKWebView {
         let webView = WKWebView()
-        let yaml = yamlble.encodeYaml(client: model.client)
-        
-        webView.configuration.userContentController.add(WKHandler(yamlble: yamlble, model: model, lastYaml: yaml, close: close), name: "toggleMessageHandler")
+//        let yaml = yamlble.encodeYaml(client: model.client)
+//        
+//        webView.configuration.userContentController.add(WKHandler(yamlble: yamlble, model: model, lastYaml: yaml, close: close), name: "toggleMessageHandler")
         if let baseUrl = Bundle.main.url(forResource: "index", withExtension: "html", subdirectory: "yaml") {
             //        print(baseUrl)
             var component = URLComponents(url: baseUrl, resolvingAgainstBaseURL: false)
-            component?.queryItems = [URLQueryItem(name: "items", value: yaml), URLQueryItem(name: "theme", value: colorScheme == .dark ? "dark" : "light")]
+//            component?.queryItems = [URLQueryItem(name: "items", value: yaml), URLQueryItem(name: "theme", value: colorScheme == .dark ? "dark" : "light")]
             
             if let url = component?.url {
                 //            print(url)

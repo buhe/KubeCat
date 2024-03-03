@@ -10,9 +10,9 @@ import SwiftkubeClient
 import SwiftkubeModel
 
 protocol Yamlble {
-    func encodeYaml(client: KubernetesClient?) -> String
+    func encodeYaml(client: KubernetesClient?) async -> String
     
-    func decodeYamlAndUpdate(client: KubernetesClient?, yaml: String)
+    func decodeYamlAndUpdate(client: KubernetesClient?, yaml: String) async
 }
 
 extension Bundle {
@@ -39,7 +39,7 @@ struct Hpa: Identifiable, Yamlble {
     let namespace: String
     let reference: String
     let referenceType: HPAReference
-    let raw: autoscaling.v2beta1.HorizontalPodAutoscaler?
+    let raw: autoscaling.v2.HorizontalPodAutoscaler?
 }
 
 struct Pod: Identifiable {

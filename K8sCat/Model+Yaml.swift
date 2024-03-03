@@ -28,12 +28,12 @@ extension Deployment {
         }
     }
     
-    func decodeYamlAndUpdate(client: KubernetesClient?, yaml: String) {
+    func decodeYamlAndUpdate(client: KubernetesClient?, yaml: String) async {
         if let client = client {
             let decoder = YAMLDecoder()
             let d = try? decoder.decode(apps.v1.Deployment.self, from: yaml)
             if d != nil {
-                let _ = try? client.appsV1.deployments.update(d!).wait()
+                let _ = try? await client.appsV1.deployments.update(d!)
             }
         }
     }
@@ -55,12 +55,12 @@ extension Stateful {
         }
     }
     
-    func decodeYamlAndUpdate(client: KubernetesClient?, yaml: String) {
+    func decodeYamlAndUpdate(client: KubernetesClient?, yaml: String) async {
         if let client = client {
             let decoder = YAMLDecoder()
             let d = try? decoder.decode(apps.v1.StatefulSet.self, from: yaml)
             if d != nil {
-                let _ = try? client.appsV1.statefulSets.update(d!).wait()
+                let _ = try? await client.appsV1.statefulSets.update(d!)
             }
         }
     }
@@ -82,12 +82,12 @@ extension Daemon {
         }
     }
     
-    func decodeYamlAndUpdate(client: KubernetesClient?, yaml: String) {
+    func decodeYamlAndUpdate(client: KubernetesClient?, yaml: String) async {
         if let client = client {
             let decoder = YAMLDecoder()
             let d = try? decoder.decode(apps.v1.DaemonSet.self, from: yaml)
             if d != nil {
-                let _ = try? client.appsV1.daemonSets.update(d!).wait()
+                let _ = try? await client.appsV1.daemonSets.update(d!)
             }
         }
     }
@@ -109,12 +109,12 @@ extension Hpa {
         }
     }
     
-    func decodeYamlAndUpdate(client: KubernetesClient?, yaml: String) {
+    func decodeYamlAndUpdate(client: KubernetesClient?, yaml: String) async {
         if let client = client {
             let decoder = YAMLDecoder()
-            let d = try? decoder.decode(autoscaling.v2beta1.HorizontalPodAutoscaler.self, from: yaml)
+            let d = try? decoder.decode(autoscaling.v2.HorizontalPodAutoscaler.self, from: yaml)
             if d != nil {
-                let _ = try? client.autoScalingV2Beta1.horizontalPodAutoscalers.update(d!).wait()
+                let _ = try? await client.autoScalingV2.horizontalPodAutoscalers.update(d!)
             }
         }
     }
@@ -136,12 +136,12 @@ extension CronJob {
         }
     }
     
-    func decodeYamlAndUpdate(client: KubernetesClient?, yaml: String) {
+    func decodeYamlAndUpdate(client: KubernetesClient?, yaml: String) async {
         if let client = client {
             let decoder = YAMLDecoder()
             let d = try? decoder.decode(batch.v1.CronJob.self, from: yaml)
             if d != nil {
-                let _ = try? client.batchV1.cronJobs.update(d!).wait()
+                let _ = try? await client.batchV1.cronJobs.update(d!)
             }
         }
     }
@@ -163,12 +163,12 @@ extension PersistentVolume {
         }
     }
     
-    func decodeYamlAndUpdate(client: KubernetesClient?, yaml: String) {
+    func decodeYamlAndUpdate(client: KubernetesClient?, yaml: String) async {
         if let client = client {
             let decoder = YAMLDecoder()
             let d = try? decoder.decode(core.v1.PersistentVolume.self, from: yaml)
             if d != nil {
-                let _ = try? client.persistentVolumes.update(d!).wait()
+                let _ = try? await client.persistentVolumes.update(d!)
             }
         }
     }
@@ -176,17 +176,17 @@ extension PersistentVolume {
 
 
 
-func urlScheme(yamlble: Yamlble, client: KubernetesClient?) {
-    let utf8str = yamlble.encodeYaml(client: client).data(using: .utf8)
+func urlScheme(yamlble: Yamlble, client: KubernetesClient?) async {
+    let utf8str = await yamlble.encodeYaml(client: client).data(using: .utf8)
     if let utf8str = utf8str {
         let base64Encoded = utf8str.base64EncodedString(options: Data.Base64EncodingOptions(rawValue: 0))
 #if os(iOS)
         if let url = URL(string: "yamler://" + base64Encoded) {
-            if UIApplication.shared.canOpenURL(url) {
-                UIApplication.shared.open(url)
+            if await UIApplication.shared.canOpenURL(url) {
+                await UIApplication.shared.open(url)
             } else {
                 if let url = URL(string: "https://apps.apple.com/cn/app/yamler/id1660009640") {
-                    UIApplication.shared.open(url)
+                    await UIApplication.shared.open(url)
                 }
             }
             

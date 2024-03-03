@@ -42,9 +42,15 @@ struct StorageView: View {
                     
                         }
                     }.listStyle(PlainListStyle())
+                        .onAppear {
+                            Task {
+                                await viewModel.pv()
+                            }
+                        }
                     .refreshable {
                         viewModel.model.pvs = nil
                     }
+                    
                 case 1:
                     List {
                         ForEach(viewModel.pvc.filter{$0.name.contains(search.lowercased()) || search == ""}) {
@@ -58,6 +64,11 @@ struct StorageView: View {
                     
                         }
                     }.listStyle(PlainListStyle())
+                        .onAppear {
+                            Task {
+                                await viewModel.pvc()
+                            }
+                        }
                     .refreshable {
                         viewModel.model.pvcs = nil
                     }

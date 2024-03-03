@@ -16,21 +16,21 @@ struct ContainerView: View {
     let viewModel: ViewModel
     @State var search = ""
     
-    @State var logTask: SwiftkubeClientTask?
+    @State var logTask: SwiftkubeClientTask<String>?
     
     @State var showLogs = false
     @State var showShell = false
     @State var logsLines: [String] = []
     
-    var delegate: LogWatcherDelegate {
-        LogWatcherCallback(onNext: {
-            line in
-            logsLines.append(line)
-        })
-    }
+//    var delegate: LogWatcherDelegate {
+//        LogWatcherCallback(onNext: {
+//            line in
+//            logsLines.append(line)
+//        })
+//    }
     
-    func logs() -> SwiftkubeClientTask? {
-        viewModel.model.logs(in: .namespace(viewModel.ns), pod: pod, container: container, delegate: delegate)
+    func logs() -> SwiftkubeClientTask<String>? {
+        viewModel.model.logs(in: .namespace(viewModel.ns), pod: pod, container: container)
     }
     
     var body: some View {
