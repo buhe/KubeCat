@@ -89,7 +89,7 @@ struct Model {
         }
     }
     
-    fileprivate func selectNotSome(c: ClusterEntry) -> (Bool) {
+    fileprivate func selectNotSame(c: ClusterEntry) -> (Bool) {
         return (c != self.current)
     }
     
@@ -133,7 +133,7 @@ struct Model {
                         hasAndSelectDemo = true
                     }
                     
-                    if !selectNotSome(c: c) {
+                    if !selectNotSame(c: c) {
                         break
                     }
                     
