@@ -49,6 +49,9 @@ struct StorageView: View {
                         }
                     .refreshable {
                         viewModel.model.pvs = nil
+                        Task {
+                            await viewModel.pv()
+                        }
                     }
                     
                 case 1:
@@ -71,6 +74,9 @@ struct StorageView: View {
                         }
                     .refreshable {
                         viewModel.model.pvcs = nil
+                        Task {
+                            await viewModel.pvc()
+                        }
                     }
                 
                 default:

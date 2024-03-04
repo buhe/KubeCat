@@ -165,8 +165,16 @@ struct NamespaceView: View {
                         
                             }
                         }.listStyle(PlainListStyle())
+                            .onAppear{
+                                Task {
+                                    await viewModel.job()
+                                }
+                            }
                         .refreshable {
                             viewModel.model.jobs[viewModel.ns] = nil
+                            Task {
+                                await viewModel.job()
+                            }
                         }
                     case 3:
                         List {
@@ -185,8 +193,16 @@ struct NamespaceView: View {
                         
                             }
                         }.listStyle(PlainListStyle())
+                            .onAppear{
+                                Task {
+                                    await viewModel.cronJob()
+                                }
+                            }
                         .refreshable {
                             viewModel.model.cronJobs[viewModel.ns] = nil
+                            Task {
+                                await viewModel.cronJob()
+                            }
                         }
                     case 4:
                         List {
@@ -202,8 +218,16 @@ struct NamespaceView: View {
                         
                             }
                         }.listStyle(PlainListStyle())
+                            .onAppear{
+                                Task {
+                                    await viewModel.statefull()
+                                }
+                            }
                         .refreshable {
                             viewModel.model.statefulls[viewModel.ns] = nil
+                            Task {
+                                await viewModel.statefull()
+                            }
                         }
                     case 5:
                         List {
@@ -240,8 +264,16 @@ struct NamespaceView: View {
                         
                             }
                         }.listStyle(PlainListStyle())
+                            .onAppear{
+                                Task {
+                                    await viewModel.service()
+                                }
+                            }
                         .refreshable {
                             viewModel.model.services[viewModel.ns] = nil
+                            Task {
+                                await viewModel.service()
+                            }
                         }
                     case 6:
                         List {
@@ -259,8 +291,16 @@ struct NamespaceView: View {
                         
                             }
                         }.listStyle(PlainListStyle())
+                            .onAppear{
+                                Task {
+                                    await viewModel.configMap()
+                                }
+                            }
                         .refreshable {
                             viewModel.model.configMaps[viewModel.ns] = nil
+                            Task {
+                                await viewModel.configMap()
+                            }
                         }
                     case 7:
                         List {
@@ -278,8 +318,16 @@ struct NamespaceView: View {
                         
                             }
                         }.listStyle(PlainListStyle())
+                            .onAppear{
+                                Task {
+                                    await viewModel.secret()
+                                }
+                            }
                         .refreshable {
                             viewModel.model.secrets[viewModel.ns] = nil
+                            Task {
+                                await viewModel.secret()
+                            }
                         }
                     case 8:
                         List {
@@ -295,8 +343,16 @@ struct NamespaceView: View {
                         
                             }
                         }.listStyle(PlainListStyle())
+                            .onAppear{
+                                Task {
+                                    await viewModel.daemon()
+                                }
+                            }
                         .refreshable {
                             viewModel.model.daemons[viewModel.ns] = nil
+                            Task {
+                                await viewModel.daemon()
+                            }
                         }
                     case 9:
                         List {
@@ -312,8 +368,16 @@ struct NamespaceView: View {
                         
                             }
                         }.listStyle(PlainListStyle())
+                            .onAppear{
+                                Task {
+                                    await viewModel.replica()
+                                }
+                            }
                         .refreshable {
                             viewModel.model.replicas[viewModel.ns] = nil
+                            Task {
+                                await viewModel.replica()
+                            }
                         }
                     case 10:
                         List {
@@ -328,8 +392,16 @@ struct NamespaceView: View {
 
                             }
                         }.listStyle(PlainListStyle())
+                            .onAppear{
+                                Task {
+                                    await viewModel.hpas()
+                                }
+                            }
                         .refreshable {
                             viewModel.model.hpas[viewModel.ns] = nil
+                            Task {
+                                await viewModel.hpas()
+                            }
                         }
                     default:
                         EmptyView()

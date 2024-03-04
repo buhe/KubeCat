@@ -16,7 +16,7 @@ class ViewModel: ObservableObject {
     init(viewContext: NSManagedObjectContext) {
         self.model = Model(viewContext: viewContext)
         Task {
-            try? await model.namespace()
+            try? await self.model.namespace()
         }
     }
     

@@ -53,6 +53,9 @@ struct GlobalView: View {
                         }
                     .refreshable {
                         viewModel.model.nodes = nil
+                        Task {
+                            await viewModel.nodes()
+                        }
                     }
                 default:
                     EmptyView()
