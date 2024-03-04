@@ -51,6 +51,7 @@
 		3F9DC545296A953600E00C31 /* AWSResign.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9DC544296A953600E00C31 /* AWSResign.swift */; };
 		3F9DC547296E65B700E00C31 /* Model+Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9DC546296E65B700E00C31 /* Model+Controller.swift */; };
 		3F9DC549296E7C0300E00C31 /* Model+Pod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9DC548296E7C0300E00C31 /* Model+Pod.swift */; };
+		3FA8D0E62B95893A007ECB70 /* LogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA8D0E52B95893A007ECB70 /* LogView.swift */; };
 		3FC383562965430B00EC011A /* ExecWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC383552965430B00EC011A /* ExecWebView.swift */; platformFilter = ios; };
 		3FC38358296546C400EC011A /* Model+Scale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC38357296546C400EC011A /* Model+Scale.swift */; };
 		3FFCCF8D294DFF6000FE6710 /* K8sCatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FFCCF8C294DFF6000FE6710 /* K8sCatApp.swift */; };
@@ -120,6 +121,7 @@
 		3F9DC544296A953600E00C31 /* AWSResign.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWSResign.swift; sourceTree = "<group>"; };
 		3F9DC546296E65B700E00C31 /* Model+Controller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Model+Controller.swift"; sourceTree = "<group>"; };
 		3F9DC548296E7C0300E00C31 /* Model+Pod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Model+Pod.swift"; sourceTree = "<group>"; };
+		3FA8D0E52B95893A007ECB70 /* LogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogView.swift; sourceTree = "<group>"; };
 		3FC383552965430B00EC011A /* ExecWebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExecWebView.swift; sourceTree = "<group>"; };
 		3FC38357296546C400EC011A /* Model+Scale.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Model+Scale.swift"; sourceTree = "<group>"; };
 		3FFCCF89294DFF6000FE6710 /* K8sCat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = K8sCat.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -204,6 +206,7 @@
 				3F2BE425295DDCF80002DEEC /* PVView.swift */,
 				3F2BE427295DDD110002DEEC /* PVCView.swift */,
 				3F25F1EF2962930B00F4DA02 /* HpaView.swift */,
+				3FA8D0E52B95893A007ECB70 /* LogView.swift */,
 			);
 			path = inner;
 			sourceTree = "<group>";
@@ -454,6 +457,7 @@
 				3F2BE3F52959972B0002DEEC /* ConfigMapView.swift in Sources */,
 				3F2BE3FF2959BF750002DEEC /* ContainerView.swift in Sources */,
 				3F2BE42A295DDFB10002DEEC /* StorageView.swift in Sources */,
+				3FA8D0E62B95893A007ECB70 /* LogView.swift in Sources */,
 				3F25F1F229630BA300F4DA02 /* Model+Yaml.swift in Sources */,
 				3F19F8C32951A63A005C0558 /* SettingView.swift in Sources */,
 				3F2BE431295F2DA30002DEEC /* Persistence.swift in Sources */,

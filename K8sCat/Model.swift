@@ -43,7 +43,12 @@ struct Model {
     mutating func logs(in ns: NamespaceSelector, pod: Pod, container: Container) -> SwiftkubeClientTask<String>? {
         checkAWSToken()
         if let client = client {
-            return try? client.pods.follow(in: ns, name: pod.name, container: container.name, retryStrategy: .never)
+            do {
+                return try client.pods.follow(in: ns, name: pod.name, container: container.name, retryStrategy: .never)
+            } catch {
+                print(error)
+                return nil
+            }
         } else {
             return nil
         }

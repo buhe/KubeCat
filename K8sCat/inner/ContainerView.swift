@@ -14,20 +14,10 @@ struct ContainerView: View {
     let pod: Pod
     let container: Container
     let viewModel: ViewModel
-    @State var search = ""
-    
-    @State var logTask: SwiftkubeClientTask<String>?
     
     @State var showLogs = false
     @State var showShell = false
-    @State var logsLines: [String] = []
     
-//    var delegate: LogWatcherDelegate {
-//        LogWatcherCallback(onNext: {
-//            line in
-//            logsLines.append(line)
-//        })
-//    }
     
     func logs() -> SwiftkubeClientTask<String>? {
         viewModel.model.logs(in: .namespace(viewModel.ns), pod: pod, container: container)
@@ -82,29 +72,18 @@ struct ContainerView: View {
 //            }
             
             Button {
+                viewModel.logTask = logs()
                 showLogs = true
-                logTask = logs()
+                
             } label: {
                 Label("log", systemImage: "doc.text.magnifyingglass")
             }
         }.sheet(isPresented: $showLogs, onDismiss: {
-            logTask?.cancel()
+            viewModel.logTask?.cancel()
         }) {
-            SearchBar(text: $search)
-                .padding()
-            List {
-                ForEach(logsLines, id: \.self) {
-                    l in
-                    if l.contains(search) {
-                        Text(l)
-                            .foregroundColor(.systemYellow)
-                    } else {
-                        Text(l)
-                    }
-                    
-                }
-            }
-        }.sheet(isPresented: $showShell) {
+            LogView(logTask: viewModel.logTask)
+        }
+        .sheet(isPresented: $showShell) {
 //            WebView(pod: pod, container: container).padding()
         }
         .navigationTitle("Container")

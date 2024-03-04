@@ -13,6 +13,9 @@ class ViewModel: ObservableObject {
     
     @Published var model: Model
     @Published var ns: String = "default"
+    
+    var logTask: SwiftkubeClientTask<String>?
+    
     private var namespaces: [String] = []
     init(viewContext: NSManagedObjectContext) {
         self.model = Model(viewContext: viewContext)
