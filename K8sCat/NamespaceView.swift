@@ -36,7 +36,7 @@ struct NamespaceView: View {
                     HStack{
                         Spacer()
                         Picker("ns", selection: $viewModel.ns) {
-                            ForEach(viewModel.namespaces, id: \.self) {
+                            ForEach(viewModel.namespace, id: \.self) {
                                 Text($0)
                             }
                         }.onChange(of: viewModel.ns) {

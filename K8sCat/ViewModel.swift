@@ -13,23 +13,30 @@ class ViewModel: ObservableObject {
     
     @Published var model: Model
     @Published var ns: String = "default"
+    private var namespaces: [String] = []
     init(viewContext: NSManagedObjectContext) {
         self.model = Model(viewContext: viewContext)
+        select(viewContext: viewContext)
+    }
+    func select(viewContext: NSManagedObjectContext) {
+        model.select(viewContext: viewContext)
         Task {
-            try? await self.model.namespace()
+            let namespaces = (try? await self.model.namespace()) ?? []
+            DispatchQueue.main.async {
+                self.namespaces = namespaces
+            }
         }
     }
-    
 //    func namespaces() async {
 //       try? await model.namespace()
 //    }
     
-    var namespaces: [String] {
+    var namespace: [String] {
         if model.hasAndSelectDemo {
             return ["demo1", "demo2"]
         } else {
-            print("get \(model.namespaces.map { $0.name ?? "unknow" })")
-            return model.namespaces.map { $0.name ?? "unknow" }
+            print("get \(namespaces)")
+            return namespaces
         }
     }
     

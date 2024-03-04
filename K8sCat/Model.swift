@@ -25,7 +25,7 @@ struct Model {
     var hasAndSelectDemo = false
     
     var nodes: [core.v1.Node]?
-    var namespaces: [core.v1.Namespace] = []
+
     var pods: [String: [core.v1.Pod]] = ["": []]
     var deployments: [String: [apps.v1.Deployment]] = ["": []]
     var jobs: [String: [batch.v1.Job]] = ["": []]
@@ -66,8 +66,6 @@ struct Model {
             workaroundChinaSpecialBug()
             first = false
         }
-
-        select(viewContext: viewContext)
 
     }
     
@@ -176,7 +174,7 @@ struct Model {
     
     mutating func clearAll() {
         nodes = nil
-        namespaces = []
+//        namespaces = []
         pods = ["": []]
         deployments = ["": []]
         jobs = ["": []]
@@ -192,29 +190,30 @@ struct Model {
         pvcs = nil
     }
     
-    mutating func namespace() async throws {
+    mutating func namespace() async throws -> [String] {
         checkAWSToken()
         if let client = client {
             do{
                 retry = retry - 1
                 let namespaces = try await client.namespaces.list().items
                 print("set")
-                self.namespaces = namespaces
+                return namespaces.map { $0.name ?? "unknow" }
     
             }catch{
                 print(error)
                 if retry > 0 {
                     print("retry \(retry)")
-                    try? await namespace()
+                    return try await namespace()
                 } else {
                     print("retry end.")
+                    return []
                 }
                 
             }
         
             
         } else {
-            self.namespaces = []
+            return []
         }
     }
     
