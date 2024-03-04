@@ -21,9 +21,9 @@ extension Model {
                    Container(
                    id: $1.name, name: $1.name, image: $1.image ?? ""
                    ,path: $1.terminationMessagePath ?? "unknow", policy: $1.terminationMessagePolicy ?? "unknow", pullPolicy: $1.imagePullPolicy ?? "unknow"
-                   , status: consainersStatus[$0].state?.running != nil ? .Running : (consainersStatus[$0].state?.waiting != nil ? .Waiting : .Terminated)
-                   , ready: consainersStatus[$0].ready
-                   , error: consainersStatus[$0].state?.terminated != nil && consainersStatus[$0].state?.terminated?.exitCode != 0
+                   , status: consainersStatus.first?.state?.running != nil ? .Running : (consainersStatus.first?.state?.waiting != nil ? .Waiting : .Terminated)
+                   , ready: consainersStatus.first?.ready ?? false
+                   , error: consainersStatus.first?.state?.terminated != nil && consainersStatus.first?.state?.terminated?.exitCode != 0
                    )
                    
                } ?? [], clusterIP: $0.status?.podIP ?? "unknow", nodeIP: $0.status?.hostIP ?? "unknow", labels: $0.metadata?.labels
@@ -48,9 +48,9 @@ extension Model {
                 Container(
                 id: $1.name, name: $1.name, image: $1.image ?? ""
                 ,path: $1.terminationMessagePath ?? "unknow", policy: $1.terminationMessagePolicy ?? "unknow", pullPolicy: $1.imagePullPolicy ?? "unknow"
-                , status: consainersStatus[$0].state?.running != nil ? .Running : (consainersStatus[$0].state?.waiting != nil ? .Waiting : .Terminated)
-                , ready: consainersStatus[$0].ready
-                , error: consainersStatus[$0].state?.terminated != nil && consainersStatus[$0].state?.terminated?.exitCode != 0
+                , status: consainersStatus.first?.state?.running != nil ? .Running : (consainersStatus.first?.state?.waiting != nil ? .Waiting : .Terminated)
+                , ready: consainersStatus.first?.ready ?? false
+                , error: consainersStatus.first?.state?.terminated != nil && consainersStatus.first?.state?.terminated?.exitCode != 0
                 )
                 
             } ?? [], clusterIP: $0.status?.podIP ?? "unknow", nodeIP: $0.status?.hostIP ?? "unknow", labels: $0.metadata?.labels
@@ -70,9 +70,9 @@ extension Model {
                 Container(
                 id: $1.name, name: $1.name, image: $1.image ?? ""
                 ,path: $1.terminationMessagePath ?? "unknow", policy: $1.terminationMessagePolicy ?? "unknow", pullPolicy: $1.imagePullPolicy ?? "unknow"
-                , status: consainersStatus[$0].state?.running != nil ? .Running : (consainersStatus[$0].state?.waiting != nil ? .Waiting : .Terminated)
-                , ready: consainersStatus[$0].ready
-                , error: consainersStatus[$0].state?.terminated != nil && consainersStatus[$0].state?.terminated?.exitCode != 0
+                , status: consainersStatus.first?.state?.running != nil ? .Running : (consainersStatus.first?.state?.waiting != nil ? .Waiting : .Terminated)
+                , ready: consainersStatus.first?.ready ?? false
+                , error: consainersStatus.first?.state?.terminated != nil && consainersStatus.first?.state?.terminated?.exitCode != 0
                 )
                 
             } ?? [], clusterIP: $0.status?.podIP ?? "unknow", nodeIP: $0.status?.hostIP ?? "unknow", labels: $0.metadata?.labels
@@ -92,9 +92,9 @@ extension Model {
                 Container(
                 id: $1.name, name: $1.name, image: $1.image ?? ""
                 ,path: $1.terminationMessagePath ?? "unknow", policy: $1.terminationMessagePolicy ?? "unknow", pullPolicy: $1.imagePullPolicy ?? "unknow"
-                , status: consainersStatus[$0].state?.running != nil ? .Running : (consainersStatus[$0].state?.waiting != nil ? .Waiting : .Terminated)
-                , ready: consainersStatus[$0].ready
-                , error: consainersStatus[$0].state?.terminated != nil && consainersStatus[$0].state?.terminated?.exitCode != 0
+                , status: consainersStatus.first?.state?.running != nil ? .Running : (consainersStatus.first?.state?.waiting != nil ? .Waiting : .Terminated)
+                , ready: consainersStatus.first?.ready ?? false
+                , error: consainersStatus.first?.state?.terminated != nil && consainersStatus.first?.state?.terminated?.exitCode != 0
                 )
                 
             } ?? [], clusterIP: $0.status?.podIP ?? "unknow", nodeIP: $0.status?.hostIP ?? "unknow", labels: $0.metadata?.labels
@@ -114,9 +114,9 @@ extension Model {
                     Container(
                     id: $1.name, name: $1.name, image: $1.image ?? ""
                     ,path: $1.terminationMessagePath ?? "unknow", policy: $1.terminationMessagePolicy ?? "unknow", pullPolicy: $1.imagePullPolicy ?? "unknow"
-                    , status: consainersStatus[$0].state?.running != nil ? .Running : (consainersStatus[$0].state?.waiting != nil ? .Waiting : .Terminated)
-                    , ready: consainersStatus[$0].ready
-                    , error: consainersStatus[$0].state?.terminated != nil && consainersStatus[$0].state?.terminated?.exitCode != 0
+                    , status: consainersStatus.first?.state?.running != nil ? .Running : (consainersStatus.first?.state?.waiting != nil ? .Waiting : .Terminated)
+                    , ready: consainersStatus.first?.ready ?? false
+                    , error: consainersStatus.first?.state?.terminated != nil && consainersStatus.first?.state?.terminated?.exitCode != 0
                     )
                   
                     
@@ -137,10 +137,10 @@ extension Model {
                 Container(
                 id: $1.name, name: $1.name, image: $1.image ?? ""
                 ,path: $1.terminationMessagePath ?? "unknow", policy: $1.terminationMessagePolicy ?? "unknow", pullPolicy: $1.imagePullPolicy ?? "unknow"
-                , status: consainersStatus[$0].state?.running != nil ? .Running : (consainersStatus[$0].state?.waiting != nil ? .Waiting : .Terminated)
+                , status: consainersStatus.first?.state?.running != nil ? .Running : (consainersStatus.first?.state?.waiting != nil ? .Waiting : .Terminated)
                 
-                    , ready: consainersStatus[$0].ready
-                , error: consainersStatus[$0].state?.terminated != nil && consainersStatus[$0].state?.terminated?.exitCode != 0
+                    , ready: consainersStatus.first?.ready ?? false
+                , error: consainersStatus.first?.state?.terminated != nil && consainersStatus.first?.state?.terminated?.exitCode != 0
                 )
                 
             } ?? [], clusterIP: $0.status?.podIP ?? "unknow", nodeIP: $0.status?.hostIP ?? "unknow", labels: $0.metadata?.labels
