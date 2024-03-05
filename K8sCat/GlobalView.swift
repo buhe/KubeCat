@@ -46,8 +46,16 @@ struct GlobalView: View {
                     
                         }
                     }.listStyle(PlainListStyle())
+                        .onAppear {
+                            Task {
+                                await viewModel.nodes()
+                            }
+                        }
                     .refreshable {
                         viewModel.model.nodes = nil
+                        Task {
+                            await viewModel.nodes()
+                        }
                     }
                 default:
                     EmptyView()

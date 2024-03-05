@@ -11,6 +11,7 @@ struct HpaView: View {
     let hpa: Hpa
     let viewModel: ViewModel
     
+    @State var deployment: Deployment?
     @State var showYaml = false
     var body: some View {
         Form {
@@ -21,7 +22,12 @@ struct HpaView: View {
                 NavigationLink {
                     switch hpa.referenceType {
                     case .Deployment:
-                        DeploymentView(deployment: viewModel.model.deploymentByName(ns: viewModel.ns, name: hpa.reference), viewModel: viewModel)
+                        DeploymentView(deployment: deployment, viewModel: viewModel)
+                            .onAppear {
+                                Task {
+                                    self.deployment = await viewModel.model.deploymentByName(ns: viewModel.ns, name: hpa.reference)
+                                }
+                            }
                     default:
                         EmptyView()
                     }
@@ -72,7 +78,9 @@ struct HpaView: View {
             }
             #endif
             Button{
-                urlScheme(yamlble: hpa, client: viewModel.model.client)
+                Task {
+                    await urlScheme(yamlble: hpa, client: viewModel.model.client)
+                }
             }label: {
                 Text("Load yaml via Yamler")
             }.padding()

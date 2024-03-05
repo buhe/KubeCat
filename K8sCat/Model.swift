@@ -25,7 +25,7 @@ struct Model {
     var hasAndSelectDemo = false
     
     var nodes: [core.v1.Node]?
-    var namespaces: [core.v1.Namespace] = []
+
     var pods: [String: [core.v1.Pod]] = ["": []]
     var deployments: [String: [apps.v1.Deployment]] = ["": []]
     var jobs: [String: [batch.v1.Job]] = ["": []]
@@ -38,14 +38,17 @@ struct Model {
     var replicas: [String: [apps.v1.ReplicaSet]] = ["": []]
     var pvs: [core.v1.PersistentVolume]?
     var pvcs: [core.v1.ObjectReference?]?
-    var hpas: [String: [autoscaling.v2beta1.HorizontalPodAutoscaler]] = ["": []]
-//    var pvcs: [core.v1.PersistentVolumeClaim]?
-//    var replications: [String: [core.v1.ReplicationController]] = ["": []]
+    var hpas: [String: [autoscaling.v2.HorizontalPodAutoscaler]] = ["": []]
     
-    mutating func logs(in ns: NamespaceSelector, pod: Pod, container: Container, delegate:  LogWatcherDelegate) -> SwiftkubeClientTask? {
+    mutating func logs(in ns: NamespaceSelector, pod: Pod, container: Container) -> SwiftkubeClientTask<String>? {
         checkAWSToken()
         if let client = client {
-            return try? client.pods.follow(in: ns, name: pod.name, container: container.name, delegate: delegate)
+            do {
+                return try client.pods.follow(in: ns, name: pod.name, container: container.name, retryStrategy: .never)
+            } catch {
+                print(error)
+                return nil
+            }
         } else {
             return nil
         }
@@ -68,8 +71,7 @@ struct Model {
             workaroundChinaSpecialBug()
             first = false
         }
-        
-        select(viewContext: viewContext)
+
     }
     
     mutating func checkAWSToken() {
@@ -90,7 +92,7 @@ struct Model {
         }
     }
     
-    fileprivate func selectNotSome(c: ClusterEntry) -> (Bool) {
+    fileprivate func selectNotSame(c: ClusterEntry) -> (Bool) {
         return (c != self.current)
     }
     
@@ -134,7 +136,7 @@ struct Model {
                         hasAndSelectDemo = true
                     }
                     
-                    if !selectNotSome(c: c) {
+                    if !selectNotSame(c: c) {
                         break
                     }
                     
@@ -160,8 +162,11 @@ struct Model {
                         client = KubernetesClient(config: config!)
                     }
                     self.current = c
-                    try? namespace()
-                    
+                    // Move to UI
+                    // TODO
+//                    Task {
+//                        try? await node()
+//                    }
                 }
             }
         } catch {
@@ -174,7 +179,7 @@ struct Model {
     
     mutating func clearAll() {
         nodes = nil
-        namespaces = []
+//        namespaces = []
         pods = ["": []]
         deployments = ["": []]
         jobs = ["": []]
@@ -190,44 +195,46 @@ struct Model {
         pvcs = nil
     }
     
-    mutating func namespace() throws {
+    mutating func namespace() async throws -> [String] {
         checkAWSToken()
         if let client = client {
             do{
                 retry = retry - 1
-                let namespaces = try client.namespaces.list().wait().items
-                self.namespaces = namespaces
+                let namespaces = try await client.namespaces.list().items
+                print("set")
+                return namespaces.map { $0.name ?? "unknow" }
     
             }catch{
                 print(error)
                 if retry > 0 {
                     print("retry \(retry)")
-                    try? namespace()
+                    return try await namespace()
                 } else {
                     print("retry end.")
+                    return []
                 }
                 
             }
         
             
         } else {
-            self.namespaces = []
+            return []
         }
     }
     
-    mutating func node() throws {
+    mutating func node() async throws {
         checkAWSToken()
         if let client = client {
-            self.nodes = try client.nodes.list().wait().items
+            self.nodes = try await client.nodes.list().items
         } else {
             self.nodes = []
         }
     }
     
-    mutating func pv() throws {
+    mutating func pv() async throws {
         checkAWSToken()
         if let client = client {
-            let pvs = try client.persistentVolumes.list().wait().items
+            let pvs = try await client.persistentVolumes.list().items
             self.pvs = pvs
         } else {
             self.pvs = []
@@ -235,10 +242,10 @@ struct Model {
 
     }
     
-    mutating func pvc() throws {
+    mutating func pvc() async throws {
         checkAWSToken()
         if let client = client {
-            let pvcs = try client.persistentVolumes.list().wait().items.map{$0.spec?.claimRef}
+            let pvcs = try await client.persistentVolumes.list().items.map{$0.spec?.claimRef}
             
             self.pvcs = pvcs
         } else {
@@ -247,10 +254,10 @@ struct Model {
 
     }
     
-    mutating func pod(in ns: NamespaceSelector) throws {
+    mutating func pod(in ns: NamespaceSelector) async throws {
         checkAWSToken()
         if let client = client {
-            let pods = try client.pods.list(in: ns).wait().items
+            let pods = try await client.pods.list(in: ns).items
             switch ns {
             case .namespace(let name):
                 self.pods[name] = pods
@@ -265,10 +272,10 @@ struct Model {
         }
     }
     
-    mutating func hpa(in ns: NamespaceSelector) throws {
+    mutating func hpa(in ns: NamespaceSelector) async throws {
         checkAWSToken()
         if let client = client {
-            let hpa = try client.autoScalingV2Beta1.horizontalPodAutoscalers.list(in: ns).wait().items
+            let hpa = try await client.autoScalingV2.horizontalPodAutoscalers.list(in: ns).items
             switch ns {
             case .namespace(let name):
                 self.hpas[name] = hpa
@@ -284,10 +291,10 @@ struct Model {
         
     }
     
-    mutating func deployment(in ns: NamespaceSelector) throws {
+    mutating func deployment(in ns: NamespaceSelector) async throws {
         checkAWSToken()
         if let client = client {
-            let deployments = try client.appsV1.deployments.list(in: ns).wait().items
+            let deployments = try await client.appsV1.deployments.list(in: ns).items
             switch ns {
             case .namespace(let name):
                 self.deployments[name] = deployments
@@ -302,10 +309,10 @@ struct Model {
         }
     }
     
-    mutating func job(in ns: NamespaceSelector) throws {
+    mutating func job(in ns: NamespaceSelector) async throws {
         checkAWSToken()
         if let client = client {
-            let job = try client.batchV1.jobs.list(in: ns).wait().items
+            let job = try await client.batchV1.jobs.list(in: ns).items
             switch ns {
             case .namespace(let name):
                 self.jobs[name] = job
@@ -320,10 +327,10 @@ struct Model {
         }
     }
     
-    mutating func cronJob(in ns: NamespaceSelector) throws {
+    mutating func cronJob(in ns: NamespaceSelector) async throws {
         checkAWSToken()
         if let client = client {
-            let cronJob = try client.batchV1.cronJobs.list(in: ns).wait().items
+            let cronJob = try await client.batchV1.cronJobs.list(in: ns).items
             switch ns {
             case .namespace(let name):
                 self.cronJobs[name] = cronJob
@@ -338,10 +345,10 @@ struct Model {
         }
     }
     
-    mutating func statefull(in ns: NamespaceSelector) throws {
+    mutating func statefull(in ns: NamespaceSelector) async throws {
         checkAWSToken()
         if let client = client {
-            let statefull = try client.appsV1.statefulSets.list(in: ns).wait().items
+            let statefull = try await client.appsV1.statefulSets.list(in: ns).items
             switch ns {
             case .namespace(let name):
                 self.statefulls[name] = statefull
@@ -356,10 +363,10 @@ struct Model {
         }
     }
     
-    mutating func service(in ns: NamespaceSelector) throws {
+    mutating func service(in ns: NamespaceSelector) async throws {
         checkAWSToken()
         if let client = client {
-            let service = try client.services.list(in: ns).wait().items
+            let service = try await client.services.list(in: ns).items
             switch ns {
             case .namespace(let name):
                 self.services[name] = service
@@ -374,10 +381,10 @@ struct Model {
         }
     }
     
-    mutating func configMap(in ns: NamespaceSelector) throws {
+    mutating func configMap(in ns: NamespaceSelector) async throws {
         checkAWSToken()
         if let client = client {
-            let configMap = try client.configMaps.list(in: ns).wait().items
+            let configMap = try await client.configMaps.list(in: ns).items
             switch ns {
             case .namespace(let name):
                 self.configMaps[name] = configMap
@@ -392,10 +399,10 @@ struct Model {
         }
     }
     
-    mutating func secret(in ns: NamespaceSelector) throws {
+    mutating func secret(in ns: NamespaceSelector) async throws {
         checkAWSToken()
         if let client = client {
-            let secret = try client.secrets.list(in: ns).wait().items
+            let secret = try await client.secrets.list(in: ns).items
             switch ns {
             case .namespace(let name):
                 self.secrets[name] = secret
@@ -410,10 +417,10 @@ struct Model {
         }
     }
     
-    mutating func daemon(in ns: NamespaceSelector) throws {
+    mutating func daemon(in ns: NamespaceSelector) async throws {
         checkAWSToken()
         if let client = client {
-            let daemon = try client.appsV1.daemonSets.list(in: ns).wait().items
+            let daemon = try await client.appsV1.daemonSets.list(in: ns).items
             switch ns {
             case .namespace(let name):
                 self.daemons[name] = daemon
@@ -428,10 +435,10 @@ struct Model {
         }
     }
     
-    mutating func replica(in ns: NamespaceSelector) throws {
+    mutating func replica(in ns: NamespaceSelector) async throws {
         checkAWSToken()
         if let client = client {
-            let replica = try client.appsV1.replicaSets.list(in: ns).wait().items
+            let replica = try await client.appsV1.replicaSets.list(in: ns).items
             switch ns {
             case .namespace(let name):
                 self.replicas[name] = replica

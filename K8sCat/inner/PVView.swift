@@ -84,8 +84,10 @@ struct PVView: View {
                 showYaml = false
             }
             #endif
-            Button{
-                urlScheme(yamlble: pv, client: viewModel.model.client)
+            Button {
+                Task {
+                    await urlScheme(yamlble: pv, client: viewModel.model.client)
+                }
             }label: {
                 Text("Load yaml via Yamler")
             }.padding()

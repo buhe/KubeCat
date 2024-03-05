@@ -114,7 +114,9 @@ struct StatefulView: View {
             }
             #endif
             Button{
-                urlScheme(yamlble: stateful, client: viewModel.model.client)
+                Task {
+                    await urlScheme(yamlble: stateful, client: viewModel.model.client)
+                }
             }label: {
                 Text("Load yaml via Yamler")
             }.padding()
